@@ -331,6 +331,16 @@
   file = {/Users/alex/Zotero/storage/HCJVHPGR/Bradshaw et al. - 2023 - Extensive intragenomic variation in the internal t.pdf}
 }
 
+@software{brendanfBrendanfReUnite2023,
+  title = {Brendanf/{{reUnite}}},
+  author = {{brendanf}},
+  date = {2023-11-29T12:18:16Z},
+  origdate = {2020-03-04T13:52:21Z},
+  url = {https://github.com/brendanf/reUnite},
+  urldate = {2024-05-30},
+  abstract = {Reannotate RDP, Warcup, and Unite databases to use uniform taxonomic classifications}
+}
+
 @software{brendanfPhylotax2021,
   title = {Phylotax},
   author = {{brendanf}},
@@ -418,6 +428,24 @@
   abstract = {Background: Sequence similarity searching is a very important bioinformatics task. While Basic Local Alignment Search Tool (BLAST) outperforms exact methods through its use of heuristics, the speed of the current BLAST software is suboptimal for very long queries or database sequences. There are also some shortcomings in the user-interface of the current command-line applications.Results: We describe features and improvements of rewritten BLAST software and introduce new command-line applications. Long query sequences are broken into chunks for processing, in some cases leading to dramatically shorter run times. For long database sequences, it is possible to retrieve only the relevant parts of the sequence, reducing CPU time and memory usage for searches of short queries against databases of contigs or chromosomes. The program can now retrieve masking information for database sequences from the BLAST databases. A new modular software library can now access subject sequence data from arbitrary data sources. We introduce several new features, including strategy files that allow a user to save and reuse their favorite set of options. The strategy files can be uploaded to and downloaded from the NCBI BLAST web site.Conclusion: The new BLAST command-line applications, compared to the current BLAST tools, demonstrate substantial speed improvements for long queries as well as chromosome length database sequences. We have also improved the user interface of the command-line applications. © 2009 Camacho et al; licensee BioMed Central Ltd.},
   isbn = {1471210510},
   file = {/Users/alex/Zotero/storage/28RR2N52/BLAST+.pdf}
+}
+
+@online{cameronRarefyNotRarefy2021,
+  title = {To Rarefy or Not to Rarefy: {{Enhancing}} Diversity Analysis of Microbial Communities through next-Generation Sequencing and Rarefying Repeatedly},
+  shorttitle = {To Rarefy or Not to Rarefy},
+  author = {Cameron, Ellen S. and Schmidt, Philip J. and Tremblay, Benjamin J.-M. and Emelko, Monica B. and Müller, Kirsten M.},
+  date = {2021-06-07},
+  eprinttype = {bioRxiv},
+  eprintclass = {New Results},
+  pages = {2020.09.09.290049},
+  doi = {10.1101/2020.09.09.290049},
+  url = {https://www.biorxiv.org/content/10.1101/2020.09.09.290049v2},
+  urldate = {2023-11-25},
+  abstract = {Amplicon sequencing has revolutionized our ability to study DNA collected from environmental samples by providing a rapid and sensitive technique for microbial community analysis that eliminates the challenges associated with lab cultivation and taxonomic identification through microscopy. In water resources management, it can be especially useful to evaluate ecosystem shifts in response to natural and anthropogenic landscape disturbances to signal potential water quality concerns, such as the detection of toxic cyanobacteria or pathogenic bacteria. Amplicon sequencing data consist of discrete counts of sequence reads, the sum of which is the library size. Groups of samples typically have different library sizes that are not representative of biological variation; library size normalization is required to meaningfully compare diversity between them. Rarefaction is a widely used normalization technique that involves the random subsampling of sequences from the initial sample library to a selected normalized library size. Rarefying is often dismissed as statistically invalid because subsampling effectively discards a portion of the observed sequences. Nonetheless, it remains prevalent in practice. Notably, the superiority of rarefying relative to many other normalization approaches has been argued in diversity analysis. Here, repeated rarefying is proposed as a tool for diversity analyses to normalize library sizes. This enables (i) proportionate representation of all observed sequences and (ii) characterization of the random variation introduced to diversity analyses by rarefying to a smaller library size shared by all samples. While many deterministic data transformations are not tailored to produce equal library sizes, repeatedly rarefying reflects the probabilistic process by which amplicon sequencing data are obtained as a representation of the source microbial community. Specifically, it evaluates which data might have been obtained if a particular sample’s library size had been smaller and allows graphical representation of the effects of this library size normalization process upon diversity analysis results.},
+  langid = {english},
+  pubstate = {preprint},
+  keywords = {_tablet},
+  file = {/Users/alex/Zotero/storage/XZCEDWJX/Cameron et al_2021_To rarefy or not to rarefy.pdf}
 }
 
 @article{Caroe2020,
@@ -654,6 +682,24 @@
   file = {/Users/alex/Zotero/storage/G777UBJU/Delavaux et al_2021_Utility of large subunit for environmental sequencing of arbuscular mycorrhizal.pdf;/Users/alex/Zotero/storage/XWWJH8F5/nph17080-sup-0001-supinfo.pdf;/Users/alex/Zotero/storage/S6FDIALI/nph.html}
 }
 
+@article{delavauxUtilityLargeSubunit2021a,
+  title = {Utility of Large Subunit for Environmental Sequencing of Arbuscular Mycorrhizal Fungi: A New Reference Database and Pipeline},
+  shorttitle = {Utility of Large Subunit for Environmental Sequencing of Arbuscular Mycorrhizal Fungi},
+  author = {Delavaux, Camille S. and Sturmer, Sidney L. and Wagner, Maggie R. and Schütte, Ursel and Morton, Joseph B. and Bever, James D.},
+  date = {2021},
+  journaltitle = {New Phytologist},
+  volume = {229},
+  number = {6},
+  pages = {3048--3052},
+  issn = {1469-8137},
+  doi = {10.1111/nph.17080},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/nph.17080},
+  urldate = {2024-03-25},
+  langid = {english},
+  keywords = {amplicon sequencing,bioinformatics,eDNA,Glomeromycota,large subunit},
+  file = {/Users/alex/Zotero/storage/FQGYGEPK/Delavaux et al_2021_Utility of large subunit for environmental sequencing of arbuscular mycorrhizal.pdf;/Users/alex/Zotero/storage/KUA725SS/nph.html}
+}
+
 @inreference{DNA2024,
   title = {{{DNA}}},
   booktitle = {Wikipedia},
@@ -888,6 +934,21 @@
   abstract = {Recent discussion focuses on the best method for delineating microbial taxa, based on either exact sequence variants (ESVs) or traditional operational taxonomic units (OTUs) of marker gene sequences. We sought to test if the binning approach (ESVs versus 97\% OTUs) affected the ecological conclusions of a large field study. The data set included sequences targeting all bacteria (16S rRNA) and fungi (internal transcribed spacer [ITS]), across multiple environments diverging markedly in abiotic conditions, over three collection times. Despite quantitative differences in microbial richness, we found that all and diversity metrics were highly positively correlated (r 0.90) between samples analyzed with both approaches. Moreover, the community composition of the dominant taxa did not vary between approaches. Consequently, statistical inferences were nearly indistinguishable. Furthermore, ESVs only moderately increased the genetic resolution of fungal and bacterial diversity (1.3 and 2.1 times OTU richness, respectively). We conclude that for broadscale (e.g., all bacteria or all fungi) and diversity analyses, ESV or OTU methods will often reveal similar ecological results. Thus, while there are good reasons to employ ESVs, we need not question the validity of results based on OTUs.},
   keywords = {bacteria,ecology,exact sequence variants (ESVs),fungi,Illumina MiSeq,microbial,operational taxonomic units (OTUs)},
   file = {/Users/alex/Zotero/storage/RPQSAQ4G/glassman-et-al-2018-broadscale-ecological-patterns-are-robust-to-use-of-exact-sequence-variants-versus-operational.pdf}
+}
+
+@article{gloorMicrobiomeDatasetsAre2017,
+  title = {Microbiome {{Datasets Are Compositional}}: {{And This Is Not Optional}}},
+  shorttitle = {Microbiome {{Datasets Are Compositional}}},
+  author = {Gloor, Gregory B. and Macklaim, Jean M. and Pawlowsky-Glahn, Vera and Egozcue, Juan J.},
+  date = {2017},
+  journaltitle = {Frontiers in Microbiology},
+  volume = {8},
+  issn = {1664-302X},
+  url = {https://www.frontiersin.org/articles/10.3389/fmicb.2017.02224},
+  urldate = {2023-11-25},
+  abstract = {Datasets collected by high-throughput sequencing (HTS) of 16S rRNA gene amplimers, metagenomes or metatranscriptomes are commonplace and being used to study human disease states, ecological differences between sites, and the built environment. There is increasing awareness that microbiome datasets generated by HTS are compositional because they have an arbitrary total imposed by the instrument. However, many investigators are either unaware of this or assume specific properties of the compositional data. The purpose of this review is to alert investigators to the dangers inherent in ignoring the compositional nature of the data, and point out that HTS datasets derived from microbiome studies can and should be treated as compositions at all stages of analysis. We briefly introduce compositional data, illustrate the pathologies that occur when compositional data are analyzed inappropriately, and finally give guidance and point to resources and examples for the analysis of microbiome datasets using compositional data analysis.},
+  keywords = {_tablet},
+  file = {/Users/alex/Zotero/storage/KRY9AGBT/Gloor et al_2017_Microbiome Datasets Are Compositional.pdf}
 }
 
 @article{guenay-greunkeHandlingTargetedAmplicon2021,
@@ -1441,6 +1502,49 @@
   abstract = {Previously we presented Swarm v1, a novel and open source amplicon clustering program that produced fine-scale molecular operational taxonomic units (OTUs), free of arbitrary global clustering thresholds and input-order dependency. Swarmv1 worked with an initial phase that used iterative single-linkage with a local clustering threshold (d), followed by a phase that used the internal abundance structures of clusters to break chained OTUs.Here we present Swarmv2, which has two important novel features: (1) a new algorithm for d = 1 that allows the computation time of the program to scale linearly with increasing amounts of data; and (2) the new fastidious option that reduces under-grouping by grafting low abundant OTUs (e.g., singletons and doubletons) onto larger ones. Swarm v2 also directly integrates the clustering and breaking phases, dereplicates sequencing reads with d = 0, outputs OTU representatives in fasta format, and plots individualOTUs as two-dimensional networks.},
   keywords = {Barcoding,Environmental diversity,Molecular operational taxonomic units},
   file = {/Users/alex/Zotero/storage/TZ4MK42V/swarm.pdf}
+}
+
+@article{mbarecheOverviewBioinformaticsTools2020,
+  title = {An {{Overview}} of {{Bioinformatics Tools}} for {{DNA Meta-Barcoding Analysis}} of {{Microbial Communities}} of {{Bioaerosols}}: {{Digest}} for {{Microbiologists}}},
+  shorttitle = {An {{Overview}} of {{Bioinformatics Tools}} for {{DNA Meta-Barcoding Analysis}} of {{Microbial Communities}} of {{Bioaerosols}}},
+  author = {Mbareche, Hamza and Dumont-Leblond, Nathan and Bilodeau, Guillaume J. and Duchaine, Caroline},
+  date = {2020-09-08},
+  journaltitle = {Life},
+  shortjournal = {Life (Basel)},
+  volume = {10},
+  number = {9},
+  eprint = {32911871},
+  eprinttype = {pmid},
+  pages = {185},
+  issn = {2075-1729},
+  doi = {10.3390/life10090185},
+  url = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7555798/},
+  urldate = {2023-11-25},
+  abstract = {High-throughput DNA sequencing (HTS) has changed our understanding of the microbial composition present in a wide range of environments. Applying HTS methods to air samples from different environments allows the identification and quantification (relative abundance) of the microorganisms present and gives a better understanding of human exposure to indoor and outdoor bioaerosols. To make full use of the avalanche of information made available by these sequences, repeated measurements must be taken, community composition described, error estimates made, correlations of microbiota with covariates (variables) must be examined, and increasingly sophisticated statistical tests must be conducted, all by using bioinformatics tools. Knowing which analysis to conduct and which tools to apply remains confusing for bioaerosol scientists, as a litany of tools and data resources are now available for characterizing microbial communities. The goal of this review paper is to offer a guided tour through the bioinformatics tools that are useful in studying the microbial ecology of bioaerosols. This work explains microbial ecology features like alpha and beta diversity, multivariate analyses, differential abundances, taxonomic analyses, visualization tools and statistical tests using bioinformatics tools for bioaerosol scientists new to the field. It illustrates and promotes the use of selected bioinformatic tools in the study of bioaerosols and serves as a good source for learning the “dos and don’ts” involved in conducting a precise microbial ecology study.},
+  pmcid = {PMC7555798},
+  keywords = {_tablet},
+  file = {/Users/alex/Zotero/storage/XY4IQRL7/Mbareche et al_2020_An Overview of Bioinformatics Tools for DNA Meta-Barcoding Analysis of.pdf}
+}
+
+@article{mcmurdieWasteNotWant2014,
+  title = {Waste {{Not}}, {{Want Not}}: {{Why Rarefying Microbiome Data Is Inadmissible}}},
+  shorttitle = {Waste {{Not}}, {{Want Not}}},
+  author = {McMurdie, Paul J. and Holmes, Susan},
+  date = {2014-04-03},
+  journaltitle = {PLOS Computational Biology},
+  shortjournal = {PLOS Computational Biology},
+  volume = {10},
+  number = {4},
+  pages = {e1003531},
+  publisher = {Public Library of Science},
+  issn = {1553-7358},
+  doi = {10.1371/journal.pcbi.1003531},
+  url = {https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531},
+  urldate = {2023-11-25},
+  abstract = {Current practice in the normalization of microbiome count data is inefficient in the statistical sense. For apparently historical reasons, the common approach is either to use simple proportions (which does not address heteroscedasticity) or to use rarefying of counts, even though both of these approaches are inappropriate for detection of differentially abundant species. Well-established statistical theory is available that simultaneously accounts for library size differences and biological variability using an appropriate mixture model. Moreover, specific implementations for DNA sequencing read count data (based on a Negative Binomial model for instance) are already available in RNA-Seq focused R packages such as edgeR and DESeq. Here we summarize the supporting statistical theory and use simulations and empirical data to demonstrate substantial improvements provided by a relevant mixture model framework over simple proportions or rarefying. We show how both proportions and rarefied counts result in a high rate of false positives in tests for species that are differentially abundant across sample classes. Regarding microbiome sample-wise clustering, we also show that the rarefying procedure often discards samples that can be accurately clustered by alternative methods. We further compare different Negative Binomial methods with a recently-described zero-inflated Gaussian mixture, implemented in a package called metagenomeSeq. We find that metagenomeSeq performs well when there is an adequate number of biological replicates, but it nevertheless tends toward a higher false positive rate. Based on these results and well-established statistical theory, we advocate that investigators avoid rarefying altogether. We have provided microbiome-specific extensions to these tools in the R package, phyloseq.},
+  langid = {english},
+  keywords = {_tablet,Binomials,DNA sequencing,Experimental design,Microbiome,RNA sequencing,Simulation and modeling,Source code,Statistical data},
+  file = {/Users/alex/Zotero/storage/BGXZJCH2/McMurdie_Holmes_2014_Waste Not, Want Not.pdf}
 }
 
 @article{Meidl2021,
@@ -2022,6 +2126,25 @@
   urldate = {2024-01-29},
   abstract = {NanoCLUST is an analysis pipeline for the classification of amplicon-based full-length 16S rRNA nanopore reads. It is characterized by an unsupervised read clustering step, based on Uniform Manifold Approximation and Projection (UMAP), followed by the construction of a polished read and subsequent Blast classification. Here, we demonstrate that NanoCLUST performs better than other state-of-the-art software in the characterization of two commercial mock communities, enabling accurate bacterial identification and abundance profile estimation at species-level resolution.Source code, test data and documentation of NanoCLUST are freely available at https://github.com/genomicsITER/NanoCLUST under MIT License.Supplementary data are available at Bioinformatics online.},
   file = {/Users/alex/Zotero/storage/GNJXVN2Q/Rodríguez-Pérez et al_2021_NanoCLUST.pdf;/Users/alex/Zotero/storage/G5NIEJZ3/5929694.html}
+}
+
+@article{rognesVSEARCHVersatileOpen2016,
+  title = {{{VSEARCH}}: A Versatile Open Source Tool for Metagenomics},
+  shorttitle = {{{VSEARCH}}},
+  author = {Rognes, Torbjørn and Flouri, Tomáš and Nichols, Ben and Quince, Christopher and Mahé, Frédéric},
+  date = {2016-10-18},
+  journaltitle = {PeerJ},
+  shortjournal = {PeerJ},
+  volume = {4},
+  pages = {e2584},
+  publisher = {PeerJ Inc.},
+  issn = {2167-8359},
+  doi = {10.7717/peerj.2584},
+  url = {https://peerj.com/articles/2584},
+  urldate = {2024-05-30},
+  abstract = {Background VSEARCH is an open source and free of charge multithreaded 64-bit tool for processing and preparing metagenomics, genomics and population genomics nucleotide sequence data. It is designed as an alternative to the widely used USEARCH tool (Edgar, 2010) for which the source code is not publicly available, algorithm details are only rudimentarily described, and only a memory-confined 32-bit version is freely available for academic use. Methods When searching nucleotide sequences, VSEARCH uses a fast heuristic based on words shared by the query and target sequences in order to quickly identify similar sequences, a similar strategy is probably used in USEARCH. VSEARCH then performs optimal global sequence alignment of the query against potential target sequences, using full dynamic programming instead of the seed-and-extend heuristic used by USEARCH. Pairwise alignments are computed in parallel using vectorisation and multiple threads. Results VSEARCH includes most commands for analysing nucleotide sequences available in USEARCH version 7 and several of those available in USEARCH version 8, including searching (exact or based on global alignment), clustering by similarity (using length pre-sorting, abundance pre-sorting or a user-defined order), chimera detection (reference-based or de novo), dereplication (full length or prefix), pairwise alignment, reverse complementation, sorting, and subsampling. VSEARCH also includes commands for FASTQ file processing, i.e., format detection, filtering, read quality statistics, and merging of paired reads. Furthermore, VSEARCH extends functionality with several new commands and improvements, including shuffling, rereplication, masking of low-complexity sequences with the well-known DUST algorithm, a choice among different similarity definitions, and FASTQ file format conversion. VSEARCH is here shown to be more accurate than USEARCH when performing searching, clustering, chimera detection and subsampling, while on a par with USEARCH for paired-ends read merging. VSEARCH is slower than USEARCH when performing clustering and chimera detection, but significantly faster when performing paired-end reads merging and dereplication. VSEARCH is available at https://github.com/torognes/vsearch under either the BSD 2-clause license or the GNU General Public License version 3.0. Discussion VSEARCH has been shown to be a fast, accurate and full-fledged alternative to USEARCH. A free and open-source versatile tool for sequence analysis is now available to the metagenomics community.},
+  langid = {english},
+  file = {/Users/alex/Zotero/storage/QB23UZCW/Rognes et al_2016_VSEARCH.pdf}
 }
 
 @article{Runnel2022,
