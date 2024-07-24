@@ -1,0 +1,12 @@
+---
+title: "A Minimal bookdown document"
+author: Alex Ringeri
+site: bookdown::bookdown_site
+documentclass: article
+output:
+    #bookdown::pdf_document2:
+    #    toc: yes
+    bookdown::html_document2
+    #    toc: yes
+    #bookdown::gitbook: default
+---

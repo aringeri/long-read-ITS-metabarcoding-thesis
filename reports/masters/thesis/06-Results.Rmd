@@ -1,0 +1,22 @@
+
+# Results
+
+## Quality control
+- read loss
+  - primer detection + trimming
+  - ITS extraction
+  - quality scores
+  - chimera filtering
+
+## Clustering
+
+### Vsearch
+- subsampling
+- clustering at 97%
+- show effect of threshold, # OTUs and read loss
+
+### Nanoclust
+- subsampling
+- show effect of minimum cluster size, # clusters, read loss
+
+### Effect of base calling improvements
