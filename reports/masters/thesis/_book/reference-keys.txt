@@ -1,0 +1,11 @@
+fig:vsearchOTUs
+fig:nanoclustOTUs
+introduction
+objectives-and-research-question
+methods
+validation-with-synthetic-data-set
+synthetic-scenarios
+results
+quality-control
+minimum-cluster-size-threshold-can-recover-expected-number-of-species-from-mixed-read-scenarios
+effect-of-newer-base-calling-model

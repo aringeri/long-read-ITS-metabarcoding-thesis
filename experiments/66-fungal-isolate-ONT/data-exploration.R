@@ -1,5 +1,7 @@
 library(phyloseq)
 library(tidyr)
+library(dplyr)
+library(ggplot2)
 
 samplesheet <- read.csv('Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
 rownames(samplesheet) <- paste0("barcode", rownames(samplesheet))
@@ -130,20 +132,100 @@ selected_clusters <- nanoclust_sums_fullits[nanoclust_sums_fullits$n > 464, ]$bi
 tabulated[tabulated$Freq != 0 & (tabulated$bin_id %in% selected_clusters) & tabulated$bin_id != -1, ] |> View()
 
 
+scenarios <- list(
+  # s167 = "isolate-even-sub167-07-16",
+  s1000 = "isolate-even-sub1000-07-16"#,
+  # s2000 = "isolate-even-derep-07-15",
+  # s2500 = "isolate-even-sub2500-07-15"
+)
+
+count_otus_gt <- function(phylo, min_size, scenario="OTUs") {
+  otu_table(phylo) %>% as.data.frame() %>%
+    summarise(across(everything(), ~sum(.x > min_size))) %>%
+    pivot_longer(cols = barcode25:barcode89, names_to = 'barcode', values_to = scenario)
+}
+
 # derep.OTUS <- read.table('outputs/isolate-even-derep-07-15/vsearch-cluster/FULL_ITS/all_samples/all_samples.otu.tsv.gz', sep="\t", header=TRUE, comment.char = "", row.names=1)
 # p <- phyloseq(otu_table(derep.OTUS, taxa_are_rows = TRUE))
-p <- readRDS('outputs/isolate-even-derep-07-15/phyloseq/FULL_ITS/clustered-by-region/blast/clustered-by-region.phyloseq.rds')
+# p <- readRDS('outputs/isolate-even-sub2500-07-15/phyloseq/FULL_ITS/clustered-by-region/blast/clustered-by-region.phyloseq.rds') # sub 2500
+p <- readRDS('outputs/isolate-even-derep-07-15/phyloseq/FULL_ITS/clustered-by-region/blast/clustered-by-region.phyloseq.rds') # sub 2000
+# p_1000 <- readRDS('outputs/isolate-even-sub1000-07-16/phyloseq/FULL_ITS/clustered-by-region/blast/clustered-by-region.phyloseq.rds') # sub 1000
+# p <- readRDS('outputs/isolate-even-sub167-07-16/phyloseq/FULL_ITS/clustered-by-region/blast/clustered-by-region.phyloseq.rds') # sub 167
+sample_data(p) <- samplesheet
+# sample_data(p_1000) <- samplesheet
+p
+thresh <- sum(sample_sums(p))*.0006
+thresh
+thresh_p <- filter_taxa(p, \(x) sum(x) > thresh, prune=TRUE)
+
+filter_taxa_by_thresh <- function(phylo, thresh) {
+  t <- sum(sample_sums(phylo))*thresh
+  filter_taxa(phylo, \(x) sum(x) > t, prune=TRUE)
+}
+
+samplesheet_tib <- tibble::rownames_to_column(samplesheet, var='barcode')
+
+mapply(scenarios, names(scenarios), SIMPLIFY=FALSE, FUN=function(scenario, name) {
+  p <- readRDS(glue::glue('outputs/{scenario}/phyloseq/FULL_ITS/clustered-by-region/blast/clustered-by-region.phyloseq.rds'))
+  total_reads <- sum(sample_sums(p))
+  p %>%
+    filter_taxa_by_thresh(thresh=0.001) %>%
+    # count_otus_gt(total_reads*0.005/60, substring(name, 2))
+    count_otus_gt(0, substring(name, 2))
+    # threshould at sample level
+}) %>%
+  purrr::reduce(full_join, by=join_by(barcode)) %>%
+  right_join(samplesheet_tib[,c('barcode', 'Sample')], ., by=join_by(barcode)) %>%
+  # filter(barcode %in% paste0('barcode', 46:65)) %>%
+  # filter(barcode %in% paste0('barcode', 25:45)) %>%
+  # filter(barcode %in% paste0('barcode', 25:90)) %>%
+  pivot_longer('1000', names_to="sample_depth", values_to = "OTUs") %>%
+  ggplot(
+    aes(x=Sample, y=OTUs, colour = sample_depth)
+  ) +
+  geom_col(position = position_dodge(.9)) +
+  scale_x_discrete(guide = guide_axis(angle = 90))
+
+p <- readRDS(glue::glue('outputs/isolate-even-sub1000-07-16/phyloseq/FULL_ITS/clustered-by-region/blast/clustered-by-region.phyloseq.rds'))
 sample_data(p) <- samplesheet
 
-sum(sample_sums(p))*.0006
-ntaxa(filter_taxa(p, \(x) sum(x) > 72, prune=TRUE))
-1 - sum(sample_sums(filter_taxa(p, \(x) sum(x) > 72, prune=TRUE))) / sum(sample_sums(p))
+taxa <- 'Cryptococcus_neoformans_VNI'
+
+p_otu <- filter_taxa_by_thresh(p, thresh=0.001) %>%
+  subset_samples(Sample %in% c(taxa)) %>%
+  otu_table()
+sum(p_otu > 0)
+
+filter_taxa_by_thresh(p, thresh=0.001) %>%
+  subset_samples(Sample %in% c(taxa)) %>%
+  filter_taxa(\(x) sum(x) > 0, prune=TRUE) %>%
+  tax_table() %>% View()
+
+filter_taxa_by_thresh(p, thresh=0.001) %>%
+  subset_samples(Sample %in% c(taxa)) %>%
+  filter_taxa(\(x) sum(x) > 0, prune=TRUE) %>%
+  plot_bar(fill='Species')
+
+
+sum(sample_sums(p))
+1 - sum(sample_sums(filter_taxa(p, \(x) sum(x) > thresh, prune=TRUE))) / sum(sample_sums(p))
 plot_bar(p)
 plot_bar(filter_taxa(p, \(x) sum(x) > 72, prune=TRUE), fill='Species', x = 'sample_Sample')
-p1 <- filter_taxa(p, \(x) sum(x) > 72, prune=TRUE)
-p2 <- prune_samples(sample_names(p1)[1:10], p1)
-p3 <- prune_taxa(taxa_sums(p2) > 3, p2 )
-plot_bar( p3, fill='Species', x = 'sample_Sample')
+p1 <- filter_taxa_by_thresh(p, 0.001)
+# p2 <- prune_samples(sample_names(p1), p1)
+p2 <- prune_samples(rownames(sample_data(p)[order(sample_data(p)$Sample),])[31:41], p1)
+
+f <- function(c) {
+  return(max(0, log(c)))
+}
+
+p3 <- p2#transform_sample_counts(p2, Vectorize(f))# prune_taxa(taxa_sums(p2) > 3, p2 )
+plot_bar(p3, fill='Species', x = 'sample_Sample')
 sample_data(p)
 plot_OTU_threshold(p, 0.00005, 0.03)
 
+plot_bar(p3, fill='Genus', x = 'sample_Sample')
+plot_bar(p3, fill='Genus', x = 'sample_Sample', facet_grid = 'Class')
+?plot_bar
+
+readRDS('/Users/alex/repos/long-read-ITS-metabarcoding/output/isolate-sub5000/phyloseq/FULL_ITS/167/-1170105035/all_samples/all_samples.phyloseq.rds') %>% plot_bar()

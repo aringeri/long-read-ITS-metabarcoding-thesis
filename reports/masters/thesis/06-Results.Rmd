@@ -8,15 +8,33 @@
   - quality scores
   - chimera filtering
 
-## Clustering
+## Minimum cluster size threshold can recover expected number of species from mixed read scenarios
 
-### Vsearch
-- subsampling
-- clustering at 97%
-- show effect of threshold, # OTUs and read loss
+Clustering using VSEARCH at 97% sequence identity consistently over-estimated the number of species in mixed read scenarios.
+Large numbers of OTUs were encountered with many of the OTUs having low abundance.
+This is to be expected when clustering long noisy reads via sequence identity and a procedure of filtering spurious reads
+was adopted.
+The method of removing OTUs with abundance levels below a specified threshold was explored in Figure \@ref(fig:vsearchOTUs).
+The minimum OTU size threshold was selected as a proportion of the total library size.
+When clustering with VSEARCH at 97% sequence identity, the threshold that gave consistent recovery of the number of species was 0.1% of total library size.
+This was robust across different library sizes (1000-150000 total reads).
 
-### Nanoclust
-- subsampling
-- show effect of minimum cluster size, # clusters, read loss
+```{r vsearchOTUs, echo = FALSE, fig.fullwidth=TRUE, fig.cap = "The effect of a minimum OTU size threshold and total library size on the number of OTUs when clustering with VSEARCH. Colours indicate the minimum OTU size as a proportion of the total library size. The dashed line indicates the actual number of species in the synthetic dataset."}
+knitr::include_graphics('analysis/images/06-otu-count-vsearch.png')
+```
 
-### Effect of base calling improvements
+The NanoCLUST algorithm was explored to better estimate the number of species in mixed samples by potentially better handling noise in the ONT reads compared to VSEARCH.
+We tested multiple library sizes to determine the optimal value for the minimum cluster size parameter used by NanoCLUST (hdbscan).
+When the minimum cluster size parameter was set to its minimum value (2), the NanoCLUST method overestimated the number of species for library sizes 10000 and above.
+The estimated number of species also correlated with the library size for small values of the minimum cluster paramer (see Figure \@ref(fig:nanoclustOTUs)).
+
+
+```{r nanoclustOTUs, echo = FALSE, fig.fullwidth=TRUE, fig.cap = "The effect of minimum cluster size parameter and total library size on the number of clusters when clustering with NanoCLUST."}
+knitr::include_graphics('analysis/images/06-otu-count-nanoclust.png')
+```
+
+```{r compareVsearchNanoclust, echo = FALSE, fig.fullwidth=TRUE}
+knitr::include_graphics('analysis/images/06-otu-count-and-loss.png')
+```
+
+### Effect of newer base calling model
