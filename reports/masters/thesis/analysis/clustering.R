@@ -4,10 +4,11 @@ library(dplyr)
 library(ggplot2)
 library(glue)
 
-# problematic <- readRDS('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08/phyloseq/FULL_ITS/2500/1/all_samples/all_samples.phyloseq.rds')
+problematic <- readRDS('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08/phyloseq/FULL_ITS/2500/1/all_samples/all_samples.phyloseq.rds')
 
 # TODO update to latest (08-08)
-output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02'
+# output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02'
+output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08'
 
 filter_taxa_by_thresh <- function(phylo, thresh) {
   t <- sum(sample_sums(phylo))*thresh

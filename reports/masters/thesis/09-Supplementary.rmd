@@ -1,4 +1,4 @@
-# Supplementary Tables
+# Supplemental Tables
 
 ```{r samplesheet, echo=FALSE, message=FALSE }
 library(tidyr)

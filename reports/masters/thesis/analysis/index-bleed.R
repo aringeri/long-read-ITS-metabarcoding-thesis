@@ -59,7 +59,7 @@ cowplot::plot_grid(
 
 # nanoplot
 nanoclust_otus <-
-  read.csv('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08/hdbscan_clustering/FULL_ITS/1000/1/otu_table/otu_table.tsv', sep = '\t', row.names = 1) %>%
+  read.csv('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08/hdbscan_clustering/FULL_ITS/2000/1/otu_table/otu_table.tsv', sep = '\t', row.names = 1) %>%
   # read.csv('/Users/alex/repos/long-read-ITS-metabarcoding/output/isolate-sub5000/hdbscan_clustering/FULL_ITS/50/1/otu_table/otu_table.tsv', sep = '\t', row.names = 1) %>%
   otu_table(taxa_are_rows = TRUE) %>%
   phyloseq(sample_data(samplesheet))
@@ -68,21 +68,27 @@ nanoclust_otus %>%
   otu_table() %>%
   data.frame() %>%
   tibble::rownames_to_column('OTU') %>%
-  pivot_longer(cols = barcode25:barcode89, names_to='barcode', values_to='count' ) %>%
+  # tibble::rownames_to_column('cluster_id') %>%
+  mutate_at(vars(OTU), function(cluster) {
+    cluster[cluster == -1] <- "U"
+    cluster
+  }) %>%
+  pivot_longer(cols = sample_names(nanoclust_otus)[1:30], names_to='barcode', values_to='count' ) %>%
   filter(count > 0) %>%
-  filter(barcode %in% c('barcode41', 'barcode42', 'barcode43', 'barcode28')) %>%
+  # filter(barcode %in% c('barcode41', 'barcode42', 'barcode43', 'barcode28', 'barcode36', 'barcode47')) %>%
+  mutate(
+    OTU = tidytext::reorder_within(OTU, -count, barcode)
+  ) %>%
   ggplot(
-    aes(x=OTU, y=count, colour=factor(OTU))
-  ) +
+      aes(x=OTU, y=count)#, colour=OTU)
+    ) +
     geom_col() +
-    facet_wrap(~barcode, scales='free_x')
-
-
-nanoclust_otus %>%
-  otu_table() %>%
-  data.frame() %>%
-  tibble::rownames_to_column('OTU') %>%
-  pivot_longer(cols = barcode25:barcode89, names_to='barcode', values_to='count' ) %>%
-  filter(count > 0) %>%
-  filter(barcode %in% c('barcode41', 'barcode42', 'barcode43', 'barcode28', 'barcode50')) %>%
-  View()
+    facet_wrap(~barcode,
+               labeller = as_labeller(\(x)  paste0(
+                 samplesheet[x, 'Sample']#, ' (', x, ')'
+               )),
+               ncol = 6,
+               scales='free_x') +
+    # coord_flip() +
+    tidytext::scale_x_reordered() +
+    labs(x="Cluster ID", y="Abundance")

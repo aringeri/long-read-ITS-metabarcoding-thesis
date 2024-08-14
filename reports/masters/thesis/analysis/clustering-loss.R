@@ -10,6 +10,8 @@ filter_taxa_by_thresh <- function(phylo, thresh) {
   filter_taxa(phylo, \(x) sum(x) > t, prune=TRUE)
 }
 
+output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08'
+
 load_loss_stats <- function(output_dir = '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02') {
   thresh_range <- seq(0,0.02, length.out = 300)
 
@@ -56,7 +58,7 @@ load_loss_stats <- function(output_dir = '../../../../experiments/66-fungal-isol
   }
   return(df)
 }
-combined_stats <- load_loss_stats()
+combined_stats <- load_loss_stats(output_dir)
 
 otu_counts <- combined_stats %>%
   ggplot(
