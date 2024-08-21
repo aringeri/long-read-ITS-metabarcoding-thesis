@@ -26,6 +26,7 @@ load_nanoclust_phyloseq <- function(
   reads_per_sample=2000,
   repetition=2)
 {
+  print(experiment)
   otu <- read.csv(glue('{experiment}/hdbscan_clustering/FULL_ITS/{reads_per_sample}/{repetition}/otu_table/otu_table.tsv'), sep = '\t', row.names = 1)
   otu <- otu[order(as.numeric(rownames(otu))), ]
   otu <- otu[rownames(otu) != -1, ]
