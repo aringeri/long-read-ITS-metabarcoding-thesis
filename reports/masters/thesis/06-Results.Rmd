@@ -65,6 +65,25 @@ knitr::include_graphics('analysis/images/06-otu-count-and-loss.png')
 
 ### Splitting of species into clusters
 
+- clustering by nanoclust
+  - sampling at 2000 reads per sample
+  - min cluster size is 0.5%
+
+```{r nanoclustSplittingEx, echo=FALSE, fig.fullwidth=TRUE}
+knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-with-tax-ex.png')
+```
+
+```{r nanoclustClumpingEx, echo=FALSE, fig.fullwidth=TRUE}
+knitr::include_graphics('analysis/images/06-cluster-clumping-nanoclust-with-tax-ex.png')
+```
+
+
 ### Clumping of species into clusters
+- nanoclust
+
+
+- Vsearch
+  - clumping of unrelated species seems more prevalent
+
 
 ### Effect of newer base calling model

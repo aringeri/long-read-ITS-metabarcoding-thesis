@@ -4,7 +4,8 @@ library(scales)
 library(magrittr)
 library(dplyr)
 # output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02'
-output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08'
+# output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08'
+output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14'
 # output_dir <- '/Users/alex/repos/long-read-ITS-metabarcoding/output/isolate-sub5000'
 
 stages <- list(

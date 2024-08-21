@@ -10,7 +10,8 @@ filter_taxa_by_thresh <- function(phylo, thresh) {
   filter_taxa(phylo, \(x) sum(x) > t, prune=TRUE)
 }
 
-output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08'
+output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14'
+expected_species <- 56
 
 load_loss_stats <- function(output_dir = '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02') {
   thresh_range <- seq(0,0.02, length.out = 300)
@@ -66,11 +67,11 @@ otu_counts <- combined_stats %>%
   ) +
   geom_point(size=0.2) +
   stat_summary(fun=mean, geom="line") +
-  geom_hline(aes(yintercept = 59, linetype='actual'))+#, show.legend =TRUE) +
-  geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
-  geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
+  geom_hline(aes(yintercept = expected_species, linetype='actual'))+#, show.legend =TRUE) +
+  # geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
+  # geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
   facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(60 * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
-  scale_y_continuous(transform = 'log10', breaks = c(0,10,20, 40, 59, 100, 200, 400, 800, 1600, 2000)) +
+  scale_y_continuous(transform = 'log10', breaks = c(0,10,20, 40, expected_species, 100, 200, 400, 800, 1600, 2000)) +
   scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +
   labs(
     x="Minimum cluster size threshold (proportion of library size)",
@@ -85,8 +86,8 @@ otu_loss <- combined_stats %>%
   ) +
   geom_point(size=0.2) +
   stat_summary(fun=mean, geom="line") +
-  geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
-  geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
+  # geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
+  # geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
   facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(60 * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
   scale_y_continuous(breaks=\(y) seq(0, max(y), 0.05), labels = \(y) label_percent()(as.numeric(y))) +
   scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +
@@ -111,11 +112,11 @@ if (FALSE) {
       ) +
       geom_point(size=0.2) +
       stat_summary(fun=mean, geom="line") +
-      geom_hline(aes(yintercept = 59, linetype='actual'))+#, show.legend =TRUE) +
+      geom_hline(aes(yintercept = expected_species, linetype='actual'))+#, show.legend =TRUE) +
       geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
       geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
       facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(60 * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
-      scale_y_continuous(transform = 'log10', breaks = c(0,10,20, 40, 59, 100, 200, 400, 800, 1600, 2000)) +
+      scale_y_continuous(transform = 'log10', breaks = c(0,10,20, 40, expected_species, 100, 200, 400, 800, 1600, 2000)) +
       scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +
       labs(
         x="Minimum cluster size threshold (proportion of library size)",

@@ -17,3 +17,26 @@ knitr::kable(
   caption = "Samplesheet showing the species, sequencing barcode and number of raw reads after basecalling."
 )
 ```
+
+# Supplemental Figures
+
+## Nanoclust splitting (all samples)
+
+
+```{r nanoclustSplitting1, echo=FALSE, fig.fullwidth=TRUE}
+knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-1-30.png')
+```
+
+```{r nanoclustSplitting2, echo=FALSE, fig.fullwidth=TRUE}
+knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-31-60.png')
+```
+
+
+## Nanoclust Clumping (All OTUs)
+```{r nanoclustClumping1, echo=FALSE, fig.fullwidth=TRUE}
+knitr::include_graphics('analysis/images/06-cluster-clumping-nanoclust-1-30.png')
+```
+
+```{r nanoclustClumping2, echo=FALSE, fig.fullwidth=TRUE}
+knitr::include_graphics('analysis/images/06-cluster-clumping-nanoclust-31-60.png')
+```

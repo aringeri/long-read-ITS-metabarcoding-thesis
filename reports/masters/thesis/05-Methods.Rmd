@@ -3,17 +3,17 @@
 ## Preparation of reads from fungal isolates for synthetic dataset
 
 In order to validate the pipeline, a mock dataset has been created to simulate scenarios of where multiple fungal species are present in a sample.
-Using reads from ONT sequencing of 66 known fungal isolates, we are able to control the proportions of species for each simulated scenario.
+Using reads from ONT sequencing of 65 known fungal isolates, we are able to control the proportions of species for each simulated scenario.
 These synthetically generated datasets provide insight into the limitations and sensitivity of this pipeline.
 Supplemental Table \@ref(tab:samplesheet) provides the list of fungal species/strains and the number of raw reads for each.
 The steps to generate and prepare reads for this synthetic dataset are outlined below.
 
 ### DNA extraction, amplification and sequencing
-The genomic DNA of 66 fungal strains was extracted with the Qiagen DNeasy Plant mini kit.
+The genomic DNA of 65 fungal strains was extracted with the Qiagen DNeasy Plant mini kit.
  from mycelia or spore material.
 Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse).
 The amplicons were prepared with the Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT).
-All samples were multiplexed and sequenced using the MinION R10.4 flow cell.
+All fungal samples plus a negative were multiplexed and sequenced using the MinION R10.4 flow cell.
 
 ### Bioinformatics - Basecalling, trimming and filtering
 The raw ONT data was basecalled and demultiplexed using Guppy v6.4.2 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup, version unknown).
@@ -35,9 +35,9 @@ The database used for reference based chimera detection of full ITS sequence was
 
 - Even distribution
   - 60 samples - subsampled to meet library sizes: 1200, 3000, 10020, 60000, 120000, 150000. 20, 50, 167, 1000, 2000, 2500 reads per sample.
-  - 59 species (two Austropuccinia strains)
+  - 56 species (two Austropuccinia strains, two cryptococcus gattii, two cryptococcus neoformans)
 - subsampling
-  - seqkit v1.4
+  - seqtk v1.4
   - 5 repetitions, deterministic seed values for reproducibility
 
 ### Synthetic dataset - Scenario 2 - Uneven sampling (5 low abundance)
@@ -62,3 +62,7 @@ The database used for reference based chimera detection of full ITS sequence was
   - selection of most abundant sequence in each cluster
 
 ## Taxonomic assignment
+
+- most abundant sequence taken from each cluster.
+  - using vsearch dereplicate `-topN` option
+- dnabarcoder v1.0.6 classified set of reads using UNITE 2024 reference database and precomputed similarity cutoffs.

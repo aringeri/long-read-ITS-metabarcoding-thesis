@@ -10,12 +10,12 @@ samplesheet <- read.csv('../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2
 rownames(samplesheet) <- paste0("barcode", rownames(samplesheet))
 
 nanoclust_otus <-
-  read.csv('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08/hdbscan_clustering/FULL_ITS/2000/1/otu_table/otu_table.tsv', sep = '\t', row.names = 1) %>%
+  read.csv('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/hdbscan_clustering/FULL_ITS/2000/1/otu_table/otu_table.tsv', sep = '\t', row.names = 1) %>%
     otu_table(taxa_are_rows = TRUE) %>%
     phyloseq(sample_data(samplesheet))
 
 vsearch_otus <-
-  readRDS('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08/phyloseq/FULL_ITS/2000/1/all_samples/all_samples.phyloseq.rds') %>%
+  readRDS('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/phyloseq/FULL_ITS/2000/1/all_samples/all_samples.phyloseq.rds') %>%
     phyloseq(sample_data(samplesheet))
 taxa_names(vsearch_otus) <- 1:ntaxa(vsearch_otus)
 

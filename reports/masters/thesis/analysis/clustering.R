@@ -6,9 +6,9 @@ library(glue)
 
 problematic <- readRDS('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08/phyloseq/FULL_ITS/2500/1/all_samples/all_samples.phyloseq.rds')
 
-# TODO update to latest (08-08)
 # output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02'
-output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08'
+output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14'
+expected_species <- 56
 
 filter_taxa_by_thresh <- function(phylo, thresh) {
   t <- sum(sample_sums(phylo))*thresh
@@ -52,7 +52,7 @@ load_otus <- function(filter_thresh = c(0, 0.006), output_dir) {
 library(scales)
 
 taxa_counts <- load_otus(c(0, 0.01, 0.005, 0.001, 0.0005, 0.0001), output_dir)
-expected_otus <- data.frame(yintercept=59, expected=factor(59))
+expected_otus <- data.frame(yintercept=expected_species, expected=factor(expected_species))
 
 otu_counts_by_sample_depth <- taxa_counts %>%
   mutate_at(vars(sample_depth), \(d) d*60) %>%
@@ -74,8 +74,8 @@ otu_counts_by_sample_depth <- taxa_counts %>%
              labeller = as_labeller(\(x) label_percent()(as.numeric(x)))) +
   # geom_boxplot(aes(x=factor(sample_depth), y=nOTUs, fill=thresh), position = 'identity') +
   geom_point(aes(x=sample_depth, y=nOTUs, shape=factor(sample_depth)), size=1) +
-  # geom_hline(yintercept = 59, linetype='dashed') +
-  geom_hline(aes(yintercept = 59, linetype=expected), data=expected_otus, show.legend =TRUE) +
+  # geom_hline(yintercept = expected_species, linetype='dashed') +
+  geom_hline(aes(yintercept = expected_species, linetype=expected), data=expected_otus, show.legend =TRUE) +
   # scale_colour_discrete(labels=paste0(c('20', '50', '167', '1000', '2000', '2500'), ' per sample'))+
   scale_colour_discrete(labels=function(x) {label_percent()(as.numeric(x))}) +
   scale_shape_discrete(labels = function(x) { as.numeric(x)/60} ) +
@@ -83,11 +83,11 @@ otu_counts_by_sample_depth <- taxa_counts %>%
                      breaks = trans_breaks("log10", function(x) 10^x),
                      labels = trans_format("log10", math_format(10^.x))
   ) +
-  scale_y_continuous(transform = 'log10', breaks = c(40, 59, 100, 200, 400, 800, 1600)) +
+  scale_y_continuous(transform = 'log10', breaks = c(40, expected_species, 100, 200, 400, 800, 1600)) +
   scale_linetype_manual(name='Expected number of OTUs', values=c("dashed"), drop=FALSE) +
   guides(colour = guide_legend(override.aes = list(linetype = 0)),
          shape = guide_legend(override.aes = list(linetype = 0)))
-  # annotate("text", x=log10(10^6), y=61, label="Expected number of OTUs (59)", size=3, color="black")
+  # annotate("text", x=log10(10^6), y=61, label="Expected number of OTUs (expected_species)", size=3, color="black")
 # otu_counts_by_sample_depth
 ggsave('images/06-otu-count-vsearch.png',otu_counts_by_sample_depth)
 
@@ -211,7 +211,7 @@ otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0006, 0.0012, 0.0050999999999
   # geom_boxplot(aes(x=factor(sample_depth), y=numOTUs, fill=thresh), position = 'identity') +
   geom_point(aes(x=sample_depth, y=numOTUs, shape=factor(sample_depth)), size=1) +
   # geom_hline(yintercept = 59, linetype='dashed') +
-  geom_hline(aes(yintercept = 59, linetype=expected), data=expected_otus, show.legend =TRUE) +
+  geom_hline(aes(yintercept = expected_species, linetype=expected), data=expected_otus, show.legend =TRUE) +
   # scale_colour_discrete(labels=paste0(c('20', '50', '167', '1000', '2000', '2500'), ' per sample'))+
   scale_colour_discrete(labels=function(x) {label_percent()(as.numeric(x))}) +
   scale_shape_discrete(labels = function(x) { as.numeric(x)/60} ) +
@@ -219,7 +219,7 @@ otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0006, 0.0012, 0.0050999999999
                      breaks = trans_breaks("log10", function(x) 10^x),
                      labels = trans_format("log10", math_format(10^.x))
   ) +
-  scale_y_continuous(transform = 'log10', breaks = c(50, 59, 100, 200, 400, 800, 1600)) +
+  scale_y_continuous(transform = 'log10', breaks = c(50, expected_species, 100, 200, 400, 800, 1600)) +
   scale_linetype_manual(name='Expected number of OTUs', values=c("dashed"), drop=FALSE) +
   guides(colour = guide_legend(override.aes = list(linetype = 0)),
          shape = guide_legend(override.aes = list(linetype = 0)))
