@@ -2,13 +2,14 @@
 
 ## Preparation of reads from fungal isolates for synthetic dataset
 
-In order to validate the pipeline, a mock dataset has been created to simulate scenarios where multiple fungal species are present in the same sample.
-Using reads from ONT sequencing of 65 known fungal isolates, we are able to control the proportions of species for each simulated scenario.
+A mock dataset has been created to simulate scenarios where multiple fungal species are present in the same sample.
+Using reads from the sequencing of 65 known fungal isolates, we were able to control the proportions of species for each simulated scenario.
 These synthetically generated datasets provide insight into the limitations and sensitivity of this pipeline.
-Supplemental Table \@ref(tab:samplesheet) provides the list of fungal species/strains and the number of raw reads for each.
+Supplemental Table \@ref(tab:samplesheet) provides the list of fungal species or strains and the number of raw reads available for the mock dataset.
 The steps to generate and prepare reads for this synthetic dataset are outlined below.
 
 ### DNA extraction, amplification and sequencing
+
 The genomic DNA of 65 fungal strains was extracted with the Qiagen DNeasy Plant mini kit.
 The DNA was extracted from mycelia or spore material of each fungal isolate.
 Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse).
@@ -16,46 +17,79 @@ The amplicons were prepared with the Native Barcoding Kit 96 V14 (code SQK-NBD11
 Fungal samples plus a negative control were multiplexed and sequenced using the MinION R10.4 flow cell.
 
 ### Bioinformatics - Basecalling, trimming and filtering
+
 The raw ONT data was basecalled and demultiplexed using Guppy v6.4.2 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup, version unknown).
 The mean read length of amplicons after basecalling was ~2.2 KB as in Figure \@ref(fig:rawReadQuality).
 
 - [alt] Dorado: dna_r10.4.1_e8.2_400bps_sup@v4.1.0
 
 Adapters were trimmed from raw basecalled reads using Dorado v0.6.1 with the '`--no-trim-primers`' to avoid removing primer sequences.
-Cutadapt v4.6 (Martin, 2011) has been used to select and trim primers from amplicons that contain both forward (NS5) and reverse primer (LR6) sequences.
+Cutadapt v4.6 [@Cutadapt] has been used to select and trim primers from amplicons that contain both forward (NS5) and reverse primer (LR6) sequences.
 Amplicons that do not contain both of these primer sequences were excluded from the analysis.
-Cutadapt was also used to re-orient reads that have been sequenced by the reverse strand ('`--revcomp`' option), making it easier to process by downstream tools.
+Cutadapt was also used to re-orient reads that have been sequenced by the reverse strand ('`--revcomp`' option), making it easier to process by downstream tools (Figure \@ref(fig:filterTrimFlowchart))
 
-The full ITS region of these reads was extracted using ITSxpress v2.0.1 with default settings other than '`--single_end`' and '`--taxa Fungi`' options.
-Chopper v0.7.0 was used to select reads of the full ITS region having a length between 300-6000bp and mean Phred quality score above Q20.
-Chimeric reads were detected using VSEARCH's denovo and reference based methods.
+The full ITS region of these reads was extracted using ITSxpress v2.0.1 [@Rivers2018] with default settings other than '`--single_end`' and '`--taxa Fungi`' options.
+Chopper v0.7.0 [@DeCoster2023] was used to select reads of the full ITS region having a length between 300-6000bp and mean Phred quality score above Q20.
+Chimeric reads were detected using VSEARCH's [@rognesVSEARCHVersatileOpen2016] denovo and reference based methods.
 The database used for reference based chimera detection of full ITS sequence was the UNITE general release v9.0 (sh_general_release_dynamic_s_all_25.07.2023).
 
-### Sample selection and validation
+```{r filterTrimFlowchart, echo=FALSE, fig.align ='center', fig.cap = "Each stage of the trimming and filtering stages of the pipeline with the tools used in paretheses."}
+DiagrammeR::grViz("digraph {
+  graph [layout = dot, rankdir = LR]
 
-To ensure consistent taxonomy between the fungal isolate and the reference database used for classification, the recorded species name of each sample was searched for in the 2024 UNITE reference database. Species that could not be found were either misspelled or had a older taxonomic synonym. For samples that could not be found in the reference database, names were manually updated using current names found in both indexfungorum.org and the reference database.
+  node [shape = rectangle, peripheries=2]
+  rec1 [label = 'Adapter trimming\n(dorado)']
+  rec2 [label = 'Primer trimming\n(cutadapt)']
+  rec3 [label = 'Gene region extraction\n(ITSxpress)']
+  rec4 [label = 'Quality Filtering\n(chopper)']
+  rec5 [label = 'Chimera Filtering\n(vsearch)']
 
-Samples that had less than a total of 2500 reads after basecalling, trimming and filtering were removed from the analysis leaving 60 samples. They were: ...
+  node [shape = plaintext, peripheries=0]
+  rec0 [label = 'raw demultiplexed reads\nfastq']
+  rec6 [label = '']
+
+  # edge definitions with the node IDs
+  rec0 -> rec1 -> rec2 -> rec3 -> rec4 -> rec5 -> rec6
+  }",
+  height = 200)
+```
+
+
+### Sample selection and taxonomic naming validation
+
+To ensure that taxonomic names were used consistently between the fungal isolate samples and the reference database, manual validation of each sample name was performed.
+A search was conducted for the recorded species name of each sample in the 2024 UNITE reference database [@vu_2024_12580255].
+Most species names that could not be found were either misspelled or used a older taxonomic synonym. 
+For example, *Nakaseomyces glabratus* has been recorded by its former name *Candida glabrata* which the latter could not be found in the reference database.
+Names of samples were manually updated using current names found in both Index Fungorum (www.indexfungorum.org) and the 2024 UNITE reference database.
+For samples that were not classified at the species level (eg. *Entoleuca sp* CCL052), the genus label was confirmed to exist in the reference database.
+
+Seven samples that had less than a total of 2500 reads after basecalling, trimming and filtering were removed from the analysis leaving 58 samples (a total of 55 species).
+The excluded taxa included: *Aspergillus niger*, *Naganishia albida* (*Cryptococcus albidus*), *Geotrichum candidum* (*Galactomyces geotrichum*), *Meyerozyma guilliermondii*, Yarrowia lipolytica, *Fusarium proliferatum* and *Puccinia recondita* (*Puccinia triticina*).
 Bias in chimera detection leading to a loss 99.0% and 68.8% of reads in *Puccinia triticina* and  *Fusarium proliferatum* respectively.
 
-### Synthetic dataset - Scenario 1 - Even sampling
+### Synthetic dataset - Scenario 1 - Equal abundance
 
-- Even distribution
-  - 60 samples - subsampled to meet library sizes: 1200, 3000, 10020, 60000, 120000, 150000. 20, 50, 167, 1000, 2000, 2500 reads per sample.
-  - 56 species (two Austropuccinia strains, two cryptococcus gattii, two cryptococcus neoformans)
-- subsampling
-  - seqtk v1.4
-  - 5 repetitions, deterministic seed values for reproducibility
+Four scenarios have been designed to test the pipeline under varying community structures. 
+Each scenario combines quality controlled reads from each sample to control the abundance of each species.
 
-### Synthetic dataset - Scenario 2 - Uneven sampling (5 low abundance)
+Scenario 1 considers an even community structure where every fungal isolate has equal abundance (in terms of number of reads).
+Libraries of differing sizes were generated by subsampling the same number of reads from each sample.
+For each of the 58 samples: 20, 50, 167, 1000, 2000 and 2500 reads were randomly selected to produce library sizes of 1160, 2900, 9686, 58000, 116000 and 145000 reads.
+Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the 'sample' command).
+Subsampling was repeated five times for each library size producing a total of 30 libraries ($6 \text{ libraries} \times 5 \text{ repetitions}$).
+The seed values given to seqtk's 'sample' command for each repetition were generated deterministically so that each run of the pipeline is reproducible.
+### Synthetic dataset - Scenario 2 - Uneven (5 low abundance)
 
 - 5 samples with very low, rest high
 
-### Synthetic dataset - Scenario 3 - Uneven sampling (5 high abundance)
+### Synthetic dataset - Scenario 3 - Uneven (5 high abundance)
 
 - all very low, 5 high
 
-### Synthetic dataset - Scenario 4 - Linear range
+### Synthetic dataset - Scenario 4 - Uneven (range of abundance)
+
+- sampling in stepwise abundance increments
 
 ## Bioinformatics - Clustering
 

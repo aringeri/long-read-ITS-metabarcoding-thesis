@@ -9,4 +9,6 @@ output:
     bookdown::html_document2
     #    toc: yes
     #bookdown::gitbook: default
+bibliography: '../../references.bib'
+csl: '../../bioinformatics.csl'
 ---

@@ -10,8 +10,6 @@ library(microViz)
 source('./helpers/dnabarcoder.R')
 source('./helpers/config.R')
 
-config$sample_depth <- 1000
-
 samplesheet <- read_samplesheet(config)
 
 nanoclust <- load_nanoclust_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition) %>%
