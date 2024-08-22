@@ -1,0 +1,66 @@
+"Barcode","Sample","Number of raw reads"
+"25","Puccinia striiformis var tritici",38761
+"26","Puccinia triticina (Puccinia recondita)",21731
+"27","Puccinia graminis",24352
+"28","Austropuccinia psidii",28916
+"29","Leptosphaeria maculans",40207
+"30","Sclerotinia sclerotiorum",30922
+"31","Botrytis cinerea",35580
+"32","Botrytis fabae",28674
+"33","Zymoseptoria tritici",31584
+"34","Sporisorium scitamineum",29141
+"35","Erysiphe necator",50836
+"36","Austropuccinia psidii",29523
+"37","Pyrenophora tritici-repentis",51246
+"38","Cryptovalsa ampelina",37861
+"39","Eutypa lata",25259
+"40","Diplodia seriata",39280
+"41","Fusarium pseudograminearum",37072
+"42","Aspergillus flavum (Aspergillus flavus)",52132
+"43","Aspergillus fumigatus",48170
+"44","Aspergillus niger",106560
+"45","Blastobotrys adeninivorans",56595
+"46","Blastobotrys proliferans",45388
+"47","Candida albicans",35572
+"48","candida boletica (Candida boleticola)",45525
+"49","Candida caryicola",42127
+"50","Candida catenulata (Diutina catenulata)",70924
+"51","Candida dublinsiensis (Candida dubliniensis)",62732
+"52","Candida glabrata (Nakaseomyces glabratus)",48252
+"53","Candida metapsilosis",48123
+"54","Candida orthopsilosis",45771
+"55","Candida parapsilosis",53561
+"56","Candida tropicalis",48486
+"57","Candid zeylanoides (Candida zeylanoides)",47125
+"58","Cryptococcus albidus (Naganishia albida)",262
+"59","Cryptococcus gattil VG I (Cryptococcus gattii VG I)",47998
+"60","Cryptococcus gattii VG III",21127
+"61","Cryptococcus neoformans VNI",19970
+"62","Cryptococcus neoformans VN IIII",54596
+"63","Fusarium proliferatum",79693
+"64","Galactomyces geotrichum (Geotrichum candidum)",15962
+"65","Geotrichum candidum",82477
+"66","Kluyveromyces lactis",70007
+"67","Kluyveromyces marxianus",70959
+"68","Kodamaea ohmeri",65595
+"69","Meyerozyma guillermondii (Meyerozyma guilliermondii)",29370
+"70","Nakazawaea ernobil (Nakazawaea ernobii)",69285
+"71","Penicillium chrysogenum",64025
+"72","Pichia kudriavzevii",56683
+"73","Pichia membranifacien (Pichia membranifaciens)",39163
+"74","Rhodotorula mucilaginosa",53680
+"75","Scedosporium auranticum (Scedosporium aurantiacum)",52475
+"76","Scedosporium boydii",43418
+"77","Trichomonascus ciferrii",39999
+"78","Trichosporon asahil (Trichosporon asahii)",49679
+"79","Wickerhamomyces anomalus",45298
+"80","Yamadazyma mexicana",44496
+"81","Yamadazyma scolyti",44166
+"82","Yarrowia lipolytica",45485
+"83","Diaporthe sp CCL067",36374
+"84","Quambalaria cyanescens CCL055",49988
+"85","Entoleuca sp CCL052",41661
+"86","Cortinarius globuliformis CM4",57951
+"87","Asteroma sp CCL068",45777
+"88","Asteroma sp CCL060",42061
+"89","Tuber brumale",102909
