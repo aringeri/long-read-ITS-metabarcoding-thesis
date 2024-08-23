@@ -77,7 +77,7 @@ The remaining reads from the *Puccinia striiformis (var tritici)* sample have cl
 The taxonomic classification given to these clusters corresponds to other samples present in the library (*Zymoseptoria tritici* and the *Trichomonascus* genus)
 and may be indicative of index-switching, where a sequencing error has occurred in the barcode region of the read.
 
-```{r splittingPuccinia, echo=FALSE, fig.fullwidth=TRUE, fig.cap = "Clustering"}
+```{r splittingPuccinia, echo=FALSE, fig.fullwidth=TRUE, fig.cap = "Plot indicating the splitting of samples into clusters. Each plot shows how reads from each sample are distributed into clusters. Bars indicate the abundance of a cluster (number of reads). Taxonomic classification of each cluster is shown in the X axis labels. Green indicates that a cluster matches the expected species-level classification."}
 knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-puccinia.png')
 ```
 
@@ -95,6 +95,10 @@ A similar plot showing all samples can be seen in Figure \@ref(fig:nanoclustSpli
 ### Effect of newer base calling model on clustering
 
 ### Classification proportion and precision 
+
+```{r nanoclustPrecisionAbundance, echo=FALSE, fig.fullwidth=TRUE, fig.cap = ""}
+knitr::include_graphics('analysis/images/06-precision-nanoclust-abundance.png')
+```
 
 - precision of nanoclust
     - using most abundance sequence

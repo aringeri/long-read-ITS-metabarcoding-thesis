@@ -12,71 +12,134 @@ library(stringr)
 source('helpers/dnabarcoder.R')
 source('helpers/config.R')
 
-# samplesheet <- read.csv('../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
-samplesheet <- read.csv(config$samplesheet_path, header = TRUE, row.names = 1)
-rownames(samplesheet) <- paste0("barcode", rownames(samplesheet))
-
-experiment <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14"
+samplesheet <- read_samplesheet(config)
 
 nanoclust <- load_nanoclust_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition)
 
-tax_with_counts <- cbind.data.frame(
-    tax_table(nanoclust),
-    otu_table(nanoclust)
-  ) %>%
-  pivot_longer(barcode25:barcode89, names_to='barcode', values_to = 'count')
+calc_precision <- function(phylo, samplesheet) {
+  tax_with_counts <- cbind.data.frame(
+      tax_table(phylo),
+      otu_table(phylo)
+    ) %>%
+    pivot_longer(barcode25:barcode89, names_to='barcode', values_to = 'count')
 
-classification_counts <- tax_with_counts %>%
-  group_by(barcode) %>%
-  filter(count > 0) %>%
-  summarise(
-    genus_classified = sum(count[genus != 'unidentified']),
-    species_classified = sum(count[species != 'unidentified']),
-    total = sum(count)
-  )
+  classification_counts <- tax_with_counts %>%
+    group_by(barcode) %>%
+    filter(count > 0) %>%
+    summarise(
+      genus_classified = sum(count[genus != 'unidentified']),
+      species_classified = sum(count[species != 'unidentified']),
+      total = sum(count)
+    )
 
-genus_classification_proportion <- sum(classification_counts$genus_classified) / sum(classification_counts$total)
-genus_classification_proportion
-sum(classification_counts$species_classified) / sum(classification_counts$total)
+  samplesheet_no_rownames <- samplesheet %>% tibble::rownames_to_column('barcode')
 
-samplesheet_no_rownames <- samplesheet %>% tibble::rownames_to_column('barcode')
+  precision_counts <- tax_with_counts %>%
+    # group_by(barcode, genus) %>%
+    filter(count > 0) %>%
+    left_join(samplesheet_no_rownames, join_by(barcode), suffix = c('.actual', '.expected')) %>%
+    summarise(
+      # .by = c(barcode, genus.actual, genus.expected),
+      # total = sum(count)
+      .by = barcode,
+      genus_correct = sum((genus_unite == genus)*count),
+      species_correct = sum((species_unite == species.actual)*count),
+      total = sum(count)
+    ) %>%
+    replace_na(list(species_correct = 0)) # NAs coming through for genus only samples
 
-precision_counts <- tax_with_counts %>%
-  # group_by(barcode, genus) %>%
-  filter(count > 0) %>%
-  left_join(samplesheet_no_rownames, join_by(barcode), suffix = c('.actual', '.expected')) %>%
-  summarise(
-    # .by = c(barcode, genus.actual, genus.expected),
-    # total = sum(count)
-    .by = barcode,
-    genus_correct = sum((genus_unite == genus)*count),
-    species_correct = sum((species_unite == species.actual)*count),
-    total = sum(count)
-  ) %>%
-  replace_na(list(species_correct = 0)) # NAs coming through for genus only samples
+  left_join(classification_counts, precision_counts, join_by(barcode), suffix = c('', '.y'))
+}
 
-genus_precision <- sum(precision_counts$genus_correct) / sum(precision_counts$total)
-genus_precision
+precision_stats <- calc_precision(nanoclust, samplesheet)
 
+# sample level
 cowplot::plot_grid(ncol = 1,
-classification_counts %>%
+precision_stats %>%
   mutate(proportion = genus_classified / total) %>%
   ggplot(aes(x=barcode, y=proportion)) +
     geom_col() +
-    geom_hline(yintercept =  genus_classification_proportion) +
+    geom_hline(aes(yintercept = sum(genus_classified) / sum(total))) +
     scale_x_discrete(
       labels = \(x) sample_data(nanoclust)[x]$UpdatedName,
       limits = rownames(sample_data(nanoclust))[order(sample_data(nanoclust)$UpdatedName)]
     ) +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)),
-  precision_counts %>%
-    mutate(precision = genus_correct / total) %>%
-    ggplot(aes(x=barcode, y= precision)) +
+  precision_stats %>%
+    mutate(precision = genus_correct / genus_classified) %>%
+    ggplot(aes(x=barcode, y=precision)) +
     geom_col() +
-    geom_hline(yintercept = genus_precision) +
+    geom_hline(aes(yintercept = sum(genus_correct) / sum(genus_classified))) +
     scale_x_discrete(
       labels = \(x) sample_data(nanoclust)[x]$UpdatedName,
       limits = rownames(sample_data(nanoclust))[order(sample_data(nanoclust)$UpdatedName)]
     ) +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 )
+
+load_all_precision_data <- function(config, samplesheet, load_phyloseq=load_nanoclust_phyloseq) {
+  cluster_dir <- glue('{config$experiment_path}/hdbscan_clustering/FULL_ITS/')
+
+  sample_depths <- list.dirs(
+    cluster_dir,
+    recursive = FALSE, full.names = FALSE) %>%
+    as.numeric() %>%
+    sort()
+
+  df <- tibble()
+
+  for (depth in sample_depths) {
+    reps <- list.dirs(
+      glue('{cluster_dir}/{depth}/'),
+      recursive = FALSE, full.names = FALSE
+    )
+    for (rep in reps) {
+      phylo <- load_phyloseq(samplesheet, config$experiment_path, depth, rep)
+      precision_data <- calc_precision(phylo, samplesheet)
+      precision_data$sample_depth <- depth
+      precision_data$rep <- rep
+
+      df <- rbind(df, precision_data)
+    }
+  }
+  df
+}
+
+
+all_df <- load_all_precision_data(config, samplesheet, load_nanoclust_phyloseq)
+all_df$method <- "nanoclust"
+all_df_vsearch <- load_all_precision_data(config, samplesheet, load_vsearch_phyloseq)
+all_df_vsearch$method <- "vsearch"
+
+
+precision_summary <- rbind(all_df, all_df_vsearch) %>%
+  summarise(
+    .by = c(method, sample_depth, rep),
+    genus_classification_prop = sum(genus_classified) / sum(total),
+    species_classification_prop = sum(species_classified) / sum(total),
+    genus_precision = sum(genus_correct) / sum(genus_classified),
+    species_precision = sum(species_correct) / sum(species_classified),
+  )
+
+precision_plot <- cowplot::plot_grid(
+  precision_summary %>%
+    ggplot(aes(x=genus_precision, y=genus_classification_prop, shape=factor(sample_depth), colour=method)) +
+      geom_point() +
+      expand_limits(x=c(.6, 1), y=c(.6, 1)) +
+      scale_y_continuous(labels = scales::percent) +
+      scale_x_continuous(labels = scales::percent) +
+      scale_shape_discrete(name="reads per sample") +
+      labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
+      theme(aspect.ratio=1),
+  precision_summary %>%
+    ggplot(aes(x=species_precision, y=species_classification_prop, shape=factor(sample_depth), colour=method)) +
+    geom_point() +
+    expand_limits(x=c(.6, 1), y=c(.6, 1)) +
+    scale_y_continuous(labels = scales::percent) +
+    scale_x_continuous(labels = scales::percent) +
+    scale_shape_discrete(name="reads per sample") +
+    labs(x="Species precision (%)", y="Species classification proportion (%)") +
+    theme(aspect.ratio=1)
+)
+precision_plot
+ggsave('./images/06-precision-nanoclust-abundance.png', precision_plot)

@@ -10,11 +10,15 @@ library(ggpattern)
 
 source('./helpers/dnabarcoder.R')
 source('./helpers/config.R')
+source('./helpers/vsearch.R')
 
 samplesheet <- read_samplesheet(config)
 
 nanoclust <- load_nanoclust_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition) %>%
   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+
+vsearch <- load_vsearch_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition) %>%
+  filter_taxa_by_thresh(0.0015)
 
 ggplot_splitting <- function(phylo, df, taxa_labels=FALSE, ncol=NULL, maxY=2200) {
   colours <- c("0" = "#00A600", "1" = "#E6E600", "2" = "#ECB176", "3" = "#F27971")
@@ -99,6 +103,12 @@ plot_splitting(nanoclust, sample_names(nanoclust)[31:70])
 
 puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100)
 ggsave('images/06-cluster-splitting-nanoclust-puccinia.png', puccinias)
+
+plot_splitting(vsearch, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100)
+
+taxa_names(vsearch) <- 1:ntaxa(vsearch)
+plot_splitting(vsearch, sample_names(vsearch)[1:30])
+plot_splitting(vsearch, sample_names(vsearch)[31:70])
 
 # ggsave('images/06-cluster-splitting-nanoclust-with-tax-6.png', plot_splitting(nanoclust, 1:6))
 # ggsave('images/06-cluster-splitting-nanoclust-with-tax-ex.png', plot_splitting(nanoclust, 2))
