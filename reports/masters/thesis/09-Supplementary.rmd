@@ -16,11 +16,11 @@ knitr::kable(
 
 
 ```{r nanoclustSplitting1, echo=FALSE, fig.fullwidth=TRUE}
-knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-1-30.png')
+knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png')
 ```
 
 ```{r nanoclustSplitting2, echo=FALSE, fig.fullwidth=TRUE}
-knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-31-60.png')
+knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png')
 ```
 
 

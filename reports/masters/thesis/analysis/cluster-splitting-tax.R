@@ -6,6 +6,7 @@ library(glue)
 library(scales)
 library(tidytext)
 library(microViz)
+library(ggpattern)
 
 source('./helpers/dnabarcoder.R')
 source('./helpers/config.R')
@@ -15,30 +16,43 @@ samplesheet <- read_samplesheet(config)
 nanoclust <- load_nanoclust_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition) %>%
   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
 
-ggplot_splitting <- function(phylo, df, taxa_labels=FALSE) {
+ggplot_splitting <- function(phylo, df, taxa_labels=FALSE, ncol=NULL, maxY=2200) {
+  colours <- c("0" = "#00A600", "1" = "#E6E600", "2" = "#ECB176", "3" = "#F27971")
+
   df %>%
-    ggplot( aes(x=OTU, y=count, fill=match) ) +
+    ggplot( aes(x=OTU, y=count, fill=factor(match, levels = seq(0,3))) ) +
     geom_col() +
-    geom_text(aes(label = count, colour=match), vjust = -0.5) +
+    # geom_col_pattern(aes(pattern_shape = factor(match)), pattern = 'pch', pattern_density = 0.5) +
+    geom_label(aes(label = count, fill=factor(match, levels = seq(0,3))), vjust = -0.2, size = 3, show.legend = FALSE) +
     facet_wrap(~barcode,
                labeller = as_labeller(\(x)  paste0(
-                 samplesheet[x, 'UpdatedName'], ' (', gsub('barcode','', x), ')'
+                 samplesheet[x, 'UpdatedName'], ' (BC ', gsub('barcode','', x), ')'
                )),
-               scales='free_x') +
+               scales='free_x',
+               ncol = ncol) +
     tidytext::scale_x_reordered(
       labels = function(x) {
         if (taxa_labels) {
           paste0(tax_table(phylo)[reorder_func(x), 'species'], " (OTU ", reorder_func(x), ")")
         } else {
-          paste0("(", reorder_func(x), ")")
+          reorder_func(x)
         }
       # labels = \(x) paste0("(", reorder_func(x), ")")
       }
     ) +
-    scale_fill_manual(values = c("green4", "green3", "red4", "green2")) +
-    scale_colour_manual(values = c("green4", "green3", "red4", "green2"), guide='none') +
-    labs(x="Cluster", y="Abundance") +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+    scale_fill_manual(
+      values = colours,
+      labels = c("0"= "species","1"= "genus","2"= "family","3"= "unmatched"),
+      name = "rank of match"
+    ) +
+    scale_colour_manual(values = colours, guide='none') +
+    # scale_fill_gradientn(colours = terrain.colors(5)) +
+    labs(x="Cluster with classification and ID", y="Abundance") +
+    coord_cartesian(clip="off") +
+    expand_limits(y=c(0, maxY)) +
+    theme(
+      aspect.ratio=4/3,
+      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 }
 
 organise_df <- function(phylo, subset) {
@@ -55,12 +69,18 @@ organise_df <- function(phylo, subset) {
       join_by(barcode)
     )%>%
     mutate(
+      # match = ifelse(
+      #   !is.na(species_unite) & species == species_unite, "species",
+      #   ifelse(genus == genus_unite, "genus",
+      #     ifelse(family == family_unite, "family",  "mismatch")
+      #   )
+      # )
       match = ifelse(
-        !is.na(species_unite) & species == species_unite, "species",
-        ifelse(genus == genus_unite, "genus",
-          ifelse(family == family_unite, "family",  "mismatch")
+        !is.na(species_unite) & species == species_unite, 0,
+        ifelse(genus == genus_unite, 1,
+          ifelse(family == family_unite, 2,  3)
         )
-      )
+      ),
     ) %>%
     filter(barcode %in% subset) %>%
     mutate(
@@ -68,17 +88,20 @@ organise_df <- function(phylo, subset) {
     )
 }
 
-plot_splitting <- function(phylo, subset, taxa_labels=FALSE) {
+plot_splitting <- function(phylo, subset, taxa_labels=FALSE, ncol=NULL, maxY=2200) {
   df <- organise_df(phylo, subset)
-  ggplot_splitting(phylo, df, taxa_labels)
+  ggplot_splitting(phylo, df, taxa_labels, ncol, maxY)
 }
 
 # nanoclust_splitting <- plot_splitting(nanoclust, 1:5)
 plot_splitting(nanoclust, sample_names(nanoclust)[1:30])
 plot_splitting(nanoclust, sample_names(nanoclust)[31:70])
 
-# plot_splitting(nanoclust, paste0("barcode", c(57, 66, 68)), taxa_labels=TRUE)
+puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100)
+ggsave('images/06-cluster-splitting-nanoclust-puccinia.png', puccinias)
 
 # ggsave('images/06-cluster-splitting-nanoclust-with-tax-6.png', plot_splitting(nanoclust, 1:6))
 # ggsave('images/06-cluster-splitting-nanoclust-with-tax-ex.png', plot_splitting(nanoclust, 2))
+ggsave('images/06-cluster-splitting-nanoclust-with-tax-1-30.png', plot_splitting(nanoclust, sample_names(nanoclust)[1:30]))
+ggsave('images/06-cluster-splitting-nanoclust-with-tax-31.png', plot_splitting(nanoclust, sample_names(nanoclust)[31:70]))
 

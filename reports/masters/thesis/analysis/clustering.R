@@ -3,17 +3,15 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 library(glue)
+library(scales)
 
-problematic <- readRDS('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08/phyloseq/FULL_ITS/2500/1/all_samples/all_samples.phyloseq.rds')
+source('./helpers/config.R')
+source('./helpers/vsearch.R')
 
-# output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02'
-output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14'
-expected_species <- 56
 
-filter_taxa_by_thresh <- function(phylo, thresh) {
-  t <- sum(sample_sums(phylo))*thresh
-  filter_taxa(phylo, \(x) sum(x) > t, prune=TRUE)
-}
+output_dir <- config$experiment_path
+expected_species <- 55
+n_samples <- 58
 
 load_otus <- function(filter_thresh = c(0, 0.006), output_dir) {
   stopifnot(length(filter_thresh) > 0)
@@ -49,21 +47,19 @@ load_otus <- function(filter_thresh = c(0, 0.006), output_dir) {
   return(df)
 }
 
-library(scales)
-
-taxa_counts <- load_otus(c(0, 0.01, 0.005, 0.001, 0.0005, 0.0001), output_dir)
+taxa_counts <- load_otus(c(0, 0.01, 0.005, 0.0015, 0.0005, 0.0001), output_dir)
 expected_otus <- data.frame(yintercept=expected_species, expected=factor(expected_species))
 
 otu_counts_by_sample_depth <- taxa_counts %>%
-  mutate_at(vars(sample_depth), \(d) d*60) %>%
+  mutate_at(vars(sample_depth), \(d) d*n_samples) %>%
   # mutate_at(vars(thresh), factor) %>%
   # mutate_at(vars(nOTUs), log) %>%
   ggplot(
     aes(x=sample_depth, y=nOTUs, colour=factor(thresh))
   ) +
   labs(
-    title = "vsearch clustering",
-    x="total library size (60 samples)",
+    # title = "vsearch clustering",
+    x=glue("total library size ({n_samples} samples)"),
     y="number of OTUs",
     colour = "Min OTU size\n(proportion of library size)",
     shape = "Reads per sample"
@@ -78,7 +74,7 @@ otu_counts_by_sample_depth <- taxa_counts %>%
   geom_hline(aes(yintercept = expected_species, linetype=expected), data=expected_otus, show.legend =TRUE) +
   # scale_colour_discrete(labels=paste0(c('20', '50', '167', '1000', '2000', '2500'), ' per sample'))+
   scale_colour_discrete(labels=function(x) {label_percent()(as.numeric(x))}) +
-  scale_shape_discrete(labels = function(x) { as.numeric(x)/60} ) +
+  scale_shape_discrete(labels = function(x) { as.numeric(x)/n_samples} ) +
   scale_x_continuous(transform = 'log10',
                      breaks = trans_breaks("log10", function(x) 10^x),
                      labels = trans_format("log10", math_format(10^.x))
@@ -192,14 +188,14 @@ load_nanoclust_stats <- function(filter_thresh = c(0, 0.0012), output_dir) {
 }
 #load_nanoclust_stats(c(0, 0.0006)) %>% View()
 
-otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0006, 0.0012, 0.0050999999999999995, 0.0072, 0.01005), output_dir) %>%
+otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0012, 0.006449999999999999, 0.0050999999999999995, 0.0072, 0.01005), output_dir) %>%
   mutate_at(vars(sample_depth), \(d) d*60) %>%
   ggplot(
     aes(x=sample_depth, y=numOTUs, colour=factor(thresh))
   ) +
   labs(
-    title = "NanoCLUST",
-    x="total library size (60 samples)",
+    # title = "NanoCLUST",
+    x=glue("total library size ({n_samples} samples)"),
     y="number of clusters",
     colour = "Minimum cluster size\n(proportion of library size)",
     shape = "Reads per sample"
@@ -207,14 +203,16 @@ otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0006, 0.0012, 0.0050999999999
   # stat_summary(aes(x=factor(sample_depth), y = numOTUs, group=thresh, linetype=thresh), fun=mean, geom="line") +
   stat_summary(aes(x=sample_depth, y = numOTUs, group=thresh), fun=mean, geom="line") +
   facet_grid(. ~ thresh,
-             labeller = as_labeller(\(x) label_percent()(as.numeric(x)))) +
+    labeller = as_labeller(\(x)
+                             ifelse(x == 0, "minimum cluster size = 2", label_percent()(as.numeric(x))))
+  ) +
   # geom_boxplot(aes(x=factor(sample_depth), y=numOTUs, fill=thresh), position = 'identity') +
   geom_point(aes(x=sample_depth, y=numOTUs, shape=factor(sample_depth)), size=1) +
   # geom_hline(yintercept = 59, linetype='dashed') +
   geom_hline(aes(yintercept = expected_species, linetype=expected), data=expected_otus, show.legend =TRUE) +
   # scale_colour_discrete(labels=paste0(c('20', '50', '167', '1000', '2000', '2500'), ' per sample'))+
   scale_colour_discrete(labels=function(x) {label_percent()(as.numeric(x))}) +
-  scale_shape_discrete(labels = function(x) { as.numeric(x)/60} ) +
+  scale_shape_discrete(labels = function(x) { as.numeric(x)/n_samples} ) +
   scale_x_continuous(transform = 'log10',
                      breaks = trans_breaks("log10", function(x) 10^x),
                      labels = trans_format("log10", math_format(10^.x))

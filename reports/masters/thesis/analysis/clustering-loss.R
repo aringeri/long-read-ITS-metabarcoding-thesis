@@ -5,15 +5,14 @@ library(ggplot2)
 library(glue)
 library(scales)
 
-filter_taxa_by_thresh <- function(phylo, thresh) {
-  t <- sum(sample_sums(phylo))*thresh
-  filter_taxa(phylo, \(x) sum(x) > t, prune=TRUE)
-}
+source('./helpers/config.R')
+source('./helpers/vsearch.R')
 
-output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14'
-expected_species <- 56
+output_dir <- config$experiment_path
+expected_species <- 55
+n_samples <- 58
 
-load_loss_stats <- function(output_dir = '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02') {
+load_loss_stats <- function(output_dir) {
   thresh_range <- seq(0,0.02, length.out = 300)
 
   df <- data.frame(matrix(ncol = 6, nrow = 0))
@@ -65,14 +64,14 @@ otu_counts <- combined_stats %>%
   ggplot(
     aes(x=thresh, y=nOTUs, colour=method)
   ) +
-  geom_point(size=0.2) +
+  geom_point(size=0.2, alpha=0.1) +
   stat_summary(fun=mean, geom="line") +
   geom_hline(aes(yintercept = expected_species, linetype='actual'))+#, show.legend =TRUE) +
   # geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
   # geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
-  facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(60 * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
+  facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(n_samples * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
   scale_y_continuous(transform = 'log10', breaks = c(0,10,20, 40, expected_species, 100, 200, 400, 800, 1600, 2000)) +
-  scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +
+  scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +#, breaks = c(0, 0.001, seq(0.005, 0.02, by=0.005))) +
   labs(
     x="Minimum cluster size threshold (proportion of library size)",
     y="Number of clusters"
@@ -84,11 +83,11 @@ otu_loss <- combined_stats %>%
   ggplot(
     aes(x=thresh, y=loss, colour=method)
   ) +
-  geom_point(size=0.2) +
+  geom_point(size=0.2, alpha=0.1) +
   stat_summary(fun=mean, geom="line") +
   # geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
   # geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
-  facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(60 * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
+  facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(n_samples * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
   scale_y_continuous(breaks=\(y) seq(0, max(y), 0.05), labels = \(y) label_percent()(as.numeric(y))) +
   scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +
   labs(
@@ -115,7 +114,7 @@ if (FALSE) {
       geom_hline(aes(yintercept = expected_species, linetype='actual'))+#, show.legend =TRUE) +
       geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
       geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
-      facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(60 * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
+      facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(n_samples * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
       scale_y_continuous(transform = 'log10', breaks = c(0,10,20, 40, expected_species, 100, 200, 400, 800, 1600, 2000)) +
       scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +
       labs(
@@ -131,7 +130,7 @@ if (FALSE) {
       stat_summary(fun=mean, geom="line") +
       geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
       geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
-      facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(60 * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
+      facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(n_samples * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
       scale_y_continuous(breaks=\(y) seq(0, max(y), 0.05), labels = \(y) label_percent()(as.numeric(y))) +
       scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +
       labs(
