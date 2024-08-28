@@ -3,8 +3,8 @@
 ## Preparation of reads from fungal isolates for synthetic dataset
 
 A mock dataset has been created to simulate scenarios where multiple fungal species are present in the same sample.
-Using reads from the sequencing of 65 known fungal isolates, we were able to control the proportions of species for each simulated scenario.
-These synthetically generated datasets provide insight into the limitations and sensitivity of this pipeline.
+Using reads from the sequencing of 65 known fungal isolates, we were able to control the proportions of species in each simulated scenario.
+These synthetically generated datasets aim provide insight into the limitations and sensitivity of this pipeline.
 Supplemental Table \@ref(tab:samplesheet) provides the list of fungal species or strains and the number of raw reads available for the mock dataset.
 The steps to generate and prepare reads for this synthetic dataset are outlined below.
 
@@ -13,19 +13,19 @@ The steps to generate and prepare reads for this synthetic dataset are outlined 
 The genomic DNA of 65 fungal strains was extracted with the Qiagen DNeasy Plant mini kit.
 The DNA was extracted from mycelia or spore material of each fungal isolate.
 Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse).
-The amplicons were prepared with the Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT).
+The amplicons were prepared with the Oxford Nanopore's Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT).
 Fungal samples plus a negative control were multiplexed and sequenced using the MinION R10.4 flow cell.
 
 ### Bioinformatics - Basecalling, trimming and filtering
 
-The raw ONT data was basecalled and demultiplexed using Guppy v6.4.2 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup, version unknown).
-The mean read length of amplicons after basecalling was ~2.2 KB as in Figure \@ref(fig:rawReadQuality).
+The raw ONT data was basecalled and demultiplexed using Guppy v6.4.2 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup).
+The mean read length of amplicons after basecalling was ~2.2 KB as seen in Figure \@ref(fig:rawReadQuality).
 
 - [alt] Dorado: dna_r10.4.1_e8.2_400bps_sup@v4.1.0
 
-Adapters were trimmed from raw basecalled reads using Dorado v0.6.1 with the '`--no-trim-primers`' to avoid removing primer sequences.
+Sequencing adapters were trimmed from raw basecalled reads using Dorado v0.6.1 with the '`--no-trim-primers`' option to avoid removing primer sequences.
 Cutadapt v4.6 [@Cutadapt] has been used to select and trim primers from amplicons that contain both forward (NS5) and reverse primer (LR6) sequences.
-Amplicons that do not contain both of these primer sequences were excluded from the analysis.
+Amplicons where both of these primer sequences could not be detected were excluded from the analysis.
 Cutadapt was also used to re-orient reads that have been sequenced by the reverse strand ('`--revcomp`' option), making it easier to process by downstream tools (Figure \@ref(fig:filterTrimFlowchart))
 
 The full ITS region of these reads was extracted using ITSxpress v2.0.1 [@Rivers2018] with default settings other than '`--single_end`' and '`--taxa Fungi`' options.
@@ -33,7 +33,7 @@ Chopper v0.7.0 [@DeCoster2023] was used to select reads of the full ITS region h
 Chimeric reads were detected using VSEARCH's [@rognesVSEARCHVersatileOpen2016] denovo and reference based methods.
 The database used for reference based chimera detection of full ITS sequence was the UNITE general release v9.0 (sh_general_release_dynamic_s_all_25.07.2023).
 
-```{r filterTrimFlowchart, echo=FALSE, fig.align ='center', fig.cap = "Each stage of the trimming and filtering stages of the pipeline with the tools used in paretheses."}
+```{r filterTrimFlowchart, echo=FALSE, fig.align ='center', fig.cap = "The steps taken to prepare raw reads for mock scenarios. Boxes inticate trimming and filtering stages of the pipeline with and the software used is in paretheses."}
 DiagrammeR::grViz("digraph {
   graph [layout = dot, rankdir = LR]
 
@@ -66,10 +66,10 @@ DiagrammeR::grViz("digraph {
 
 To ensure that taxonomic names were used consistently between the fungal isolate samples and the reference database, manual validation of each sample name was performed.
 A search was conducted for the recorded species name of each sample in the 2024 UNITE reference database [@vu_2024_12580255].
-Most species names that could not be found were either misspelled or used a older taxonomic synonym. 
+Most species names that could not be found were either misspelled or used an older taxonomic synonym.
 For example, *Nakaseomyces glabratus* has been recorded by its former name *Candida glabrata* which the latter could not be found in the reference database.
 Names of samples were manually updated using current names found in both Index Fungorum (www.indexfungorum.org) and the 2024 UNITE reference database.
-For samples that were not classified at the species level (eg. *Entoleuca sp* CCL052), the genus label was confirmed to exist in the reference database.
+For samples that were not classified at the species level (e.g. *Entoleuca sp* CCL052), the genus label was confirmed to exist in the reference database.
 
 Seven samples that had less than a total of 2500 reads after basecalling, trimming and filtering were removed from the analysis leaving 58 samples (a total of 55 species).
 The excluded taxa included: *Aspergillus niger*, *Naganishia albida* (*Cryptococcus albidus*), *Geotrichum candidum* (*Galactomyces geotrichum*), *Meyerozyma guilliermondii*, Yarrowia lipolytica, *Fusarium proliferatum* and *Puccinia recondita* (*Puccinia triticina*).
@@ -78,14 +78,15 @@ Bias in chimera detection leading to a loss 99.0% and 68.8% of reads in *Puccini
 ### Synthetic dataset - Scenario 1 - Equal abundance
 
 Four scenarios have been designed to test the pipeline under varying community structures. 
-Each scenario consists of full ITS sequences that pass the quality filtering steps which are combined to control the abundance of each sample.
+Each mock scenario consists of full ITS sequences that pass the quality filtering steps and are combined in different proportions to control the abundance of each sample.
 
 Scenario 1 considers an even community structure where every fungal isolate has equal abundance (in terms of number of reads).
 Libraries of differing sizes were generated by subsampling the same number of reads from each sample.
-For each of the 58 samples: 20, 50, 167, 1000, 2000 and 2500 reads were randomly selected to produce library sizes of 1160, 2900, 9686, 58000, 116000 and 145000 reads.
-Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the 'sample' command).
-Subsampling was repeated five times for each library size producing a total of 30 libraries ($6 \text{ libraries} \times 5 \text{ repetitions}$).
+For each of the 58 samples: 20, 50, 167, 1000, 2000 and 2500 reads were randomly selected to produce libraries with sizes of 1160, 2900, 9686, 58000, 116000 and 145000 reads.
+Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the '`sample`' command).
+The subsampling was repeated five times for each library size producing a total of 30 libraries ($6 \text{ libraries} \times 5 \text{ repetitions}$).
 The seed values given to seqtk's 'sample' command for each repetition were generated deterministically so that each run of the pipeline is reproducible.
+
 ### Synthetic dataset - Scenario 2 - Uneven (5 low abundance)
 
 - 5 samples with very low, rest high
@@ -112,8 +113,8 @@ A minimum OTU size threshold of 0.1% of the library size was used to filter out 
 The second approach clusters similar sequences through transformations of k-mer signatures as used in the NanoCLUST pipeline [@rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021; @langsiriTargetedSequencingAnalysis2023].
 Each sequence was transformed into a k-mer frequency vector and stored in a tabular format.
 In our pipeline, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST).
-The large dimensional tabular structure projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020].
-Sequences (represented as points in the two-dimensional space) are then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan].
+The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020].
+Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan].
 The 'cluster_selection_epsilon' parameter used in HDBSCAN was set to $0.5$ as used in [@langsiriTargetedSequencingAnalysis2023], while the 'min_cluster_size' parameter was set to 0.5% of the library size.
 See Section \@ref(cluster-results) for determination of the 'min_cluster_size' parameter.
 
@@ -123,6 +124,7 @@ DiagrammeR::grViz("digraph {
 
   node [shape = rectangle, peripheries=1]
 
+  derep [ label = 'Read dereplication\n(vsearch)' ]
   vsearch [ label = '97% identity clustering\n(vsearch)' ]
   kmer [ label = 'k-mer frequencies' ]
   umap [ label = 'Dimension reduction\n(UMAP)' ]
@@ -141,7 +143,7 @@ DiagrammeR::grViz("digraph {
 
   # edge definitions with the node IDs
   qc -> subs
-  subs -> vsearch
+  subs -> derep -> vsearch
   subs -> kmer -> umap -> hdbscan -> mostA
 
   vsearch -> dnabarcoder [ label = 'centroids' ]
@@ -154,11 +156,16 @@ DiagrammeR::grViz("digraph {
 ## Bioinformatics - Taxonomic assignments
 
 A representative sequence from each cluster was selected to give taxonomic assignments to the cluster.
-Our initial approach used most abundant sequence of each cluster as the representative sequence.
-The VSEARCH clustering approach provides these sequences with the '--centroids' option.
-To determine the most abundant sequence from clusters in the UMAP + HDBSCAN approach, VSEARCH '--fastx_unique' command in combination with '--topn 1' option was used.
+Our initial approach used the most abundant sequence of each cluster as the representative sequence.
+The VSEARCH clustering approach provides these sequences with the '`--centroids`' option.
+To determine the most abundant sequence from clusters in the UMAP + HDBSCAN approach, the VSEARCH '`--fastx_uniques`' command in combination with '`--topn 1`' option was used.
 
 The representative sequence from each cluster was then given a taxonomic assignment with dnabarcoder v1.0.6 [@vuDnabarcoderOpensourceSoftware2022].
 In this case full ITS sequences were classified against the UNITE 2024 reference database [@vu_2024_12580255] using precomputed similarity cutoffs provided by the dnabarcoder project (unite2024ITS.unique.cutoffs.best.json).
 
 - TODO: assign based on polished sequence of each cluster (NanoCLUST method)
+  - fastANI - compute draft sequence from each cluster (based on highest Average Nucleotide Identity)
+  - minimap2 - map reads to draft
+  - racon - polishing
+  - medaka - polishing step
+  - unable to do read correction with canu due to full ITS region being too short. Canu requires a '`genomeSize`' of at least 1000, where mean full ITS from our samples were ~400.

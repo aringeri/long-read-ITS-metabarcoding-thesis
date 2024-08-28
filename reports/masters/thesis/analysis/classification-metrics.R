@@ -116,7 +116,9 @@ precision_summary <- rbind(all_df, all_df_vsearch) %>%
   summarise(
     .by = c(method, sample_depth, rep),
     genus_classification_prop = sum(genus_classified) / sum(total),
+    genus_classification_prop_by_depth = sum(genus_classified) / sum(sample_depth),
     species_classification_prop = sum(species_classified) / sum(total),
+    species_classification_prop_by_depth = sum(species_classified) / sum(sample_depth),
     genus_precision = sum(genus_correct) / sum(genus_classified),
     species_precision = sum(species_correct) / sum(species_classified),
   )
@@ -125,7 +127,7 @@ precision_plot <- cowplot::plot_grid(
   precision_summary %>%
     ggplot(aes(x=genus_precision, y=genus_classification_prop, shape=factor(sample_depth), colour=method)) +
       geom_point() +
-      expand_limits(x=c(.6, 1), y=c(.6, 1)) +
+      expand_limits(x=c(.6, .8), y=c(.6, 1)) +
       scale_y_continuous(labels = scales::percent) +
       scale_x_continuous(labels = scales::percent) +
       scale_shape_discrete(name="reads per sample") +
@@ -134,7 +136,7 @@ precision_plot <- cowplot::plot_grid(
   precision_summary %>%
     ggplot(aes(x=species_precision, y=species_classification_prop, shape=factor(sample_depth), colour=method)) +
     geom_point() +
-    expand_limits(x=c(.6, 1), y=c(.6, 1)) +
+    expand_limits(x=c(.6, .8), y=c(.6, 1)) +
     scale_y_continuous(labels = scales::percent) +
     scale_x_continuous(labels = scales::percent) +
     scale_shape_discrete(name="reads per sample") +

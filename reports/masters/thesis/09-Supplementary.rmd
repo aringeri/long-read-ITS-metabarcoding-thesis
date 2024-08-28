@@ -19,7 +19,7 @@ knitr::kable(
 knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png')
 ```
 
-```{r nanoclustSplitting2, echo=FALSE, fig.fullwidth=TRUE}
+```{r nanoclustSplitting2, echo=FALSE, fig.fullwidth=TRUE, fig.cap = "Plot indicating the splitting of all samples into clusters using the UMAP + HDBSCAN method. Each plot shows how reads from each sample are distributed into clusters. Bars indicate the abundance of a cluster (number of reads). Taxonomic classification of each cluster is shown in the X axis labels. Green indicates that a cluster matches the expected species-level classification."}
 knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png')
 ```
 

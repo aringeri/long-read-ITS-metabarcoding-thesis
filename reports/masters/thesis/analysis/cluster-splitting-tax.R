@@ -101,12 +101,23 @@ plot_splitting <- function(phylo, subset, taxa_labels=FALSE, ncol=NULL, maxY=220
 plot_splitting(nanoclust, sample_names(nanoclust)[1:30])
 plot_splitting(nanoclust, sample_names(nanoclust)[31:70])
 
-puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100)
+puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
+  labs(title = "UMAP + HDBSCAN")
 ggsave('images/06-cluster-splitting-nanoclust-puccinia.png', puccinias)
 
-plot_splitting(vsearch, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100)
-
 taxa_names(vsearch) <- 1:ntaxa(vsearch)
+puccinias_vsearch <- plot_splitting(vsearch, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
+  labs(title = "VSEARCH")
+ggsave('images/06-cluster-splitting-vsearch-puccinia.png', puccinias_vsearch)
+
+
+cryptococcus <- plot_splitting(nanoclust, paste0('barcode', 58:62), taxa_labels = TRUE, ncol = 4, maxY=2100) +
+  labs(title = "UMAP + HDBSCAN")
+cryptococcus_vsearch <- plot_splitting(vsearch, paste0('barcode', 58:62), taxa_labels = TRUE, ncol = 4, maxY=2100) +
+  labs(title = "VSEARCH")
+ggsave('images/06-cluster-splitting-nanoclust-cryptococcus.png', cryptococcus)
+ggsave('images/06-cluster-splitting-vsearch-cryptococcus.png', cryptococcus_vsearch)
+
 plot_splitting(vsearch, sample_names(vsearch)[1:30])
 plot_splitting(vsearch, sample_names(vsearch)[31:70])
 
