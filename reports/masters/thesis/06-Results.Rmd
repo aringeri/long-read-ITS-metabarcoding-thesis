@@ -114,13 +114,13 @@ knitr::include_graphics('analysis/images/06-cluster-splitting-vsearch-cryptococc
 ### Classification proportion and precision in even abundance scenario (Scenario 1)
 
 In order to explore the accuracy of the taxonomic classifications in the pipeline, two metrics were computed for the even abundance scenario (Scenario 1).
-The genera classification proportion metric has been defined as $\frac{\text{# of reads classified at the genera level}}{\text{total # of reads in cluster}}$.
-The genera precision metric has been defined as $\frac{\text{# of reads classified correctly at the genera level}}{\text{# of reads classified at the genera level}}$.
+The genera classification proportion metric has been defined as $\frac{\text{\# of reads classified at the genera level}}{\text{total \# of reads in cluster}}$.
+The genera precision metric has been defined as $\frac{\text{\# of reads classified correctly at the genera level}}{\text{\# of reads classified at the genera level}}$.
 These metrics were calculated for each library size and compared by clustering methods in Figure \@ref(fig:nanoclustPrecisionAbundance).
 
 - NOTE: varying interpretation when classification proportion:
-    - $\frac{\text{# of reads classified at the genera level}}{\text{total # of reads in cluster}}$ (better for nanoclust)
-    - $\frac{\text{# of reads classified at the genera level}}{\text{# of reads per sample}}$ (similar outcomes)
+    - $\frac{\text{\# of reads classified at the genera level}}{\text{total \# of reads in cluster}}$ (better for nanoclust)
+    - $\frac{\text{\# of reads classified at the genera level}}{\text{\# of reads per sample}}$ (similar outcomes)
 
 ```{r nanoclustPrecisionAbundance, echo=FALSE, fig.fullwidth=TRUE, fig.cap = ""}
 knitr::include_graphics('analysis/images/06-precision-nanoclust-abundance.png')

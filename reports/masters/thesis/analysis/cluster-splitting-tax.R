@@ -55,7 +55,7 @@ ggplot_splitting <- function(phylo, df, taxa_labels=FALSE, ncol=NULL, maxY=2200)
     coord_cartesian(clip="off") +
     expand_limits(y=c(0, maxY)) +
     theme(
-      aspect.ratio=4/3,
+      # aspect.ratio=4/3,
       axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 }
 
@@ -125,4 +125,13 @@ plot_splitting(vsearch, sample_names(vsearch)[31:70])
 # ggsave('images/06-cluster-splitting-nanoclust-with-tax-ex.png', plot_splitting(nanoclust, 2))
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-1-30.png', plot_splitting(nanoclust, sample_names(nanoclust)[1:30]))
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-31.png', plot_splitting(nanoclust, sample_names(nanoclust)[31:70]))
+
+seq_type_comparison <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14-NC"
+nanoclust_ma <- load_nanoclust_phyloseq_2(samplesheet, seq_type_comparison, sequence_type="nanoclust_abundant",reads_per_sample=1000, repetition=1) %>%
+  tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+nanoclust_cons <- load_nanoclust_phyloseq_2(samplesheet, seq_type_comparison, sequence_type="nanoclust_consensus",reads_per_sample=1000, repetition=1) %>%
+  tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+
+plot_splitting(nanoclust_cons, sample_names(nanoclust_cons)[31:70])
+plot_splitting(nanoclust_ma, sample_names(nanoclust_ma)[31:70])
 

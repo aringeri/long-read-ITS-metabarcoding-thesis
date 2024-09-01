@@ -106,13 +106,43 @@ load_all_precision_data <- function(config, samplesheet, load_phyloseq=load_nano
 }
 
 
-all_df <- load_all_precision_data(config, samplesheet, load_nanoclust_phyloseq)
-all_df$method <- "nanoclust"
+# all_df <- load_all_precision_data(config, samplesheet, load_nanoclust_phyloseq)
+# all_df$method <- "nanoclust"
 all_df_vsearch <- load_all_precision_data(config, samplesheet, load_vsearch_phyloseq)
 all_df_vsearch$method <- "vsearch"
 
+cons_config <- Config$new(
+  experiment_path = "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14-NC",
+  samplesheet_path = config$samplesheet_path,
+  sample_depth = config$sample_depth,
+  repetition = config$repetition
+)
+all_df_cons <- load_all_precision_data(
+  cons_config, samplesheet,
+  function(samplesheet, experiment, reads_per_sample, repetition) {
+    load_nanoclust_phyloseq_2(samplesheet,
+                            experiment = experiment,
+                            sequence_type = 'nanoclust_consensus',
+                            reads_per_sample = reads_per_sample,
+                            repetition = repetition
+    )
+  })
+all_df_cons$method <- "nanoclust_consensus"
 
-precision_summary <- rbind(all_df, all_df_vsearch) %>%
+all_df <- load_all_precision_data(
+  cons_config, samplesheet,
+  function(samplesheet, experiment, reads_per_sample, repetition) {
+    load_nanoclust_phyloseq_2(samplesheet,
+                              experiment = experiment,
+                              sequence_type = 'nanoclust_abundant',
+                              reads_per_sample = reads_per_sample,
+                              repetition = repetition
+    )
+  })
+all_df$method <- "nanoclust"
+
+precision_summary <- rbind(all_df, all_df_cons) %>%
+  filter(sample_depth %in% c(1000, 2000)) %>%
   summarise(
     .by = c(method, sample_depth, rep),
     genus_classification_prop = sum(genus_classified) / sum(total),
@@ -125,7 +155,7 @@ precision_summary <- rbind(all_df, all_df_vsearch) %>%
 
 precision_plot <- cowplot::plot_grid(
   precision_summary %>%
-    ggplot(aes(x=genus_precision, y=genus_classification_prop, shape=factor(sample_depth), colour=method)) +
+    ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth, shape=factor(sample_depth), colour=method)) +
       geom_point() +
       expand_limits(x=c(.6, .8), y=c(.6, 1)) +
       scale_y_continuous(labels = scales::percent) +
@@ -134,7 +164,7 @@ precision_plot <- cowplot::plot_grid(
       labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
       theme(aspect.ratio=1),
   precision_summary %>%
-    ggplot(aes(x=species_precision, y=species_classification_prop, shape=factor(sample_depth), colour=method)) +
+    ggplot(aes(x=species_precision, y=species_classification_prop_by_depth, shape=factor(sample_depth), colour=method)) +
     geom_point() +
     expand_limits(x=c(.6, .8), y=c(.6, 1)) +
     scale_y_continuous(labels = scales::percent) +

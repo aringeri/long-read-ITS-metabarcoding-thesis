@@ -6,8 +6,9 @@ documentclass: article
 output:
     #bookdown::pdf_document2:
     #    toc: yes
-    bookdown::html_document2
-    #    toc: yes
+    bookdown::html_document2:
+        toc: yes
+    #bookdown::word_document2: default
     #bookdown::gitbook: default
 bibliography: '../../references.bib'
 csl: '../../bioinformatics.csl'

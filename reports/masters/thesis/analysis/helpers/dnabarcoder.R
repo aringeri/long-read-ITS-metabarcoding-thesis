@@ -43,6 +43,35 @@ load_nanoclust_phyloseq <- function(
   # tax_fix(phylo, min_length = 0, unknowns = 'unidentified', anon_unique = F)
 }
 
+load_nanoclust_phyloseq_2 <- function(
+  samplesheet,
+  experiment="../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14",
+  sequence_type="nanoclust_abundant",
+  reads_per_sample=2000,
+  repetition=2)
+{
+  # print(experiment)
+  otu <- read.csv(glue('{experiment}/hdbscan_clustering/FULL_ITS/{reads_per_sample}/{repetition}/otu_table/otu_table.tsv'), sep = '\t', row.names = 1)
+  otu <- otu[order(as.numeric(rownames(otu))), ]
+  otu <- otu[rownames(otu) != -1, ]
+
+  classFile <- list.files(
+    glue('{experiment}/dnabarcoder/{sequence_type}/FULL_ITS/{reads_per_sample}/{repetition}/classify/'),
+    pattern='*.unite2024ITS_BLAST.classification',
+    full.names = T
+  )
+  tax <- read_dna_barcoder_classification_nanoclust(classFile[1])
+
+  phylo <- phyloseq(
+    otu_table(otu, taxa_are_rows = TRUE),
+    tax,
+    sample_data(samplesheet)
+  )
+
+  phylo
+  # tax_fix(phylo, min_length = 0, unknowns = 'unidentified', anon_unique = F)
+}
+
 load_vsearch_phyloseq <- function(
   samplesheet,
   experiment="../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14",
