@@ -1,11 +1,15 @@
-read_dna_barcoder_classification_nanoclust <- function(filepath) {
-  tax <- read.csv(filepath, sep='\t', row.names = 1) %>%
+load_dna_barcoder_classification_nanoclust <- function(filepath) {
+  read.csv(filepath, sep='\t', row.names = 1) %>%
     tibble::rownames_to_column('OTU') %>%
     separate(OTU, into=c('read', 'barcode', 'cluster', NA, 'size'), sep=';') %>%
     mutate_at(vars(read, barcode, cluster, size), \(str) gsub('.*=', '', str)) %>%
     filter(cluster != -1) %>%
     arrange(as.numeric(cluster)) %>%
     tibble::column_to_rownames("cluster")
+}
+
+read_dna_barcoder_classification_nanoclust <- function(filepath) {
+  tax <- load_dna_barcoder_classification_nanoclust(filepath)
 
   tax_table(as.matrix(tax[, !(names(tax) %in% c('read', 'barcode', 'size', 'ReferenceID', 'rank', 'score', 'cutoff', 'confidence'))]))
 }
@@ -57,6 +61,36 @@ load_nanoclust_phyloseq_2 <- function(
 
   classFile <- list.files(
     glue('{experiment}/dnabarcoder/{sequence_type}/FULL_ITS/{reads_per_sample}/{repetition}/classify/'),
+    pattern='*.unite2024ITS_BLAST.classification',
+    full.names = T
+  )
+  tax <- read_dna_barcoder_classification_nanoclust(classFile[1])
+
+  phylo <- phyloseq(
+    otu_table(otu, taxa_are_rows = TRUE),
+    tax,
+    sample_data(samplesheet)
+  )
+
+  phylo
+  # tax_fix(phylo, min_length = 0, unknowns = 'unidentified', anon_unique = F)
+}
+
+load_nanoclust_phyloseq_3 <- function(
+  samplesheet,
+  experiment="../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-09-12",
+  sequence_type="nanoclust_abundant",
+  reads_per_sample=2000,
+  repetition=2,
+  min_cluster_size=0)
+{
+  # print(experiment)
+  otu <- read.csv(glue('{experiment}/hdbscan_clustering/FULL_ITS/{reads_per_sample}/{repetition}/{min_cluster_size}/otu_table/otu_table.tsv'), sep = '\t', row.names = 1)
+  otu <- otu[order(as.numeric(rownames(otu))), ]
+  otu <- otu[rownames(otu) != -1, ]
+
+  classFile <- list.files(
+    glue('{experiment}/dnabarcoder/{sequence_type}/FULL_ITS/{reads_per_sample}/{repetition}/{min_cluster_size}/classify/'),
     pattern='*.unite2024ITS_BLAST.classification',
     full.names = T
   )

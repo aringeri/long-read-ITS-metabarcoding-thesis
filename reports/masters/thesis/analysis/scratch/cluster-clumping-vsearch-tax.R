@@ -9,13 +9,21 @@ library(tidytext)
 library(microViz)
 library(stringr)
 
-source('helpers/dnabarcoder.R')
-source('helpers/vsearch.R')
+source('../helpers/config.R')
+source('../helpers/dnabarcoder.R')
+source('../helpers/vsearch.R')
 
-samplesheet <- read.csv('../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
+samplesheet <- read_samplesheet(config)
+
+nanoclust <- load_nanoclust_phyloseq_3(
+  samplesheet=samplesheet, experiment=config$experiment_path, reads_per_sample=config$sample_depth, repetition=config$repetition,
+  sequence_type='nanoclust_abundant', min_cluster_size = '0.005') %>%
+  tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+
+samplesheet <- read.csv('../../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
 rownames(samplesheet) <- paste0("barcode", rownames(samplesheet))
 
-experiment <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14"
+experiment <- "../../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14"
 
 
 vsearch_otus <- readRDS(glue('{experiment}/phyloseq/FULL_ITS/2000/1/all_samples/all_samples.phyloseq.rds'))
@@ -62,6 +70,6 @@ plot_clumping <- function(phylo, n) {
 
 filter_taxa_by_thresh(vsearch_phylo, 0.001)
 plot_clumping(filter_taxa_by_thresh(vsearch_phylo, 0.001), 1:30)
-plot_clumping(nanoclust, c(43, 54, 55) + 1)
+plot_clumping(nanoclust, c(57, 49) + 1)
 
-ggsave('images/06-cluster-clumping-nanoclust-with-tax-ex.png', plot_clumping(nanoclust, c(57, 56, 34, 22) + 1))
+ggsave('../images/06-cluster-clumping-nanoclust-with-tax-ex.png', plot_clumping(nanoclust, c(57, 56, 34, 22) + 1))

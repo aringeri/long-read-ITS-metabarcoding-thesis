@@ -14,8 +14,20 @@ source('./helpers/vsearch.R')
 
 samplesheet <- read_samplesheet(config)
 
-nanoclust <- load_nanoclust_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition) %>%
+nanoclust <- load_nanoclust_phyloseq_3(
+  samplesheet=samplesheet, experiment=config$experiment_path, reads_per_sample=config$sample_depth, repetition=config$repetition,
+  sequence_type='nanoclust_abundant', min_cluster_size = '0.005') %>%
   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+
+# nanoclust_abundant <- load_nanoclust_phyloseq_2(
+#   samplesheet=samplesheet, experiment=config$experiment_path, reads_per_sample=config$sample_depth, repetition=config$repetition,
+#   sequence_type='nanoclust_abundant') %>%
+#   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+
+# vsearch_x <- load_nanoclust_phyloseq_2(
+#   samplesheet=samplesheet, experiment=config$experiment_path, reads_per_sample=config$sample_depth, repetition=config$repetition,
+#   sequence_type='vsearch') %>%
+#   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
 
 vsearch <- load_vsearch_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition) %>%
   filter_taxa_by_thresh(0.0015)
@@ -103,11 +115,13 @@ plot_splitting(nanoclust, sample_names(nanoclust)[31:70])
 
 puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
   labs(title = "UMAP + HDBSCAN")
+puccinias
 ggsave('images/06-cluster-splitting-nanoclust-puccinia.png', puccinias)
 
 taxa_names(vsearch) <- 1:ntaxa(vsearch)
 puccinias_vsearch <- plot_splitting(vsearch, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
   labs(title = "VSEARCH")
+puccinias_vsearch
 ggsave('images/06-cluster-splitting-vsearch-puccinia.png', puccinias_vsearch)
 
 
@@ -115,23 +129,23 @@ cryptococcus <- plot_splitting(nanoclust, paste0('barcode', 58:62), taxa_labels 
   labs(title = "UMAP + HDBSCAN")
 cryptococcus_vsearch <- plot_splitting(vsearch, paste0('barcode', 58:62), taxa_labels = TRUE, ncol = 4, maxY=2100) +
   labs(title = "VSEARCH")
-ggsave('images/06-cluster-splitting-nanoclust-cryptococcus.png', cryptococcus)
-ggsave('images/06-cluster-splitting-vsearch-cryptococcus.png', cryptococcus_vsearch)
+# ggsave('images/06-cluster-splitting-nanoclust-cryptococcus.png', cryptococcus)
+# ggsave('images/06-cluster-splitting-vsearch-cryptococcus.png', cryptococcus_vsearch)
 
 plot_splitting(vsearch, sample_names(vsearch)[1:30])
 plot_splitting(vsearch, sample_names(vsearch)[31:70])
 
-# ggsave('images/06-cluster-splitting-nanoclust-with-tax-6.png', plot_splitting(nanoclust, 1:6))
-# ggsave('images/06-cluster-splitting-nanoclust-with-tax-ex.png', plot_splitting(nanoclust, 2))
+# # ggsave('images/06-cluster-splitting-nanoclust-with-tax-6.png', plot_splitting(nanoclust, 1:6))
+# # ggsave('images/06-cluster-splitting-nanoclust-with-tax-ex.png', plot_splitting(nanoclust, 2))
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-1-30.png', plot_splitting(nanoclust, sample_names(nanoclust)[1:30]))
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-31.png', plot_splitting(nanoclust, sample_names(nanoclust)[31:70]))
 
-seq_type_comparison <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14-NC"
-nanoclust_ma <- load_nanoclust_phyloseq_2(samplesheet, seq_type_comparison, sequence_type="nanoclust_abundant",reads_per_sample=1000, repetition=1) %>%
-  tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
-nanoclust_cons <- load_nanoclust_phyloseq_2(samplesheet, seq_type_comparison, sequence_type="nanoclust_consensus",reads_per_sample=1000, repetition=1) %>%
-  tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
-
-plot_splitting(nanoclust_cons, sample_names(nanoclust_cons)[31:70])
-plot_splitting(nanoclust_ma, sample_names(nanoclust_ma)[31:70])
-
+# seq_type_comparison <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14-NC"
+# nanoclust_ma <- load_nanoclust_phyloseq_2(samplesheet, seq_type_comparison, sequence_type="nanoclust_abundant",reads_per_sample=1000, repetition=1) %>%
+#   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+# nanoclust_cons <- load_nanoclust_phyloseq_2(samplesheet, seq_type_comparison, sequence_type="nanoclust_consensus",reads_per_sample=1000, repetition=1) %>%
+#   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+#
+# plot_splitting(nanoclust_cons, sample_names(nanoclust_cons)[31:70])
+# plot_splitting(nanoclust_ma, sample_names(nanoclust_ma)[31:70])
+#

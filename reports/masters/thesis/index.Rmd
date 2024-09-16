@@ -1,5 +1,5 @@
 ---
-title: "A Minimal bookdown document"
+title: "Metabarcoding of Fungi with Oxford Nanopore Sequencing"
 author: Alex Ringeri
 site: bookdown::bookdown_site
 documentclass: article

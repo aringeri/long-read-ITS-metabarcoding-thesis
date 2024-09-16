@@ -1,5 +1,6 @@
 fig:filterTrimFlowchart
 fig:clusterAssignFlowchart
+fig:clusterPolishFlow
 fig:readLossByStage
 fig:rawReadQuality
 fig:vsearchotus

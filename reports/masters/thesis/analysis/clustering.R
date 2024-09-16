@@ -58,7 +58,7 @@ otu_counts_by_sample_depth <- taxa_counts %>%
     aes(x=sample_depth, y=nOTUs, colour=factor(thresh))
   ) +
   labs(
-    # title = "vsearch clustering",
+    title = "VSEARCH",
     x=glue("total library size ({n_samples} samples)"),
     y="number of OTUs",
     colour = "Min OTU size\n(proportion of library size)",
@@ -189,12 +189,12 @@ load_nanoclust_stats <- function(filter_thresh = c(0, 0.0012), output_dir) {
 #load_nanoclust_stats(c(0, 0.0006)) %>% View()
 
 otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0012, 0.006449999999999999, 0.0050999999999999995, 0.0072, 0.01005), output_dir) %>%
-  mutate_at(vars(sample_depth), \(d) d*60) %>%
+  mutate_at(vars(sample_depth), \(d) d*n_samples) %>%
   ggplot(
     aes(x=sample_depth, y=numOTUs, colour=factor(thresh))
   ) +
   labs(
-    # title = "NanoCLUST",
+    title = "UMAP + HDBSCAN",
     x=glue("total library size ({n_samples} samples)"),
     y="number of clusters",
     colour = "Minimum cluster size\n(proportion of library size)",
@@ -218,9 +218,9 @@ otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0012, 0.006449999999999999, 0
                      labels = trans_format("log10", math_format(10^.x))
   ) +
   scale_y_continuous(transform = 'log10', breaks = c(50, expected_species, 100, 200, 400, 800, 1600)) +
-  scale_linetype_manual(name='Expected number of OTUs', values=c("dashed"), drop=FALSE) +
+  scale_linetype_manual(name='Expected number of OTUs', values="dashed", drop=FALSE) +
   guides(colour = guide_legend(override.aes = list(linetype = 0)),
          shape = guide_legend(override.aes = list(linetype = 0)))
-# otu_count_nanoclust
+otu_count_nanoclust
 ggsave('./images/06-otu-count-nanoclust.png', otu_count_nanoclust)
 

@@ -6,14 +6,14 @@ library(glue)
 library(magrittr)
 
 
-samplesheet <- read.csv('../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
+samplesheet <- read.csv('../../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
 rownames(samplesheet) <- paste0("barcode", rownames(samplesheet))
 
-otu <- read.csv('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/hdbscan_clustering/FULL_ITS/2000/2/otu_table/otu_table.tsv', sep='\t', row.names = 1)
+otu <- read.csv('../../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/hdbscan_clustering/FULL_ITS/2000/2/otu_table/otu_table.tsv', sep='\t', row.names = 1)
 otu <- otu[order(as.numeric(rownames(otu))), ]
 otu <- otu[rownames(otu) != -1, ]
 
-tax <- read.csv('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/dnabarcoder/nanoclust/FULL_ITS/2000/2/classify/all_samples.unite2024ITS_BLAST.classification', sep='\t', row.names = 1) %>%
+tax <- read.csv('../../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/dnabarcoder/nanoclust/FULL_ITS/2000/2/classify/all_samples.unite2024ITS_BLAST.classification', sep='\t', row.names = 1) %>%
   tibble::rownames_to_column('OTU') %>%
   separate(OTU, into=c('read', 'barcode', 'cluster', NA, 'size'), sep=';') %>%
   mutate_at(vars(read, barcode, cluster, size), \(str) gsub('.*=', '', str)) %>%

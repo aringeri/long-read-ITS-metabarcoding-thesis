@@ -9,7 +9,7 @@ source('./helpers/config.R')
 # output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02'
 # output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-08'
 output_dir <- config$experiment_path
-# output_dir <- '/Users/alex/repos/long-read-ITS-metabarcoding/output/isolate-sub5000'
+# output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-09-12'
 
 stages <- list(
   A_raw=list(dir=glue('{output_dir}/QC/01-raw_reads_all_samples/nanoplot/all-samples/NanoStats.txt'), name="Raw Reads"),
@@ -43,11 +43,11 @@ read_loss <- df %>%
         colour = pct_loss
     )
   ) +
-  labs(x="pipeline stage", y="number of reads") +
+  labs(x="Pipeline Stage", y="Number of Reads") +
   geom_col() +
   geom_text(aes(label = label_percent(0.01)(pct_loss)), vjust = -0.5) +
   scale_x_discrete(labels = \(x) lapply(stages[match(x, names(stages))], \(e) e[['name']])) +
-  scale_color_continuous(name = 'relative read loss', labels = scales::percent) +
+  scale_color_continuous(name = 'Relative Read Loss', labels = scales::percent) +
   scale_y_continuous(breaks = pretty_breaks(n=10))
 
   # scale_colour_viridis_c(option='plasma')

@@ -20,7 +20,9 @@ Config <- R6Class("Config",  list(
 ))
 
 config <- Config$new(
-  experiment_path = "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14",
+  # experiment_path = "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14",
+  # experiment_path = "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14-NC",
+  experiment_path = "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-09-12",
   samplesheet_path = "../../../../experiments/66-fungal-isolate-ONT/samplesheet-unite-tax.csv",
   sample_depth = 2000,
   repetition = 2

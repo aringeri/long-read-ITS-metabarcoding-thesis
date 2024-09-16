@@ -47,7 +47,7 @@ load_loss_stats <- function(output_dir) {
 
       nanoclust_stats <- read.csv(glue('{output_dir}/hdbscan_clustering_stats/FULL_ITS/{depth}/{rep}/min_cluster_size_stats.tsv'), sep='\t')
       nanoclust_stats <- nanoclust_stats[, c('thresh', 'loss', 'numOTUs')]
-      nanoclust_stats <- nanoclust_stats[nanoclust_stats[, 'thresh'] <= 0.02,]
+      # nanoclust_stats <- nanoclust_stats[nanoclust_stats[, 'thresh'] <= 0.02,]
       colnames(nanoclust_stats) <- c('thresh', 'loss', 'nOTUs')
       nanoclust_stats$method <- 'nanoclust'
       nanoclust_stats$rep <- rep

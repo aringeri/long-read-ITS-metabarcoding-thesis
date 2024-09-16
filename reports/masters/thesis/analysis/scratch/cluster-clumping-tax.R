@@ -9,12 +9,12 @@ library(tidytext)
 library(microViz)
 library(stringr)
 
-source('helpers/dnabarcoder.R')
+source('../helpers/dnabarcoder.R')
 
-samplesheet <- read.csv('../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
+samplesheet <- read.csv('../../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
 rownames(samplesheet) <- paste0("barcode", rownames(samplesheet))
 
-experiment <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14"
+experiment <- "../../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14"
 
 # load_nanoclust_phyloseq <- function(samplesheet, experiment) {
 #   otu <- read.csv(glue('{experiment}/hdbscan_clustering/FULL_ITS/2000/2/otu_table/otu_table.tsv'), sep = '\t', row.names = 1)
@@ -75,4 +75,4 @@ plot_clumping <- function(phylo, n) {
 plot_clumping(nanoclust, 1:6)
 plot_clumping(nanoclust, c(43, 54, 55) + 1)
 
-ggsave('images/06-cluster-clumping-nanoclust-with-tax-ex.png', plot_clumping(nanoclust, c(57, 56, 34, 22) + 1))
+ggsave('../images/06-cluster-clumping-nanoclust-with-tax-ex.png', plot_clumping(nanoclust, c(57, 56, 34, 22) + 1))

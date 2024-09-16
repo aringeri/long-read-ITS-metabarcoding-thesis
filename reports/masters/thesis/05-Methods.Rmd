@@ -3,7 +3,7 @@
 ## Preparation of reads from fungal isolates for synthetic dataset
 
 A mock dataset has been created to simulate scenarios where multiple fungal species are present in the same sample.
-Using reads from the sequencing of 65 known fungal isolates, we were able to control the proportions of species in each simulated scenario.
+Using reads from the sequencing of 65 known fungal isolates, I was able to control the proportions of species in each simulated scenario.
 These synthetically generated datasets aim provide insight into the limitations and sensitivity of this pipeline.
 Supplemental Table \@ref(tab:samplesheet) provides the list of fungal species or strains and the number of raw reads available for the mock dataset.
 The steps to generate and prepare reads for this synthetic dataset are outlined below.
@@ -35,27 +35,30 @@ The database used for reference based chimera detection of full ITS sequence was
 
 ```{r filterTrimFlowchart, echo=FALSE, fig.align ='center', fig.cap = "The steps taken to prepare raw reads for mock scenarios. Boxes inticate trimming and filtering stages of the pipeline with and the software used is in paretheses."}
 DiagrammeR::grViz("digraph {
-  graph [layout = dot, rankdir = LR]
+  graph [layout = dot, label='Quality Filtering of Raw Reads', labelloc='tl', labeljust='l', rankdir = LR, fontsize='30']
 
-  node [shape = rectangle, peripheries=2]
+  node [shape = rectangle, peripheries=2, fontsize='20']
   rec1 [label = 'Adapter trimming\n(dorado)']
   rec2 [label = 'Primer trimming\n(cutadapt)']
   rec3 [label = 'Barcode region extraction\n(ITSxpress)']
   rec4 [label = 'Quality filtering\n(chopper)']
-  rec5 [label = 'Chimera filtering\n(vsearch)']
-
-  node [shape = rectangle, peripheries=1]
-  rec7 [label = 'UNITE DB']
+    subgraph chimera {
+    rank = same
+    rec5 [label = 'Chimera filtering\n(vsearch)']
+    node [shape = rectangle, peripheries=1]
+    rec7 [label = 'UNITE DB']
+    rec7 -> rec5;
+  }
 
   node [shape = plaintext, peripheries=0]
-  rec0 [label = 'raw demultiplexed reads\nfastq']
+  rec0 [label = 'Raw demultiplexed reads\nfastq']
   rec6 [label = 'Quality filtered\nfull ITS sequences']
 
 
   # edge definitions with the node IDs
+  edge [ fontsize='20']
   rec0 -> rec1 -> rec2 -> rec3
   rec3 -> rec4 [ label = 'Full ITS']
-  rec7 -> rec5
   rec4 -> rec5 -> rec6
   }",
   height = 200)
@@ -65,7 +68,7 @@ DiagrammeR::grViz("digraph {
 ### Sample selection and taxonomic naming validation
 
 To ensure that taxonomic names were used consistently between the fungal isolate samples and the reference database, manual validation of each sample name was performed.
-A search was conducted for the recorded species name of each sample in the 2024 UNITE reference database [@vu_2024_12580255].
+A search was conducted for the recorded species name of each sample in the 2024 UNITE reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255].
 Most species names that could not be found were either misspelled or used an older taxonomic synonym.
 For example, *Nakaseomyces glabratus* has been recorded by its former name *Candida glabrata* which the latter could not be found in the reference database.
 Names of samples were manually updated using current names found in both Index Fungorum (www.indexfungorum.org) and the 2024 UNITE reference database.
@@ -115,24 +118,33 @@ Each sequence was transformed into a k-mer frequency vector and stored in a tabu
 In our pipeline, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST).
 The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020].
 Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan].
-The 'cluster_selection_epsilon' parameter used in HDBSCAN was set to $0.5$ as used in [@langsiriTargetedSequencingAnalysis2023], while the 'min_cluster_size' parameter was set to 0.5% of the library size.
+The 'cluster_selection_epsilon' parameter used in HDBSCAN was set to 0.5 as used in [@langsiriTargetedSequencingAnalysis2023], while the 'min_cluster_size' parameter was set to 0.5% of the library size.
 See Section \@ref(cluster-results) for determination of the 'min_cluster_size' parameter.
 
 ```{r clusterAssignFlowchart, echo=FALSE, fig.align ='center', fig.cap = "Clustering stages of the pipeline with the tools used in paretheses."}
 DiagrammeR::grViz("digraph {
-  graph [layout = dot, rankdir = LR]
+  graph [layout = dot, label='Read Clustering', labelloc='tl', labeljust='l', rankdir = LR, fontsize='50']
 
-  node [shape = rectangle, peripheries=1]
+  node [shape = rectangle, peripheries=1, fontsize='30', width=3.5]
 
-  derep [ label = 'Read dereplication\n(vsearch)' ]
-  vsearch [ label = '97% identity clustering\n(vsearch)' ]
-  kmer [ label = 'k-mer frequencies' ]
-  umap [ label = 'Dimension reduction\n(UMAP)' ]
-  hdbscan [ label = 'Clustering\n(HDBSCAN)' ]
-  mostA [ label = 'Most abundant sequence\n(vsearch)' ]
+  subgraph {
+    subgraph A {
+      derep [ label = 'Read dereplication\n(vsearch)' ]
+      vsearch [ label = '97% identity clustering\n(vsearch)' ]
+    }
+    subgraph B {
+      kmer [ label = 'k-mer frequencies\n(python)' ]
+      umap [ label = 'Dimension reduction\n(UMAP)' ]
+      hdbscan [ label = 'Clustering\n(HDBSCAN)' ]
+    }
+  }
+  subgraph {
+    rank = same
+    mostA [ label = 'Most abundant sequence\n(vsearch)' ]
+    consA [ label = 'Consensus sequence\n(polishing)' ]
+    centr [ label = 'centroids\n(vsearch)' ]
 
-  dnabarcoder [ label = 'Taxonomic Assignment\n(dnabarcoder)' ]
-  unite [ label = 'UNITE DB' ]
+  }
 
   node [shape = rectangle, peripheries=2]
   subs [label = 'Scenario 1\nEven abundance\n(6 libs, 5 reps)']
@@ -140,32 +152,64 @@ DiagrammeR::grViz("digraph {
   node [shape = plaintext, peripheries=0]
   qc [label = 'Quality filtered\nfull ITS sequences']
 
+  reps [label = 'Representative sequences\nfor classification' ]
 
   # edge definitions with the node IDs
+  edge [ fontsize = '20']
   qc -> subs
   subs -> derep -> vsearch
   subs -> kmer -> umap -> hdbscan -> mostA
+  hdbscan -> consA
+  vsearch -> consA
 
-  vsearch -> dnabarcoder [ label = 'centroids' ]
-  mostA -> dnabarcoder [ label = 'most abundant' ]
-  unite -> dnabarcoder
+  vsearch -> centr -> reps
+  consA -> reps
+  mostA -> reps
+  #vsearch -> dnabarcoder [ label = 'centroids' ]
+  #mostA -> dnabarcoder [ label = 'most abundant' ]
+  #unite -> dnabarcoder
   }",
   height = 200)
 ```
 
 ## Bioinformatics - Taxonomic assignments
 
-A representative sequence from each cluster was selected to give taxonomic assignments to the cluster.
+A representative sequence was selected from each cluster to provide a taxonomic assignment.
 Our initial approach used the most abundant sequence of each cluster as the representative sequence.
-The VSEARCH clustering approach provides these sequences with the '`--centroids`' option.
+The VSEARCH clustering approach provides the most abundant sequences with the '`--centroids`' option.
 To determine the most abundant sequence from clusters in the UMAP + HDBSCAN approach, the VSEARCH '`--fastx_uniques`' command in combination with '`--topn 1`' option was used.
 
-The representative sequence from each cluster was then given a taxonomic assignment with dnabarcoder v1.0.6 [@vuDnabarcoderOpensourceSoftware2022].
-In this case full ITS sequences were classified against the UNITE 2024 reference database [@vu_2024_12580255] using precomputed similarity cutoffs provided by the dnabarcoder project (unite2024ITS.unique.cutoffs.best.json).
+Alternatively, a consensus sequence was built from the reads from each cluster following a similar approach used by nanoCLUST see Figure \@ref(fig:clusterPolishFlow).
+First a subset of 200 sequences was selected from each cluster to reduce computation time and space requirements.
+Then a draft sequence was selected by taking the read with the highest Average Nucleotide Identity (ANI) to all the other sequences with FastANI [@jainHighThroughputANI2018].
+Subsequently, the draft read underwent two rounds of polishing using Racon v1.5.0 [@vaserFastAccurateNovo2017] then Medaka v1.12.0 ([https://github.com/nanoporetech/medaka](https://github.com/nanoporetech/medaka)).
+As Canu [@korenCanuScalableAccurate2017] is designed as a long-read assembler, it has a strict minimum genome size of 1000 making it unable to polish full ITS sequences from my dataset (which were around 400bp).
 
-- TODO: assign based on polished sequence of each cluster (NanoCLUST method)
-  - fastANI - compute draft sequence from each cluster (based on highest Average Nucleotide Identity)
-  - minimap2 - map reads to draft
-  - racon - polishing
-  - medaka - polishing step
-  - unable to do read correction with canu due to full ITS region being too short. Canu requires a '`genomeSize`' of at least 1000, where mean full ITS from our samples were ~400.
+```{r clusterPolishFlow, echo=FALSE, fig.align ='center', fig.cap = "The process of producing a consensus sequences for each cluster by selecting and polishing a draft read. Tools used for each stage are in parentheses."}
+DiagrammeR::grViz("digraph {
+  graph [layout = dot, label='Consensus Sequence Polishing', labelloc='tl', labeljust='l', rankdir = LR, fontsize='50']
+
+  node [shape = rectangle, peripheries=1, fontsize='30', width=3.5]
+
+  subset [ label = 'Subset reads for polishing\n(n=200)' ]
+  subgraph {
+  fastANI [ label = 'Select draft by max ANI\n(fastANI)' ]
+  racon [  label = 'Polish draft\n(racon)' ]
+  medaka [ label = 'Polish draft\n(medaka)' ]
+  }
+
+  node [shape = plaintext, peripheries=0]
+  reads [label = 'Set of reads in same cluster']
+  reps [label = 'Representative sequences\nfor classification' ]
+
+  # edge definitions with the node IDs
+  edge [ fontsize = '20']
+  reads -> subset -> fastANI -> racon -> medaka -> reps [ weight = 10 ]
+  subset -> racon:nw
+  subset -> medaka:nw
+  }",
+  height = 150)
+```
+
+The representative sequence from each cluster was then given a taxonomic assignment with dnabarcoder v1.0.6 [@vuDnabarcoderOpensourceSoftware2022].
+In this case full ITS sequences were classified against the UNITE 2024 reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255] using precomputed similarity cutoffs provided by the dnabarcoder project (unite2024ITS.unique.cutoffs.best.json, @vuDnabarcoderOpensourceSoftware2022).

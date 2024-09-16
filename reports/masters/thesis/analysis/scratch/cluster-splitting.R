@@ -6,16 +6,16 @@ library(glue)
 library(scales)
 library(tidytext)
 
-samplesheet <- read.csv('../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
+samplesheet <- read.csv('../../../../../experiments/66-fungal-isolate-ONT/Rep1_Run2_ITS_Fungal_database_samplesheet.csv', header = TRUE, row.names = 1)
 rownames(samplesheet) <- paste0("barcode", rownames(samplesheet))
 
 nanoclust_otus <-
-  read.csv('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/hdbscan_clustering/FULL_ITS/2000/1/otu_table/otu_table.tsv', sep = '\t', row.names = 1) %>%
+  read.csv('../../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/hdbscan_clustering/FULL_ITS/2000/1/otu_table/otu_table.tsv', sep = '\t', row.names = 1) %>%
     otu_table(taxa_are_rows = TRUE) %>%
     phyloseq(sample_data(samplesheet))
 
 vsearch_otus <-
-  readRDS('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/phyloseq/FULL_ITS/2000/1/all_samples/all_samples.phyloseq.rds') %>%
+  readRDS('../../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14/phyloseq/FULL_ITS/2000/1/all_samples/all_samples.phyloseq.rds') %>%
     phyloseq(sample_data(samplesheet))
 taxa_names(vsearch_otus) <- 1:ntaxa(vsearch_otus)
 
@@ -50,8 +50,8 @@ plot_splitting <- function(phylo, n) {
 
 first_30_nano <- plot_splitting(nanoclust_otus, 1:30)
 second_30_nano <- plot_splitting(nanoclust_otus, 31:nsamples(nanoclust_otus))
-ggsave('images/06-cluster-splitting-nanoclust-1-30.png', first_30_nano)
-ggsave('images/06-cluster-splitting-nanoclust-31-60.png', second_30_nano)
+ggsave('../images/06-cluster-splitting-nanoclust-1-30.png', first_30_nano)
+ggsave('../images/06-cluster-splitting-nanoclust-31-60.png', second_30_nano)
 
 
 filter_taxa_by_thresh <- function(phylo, thresh) {
