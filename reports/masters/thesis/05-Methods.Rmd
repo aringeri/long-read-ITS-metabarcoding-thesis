@@ -93,6 +93,9 @@ The seed values given to seqtk's 'sample' command for each repetition were gener
 ### Synthetic dataset - Scenario 2 - Uneven (5 low abundance)
 
 - 5 samples with very low, rest high
+- selected samples randomly
+- removed duplicate species
+- 1/20, 1/10, 1/5, 2/5, 1/2
 
 ### Synthetic dataset - Scenario 3 - Uneven (5 high abundance)
 

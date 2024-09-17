@@ -16,7 +16,7 @@ samplesheet <- read_samplesheet(config)
 
 nanoclust <- load_nanoclust_phyloseq_3(
   samplesheet=samplesheet, experiment=config$experiment_path, reads_per_sample=config$sample_depth, repetition=config$repetition,
-  sequence_type='nanoclust_abundant', min_cluster_size = '0.005') %>%
+  sequence_type='nanoclust_abundant', min_cluster_size = '0.001') %>%
   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
 
 # nanoclust_abundant <- load_nanoclust_phyloseq_2(
@@ -31,15 +31,17 @@ nanoclust <- load_nanoclust_phyloseq_3(
 
 vsearch <- load_vsearch_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition) %>%
   filter_taxa_by_thresh(0.0015)
+taxa_names(vsearch) <- 1:ntaxa(vsearch)
 
 ggplot_splitting <- function(phylo, df, taxa_labels=FALSE, ncol=NULL, maxY=2200) {
-  colours <- c("0" = "#00A600", "1" = "#E6E600", "2" = "#ECB176", "3" = "#F27971")
+  colours <- c("0" = "#00A600", "1" = "#E6E600", "2" = "#ECB176", "3" = "#F27971", "4" = "#7F7F7F")
+  levs <- seq(0,4)
 
   df %>%
-    ggplot( aes(x=OTU, y=count, fill=factor(match, levels = seq(0,3))) ) +
+    ggplot( aes(x=OTU, y=count, fill=factor(match, levels = levs)) ) +
     geom_col() +
     # geom_col_pattern(aes(pattern_shape = factor(match)), pattern = 'pch', pattern_density = 0.5) +
-    geom_label(aes(label = count, fill=factor(match, levels = seq(0,3))), vjust = -0.2, size = 3, show.legend = FALSE) +
+    geom_label(aes(label = count, fill=factor(match, levels = levs)), vjust = -0.2, size = 3, show.legend = FALSE) +
     facet_wrap(~barcode,
                labeller = as_labeller(\(x)  paste0(
                  samplesheet[x, 'UpdatedName'], ' (BC ', gsub('barcode','', x), ')'
@@ -58,7 +60,7 @@ ggplot_splitting <- function(phylo, df, taxa_labels=FALSE, ncol=NULL, maxY=2200)
     ) +
     scale_fill_manual(
       values = colours,
-      labels = c("0"= "species","1"= "genus","2"= "family","3"= "unmatched"),
+      labels = c("0"= "species","1"= "genus","2"= "family","3"= "unmatched", "4" ="unclassified kingdom"),
       name = "rank of match"
     ) +
     scale_colour_manual(values = colours, guide='none') +
@@ -94,7 +96,8 @@ organise_df <- function(phylo, subset) {
       match = ifelse(
         !is.na(species_unite) & species == species_unite, 0,
         ifelse(genus == genus_unite, 1,
-          ifelse(family == family_unite, 2,  3)
+          ifelse(family == family_unite, 2,
+            ifelse(family == 'unclassified kingdom', 4,3))
         )
       ),
     ) %>%
@@ -118,7 +121,6 @@ puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), tax
 puccinias
 ggsave('images/06-cluster-splitting-nanoclust-puccinia.png', puccinias)
 
-taxa_names(vsearch) <- 1:ntaxa(vsearch)
 puccinias_vsearch <- plot_splitting(vsearch, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
   labs(title = "VSEARCH")
 puccinias_vsearch
@@ -129,16 +131,35 @@ cryptococcus <- plot_splitting(nanoclust, paste0('barcode', 58:62), taxa_labels 
   labs(title = "UMAP + HDBSCAN")
 cryptococcus_vsearch <- plot_splitting(vsearch, paste0('barcode', 58:62), taxa_labels = TRUE, ncol = 4, maxY=2100) +
   labs(title = "VSEARCH")
-# ggsave('images/06-cluster-splitting-nanoclust-cryptococcus.png', cryptococcus)
-# ggsave('images/06-cluster-splitting-vsearch-cryptococcus.png', cryptococcus_vsearch)
+ggsave('images/06-cluster-splitting-nanoclust-cryptococcus.png', cryptococcus)
+ggsave('images/06-cluster-splitting-vsearch-cryptococcus.png', cryptococcus_vsearch)
+
+
+cand_nanoclust <- nanoclust
+cand_tax <- as.matrix(tax_table(cand_nanoclust))
+incertae <- cand_tax[,'genus'] == 'Debaryomycetaceae gen Incertae sedis'
+cand_tax[incertae, c('family', 'genus', 'species')] <- 'Debaryomycetaceae family'
+tax_table(cand_nanoclust) <- tax_table(cand_tax)
+candidas <- plot_splitting(cand_nanoclust, paste0('barcode', c(47:57)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
+  labs(title = "UMAP + HDBSCAN")
 
 plot_splitting(vsearch, sample_names(vsearch)[1:30])
 plot_splitting(vsearch, sample_names(vsearch)[31:70])
 
-# # ggsave('images/06-cluster-splitting-nanoclust-with-tax-6.png', plot_splitting(nanoclust, 1:6))
-# # ggsave('images/06-cluster-splitting-nanoclust-with-tax-ex.png', plot_splitting(nanoclust, 2))
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-1-30.png', plot_splitting(nanoclust, sample_names(nanoclust)[1:30]))
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-31.png', plot_splitting(nanoclust, sample_names(nanoclust)[31:70]))
+
+
+nanoclust_uneven <- load_nanoclust_phyloseq_3(
+  samplesheet=samplesheet, experiment="../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-uneven-reps-09-16", reads_per_sample=1000, repetition=config$repetition,
+  sequence_type='nanoclust_consensus', min_cluster_size = '0.005') %>%
+  tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+
+plot_splitting(nanoclust_uneven, sample_names(nanoclust_uneven)[1:30])
+plot_splitting(nanoclust_uneven, sample_names(nanoclust_uneven)[31:70])
+
+ntaxa(nanoclust_uneven)
+plot_splitting(nanoclust_uneven, paste0('barcode', c(77, 35, 39, 71, 57, 43)))
 
 # seq_type_comparison <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14-NC"
 # nanoclust_ma <- load_nanoclust_phyloseq_2(samplesheet, seq_type_comparison, sequence_type="nanoclust_abundant",reads_per_sample=1000, repetition=1) %>%

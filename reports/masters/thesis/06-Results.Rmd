@@ -124,3 +124,8 @@ knitr::include_graphics('analysis/images/06-precision-nanoclust-abundance.png')
 
 - precision of nanoclust
     - using consensus
+
+### Sensitivity of cluster thresholds in uneven abundance scenarios (Scenario 2 and 3)
+
+- points at which we lose samples
+- tradeoff -> inflated number of clusters / noisy

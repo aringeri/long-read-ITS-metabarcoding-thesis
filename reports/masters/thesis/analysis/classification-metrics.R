@@ -14,8 +14,6 @@ source('helpers/config.R')
 
 samplesheet <- read_samplesheet(config)
 
-# nanoclust <- load_nanoclust_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition)
-
 calc_precision <- function(phylo, samplesheet) {
   tax_with_counts <- cbind.data.frame(
       tax_table(phylo),
@@ -51,32 +49,6 @@ calc_precision <- function(phylo, samplesheet) {
   left_join(classification_counts, precision_counts, join_by(barcode), suffix = c('', '.y'))
 }
 
-# precision_stats <- calc_precision(nanoclust, samplesheet)
-
-# sample level
-# cowplot::plot_grid(ncol = 1,
-# precision_stats %>%
-#   mutate(proportion = genus_classified / total) %>%
-#   ggplot(aes(x=barcode, y=proportion)) +
-#     geom_col() +
-#     geom_hline(aes(yintercept = sum(genus_classified) / sum(total))) +
-#     scale_x_discrete(
-#       labels = \(x) sample_data(nanoclust)[x]$UpdatedName,
-#       limits = rownames(sample_data(nanoclust))[order(sample_data(nanoclust)$UpdatedName)]
-#     ) +
-#     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)),
-#   precision_stats %>%
-#     mutate(precision = genus_correct / genus_classified) %>%
-#     ggplot(aes(x=barcode, y=precision)) +
-#     geom_col() +
-#     geom_hline(aes(yintercept = sum(genus_correct) / sum(genus_classified))) +
-#     scale_x_discrete(
-#       labels = \(x) sample_data(nanoclust)[x]$UpdatedName,
-#       limits = rownames(sample_data(nanoclust))[order(sample_data(nanoclust)$UpdatedName)]
-#     ) +
-#     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-# )
-
 load_all_precision_data <- function(config, samplesheet, load_phyloseq=load_nanoclust_phyloseq_3) {
   cluster_dir <- glue('{config$experiment_path}/hdbscan_clustering/FULL_ITS/')
 
@@ -108,20 +80,6 @@ load_all_precision_data <- function(config, samplesheet, load_phyloseq=load_nano
   df
 }
 
-
-# all_df <- load_all_precision_data(config, samplesheet, load_nanoclust_phyloseq)
-# all_df$method <- "nanoclust"
-# all_df_vsearch <- load_all_precision_data(config, samplesheet, load_vsearch_phyloseq)
-# all_df_vsearch$method <- "vsearch_abundant"
-
-# cons_config <- Config$new(
-#   experiment_path = "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14-NC",
-#   samplesheet_path = config$samplesheet_path,
-#   sample_depth = config$sample_depth,
-#   repetition = config$repetition
-# )
-
-
 all_df_cons <- load_all_precision_data(
   config, samplesheet,
   function(samplesheet, experiment, reads_per_sample, repetition, min_cluster_size) {
@@ -150,7 +108,8 @@ all_df$method <- "nanoclust_abundant"
 
 precision_summary <- rbind(all_df, all_df_cons) %>%
   # filter(sample_depth %in% c(1000, 2000)) %>%
-  filter(sample_depth > 160) %>%
+  filter(min_cluster_size %in% c(0.005)) %>%
+  filter(sample_depth > 49) %>%
   summarise(
     .by = c(method, sample_depth, rep, min_cluster_size),
     genus_classification_prop = sum(genus_classified) / sum(total),
@@ -159,36 +118,19 @@ precision_summary <- rbind(all_df, all_df_cons) %>%
     species_classification_prop_by_depth = sum(species_classified) / sum(sample_depth),
     genus_precision = sum(genus_correct) / sum(genus_classified),
     species_precision = sum(species_correct) / sum(species_classified),
-  ) #%>%
-  # summarise(
-  #   .by = c(method, sample_depth),
-  #   genus_classification_prop = mean(genus_classification_prop),
-  #   species_classification_prop = mean(species_classification_prop),
-  #   genus_precision = mean(genus_precision),
-  #   species_precision = mean(species_precision)
-  # )
+  )
 
 precision_plot <- cowplot::plot_grid(
   precision_summary %>%
     ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth, shape=factor(sample_depth), colour=factor(method))) +
       geom_point() +
       expand_limits(x=c(.75, .825), y=c(.8, 1)) +
-      facet_wrap(~sample_depth + min_cluster_size) +
+      facet_wrap(~method) +
       scale_y_continuous(labels = scales::percent) +
       scale_x_continuous(labels = scales::percent) +
       scale_shape_discrete(name="reads per sample") +
       labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
-      theme(aspect.ratio=1)#,
-  # precision_summary %>%
-  #   ggplot(aes(x=species_precision, y=species_classification_prop, shape=factor(sample_depth), colour=factor(min_cluster_size))) +
-  #   geom_point() +
-  #   facet_wrap(~method) +
-  #   expand_limits(x=c(.625, .825), y=c(.6, 1)) +
-  #   scale_y_continuous(labels = scales::percent) +
-  #   scale_x_continuous(labels = scales::percent) +
-  #   scale_shape_discrete(name="reads per sample") +
-  #   labs(x="Species precision (%)", y="Species classification proportion (%)") +
-  #   theme(aspect.ratio=1)
+      theme(aspect.ratio=1)
 )
 precision_plot
 ggsave('./images/06-precision-nanoclust-abundance.png', precision_plot)
