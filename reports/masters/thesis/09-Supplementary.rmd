@@ -6,6 +6,7 @@ library(dplyr)
 knitr::kable(
   read.csv('../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv') %>%
     rename_with(\(col) gsub('\\.', ' ', col)),
+  align = c('r', 'l', 'r', 'r'),
   caption = "Samplesheet showing the species, sequencing barcode and number of raw reads after basecalling."
 )
 ```

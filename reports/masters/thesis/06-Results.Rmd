@@ -14,6 +14,11 @@ Such large loss of reads can be attributed to many of the reads from the dataset
 knitr::include_graphics('analysis/images/06-read-loss-by-stage.png')
 ```
 
+
+```{r readCountDistributionBySample, echo=FALSE, fig.align = 'center', fig.cap = 'The distribution of read counts per sample before and after quality control.'}
+knitr::include_graphics('analysis/images/06-read-count-distribution-by-sample.png')
+```
+
 It should be noted that no reads were removed after trimming ONT adapter sequences at the ends of reads with Dorado.
 While the overall read loss for the chimera filtering step was relatively low (0.26%), we observed sample bias in reference-based chimera detection step for samples which were excluded from the analysis (99.0% loss in Puccinia triticina and 68.8% loss in Fusarium proliferatum).
 
