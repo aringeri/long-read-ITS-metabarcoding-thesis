@@ -134,3 +134,51 @@ precision_plot <- cowplot::plot_grid(
 )
 precision_plot
 ggsave('./images/06-precision-nanoclust-abundance.png', precision_plot)
+
+
+vsearch_stats <- tibble()
+for (t in c(0, 0.0005, 0.001, 0.0015)) {
+  for (rep in 1:5) {
+    vsearch_cons <- load_vsearch_phyloseq(samplesheet, config$experiment_path, 2000, rep, consensus=T)
+    vsearch_stats_cons <- calc_precision(vsearch_cons  %>% filter_taxa_by_thresh(t), samplesheet)
+    vsearch_stats_cons$method <- 'consensus'
+    vsearch_stats_cons$sample_depth <- 2000
+    vsearch_stats_cons$rep <- rep
+    vsearch_stats_cons$min_cluster_size <- t
+
+
+    vsearch_abund <- load_vsearch_phyloseq(samplesheet, config$experiment_path, 2000, rep, consensus=F)
+    vsearch_stats_abund <- calc_precision(vsearch_abund %>% filter_taxa_by_thresh(t), samplesheet)
+    vsearch_stats_abund$method <- 'abundance'
+    vsearch_stats_abund$sample_depth <- 2000
+    vsearch_stats_abund$rep <- rep
+    vsearch_stats_abund$min_cluster_size <- t
+
+    vsearch_stats <- rbind(vsearch_stats, vsearch_stats_abund, vsearch_stats_cons)
+  }
+}
+
+vsearch_precision_summary <- vsearch_stats %>%
+  # filter(sample_depth %in% c(1000, 2000)) %>%
+  # filter(min_cluster_size %in% c(0.005)) %>%
+  # filter(sample_depth > 49) %>%
+  summarise(
+    .by = c(method, sample_depth, rep, min_cluster_size),
+    genus_classification_prop = sum(genus_classified) / sum(total),
+    genus_classification_prop_by_depth = sum(genus_classified) / sum(sample_depth),
+    species_classification_prop = sum(species_classified) / sum(total),
+    species_classification_prop_by_depth = sum(species_classified) / sum(sample_depth),
+    genus_precision = sum(genus_correct) / sum(genus_classified),
+    species_precision = sum(species_correct) / sum(species_classified),
+  )
+
+vsearch_precision_summary %>%
+  ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth, shape=factor(min_cluster_size), colour=factor(rep))) +
+  geom_point() +
+  # expand_limits(x=c(.75, .825), y=c(.8, 1)) +
+  facet_wrap(~method) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_shape_discrete(name="minimum cluster size") +
+  labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
+  theme(aspect.ratio=1)

@@ -110,10 +110,17 @@ load_vsearch_phyloseq <- function(
   samplesheet,
   experiment="../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14",
   reads_per_sample=2000,
-  repetition=2)
+  repetition=2,
+  consensus=F)
 {
   vsearch_otus <- readRDS(glue('{experiment}/phyloseq/FULL_ITS/{reads_per_sample}/{repetition}/all_samples/all_samples.phyloseq.rds'))
-  tax_table <- read_dna_barcoder_classification_vsearch(glue('{experiment}/dnabarcoder/vsearch/FULL_ITS/{reads_per_sample}/{repetition}/classify/all_samples.unite2024ITS_BLAST.classification'))
+  rep_seq <- if (consensus) 'vsearch_consensus' else 'vsearch'
+  classFile <- list.files(
+    glue('{experiment}/dnabarcoder/{rep_seq}/FULL_ITS/{reads_per_sample}/{repetition}/classify/'),
+    pattern='*.unite2024ITS_BLAST.classification',
+    full.names = T
+  )
+  tax_table <- read_dna_barcoder_classification_vsearch(classFile[1])
 
   vsearch_phylo <- phyloseq(vsearch_otus, tax_table, sample_data(samplesheet))
 }

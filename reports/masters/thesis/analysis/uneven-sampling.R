@@ -28,10 +28,10 @@ for (min_cluster_size in min_cluster_sizes) {
     pivot_longer(barcode25:barcode89, names_to = "barcode", values_to = 'count') %>%
     filter(count > 0) %>%
     # filter(barcode %in% names(low_sampled_barcodes)) %>%
-    group_by(barcode) %>%
+    group_by(OTU) %>%
     mutate(
       clusterSize = sum(count),
-      numOTUs = length(OTU),
+      # numOTUs = length(OTU),
       sample_count = ifelse(barcode %in% names(low_sampled_barcodes),
                             as.character(low_sampled_barcodes[barcode]*sample_depth),
                             as.character(sample_depth))
@@ -46,24 +46,32 @@ library_size <- 50*config$sample_depth + sum(config$sample_depth*low_sampled_bar
 
 combined_data_2 <- combined_data %>%
   mutate(barcode = sub('barcode', '', barcode)) %>%
-  mutate(
-    OTU = tidytext::reorder_within(barcode, clusterSize, min_cluster_size)
-  )
+  mutate( OTU = tidytext::reorder_within(OTU, clusterSize, min_cluster_size) )
+  # mutate( OTU = tidytext::reorder_within(OTU, clusterSize, min_cluster_size) )
 
-combined_data_2 %>%
+uneven_nanoclust <- combined_data_2 %>%
+  # filter(min_cluster_size %in% c(0, 0.001)) %>%
   ggplot(aes(
-    x=reorder(barcode,clusterSize),
+    x=OTU,#reorder(OTU, clusterSize),#reorder(barcode,clusterSize),
     y=count,
     # fill=barcode %in% names(low_sampled_barcodes)
     fill=reorder(sample_count, as.numeric(sample_count))
   )) +
-  geom_bar(colour='grey23', stat='identity') +
+  geom_bar(stat='identity', color='grey42') +
   geom_hline(aes(yintercept = min_cluster_size * library_size), linetype='dashed') +
-  geom_text(aes(label=round(min_cluster_size * library_size), x=52, y=round(min_cluster_size * library_size + 100)), data = combined_data %>% group_by(min_cluster_size)) +
-  facet_wrap(~min_cluster_size, ncol = 1) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  tidytext::scale_x_reordered() +
-  scale_fill_discrete(name="sample depth") +
+  # geom_text(aes(label=round(min_cluster_size * library_size), x=52, y=round(min_cluster_size * library_size + 100)), data = combined_data %>% group_by(min_cluster_size)) +
+  facet_wrap(ncol=2, ~min_cluster_size,
+             labeller = as_labeller(\(x) paste0('minimum ', ifelse(x == 0, "2", as.numeric(x)*library_size), " reads (", x, ")")),
+             scales='free_x'
+  ) +
+  theme(
+    axis.text.x=element_blank(),
+    axis.ticks.x=element_blank()
+    # axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)
+  ) +
+  # tidytext::scale_x_reordered() +
+  # scale_fill_discrete(name="sample depth") +
+  scale_fill_manual(name="sample depth", values = c("#E87D72", "#B39F33", "#53B64C", "#55BCC2", "#6E9CF8", "grey69")) +
   scale_colour_discrete(guide="none")
 
 # phylo <- load_nanoclust_phyloseq_3(

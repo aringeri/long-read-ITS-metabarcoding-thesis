@@ -1,59 +1,40 @@
 library(tidyr)
 library(dplyr)
 library(glue)
+library(ggplot2)
 
 source('./helpers/config.R')
+source('./helpers/qc-stats.R')
 
 samplesheet <- read_samplesheet(config) %>%
   tibble::rownames_to_column("barcode") %>%
   mutate(barcode = gsub('barcode', '', barcode))
 
-gather_qc_stats <- function(experiment_path) {
-  post_qc_stats <- data.frame(bc = NULL, qcd_reads = NULL)
+fmted <- read_counts_by_sample_before_and_after_qc(samplesheet=samplesheet)
 
-  qc_dir <- glue('{experiment_path}/QC/05-post_chimera_filtering/FULL_ITS/nanoplot')
 
-  sample_dirs <- list.dirs(
-    qc_dir,
-    recursive = FALSE, full.names = FALSE) %>%
-    grep('BC.*', ., value = TRUE)
+cutoff <- 2500
+sample_read_distribution <- cowplot::plot_grid(
+  fmted %>%
+    ggplot(aes(x=num_seqs+1)) +
+    geom_histogram(bins=66) +
+    # scale_x_continuous(n.breaks = 16, name = "Number of reads") +
+    scale_x_log10(breaks = c(0, 10, 100, 1000, cutoff, 10000, 40000, 110000), limits = c(1, max(fmted$num_seqs)), name="Number of reads") +
+    scale_y_continuous(limits = c(0,16),name = "Number of samples") +
+    labs(title='A) Raw Reads') +
+    theme(aspect.ratio = 1),
+  fmted %>%
+    ggplot(aes(x=as.numeric(qcd_reads)+1)) +
+    geom_histogram(bins=66) +
+    geom_vline(xintercept = cutoff, linetype='dashed') +
+    scale_x_log10(breaks = c(0, 10, 100, 1000, cutoff, 10000, 40000, 110000), limits = c(1, max(fmted$num_seqs)), name="Number of reads") +
+    scale_y_continuous(limits = c(0,16), name = "Number of samples") +
+    labs(title='B) Reads after QC') +
+    theme(aspect.ratio = 1)
+)
+sample_read_distribution
 
-  for (sample_dir in sample_dirs) {
-    sample_stats <- read.csv(glue('{qc_dir}/{sample_dir}/NanoStats.txt'), sep = '\t', row.names = 1)
-    bc <- sub('BC', '', substring(sample_dir, regexpr('BC.*', sample_dir)))
-    post_qc_stats[bc, 'qcd_reads'] <- sample_stats['number_of_reads', 'dataset']
-  }
-  post_qc_stats %>% tibble::rownames_to_column('BC')
-}
-
-qc_stats <- gather_qc_stats('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-all-sample-qc')
-
-fmted <- read.csv('../../../../experiments/66-fungal-isolate-ONT/sample-stats.tsv', sep='\t') %>%
-  separate_wider_delim(file, '.', names_sep = "_") %>%
-  mutate(
-    BC = gsub('BC', '', file_4),
-    sample = gsub('_', ' ', file_3)
-  ) %>%
-  arrange(BC) %>%
-  left_join(samplesheet, join_by(BC == barcode)) %>%
-  mutate(
-    sample = ifelse(OriginalName != UpdatedName, paste0(sample, " (", gsub('_', ' ', UpdatedName), ")"), sample)
-  ) %>%
-  select(BC, sample, num_seqs) %>%
-  left_join(qc_stats, join_by(BC)) %>%
-  mutate(
-    qcd_reads = ifelse(is.na(qcd_reads), NA, paste0(qcd_reads, " (", scales::percent(as.numeric(qcd_reads) / as.numeric(num_seqs), accuracy = 0.1), ")"))
-  ) %>%
-  rename(
-    Barcode = 'BC',
-    Sample = 'sample',
-    'Number of raw reads'=num_seqs,
-    'Number of reads after QC'=qcd_reads,
-  )
-
-write.csv(fmted, '../../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv', row.names = F)
-read.csv('../../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv') %>%
-  rename_with(\(col) gsub('\\.', ' ', col)) %>% View()
+ggsave('images/06-read-count-distribution-by-sample.png', sample_read_distribution)
 
 
 
