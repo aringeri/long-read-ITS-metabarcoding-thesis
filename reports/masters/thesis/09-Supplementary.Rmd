@@ -1,6 +1,10 @@
 # Supplemental Tables
 
-```{r samplesheet, echo=FALSE, message=FALSE }
+
+
+```{r}
+#| message: false
+#| label: tbl-samplesheet
 library(dplyr)
 
 knitr::kable(
@@ -16,10 +20,12 @@ knitr::kable(
 ## Nanoclust splitting (all samples)
 
 
-```{r nanoclustSplitting1, echo=FALSE, fig.fullwidth=TRUE}
-knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png')
-```
+:::{#fig-nanoclustSplitting2}
+![](analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png)
+![](analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png)
 
-```{r nanoclustSplitting2, echo=FALSE, fig.fullwidth=TRUE, fig.cap = "Plot indicating the splitting of all samples into clusters using the UMAP + HDBSCAN method. Each plot shows how reads from each sample are distributed into clusters. Bars indicate the abundance of a cluster (number of reads). Taxonomic classification of each cluster is shown in the X axis labels. Green indicates that a cluster matches the expected species-level classification."}
-knitr::include_graphics('analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png')
-```
+Plot indicating the splitting of all samples into clusters using the UMAP + HDBSCAN method. Each plot shows how reads from each sample are distributed into clusters. Bars indicate the abundance of a cluster (number of reads). Taxonomic classification of each cluster is shown in the X axis labels. Green indicates that a cluster matches the expected species-level classification.
+
+Clustering by Sample - NanoCLUST
+
+:::

@@ -1,0 +1,32 @@
+project:
+  type: book
+
+book:
+  title: "Metabarcoding of Fungi with Oxford Nanopore Sequencing"
+  author: Alex Ringeri
+  chapters:
+    - index.qmd
+    - 05-Methods.Rmd
+    - 06-Results.Rmd
+    - 07-Discussion.Rmd
+    - 08-Conclusion.Rmd
+    - 09-Supplementary.Rmd
+    - 10-References.Rmd
+
+bibliography: '../../references.bib'
+csl: '../../bioinformatics.csl'
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+  docx:
+    toc: true
+    number-sections: true
+    highlight-style: github
+#    reference-doc: reference.docx
+
+fig-cap-location: top
+execute:
+  echo: false
