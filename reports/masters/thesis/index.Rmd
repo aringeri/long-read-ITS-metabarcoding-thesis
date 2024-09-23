@@ -4,9 +4,9 @@ author: Alex Ringeri
 site: bookdown::bookdown_site
 documentclass: article
 output:
-    #bookdown::pdf_document2:
-    #    toc: yes
     bookdown::html_document2:
+        toc: yes
+    bookdown::pdf_document2:
         toc: yes
     #bookdown::word_document2: default
     #bookdown::gitbook: default
