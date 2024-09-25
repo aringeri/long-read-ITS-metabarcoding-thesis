@@ -13,6 +13,7 @@ source('helpers/dnabarcoder.R')
 source('helpers/config.R')
 
 samplesheet <- read_samplesheet(config)
+nsamples <- 58
 
 calc_precision <- function(phylo, samplesheet) {
   tax_with_counts <- cbind.data.frame(
@@ -106,12 +107,19 @@ all_df <- load_all_precision_data(
   })
 all_df$method <- "nanoclust_abundant"
 
+selected_min_cluster_sizes <- c(0, 0.001, 0.005)
+
 precision_summary <- rbind(all_df, all_df_cons) %>%
   # filter(sample_depth %in% c(1000, 2000)) %>%
-  filter(min_cluster_size %in% c(0.005)) %>%
+  filter(min_cluster_size %in% c(0, 0.001, 0.005)) %>%
   filter(sample_depth > 49) %>%
+  mutate(
+    library_size = sample_depth*nsamples,
+    min_cluster_size = as.numeric(min_cluster_size),
+    # method = ifelse(method == 'nanoclust_abundant', "most abundant", "consensus")
+  ) %>%
   summarise(
-    .by = c(method, sample_depth, rep, min_cluster_size),
+    .by = c(method, library_size, rep, min_cluster_size),
     genus_classification_prop = sum(genus_classified) / sum(total),
     genus_classification_prop_by_depth = sum(genus_classified) / sum(sample_depth),
     species_classification_prop = sum(species_classified) / sum(total),
@@ -122,13 +130,20 @@ precision_summary <- rbind(all_df, all_df_cons) %>%
 
 precision_plot <- cowplot::plot_grid(
   precision_summary %>%
-    ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth, shape=factor(sample_depth), colour=factor(method))) +
+    ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth,
+               shape=factor(library_size), colour=factor(method, labels = c("most abundant", "consensus")))) +
       geom_point() +
       expand_limits(x=c(.75, .825), y=c(.8, 1)) +
-      facet_wrap(~method) +
+      facet_grid(
+        rows=vars(min_cluster_size), cols=vars(method),
+        labeller = as_labeller(\(x)
+           ifelse(is.na(as.numeric(x)), ifelse(x == 'nanoclust_abundant', "most abundant", "consensus") , paste0("min OTU size (", scales::percent(as.numeric(x)), ")"))
+        ),
+      ) +
       scale_y_continuous(labels = scales::percent) +
-      scale_x_continuous(labels = scales::percent) +
-      scale_shape_discrete(name="reads per sample") +
+      scale_x_continuous(labels = scales::percent, n.breaks = 3) +
+      scale_shape_discrete(name="Library size") +
+      scale_colour_discrete(name="Representative sequence") +
       labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
       theme(aspect.ratio=1)
 )
@@ -137,33 +152,39 @@ ggsave('./images/06-precision-nanoclust-abundance.png', precision_plot)
 
 
 vsearch_stats <- tibble()
-for (t in c(0, 0.0005, 0.001, 0.0015)) {
-  for (rep in 1:5) {
-    vsearch_cons <- load_vsearch_phyloseq(samplesheet, config$experiment_path, 2000, rep, consensus=T)
-    vsearch_stats_cons <- calc_precision(vsearch_cons  %>% filter_taxa_by_thresh(t), samplesheet)
-    vsearch_stats_cons$method <- 'consensus'
-    vsearch_stats_cons$sample_depth <- 2000
-    vsearch_stats_cons$rep <- rep
-    vsearch_stats_cons$min_cluster_size <- t
+for (sample_depth in c(20, 50, 167, 1000, 2000, 2500)) {
+  for (t in c(0, 0.0005, 0.001, 0.0015)) {
+    for (rep in 1:5) {
+      if (sample_depth==2000) {
+        vsearch_cons <- load_vsearch_phyloseq(samplesheet, config$experiment_path, 2000, rep, consensus=T)
+        vsearch_stats_cons <- calc_precision(vsearch_cons  %>% filter_taxa_by_thresh(t), samplesheet)
+        vsearch_stats_cons$method <- 'consensus'
+        vsearch_stats_cons$sample_depth <- 2000
+        vsearch_stats_cons$rep <- rep
+        vsearch_stats_cons$min_cluster_size <- t
+      }
 
 
-    vsearch_abund <- load_vsearch_phyloseq(samplesheet, config$experiment_path, 2000, rep, consensus=F)
-    vsearch_stats_abund <- calc_precision(vsearch_abund %>% filter_taxa_by_thresh(t), samplesheet)
-    vsearch_stats_abund$method <- 'abundance'
-    vsearch_stats_abund$sample_depth <- 2000
-    vsearch_stats_abund$rep <- rep
-    vsearch_stats_abund$min_cluster_size <- t
+      vsearch_abund <- load_vsearch_phyloseq(samplesheet, config$experiment_path, sample_depth, rep, consensus=F)
+      vsearch_stats_abund <- calc_precision(vsearch_abund %>% filter_taxa_by_thresh(t), samplesheet)
+      vsearch_stats_abund$method <- 'abundance'
+      vsearch_stats_abund$sample_depth <- sample_depth
+      vsearch_stats_abund$rep <- rep
+      vsearch_stats_abund$min_cluster_size <- t
 
-    vsearch_stats <- rbind(vsearch_stats, vsearch_stats_abund, vsearch_stats_cons)
+      vsearch_stats <- rbind(vsearch_stats, vsearch_stats_abund, vsearch_stats_cons)
+    }
   }
 }
 
 vsearch_precision_summary <- vsearch_stats %>%
   # filter(sample_depth %in% c(1000, 2000)) %>%
-  # filter(min_cluster_size %in% c(0.005)) %>%
+  filter(min_cluster_size %in% c(0, 0.0015)) %>%
+  filter(method %in% c('abundance', 'consensus')) %>%
   # filter(sample_depth > 49) %>%
+  mutate(library_size = sample_depth * nsamples) %>%
   summarise(
-    .by = c(method, sample_depth, rep, min_cluster_size),
+    .by = c(method, sample_depth, rep, min_cluster_size, library_size),
     genus_classification_prop = sum(genus_classified) / sum(total),
     genus_classification_prop_by_depth = sum(genus_classified) / sum(sample_depth),
     species_classification_prop = sum(species_classified) / sum(total),
@@ -172,13 +193,36 @@ vsearch_precision_summary <- vsearch_stats %>%
     species_precision = sum(species_correct) / sum(species_classified),
   )
 
-vsearch_precision_summary %>%
-  ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth, shape=factor(min_cluster_size), colour=factor(rep))) +
+vsearch_abundance_precision <- vsearch_precision_summary %>%
+  filter(method == 'abundance') %>%
+  ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth, shape=factor(library_size))) +
   geom_point() +
   # expand_limits(x=c(.75, .825), y=c(.8, 1)) +
-  facet_wrap(~method) +
+  facet_grid(rows=vars(min_cluster_size), cols=vars(method),
+    labeller = as_labeller(\(x)
+      ifelse(is.na(as.numeric(x)), "most abundant", paste0("min OTU size (", scales::percent(as.numeric(x)), ")"))
+    )
+  ) +
   scale_y_continuous(labels = scales::percent) +
   scale_x_continuous(labels = scales::percent) +
-  scale_shape_discrete(name="minimum cluster size") +
+  scale_shape_discrete(name="Library size") +
+  labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
+  theme(aspect.ratio=1)
+ggsave('./images/06-precision-vsearch-abundance.png', vsearch_abundance_precision)
+
+
+vsearch_precision_summary %>%
+  filter(method == 'consensus') %>%
+  ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth, shape=factor(library_size), colour=factor(rep))) +
+  geom_point() +
+  # expand_limits(x=c(.75, .825), y=c(.8, 1)) +
+  facet_grid(rows=vars(min_cluster_size), cols=vars(method),
+             labeller = as_labeller(\(x)
+                                      ifelse(is.na(as.numeric(x)), "most abundant", paste0("min OTU size (", scales::percent(as.numeric(x)), ")"))
+             )
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_shape_discrete(name="Library size") +
   labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
   theme(aspect.ratio=1)

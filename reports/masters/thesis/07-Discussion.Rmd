@@ -1,3 +1,16 @@
 ---
 title: "Discussion"
 ---
+
+- QC approach
+  - limitations of primer trimming
+    - my method is stringent as it requires FWD and REV. This could cause bias in a real world scenario
+    - make this configurable in pipeline for users
+
+
+- Limitations of assessing correct taxonomic assignments
+  - taxonomic labels not always consistent in reference DB
+
+- Recommendations
+  - best practices for running
+    - minimum sample sizes for recovering rare species

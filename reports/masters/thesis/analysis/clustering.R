@@ -59,10 +59,10 @@ otu_counts_by_sample_depth <- taxa_counts %>%
   ) +
   labs(
     title = "VSEARCH",
-    x=glue("total library size ({n_samples} samples)"),
-    y="number of OTUs",
+    x=glue("Total library size ({n_samples} isolates)"),
+    y="Number of OTUs",
     colour = "Min OTU size\n(proportion of library size)",
-    shape = "Reads per sample"
+    shape = "Reads per isolate"
   ) +
   # stat_summary(aes(x=factor(sample_depth), y = nOTUs, group=thresh, linetype=thresh), fun=mean, geom="line") +
   stat_summary(aes(x=sample_depth, y = nOTUs, group=thresh), fun=mean, geom="line") +
@@ -80,75 +80,14 @@ otu_counts_by_sample_depth <- taxa_counts %>%
                      labels = trans_format("log10", math_format(10^.x))
   ) +
   scale_y_continuous(transform = 'log10', breaks = c(40, expected_species, 100, 200, 400, 800, 1600)) +
+  coord_cartesian(ylim=c(40, 400)) +
   scale_linetype_manual(name='Expected number of OTUs', values=c("dashed"), drop=FALSE) +
   guides(colour = guide_legend(override.aes = list(linetype = 0)),
-         shape = guide_legend(override.aes = list(linetype = 0)))
+         shape = guide_legend(override.aes = list(linetype = 0))) +
+  theme(aspect.ratio = 2)
   # annotate("text", x=log10(10^6), y=61, label="Expected number of OTUs (expected_species)", size=3, color="black")
-# otu_counts_by_sample_depth
-ggsave('images/06-otu-count-vsearch.png',otu_counts_by_sample_depth)
-
-# thresh_range <- seq(0,0.02, length.out = 300)
-# vsearch_otus_1000 <- readRDS(glue('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02/phyloseq/FULL_ITS/2500/2/all_samples/all_samples.phyloseq.rds'))
-#
-# nanoclust_1000 <- read.csv('../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-02/hdbscan_clustering_stats/FULL_ITS/2500/2/min_cluster_size_stats.tsv', sep='\t')
-# nanoclust_1000 <- nanoclust_1000[, c('thresh', 'loss', 'numOTUs')]
-# nanoclust_1000 <- nanoclust_1000[nanoclust_1000[,'thresh'] <= 0.02,]
-# colnames(nanoclust_1000) <- c('thresh', 'loss', 'nOTUs')
-# nanoclust_1000$method <- 'nanoclust'
-#
-# vsearch_stats <- data.frame(thresh = thresh_range) %>%
-#   rowwise() %>%
-#   mutate(
-#     nOTUs = ntaxa(filter_taxa_by_thresh(vsearch_otus_1000, thresh)),
-#     loss = 1 - sum(sample_sums(filter_taxa_by_thresh(vsearch_otus_1000, thresh)))/sum(sample_sums(vsearch_otus_1000))
-#   )
-# vsearch_stats$method <- 'vsearch'
-# combined <- rbind(vsearch_stats, nanoclust_1000)
-# n_otus_by_thresh <- combined %>%
-#   ggplot(
-#     aes(x=thresh, colour = method)
-#   ) +
-#   geom_point(aes(y=nOTUs), size=0.5) +
-#   stat_summary(aes(y = nOTUs), fun=mean, geom="line") +
-#   # geom_point(aes(y=loss*500, colour=method), size=.5) +
-#   scale_y_continuous(
-#     "number of OTUs",
-#     # transform = 'log10',
-#     # sec.axis = sec_axis(~ . / 500, name = "loss", breaks = seq(0,1,.05)),
-#     minor_breaks = \(x) seq(0, max(x), 10),
-#     breaks = \(x) seq(0, max(x), 50)
-#   ) +
-#   scale_x_continuous(
-#     minor_breaks = \(x) seq(0, max(x), 0.0025/2),
-#     breaks = \(x) seq(0, max(x), 0.0025),
-#     labels = \(x) label_percent()(as.numeric(x)),
-#   ) +
-#   labs(x="minimum OTU size threshold (proportion of library size)") +
-#   geom_hline(yintercept = 59, linetype='dashed')
-#
-# loss_by_thresh <- combined %>%
-#   ggplot(
-#     aes(x=thresh, colour=method)
-#   ) +
-#   geom_point(aes(y=loss), size=0.5) +
-#   stat_summary(aes(y = loss), fun=mean, geom="line") +
-#   scale_y_continuous(
-#     "read loss",
-#     labels = \(y) label_percent()(as.numeric(y)),
-#     breaks = \(y) seq(0, max(y), 0.05)
-#   ) +
-#   scale_x_continuous(
-#     minor_breaks = \(x) seq(0, max(x), 0.0025/2),
-#     breaks = \(x) seq(0, max(x), 0.0025),
-#     labels = \(x) label_percent()(as.numeric(x)),
-#   ) +
-#   labs(
-#     x="minimum OTU size threshold (proportion of library size)",
-#   )
-#
-# cowplot::plot_grid(n_otus_by_thresh, loss_by_thresh)
-
-
+otu_counts_by_sample_depth
+ggsave('images/06-otu-count-vsearch.png', otu_counts_by_sample_depth)
 
 load_nanoclust_stats <- function(filter_thresh = c(0, 0.0012), output_dir) {
   stopifnot(length(filter_thresh) > 0)
@@ -187,6 +126,8 @@ load_nanoclust_stats <- function(filter_thresh = c(0, 0.0012), output_dir) {
   return(df)
 }
 #load_nanoclust_stats(c(0, 0.0006)) %>% View()
+output_dir <- '../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14'
+nc <- load_nanoclust_stats(c(0, 0.0012, 0.006449999999999999, 0.0050999999999999995, 0.0072, 0.01005), output_dir)
 
 otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0012, 0.006449999999999999, 0.0050999999999999995, 0.0072, 0.01005), output_dir) %>%
   mutate_at(vars(sample_depth), \(d) d*n_samples) %>%
@@ -195,10 +136,10 @@ otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0012, 0.006449999999999999, 0
   ) +
   labs(
     title = "UMAP + HDBSCAN",
-    x=glue("total library size ({n_samples} samples)"),
-    y="number of clusters",
+    x=glue("Total library size ({n_samples} isolates)"),
+    y="Number of OTUs",
     colour = "Minimum cluster size\n(proportion of library size)",
-    shape = "Reads per sample"
+    shape = "Reads per isolate"
   ) +
   # stat_summary(aes(x=factor(sample_depth), y = numOTUs, group=thresh, linetype=thresh), fun=mean, geom="line") +
   stat_summary(aes(x=sample_depth, y = numOTUs, group=thresh), fun=mean, geom="line") +
@@ -217,10 +158,12 @@ otu_count_nanoclust <- load_nanoclust_stats(c(0, 0.0012, 0.006449999999999999, 0
                      breaks = trans_breaks("log10", function(x) 10^x),
                      labels = trans_format("log10", math_format(10^.x))
   ) +
-  scale_y_continuous(transform = 'log10', breaks = c(50, expected_species, 100, 200, 400, 800, 1600)) +
+  scale_y_continuous(transform = 'log10', breaks = c(50, expected_species, seq(60, 100, 10))) +
   scale_linetype_manual(name='Expected number of OTUs', values="dashed", drop=FALSE) +
   guides(colour = guide_legend(override.aes = list(linetype = 0)),
-         shape = guide_legend(override.aes = list(linetype = 0)))
+         shape = guide_legend(override.aes = list(linetype = 0))) +
+  coord_cartesian(ylim=c(48, 100)) +
+  theme(aspect.ratio = 2)
 otu_count_nanoclust
 ggsave('./images/06-otu-count-nanoclust.png', otu_count_nanoclust)
 

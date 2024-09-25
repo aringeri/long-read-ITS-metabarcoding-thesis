@@ -19,14 +19,18 @@ csl: '../../bioinformatics.csl'
 format:
   html:
     theme: cosmo
+    number-depth: 2
   pdf:
     documentclass: scrreprt
   docx:
     toc: true
     number-sections: true
     highlight-style: github
+    number-depth: 2
 #    reference-doc: reference.docx
 
 fig-cap-location: top
 execute:
   echo: false
+crossref:
+  chapters: false
