@@ -78,7 +78,7 @@ Quality Filtering of Raw Reads
 :::
 
 
-### Sample selection and taxonomic naming validation
+### Isolate sample selection and taxonomic naming validation
 
 To ensure that taxonomic names were used consistently between the fungal isolate samples and the reference database, manual validation of each sample name was performed.
 A search was conducted for the recorded species name of each sample in the 2024 UNITE+INSD reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255].
@@ -88,9 +88,9 @@ Names of samples were manually updated using current names found in both Index F
 For samples that were not classified at the species level (e.g. *Entoleuca sp* CCL052), the genus label was confirmed to exist in the reference database.
 
 Seven samples were excluded from the mock dataset, leaving 58 samples (a total of 55 species).
-Six samples that had less than a total of 2500 reads after basecalling, trimming and filtering were removed from the analysis leaving.
-This limit of 2500 reads was chosen in order to test scenarios with library sizes of up to 150000 reads.
-With this limit we could also retain the majority of the samples (see @fig-readCountDistributionBySample for the distribution of read counts per sample, and @tbl-samplesheet for read counts).
+Six samples that had less than a total of 2500 reads after basecalling, trimming and filtering were removed from the analysis.
+This limit of 2500 reads was chosen in order to test scenarios with library sizes of up to around 150000 reads.
+With this limit we could also retain the majority of the samples (see @fig-readCountDistributionBySample and @tbl-samplesheet for the distribution of read counts per sample).
 
 Initial runs of the pipeline used the 2019 version of the UNITE database for reference-based chimera detection.
 The use of this database for chimera detection lead to the loss of 99.0% of reads in the *Fusarium proliferatum* sample and the sample was therefore excluded from the mock dataset.
@@ -102,8 +102,8 @@ The list of excluded taxa include: *Aspergillus niger*, *Naganishia albida* (*Cr
 ## Mock scenarios
 
 After the raw reads from the fungal isolates had been processed as described above, we had a pool of high quality full ITS sequences which could be sampled from to simulate different community structures.
-Here the steps taken to combine these full ITS sequences into mock scenarios are outlined below.
-Two main approaches have been followed for simulating even and uneven species abundance.
+The steps taken to combine these full ITS sequences into mock scenarios are outlined below.
+Two approaches have been developed for simulating communities with even and uneven species abundance.
 
 ### Scenario 1 - Even abundance
 
@@ -120,21 +120,41 @@ knitr::include_graphics('analysis/images/05-even-sampling-diagram.png')
 ```
 
 :::{custom-style="Caption"}
-The process for generating mock communities with equal abundances. Equal numbers of reads are selected from the set of quality filtered reads of each fungal isolate then combined into a single library. Each library is processed by the pipeline individually.
+The process for generating mock communities with equal abundances. Equal numbers of reads were selected from the set of quality filtered reads of each fungal isolate then combined into a single library. The process was repeated with different subsampling depth to produce libraries with different sizes. Five libraries of each size were created. Each library was processed by the pipeline individually.
 :::
 
-Generating Even Abundance Mock Scenario
+Generating even abundance mock scenarios
 :::
 
 ### Scenario 2 - Uneven (5 low abundance)
 
-As it is unlikely for a 'real world' environmental sample to produce sequence data resembling Scenario 1 where all strains have the same number of reads,
+As it is unlikely for a 'real world' environmental sample to yield a read distribution in Scenario 1 where all strains have the same number of reads,
 we explored limited situations where the number of reads between isolates was unequal.
-For this scenario, a subset of 5 species were subsampled at low abundance, while a remaining 50 species were subsampled at an even abundance.
-5, 10, 20, 50 and 100 reads were subsampled from the *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum*, *Candida zeylanoides* samples respectively, then mixed with the evenly-subsampled reads from the other 50 species.
+For this scenario, five species were subsampled at low abundance, while a remaining 50 species were subsampled at a higher abundance (@fig-unevenSamplingDiagram).
+The low-abundance species *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum*, *Candida zeylanoides*,
+were subsampled at levels of 5, 10, 20, 50 and 100 reads respectively.
+The remaining 50 high-abundance species were subsampled at an even rate and mixed with the low-abundance reads.
+This process was repeated to produce different library sizes by subsampling the 'high-abundance' species at rates of 200, 500, 1000 and 2000 reads per isolate, while keeping the 'low-abundance' species unchanged.
+This produced library sizes of 10185, 25185, 50185, 100185 respectively.
+
+:::{#fig-unevenSamplingDiagram}
+
+![](analysis/images/05-uneven-sampling-diagram.png)
+
+:::{custom-style="Caption"}
+The process for generating mock communities with uneven abundances.
+Five fungal isolates were subsampled at a low rate (between 5 and 100 reads).
+The remaining 50 fungal isolates were subsampled at fixed higher rate.
+The 'high-abundance' fungal isolates were subsampled at rates between 200 and 2000 reads to produce four libraries.
+Each library was processed by the pipeline individually.
+:::
+
+Generating uneven abundance mock scenarios
+:::
 
 - subset of species selected randomly
 - removed duplicate species
+  - excluded: Austropuccinia_psidii, Cryptococcus_gattii_VG_III, Cryptococcus_neoformans_VNI in addition to those from Scenario 1
 
 ## Bioinformatics - Clustering
 
@@ -153,7 +173,7 @@ Each sequence was transformed into a k-mer frequency vector and stored in a tabu
 In our pipeline, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST).
 The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020].
 Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan].
-The 'cluster_selection_epsilon' parameter used in HDBSCAN was set to 0.5 as used in [@langsiriTargetedSequencingAnalysis2023], while the multiple '`min_cluster_size`' parameters were tested and explored in @sec-cluster-results.t
+The 'cluster_selection_epsilon' parameter used in HDBSCAN was set to 0.5 as used in [@langsiriTargetedSequencingAnalysis2023], while the multiple '`min_cluster_size`' parameters were tested and explored in @sec-cluster-results.
 For equal abundance scenarios a '`min_cluster_size`' parameter was chosen to be 0.5% of the total library size.
 For uneven abundance scenarios (...) .
 
