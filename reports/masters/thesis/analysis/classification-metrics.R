@@ -179,6 +179,7 @@ for (sample_depth in c(20, 50, 167, 1000, 2000, 2500)) {
 
 vsearch_precision_summary <- vsearch_stats %>%
   # filter(sample_depth %in% c(1000, 2000)) %>%
+  filter(sample_depth != 20) %>%
   filter(min_cluster_size %in% c(0, 0.0015)) %>%
   filter(method %in% c('abundance', 'consensus')) %>%
   # filter(sample_depth > 49) %>%

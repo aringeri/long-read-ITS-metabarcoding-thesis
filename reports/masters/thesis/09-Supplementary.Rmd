@@ -20,12 +20,33 @@ knitr::kable(
 ![](analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png)
 ![](analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png)
 
+:::{custom-style="Caption"}
 Chart showing how 58 fungal isolates are split into clusters based on a single execution of the even abundance mock scenario.
 Each isolate has been subsampled to 2000 reads and then clustered using the NanoCLUST (UMAP + HDBSCAN) method with a minimum cluster size set to 580 (0.5% of the total library size).
 Bars indicate the abundance of a cluster (number of reads). The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the X axis labels. Green indicates that the assignment given to a cluster matches the expected species-level classification. Yellow indicates a correct genus-level classification.
 Orange indicates a correct family-level classification. Red indicates the classification is incorrect for family-level and above.
 Grey indicates that the cluster could not be given a taxonomic classification at all.
+:::
 
 Clusters per isolate - Even Abundance (Scenario 1) - NanoCLUST
 
 :::
+
+
+
+```{r}
+#| message: false
+#| label: tbl-tax-assignments-nanoclust
+knitr::kable(
+  read.csv('analysis/tables/all-otus-tax.csv') %>%
+    arrange(OTU.ID) %>%
+    select(OTU.ID, genus, species, score, confidence) %>%
+    mutate(
+      score = scales::percent(score, 0.01),
+      confidence = scales::percent(confidence)
+    ) %>%
+    rename_with(\(col) gsub('\\.', ' ', col)),
+  align = c('l', 'l', 'l','r', 'r'),
+  caption = "The set of taxonomic assignments for each cluster in @fig-nanoclustSplitting2. The most abundant sequence of each cluster was given a taxonomic assignment using dnabarcoder and the UNITE 2024 database. The OTU ID column refers clusters found in @fig-nanoclustSplitting2 (x-axis). The genus assignment, species assignment, BLAST score and confidence as reported by dnabarcoder are also shown."
+)
+```

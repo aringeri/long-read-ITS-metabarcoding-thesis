@@ -20,8 +20,8 @@ The steps to generate and prepare reads for this synthetic dataset are outlined 
 The genomic DNA of 65 fungal strains was extracted with the Qiagen DNeasy Plant mini kit.
 The DNA was extracted from mycelia or spore material of each fungal isolate.
 Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse).
-The amplicons were prepared with the Oxford Nanopore's Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT).
-The fungal samples plus a negative control were multiplexed and sequenced using the MinION R10.4 flow cell.
+The amplicons were prepared with Oxford Nanopore's Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT).
+The fungal samples plus a negative control were multiplexed and sequenced using a MinION R10.4 flow cell.
 
 ### Bioinformatics - Basecalling, trimming and filtering
 
@@ -31,12 +31,12 @@ The mean read length of amplicons after basecalling was ~2.2 KB as seen in @fig-
 Sequencing adapters were trimmed from raw basecalled reads using Dorado v0.6.1 with the '`--no-trim-primers`' option to avoid removing primer sequences.
 Cutadapt v4.6 [@Cutadapt] has been used to select and trim primers from amplicons that contain both forward (NS5) and reverse primer (LR6) sequences.
 Amplicons where both of these primer sequences could not be detected were excluded from the analysis.
-Cutadapt was also used to re-orient reads that have been sequenced by the reverse strand ('`--revcomp`' option), making it easier to process by downstream tools (@fig-filterTrimFlowchart)
+Cutadapt was also used to re-orient reads that have been sequenced by the reverse strand ('`--revcomp`' option), making it easier to process by downstream tools (@fig-filterTrimFlowchart).
 
 The full ITS region of these reads was extracted using ITSxpress v2.0.1 [@Rivers2018] with default settings other than '`--single_end`' and '`--taxa Fungi`' options.
 Chopper v0.7.0 [@DeCoster2023] was used to select reads of the full ITS region having a length between 300-6000bp and mean Phred quality score above Q20.
 Chimeric reads were detected using VSEARCH's [@rognesVSEARCHVersatileOpen2016] denovo and reference based methods.
-The database used for reference based chimera detection of full ITS sequence was the UNITE+INSD 2024 reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255]
+The database used for reference based chimera detection of full ITS sequences was the UNITE+INSD 2024 reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255]
 
 ::: {#fig-filterTrimFlowchart}
 ```{dot}
@@ -60,7 +60,7 @@ digraph {
     node [shape = plaintext, peripheries=0]
     rec0 [label = "Raw demultiplexed reads\nfastq"]
     rec6 [label = "Quality filtered\nfull ITS sequences"]
-
+	
 
     # edge definitions with the node IDs
     edge [ fontsize="20"]
@@ -71,10 +71,10 @@ digraph {
 ```
 
 ::: {custom-style="Caption"}
-The steps taken to prepare raw reads for mock scenarios. Boxes inticate trimming and filtering stages of the pipeline with and the software used is in paretheses.
+The steps taken to prepare raw reads for mock scenarios. Boxes indicate trimming and filtering stages of the pipeline with and the software used is in parentheses.
 :::
 
-Quality Filtering of Raw Reads
+Quality filtering of raw reads
 :::
 
 
@@ -89,15 +89,14 @@ For samples that were not classified at the species level (e.g. *Entoleuca sp* C
 
 Seven samples were excluded from the mock dataset, leaving 58 samples (a total of 55 species).
 Six samples that had less than a total of 2500 reads after basecalling, trimming and filtering were removed from the analysis.
-This limit of 2500 reads was chosen in order to test scenarios with library sizes of up to around 150000 reads.
-With this limit we could also retain the majority of the samples (see @fig-readCountDistributionBySample and @tbl-samplesheet for the distribution of read counts per sample).
+This limit of 2500 reads was chosen in order to test scenarios with library sizes of up to around 150000 reads. See @fig-readCountDistributionBySample and @tbl-samplesheet for the distribution of read counts per sample.
 
 Initial runs of the pipeline used the 2019 version of the UNITE database for reference-based chimera detection.
 The use of this database for chimera detection lead to the loss of 99.0% of reads in the *Fusarium proliferatum* sample and the sample was therefore excluded from the mock dataset.
 At a later date, the pipeline was updated to use the 2024 version of the UNITE database which retained many more reads (total of 4894) from the *F. proliferatum* sample
 but the pipeline was still configured to exclude the *F. proliferatum* sample.
 
-The list of excluded taxa include: *Aspergillus niger*, *Naganishia albida* (*Cryptococcus albidus*), *Geotrichum candidum* (*Galactomyces geotrichum*), *Meyerozyma guilliermondii*, Yarrowia lipolytica, *Fusarium proliferatum* and *Puccinia recondita* (*Puccinia triticina*).
+The samples that were excluded (with updated names in parenthesis) were: *Aspergillus niger*, *Naganishia albida* (*Cryptococcus albidus*), *Geotrichum candidum* (*Galactomyces geotrichum*), *Meyerozyma guilliermondii*, Yarrowia lipolytica, *Fusarium proliferatum* and *Puccinia recondita* (*Puccinia triticina*).
 
 ## Mock scenarios
 
@@ -108,7 +107,7 @@ Two approaches have been developed for simulating communities with even and unev
 ### Scenario 1 - Even abundance
 
 The first mock scenario simulated an even community structure where every fungal isolate has equal abundance in terms of number of reads.
-Libraries of differing sizes were generated by subsampling equal number of reads from each fungal isolate.
+Libraries of differing sizes were generated by subsampling an equal number of reads from each fungal isolate.
 For each of the 58 fungal isolates: 20, 50, 167, 1000, 2000 and 2500 reads were randomly selected to produce libraries with sizes of 1160, 2900, 9686, 58000, 116000 and 145000 reads (@fig-equalAbundanceDiagram).
 Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the '`sample`' command).
 The subsampling was repeated five times for each library size producing a total of 30 libraries (6 libraries $\times$ 5  repetitions).
@@ -120,7 +119,7 @@ knitr::include_graphics('analysis/images/05-even-sampling-diagram.png')
 ```
 
 :::{custom-style="Caption"}
-The process for generating mock communities with equal abundances. Equal numbers of reads were selected from the set of quality filtered reads of each fungal isolate then combined into a single library. The process was repeated with different subsampling depth to produce libraries with different sizes. Five libraries of each size were created. Each library was processed by the pipeline individually.
+The process for generating mock communities with equal abundances. Equal numbers of reads were selected from the set of quality filtered reads of each fungal isolate then combined into a single library. The process was repeated with different subsampling depth to produce libraries with different sizes. Five libraries of each size were created. Clustering and taxonomic assignment was performed on each library individually.
 :::
 
 Generating even abundance mock scenarios
@@ -128,10 +127,10 @@ Generating even abundance mock scenarios
 
 ### Scenario 2 - Uneven (5 low abundance)
 
-As it is unlikely for a 'real world' environmental sample to yield a read distribution in Scenario 1 where all strains have the same number of reads,
-we explored limited situations where the number of reads between isolates was unequal.
-For this scenario, five species were subsampled at low abundance, while a remaining 50 species were subsampled at a higher abundance (@fig-unevenSamplingDiagram).
-The low-abundance species *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum*, *Candida zeylanoides*,
+As it is unlikely for a 'real world' environmental sample to yield a read distribution in Scenario 1 where all taxa have the same number of reads,
+we explored situations where the number of reads between isolates was unequal.
+For this scenario, we selected five species to be subsampled at a low abundance, while a remaining 50 species were subsampled at a higher abundance (@fig-unevenSamplingDiagram).
+The low-abundance species *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides*,
 were subsampled at levels of 5, 10, 20, 50 and 100 reads respectively.
 The remaining 50 high-abundance species were subsampled at an even rate and mixed with the low-abundance reads.
 This process was repeated to produce different library sizes by subsampling the 'high-abundance' species at rates of 200, 500, 1000 and 2000 reads per isolate, while keeping the 'low-abundance' species unchanged.
@@ -146,20 +145,22 @@ The process for generating mock communities with uneven abundances.
 Five fungal isolates were subsampled at a low rate (between 5 and 100 reads).
 The remaining 50 fungal isolates were subsampled at fixed higher rate.
 The 'high-abundance' fungal isolates were subsampled at rates between 200 and 2000 reads to produce four libraries.
-Each library was processed by the pipeline individually.
+Clustering and taxonomic assignment was performed on each library individually.
 :::
 
 Generating uneven abundance mock scenarios
 :::
 
-- subset of species selected randomly
-- removed duplicate species
-  - excluded: Austropuccinia_psidii, Cryptococcus_gattii_VG_III, Cryptococcus_neoformans_VNI in addition to those from Scenario 1
+
+The species *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides* were selected at random to be the low abundance species.
+To simplify the interpretation of this scenario, we ensured that we did not subsample from the same species more than once (i.e. from two fungal isolates with the same species designation).
+To do this, the following fungal isolates were excluded from the set of quality filtered reads: *Austropuccinia psidii* 2, *Cryptococcus gattii VG III*, *Cryptococcus neoformans VNI* in addition to those from Scenario 1.
+
 
 ## Bioinformatics - Clustering
 
-For each scenario full ITS sequences were grouped into approximate species-level clusters.
-Two de-novo clustering approaches were explored and can be seen in @fig-clusterAssignFlowchart.
+For each scenario, full ITS sequences were grouped into approximate species-level clusters.
+Two de-novo clustering approaches were explored (@fig-clusterAssignFlowchart).
 
 The first approach uses centroid-based clustering on sequence similarity as implemented in VSEARCH [@rognesVSEARCHVersatileOpen2016].
 The sequences were first de-replicated using VSEARCH's `'--fastx_uniques'` option to merge identical sequences into a single record, then clustered with the `'--cluster_size'` option.
@@ -173,7 +174,7 @@ Each sequence was transformed into a k-mer frequency vector and stored in a tabu
 In our pipeline, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST).
 The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020].
 Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan].
-The 'cluster_selection_epsilon' parameter used in HDBSCAN was set to 0.5 as used in [@langsiriTargetedSequencingAnalysis2023], while the multiple '`min_cluster_size`' parameters were tested and explored in @sec-cluster-results.
+The '`cluster_selection_epsilon`' parameter used in HDBSCAN was set to 0.5, while the multiple '`min_cluster_size`' parameters were tested and explored in @sec-cluster-results.
 For equal abundance scenarios a '`min_cluster_size`' parameter was chosen to be 0.5% of the total library size.
 For uneven abundance scenarios (...) .
 
@@ -230,10 +231,12 @@ digraph {
   }
 ```
 :::{custom-style="Caption"}
-Clustering stages of the pipeline with the tools used in parentheses.
+The two clustering approaches used in the pipeline: VSEARCH and NanoCLUST (UMAP + HDBSCAN).
+Stages of the pipeline are shown as boxes with the software tools used in parentheses.
+The two ways of selecting a representative sequence from each cluster are also shown: most abundance sequence and consensus sequence.
 :::
 
-Read Clustering
+Read clustering
 :::
 
 ## Bioinformatics - Taxonomic assignments
@@ -241,14 +244,14 @@ Read Clustering
 A representative sequence was selected from each cluster to provide a taxonomic assignment.
 Our initial approach used the most abundant sequence of each cluster as the representative sequence.
 The VSEARCH clustering approach provides the most abundant sequences with the '`--centroids`' option.
-To determine the most abundant sequence from clusters in the UMAP + HDBSCAN approach, the VSEARCH '`--fastx_uniques`' command in combination with '`--topn 1`' option was used.
+To determine the most abundant sequence from clusters in the UMAP + HDBSCAN approach, the VSEARCH '`--fastx_uniques`' command in combination with '`--topn 1`' option was used (@fig-clusterAssignFlowchart).
 
-Alternatively, a consensus sequence was built from the reads from each cluster following a similar approach used by nanoCLUST see @fig-clusterPolishFlow.
-First a subset of 200 sequences was selected from each cluster to reduce computation time and space requirements.
+Alternatively, a consensus sequence was built from the reads from each cluster following a similar approach used by NanoCLUST (@fig-clusterPolishFlow).
+First, a subset of 200 sequences was selected from each cluster to reduce computation time and space requirements.
 Then a draft sequence was selected by taking the read with the highest Average Nucleotide Identity (ANI) to all the other sequences with FastANI [@jainHighThroughputANI2018].
 The 200 reads used for polishing were then aligned to the draft sequence using minimap2 v2.28 [@liMinimap2PairwiseAlignment2018].
-Subsequently, the draft read underwent two rounds of polishing using Racon v1.5.0 [@vaserFastAccurateNovo2017] then Medaka v1.12.0 ([https://github.com/nanoporetech/medaka](https://github.com/nanoporetech/medaka)).
-As Canu [@korenCanuScalableAccurate2017] is designed as a long-read assembler, it has a strict minimum genome size of 1000 making it unable to polish full ITS sequences from my dataset (which were around 400bp).
+Subsequently, the draft read underwent polishing using Racon v1.5.0 [@vaserFastAccurateNovo2017] then Medaka v1.12.0 ([https://github.com/nanoporetech/medaka](https://github.com/nanoporetech/medaka)).
+As Canu [@korenCanuScalableAccurate2017] is designed as a long-read assembler, it has a strict minimum genome size of 1000 making it unable to polish full ITS sequences from this dataset (which were around 400bp).
 
 :::{#fig-clusterPolishFlow}
 ```{dot}
@@ -274,18 +277,20 @@ digraph {
   # edge definitions with the node IDs
   edge [ fontsize = "20"]
   reads -> subset -> fastANI -> minimap -> racon -> medaka -> reps [ weight = 10 ]
-  subset -> racon:nw
+  subset -> racon:sw
   subset -> medaka:nw
   subset -> minimap:sw
-  fastANI -> racon:nw
+  fastANI:ne -> racon:nw
 }
 ```
 
 :::{custom-style="Caption"}
-The process of producing a consensus sequences for each cluster by selecting and polishing a draft read. Tools used for each stage are in parentheses.
+The process of producing a consensus sequence for each cluster by selecting and polishing a draft read.
+An initial draft sequence is selected from the first 200 reads in the cluster, taking the read with the highest Average Nucleotide Identity (ANI) to the other reads.
+The 200 reads used for polishing are first aligned to the draft sequence, then polished using racon and medaka.
 :::
 
-Consensus Sequence Polishing
+Consensus sequence polishing
 :::
 
 
@@ -295,8 +300,10 @@ In this case full ITS sequences were classified against the UNITE+INSD 2024 refe
 ## Pipeline implementation
 
 The pipeline has been implemented using the Nextflow workflow language [@ditommasoNextflowEnablesReproducible2017].
-The pipeline has been developed to run Singularity [@kurtzerSingularityScientificContainers2017] or Docker [@merkel2014docker] containers and allows the pipeline to flexibly run
-on all systems that support either one of these container systems.
+The pipeline has been developed to run with Singularity [@kurtzerSingularityScientificContainers2017] or Docker [@merkel2014docker] containers.
+A container based approach is flexible and allows the pipeline to run on all systems that support either one of these container systems.
+It also simplifies the setup of dependencies and ensures that the versions of dependencies are reproducible between installations.
+The pipeline only requires Nextflow and a container system (Singularity or Docker) to be installed.
 
 As input, the pipeline takes a set of `fastq` files where each file contains the raw basecalled reads for each sample in the metabarcoding experiment.
 

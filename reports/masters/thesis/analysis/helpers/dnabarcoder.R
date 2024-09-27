@@ -8,6 +8,21 @@ load_dna_barcoder_classification_nanoclust <- function(filepath) {
     tibble::column_to_rownames("cluster")
 }
 
+load_dna_barcoder_classification_nanoclust_2 <- function(
+  experiment="../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-09-12",
+  sequence_type="nanoclust_abundant",
+  reads_per_sample=2000,
+  repetition=2,
+  min_cluster_size=0
+) {
+  classFile <- list.files(
+    glue('{experiment}/dnabarcoder/{sequence_type}/FULL_ITS/{reads_per_sample}/{repetition}/{min_cluster_size}/classify/'),
+    pattern='*.unite2024ITS_BLAST.classification',
+    full.names = T
+  )
+  load_dna_barcoder_classification_nanoclust(classFile[1])
+}
+
 read_dna_barcoder_classification_nanoclust <- function(filepath) {
   tax <- load_dna_barcoder_classification_nanoclust(filepath)
 

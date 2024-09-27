@@ -27,7 +27,8 @@ format:
     number-sections: true
     highlight-style: github
     number-depth: 2
-#    reference-doc: reference.docx
+    reference-doc: custom-reference-doc.docx
+#    reference-doc: templates/CDC_Template.docx
 
 fig-cap-location: top
 execute:

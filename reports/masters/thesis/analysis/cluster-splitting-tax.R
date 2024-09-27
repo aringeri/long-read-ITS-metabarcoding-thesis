@@ -16,8 +16,16 @@ samplesheet <- read_samplesheet(config)
 
 nanoclust <- load_nanoclust_phyloseq_3(
   samplesheet=samplesheet, experiment=config$experiment_path, reads_per_sample=config$sample_depth, repetition=config$repetition,
-  sequence_type='nanoclust_abundant', min_cluster_size = '0.001') %>%
+  sequence_type='nanoclust_abundant', min_cluster_size = '0.005') %>%
   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
+
+nanoclust_tax <- load_dna_barcoder_classification_nanoclust_2(
+  experiment=config$experiment_path,
+  reads_per_sample=config$sample_depth,
+  repetition=config$repetition,
+  sequence_type='nanoclust_abundant',
+  min_cluster_size = '0.005'
+)
 
 # nanoclust_abundant <- load_nanoclust_phyloseq_2(
 #   samplesheet=samplesheet, experiment=config$experiment_path, reads_per_sample=config$sample_depth, repetition=config$repetition,
@@ -30,6 +38,7 @@ nanoclust <- load_nanoclust_phyloseq_3(
 #   tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F)
 
 vsearch <- load_vsearch_phyloseq(samplesheet, config$experiment_path, config$sample_depth, config$repetition) %>%
+  tax_fix(min_length = 0, unknowns = 'unidentified', anon_unique = F) %>%
   filter_taxa_by_thresh(0.0015)
 taxa_names(vsearch) <- 1:ntaxa(vsearch)
 
@@ -56,7 +65,7 @@ ggplot_splitting <- function(phylo, df, taxa_labels=FALSE, ncol=NULL, maxY=2200)
           reorder_func(x)
         }
       # labels = \(x) paste0("(", reorder_func(x), ")")
-      }
+      },
     ) +
     scale_fill_manual(
       values = colours,
@@ -117,12 +126,14 @@ plot_splitting(nanoclust, sample_names(nanoclust)[1:30])
 plot_splitting(nanoclust, sample_names(nanoclust)[31:70])
 
 puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
-  labs(title = "UMAP + HDBSCAN")
+  labs(title = "UMAP + HDBSCAN (NanoCLUST)", x='') +
+  theme(aspect.ratio = 1)
 puccinias
 ggsave('images/06-cluster-splitting-nanoclust-puccinia.png', puccinias)
 
 puccinias_vsearch <- plot_splitting(vsearch, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
-  labs(title = "VSEARCH")
+  labs(title = "VSEARCH (97% identity)") +
+  theme(aspect.ratio = 1)
 puccinias_vsearch
 ggsave('images/06-cluster-splitting-vsearch-puccinia.png', puccinias_vsearch)
 
@@ -148,6 +159,16 @@ plot_splitting(vsearch, sample_names(vsearch)[31:70])
 
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-1-30.png', plot_splitting(nanoclust, sample_names(nanoclust)[1:30]))
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-31.png', plot_splitting(nanoclust, sample_names(nanoclust)[31:70]))
+
+tax_to_show <- tax_table(nanoclust) %>% as.matrix()
+tax_to_show[tax_to_show[,'genus'] == 'Debaryomycetaceae gen Incertae sedis', c('family', 'genus', 'species') ] <- 'Debaryomycetaceae family'
+tax_to_show[tax_to_show[,'genus'] == 'Pucciniaceae gen Incertae sedis', c('family', 'genus', 'species') ] <- 'Pucciniaceae family'
+tax_to_show <- merge(tax_to_show, nanoclust_tax[, c('score', 'cutoff', 'confidence')], by = 0) %>% arrange(Row.names) %>%
+  rename(OTU.ID = 'Row.names')
+write.csv(tax_to_show, 'tables/all-otus-tax.csv', row.names = F)
+
+left_join(tax_to_show, nanoclust_tax, join_by())
+
 
 
 nanoclust_uneven <- load_nanoclust_phyloseq_3(
