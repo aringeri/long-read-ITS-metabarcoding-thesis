@@ -1,66 +1,66 @@
-"Barcode","Sample","Number of raw reads","Number of reads after QC"
-"25","Puccinia striiformis var tritici",38761,"9304 (24.0%)"
-"26","Puccinia triticina (Puccinia recondita)",21731,"2216 (10.2%)"
-"27","Puccinia graminis",24352,"6994 (28.7%)"
-"28","Austropuccinia psidii",28916,"8378 (29.0%)"
-"29","Leptosphaeria maculans",40207,"7123 (17.7%)"
-"30","Sclerotinia sclerotiorum",30922,"5461 (17.7%)"
-"31","Botrytis cinerea",35580,"5953 (16.7%)"
-"32","Botrytis fabae",28674,"4533 (15.8%)"
-"33","Zymoseptoria tritici",31584,"2747 (8.7%)"
-"34","Sporisorium scitamineum",29141,"3610 (12.4%)"
-"35","Erysiphe necator",50836,"4889 (9.6%)"
-"36","Austropuccinia psidii",29523,"8299 (28.1%)"
-"37","Pyrenophora tritici-repentis",51246,"5655 (11.0%)"
-"38","Cryptovalsa ampelina",37861,"4816 (12.7%)"
-"39","Eutypa lata",25259,"2886 (11.4%)"
-"40","Diplodia seriata",39280,"4821 (12.3%)"
-"41","Fusarium pseudograminearum",37072,"5716 (15.4%)"
-"42","Aspergillus flavum (Aspergillus flavus)",52132,"2775 (5.3%)"
-"43","Aspergillus fumigatus",48170,"4829 (10.0%)"
-"44","Aspergillus niger",106560,"352 (0.3%)"
-"45","Blastobotrys adeninivorans",56595,"11158 (19.7%)"
-"46","Blastobotrys proliferans",45388,"10511 (23.2%)"
-"47","Candida albicans",35572,"6889 (19.4%)"
-"48","candida boletica (Candida boleticola)",45525,"10374 (22.8%)"
-"49","Candida caryicola",42127,"9482 (22.5%)"
-"50","Candida catenulata (Diutina catenulata)",70924,"15285 (21.6%)"
-"51","Candida dublinsiensis (Candida dubliniensis)",62732,"12240 (19.5%)"
-"52","Candida glabrata (Nakaseomyces glabratus)",48252,"5206 (10.8%)"
-"53","Candida metapsilosis",48123,"11117 (23.1%)"
-"54","Candida orthopsilosis",45771,"10222 (22.3%)"
-"55","Candida parapsilosis",53561,"10754 (20.1%)"
-"56","Candida tropicalis",48486,"10111 (20.9%)"
-"57","Candid zeylanoides (Candida zeylanoides)",47125,"11643 (24.7%)"
-"58","Cryptococcus albidus (Naganishia albida)",262,"6 (2.3%)"
-"59","Cryptococcus gattil VG I (Cryptococcus gattii VG I)",47998,"9161 (19.1%)"
-"60","Cryptococcus gattii VG III",21127,"3817 (18.1%)"
-"61","Cryptococcus neoformans VNI",19970,"2842 (14.2%)"
-"62","Cryptococcus neoformans VN IIII",54596,"10852 (19.9%)"
-"63","Fusarium proliferatum",79693,"4894 (6.1%)"
-"64","Galactomyces geotrichum (Geotrichum candidum)",15962,"12 (0.1%)"
-"65","Geotrichum candidum",82477,"26203 (31.8%)"
-"66","Kluyveromyces lactis",70007,"14285 (20.4%)"
-"67","Kluyveromyces marxianus",70959,"9212 (13.0%)"
-"68","Kodamaea ohmeri",65595,"11929 (18.2%)"
-"69","Meyerozyma guillermondii (Meyerozyma guilliermondii)",29370,"12 (0.0%)"
-"70","Nakazawaea ernobil (Nakazawaea ernobii)",69285,"15320 (22.1%)"
-"71","Penicillium chrysogenum",64025,"3569 (5.6%)"
-"72","Pichia kudriavzevii",56683,"9807 (17.3%)"
-"73","Pichia membranifacien (Pichia membranifaciens)",39163,"2963 (7.6%)"
-"74","Rhodotorula mucilaginosa",53680,"8580 (16.0%)"
-"75","Scedosporium auranticum (Scedosporium aurantiacum)",52475,"4348 (8.3%)"
-"76","Scedosporium boydii",43418,"4766 (11.0%)"
-"77","Trichomonascus ciferrii",39999,"5338 (13.3%)"
-"78","Trichosporon asahil (Trichosporon asahii)",49679,"11219 (22.6%)"
-"79","Wickerhamomyces anomalus",45298,"8840 (19.5%)"
-"80","Yamadazyma mexicana",44496,"10733 (24.1%)"
-"81","Yamadazyma scolyti",44166,"8874 (20.1%)"
-"82","Yarrowia lipolytica",45485,"10 (0.0%)"
-"83","Diaporthe sp CCL067",36374,"5055 (13.9%)"
-"84","Quambalaria cyanescens CCL055",49988,"6172 (12.3%)"
-"85","Entoleuca sp CCL052",41661,"3845 (9.2%)"
-"86","Cortinarius globuliformis CM4",57951,"7732 (13.3%)"
-"87","Asteroma sp CCL068",45777,"6254 (13.7%)"
-"88","Asteroma sp CCL060",42061,"4449 (10.6%)"
-"89","Tuber brumale",102909,"15169 (14.7%)"
+"Barcode","Sample","Number of raw reads","Number of reads after QC","excluded_even","excluded_uneven"
+"25","Puccinia striiformis var tritici",38761,"9304 (24.0%)",FALSE,FALSE
+"26","Puccinia triticina (Puccinia recondita)",21731,"2216 (10.2%)",TRUE,TRUE
+"27","Puccinia graminis",24352,"6994 (28.7%)",FALSE,FALSE
+"28","Austropuccinia psidii",28916,"8378 (29.0%)",FALSE,FALSE
+"29","Leptosphaeria maculans",40207,"7123 (17.7%)",FALSE,FALSE
+"30","Sclerotinia sclerotiorum",30922,"5461 (17.7%)",FALSE,FALSE
+"31","Botrytis cinerea",35580,"5953 (16.7%)",FALSE,FALSE
+"32","Botrytis fabae",28674,"4533 (15.8%)",FALSE,FALSE
+"33","Zymoseptoria tritici",31584,"2747 (8.7%)",FALSE,FALSE
+"34","Sporisorium scitamineum",29141,"3610 (12.4%)",FALSE,FALSE
+"35","Erysiphe necator",50836,"4889 (9.6%)",FALSE,FALSE
+"36","Austropuccinia psidii",29523,"8299 (28.1%)",FALSE,TRUE
+"37","Pyrenophora tritici-repentis",51246,"5655 (11.0%)",FALSE,FALSE
+"38","Cryptovalsa ampelina",37861,"4816 (12.7%)",FALSE,FALSE
+"39","Eutypa lata",25259,"2886 (11.4%)",FALSE,FALSE
+"40","Diplodia seriata",39280,"4821 (12.3%)",FALSE,FALSE
+"41","Fusarium pseudograminearum",37072,"5716 (15.4%)",FALSE,FALSE
+"42","Aspergillus flavum (Aspergillus flavus)",52132,"2775 (5.3%)",FALSE,FALSE
+"43","Aspergillus fumigatus",48170,"4829 (10.0%)",FALSE,FALSE
+"44","Aspergillus niger",106560,"352 (0.3%)",TRUE,TRUE
+"45","Blastobotrys adeninivorans",56595,"11158 (19.7%)",FALSE,FALSE
+"46","Blastobotrys proliferans",45388,"10511 (23.2%)",FALSE,FALSE
+"47","Candida albicans",35572,"6889 (19.4%)",FALSE,FALSE
+"48","candida boletica (Candida boleticola)",45525,"10374 (22.8%)",FALSE,FALSE
+"49","Candida caryicola",42127,"9482 (22.5%)",FALSE,FALSE
+"50","Candida catenulata (Diutina catenulata)",70924,"15285 (21.6%)",FALSE,FALSE
+"51","Candida dublinsiensis (Candida dubliniensis)",62732,"12240 (19.5%)",FALSE,FALSE
+"52","Candida glabrata (Nakaseomyces glabratus)",48252,"5206 (10.8%)",FALSE,FALSE
+"53","Candida metapsilosis",48123,"11117 (23.1%)",FALSE,FALSE
+"54","Candida orthopsilosis",45771,"10222 (22.3%)",FALSE,FALSE
+"55","Candida parapsilosis",53561,"10754 (20.1%)",FALSE,FALSE
+"56","Candida tropicalis",48486,"10111 (20.9%)",FALSE,FALSE
+"57","Candid zeylanoides (Candida zeylanoides)",47125,"11643 (24.7%)",FALSE,FALSE
+"58","Cryptococcus albidus (Naganishia albida)",262,"6 (2.3%)",TRUE,TRUE
+"59","Cryptococcus gattil VG I (Cryptococcus gattii VG I)",47998,"9161 (19.1%)",FALSE,FALSE
+"60","Cryptococcus gattii VG III",21127,"3817 (18.1%)",FALSE,TRUE
+"61","Cryptococcus neoformans VNI",19970,"2842 (14.2%)",FALSE,TRUE
+"62","Cryptococcus neoformans VN IIII",54596,"10852 (19.9%)",FALSE,FALSE
+"63","Fusarium proliferatum",79693,"4894 (6.1%)",TRUE,TRUE
+"64","Galactomyces geotrichum (Geotrichum candidum)",15962,"12 (0.1%)",TRUE,TRUE
+"65","Geotrichum candidum",82477,"26203 (31.8%)",FALSE,FALSE
+"66","Kluyveromyces lactis",70007,"14285 (20.4%)",FALSE,FALSE
+"67","Kluyveromyces marxianus",70959,"9212 (13.0%)",FALSE,FALSE
+"68","Kodamaea ohmeri",65595,"11929 (18.2%)",FALSE,FALSE
+"69","Meyerozyma guillermondii (Meyerozyma guilliermondii)",29370,"12 (0.0%)",TRUE,TRUE
+"70","Nakazawaea ernobil (Nakazawaea ernobii)",69285,"15320 (22.1%)",FALSE,FALSE
+"71","Penicillium chrysogenum",64025,"3569 (5.6%)",FALSE,FALSE
+"72","Pichia kudriavzevii",56683,"9807 (17.3%)",FALSE,FALSE
+"73","Pichia membranifacien (Pichia membranifaciens)",39163,"2963 (7.6%)",FALSE,FALSE
+"74","Rhodotorula mucilaginosa",53680,"8580 (16.0%)",FALSE,FALSE
+"75","Scedosporium auranticum (Scedosporium aurantiacum)",52475,"4348 (8.3%)",FALSE,FALSE
+"76","Scedosporium boydii",43418,"4766 (11.0%)",FALSE,FALSE
+"77","Trichomonascus ciferrii",39999,"5338 (13.3%)",FALSE,FALSE
+"78","Trichosporon asahil (Trichosporon asahii)",49679,"11219 (22.6%)",FALSE,FALSE
+"79","Wickerhamomyces anomalus",45298,"8840 (19.5%)",FALSE,FALSE
+"80","Yamadazyma mexicana",44496,"10733 (24.1%)",FALSE,FALSE
+"81","Yamadazyma scolyti",44166,"8874 (20.1%)",FALSE,FALSE
+"82","Yarrowia lipolytica",45485,"10 (0.0%)",TRUE,TRUE
+"83","Diaporthe sp CCL067",36374,"5055 (13.9%)",FALSE,FALSE
+"84","Quambalaria cyanescens CCL055",49988,"6172 (12.3%)",FALSE,FALSE
+"85","Entoleuca sp CCL052",41661,"3845 (9.2%)",FALSE,FALSE
+"86","Cortinarius globuliformis CM4",57951,"7732 (13.3%)",FALSE,FALSE
+"87","Asteroma sp CCL068",45777,"6254 (13.7%)",FALSE,FALSE
+"88","Asteroma sp CCL060",42061,"4449 (10.6%)",FALSE,FALSE
+"89","Tuber brumale",102909,"15169 (14.7%)",FALSE,FALSE

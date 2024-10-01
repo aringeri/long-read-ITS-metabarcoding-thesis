@@ -15,7 +15,10 @@ set_flextable_defaults(
   theme_fun = theme_vanilla
 )
 
-read.csv('../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv') %>%
+sample_stats <-  read.csv('../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv')
+
+sample_stats %>%
+  select(Barcode, Sample, Number.of.raw.reads, Number.of.reads.after.QC) %>%
   rename_with(\(col) gsub('\\.', ' ', col)) %>%
   flextable() %>%
   align_text_col(align = "left") %>%
@@ -24,7 +27,18 @@ read.csv('../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv') %>%
   width(j=1, width=2, unit = "cm") %>%
   width(j=2, width=8, unit = "cm") %>%
   width(j=3, width=2.5, unit = "cm") %>%
-  width(j=4, width=3, unit = "cm")
+  width(j=4, width=3, unit = "cm") %>%
+  footnote(
+    i = which(sample_stats$excluded_even), j = 2,
+    ref_symbols = "e,",
+    value = as_paragraph("Excluded from even abundance scenario")
+  ) %>%
+  footnote(
+    i = which(sample_stats$excluded_uneven), j = 2,
+    ref_symbols = "u",
+    inline=F,
+    value = as_paragraph("Excluded from uneven abundance scenario")
+  )
 ```
 
 :::{#fig-nanoclustSplitting2}
