@@ -6,7 +6,7 @@ title: "Supplemental Figures"
 ```{r}
 #| message: false
 #| label: tbl-samplesheet
-#| tbl-cap: Samplesheet showing the species, sequencing barcode, number of raw reads after basecalling and number of reads remaining after quality control (QC). Corrections to names based on the latest taxonomic synonyms are shown in parenthesis.
+#| tbl-cap: List of the species, sequencing barcode, number of raw reads (following basecalling) and number of reads after quality control (QC). Corrections to original based on the UNITE+INSD (v2024) taxonomy [@abarenkovFullUNITEINSDDataset2024] are shown in parenthesis.
 library(dplyr)
 library(flextable)
 

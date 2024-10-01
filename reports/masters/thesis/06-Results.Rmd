@@ -4,9 +4,9 @@ title: "Results"
 
 ## Quality control
 
-After preparing the reads from fungal isolates for mock scenarios there was considerable read loss across many of the samples (@fig-readCountDistributionBySample).
-Seven samples were excluded when creating mock scenarios due to having a low number of reads relative to other samples.
-Sample with greater than 2500 reads were kept for the mock scenarios so that the pipeline could be tested with library sizes of around 150K reads.
+There was considerable read loss across many of the samples during the quality control steps (@tbl-samplesheet, @fig-readCountDistributionBySample).
+Only samples with greater than 2500 reads were kept for the mock scenarios so that the pipeline could be tested with library sizes of around 150K reads.
+Therefore, seven samples were excluded when creating mock scenarios due to their low number of reads relative to other samples.
 
 ::: {#fig-readCountDistributionBySample}
 ```{r}
@@ -21,8 +21,8 @@ Read count loss by sample after quality control
 
 Tracking read counts at each stage of the pipeline has shown that the majority of reads were lost in the primer trimming and quality filtering stages of the pipeline (@fig-readLossByStage).
 An average of 32.37% of reads were lost across samples after applying cutadapt to select and trim amplicons that contain both forward (ITS1F) and reverse primer (LR3) sequences.
-The extraction of full ITS regions led to an average loss of 10.65% trimmed reads across samples.
-An average of 71.82% of full ITS sequences were lost after selecting reads between 300-6000bp in length and having a mean quality above Q20 (Phred scale).
+The extraction of the full ITS region led to an average loss of 10.65% trimmed reads across samples.
+An average of 71.82% of full ITS sequences were lost after selecting reads between 300-6000bp in length and having a mean quality score above Q20 (Phred scale).
 Such large loss of reads can be attributed to many of the reads from the dataset being below the minimum mean quality threshold of Q20 (@fig-rawReadQuality).
 
 ::: {#fig-readLossByStage}
@@ -55,15 +55,17 @@ Read quality of raw reads
 
 :::
 
-## Minimum cluster size threshold can recover expected number of species from even abundance scenario {#sec-cluster-results}
+## Even abundance scenario
+
+### Minimum cluster size threshold to recover the expected number of species {#sec-cluster-results}
 
 The clustering approach that was adopted aimed to group full ITS sequences from the same species together.
 The total number of clusters was used as a measure for successfully estimating the number of species in the community.
 In this section we considered the even abundance mock community where 58 fungal isolates (of 55 species) were equally represented (Scenario 1).
 
 Clustering using VSEARCH at 97% sequence identity consistently over-estimated the number of species in mixed read scenarios.
-Large numbers of OTUs were encountered with many of them having low abundance.
-We explored removing these low-abundance OTUs by selecting a minimum OTU size cutoff (@fig-compareVsearchNanoclust, @fig-vsearchotus).
+Large numbers of OTUs with low abundances were detected.
+We removed these low-abundance OTUs by selecting a minimum OTU size cutoff (@fig-compareVsearchNanoclust, @fig-vsearchotus).
 OTUs that had a read count which was less than the cutoff were discarded.
 The cutoff was specified as a proportion of the total library size.
 The minimum OTU size cutoffs were tested across a range of values between 0% and 1% of the total library size.
@@ -93,11 +95,11 @@ Minimum cluster size cutoff - VSEARCH
 
 
 A k-mer based clustering method (used by NanoCLUST) was explored to test whether we could improve the accuracy of species-level clustering and retain more reads compared to VSEARCH.
-The minimum cluster size parameter used by the HDBSCAN significantly impacts the resulting number of clusters by limiting the groupings that can be considered a cluster (CITE).
-We tested multiple library sizes to understand whether the minimum cluster size parameter can be set to reliably recover the expected number of species in our mock sample.
+The minimum cluster size parameter used by the HDBSCAN significantly impacted the resulting number of clusters by limiting the groupings that can be considered a cluster (CITE).
+We tested multiple library sizes to understand whether the minimum cluster size parameter can be set to reliably recover the expected number of species in our mock community.
 When the minimum cluster size parameter was set to its minimum value (2), the NanoCLUST method overestimated the number of species for library sizes ~1000 and above.
 The number of clusters increased significantly with library size for small values of the minimum cluster parameter (@fig-nanoclustOTUs).
-For library sizes of ~1000 reads and above, a minimum cluster size of 0.65% (of the total library size) approximately recovered the expected number of species.
+For library sizes of ~1000 reads and above, a minimum cluster size of 0.65% of the total library size approximately recovered the expected number of species.
 
 :::{#fig-nanoclustOTUs}
 
@@ -121,18 +123,17 @@ and worse at a library size of 145K reads.
 
 ### Comparing cluster delineation between VSEARCH and NanoCLUST
 
-To investigate the effect on clustering of closely related species we looked at a single execution of the even abundance scenario (Scenario 1) where 2000 reads were selected
+To investigate if closely related species were recovered during clustering, we looked at a single execution of the even abundance scenario (Scenario 1) where 2000 reads were selected
 from each of the 58 fungal isolates giving a total library size of 116K reads.
-Reads were clustered separately with NanoCLUST and VSEARCH methods then compared.
+Reads were clustered separately with the NanoCLUST and VSEARCH methods.
 Reads that were clustered with the UMAP + HDBSCAN method (NanoCLUST) used a minimum cluster size of 580 (0.5% of the library size).
 Reads were clustered using VSEARCH at 97% identity and clusters that had fewer than 174 reads (0.15% of library size) were removed.
-The most abundant sequence of each cluster was given a taxonomic assignment with dnabarcoder and the UNITE+INSD 2024 reference database.
+Taxonomy was assigned to the most abundant sequence of each cluster with dnabarcoder and the UNITE+INSD 2024 reference database.
 
 The samples from the order *Pucciniales* are shown in @fig-splittingPuccinia.
-Using the NanoCLUST method, the majority of reads from the *Puccinia striiformis (var tritici)* sample (BC 25) have clustered together into a single cluster (OTU 37),
-which has been given the expected species-level classification (*Puccinia striiformis*).
-The remaining reads from the *P. striiformis (var tritici)* sample have clustered into two groups (1 read each) which do not correspond to the expected sample taxonomy.
-The *Botrytis* genus classification given one of clusters corresponds to another sample present in the library
+Using the NanoCLUST method, the majority of reads from the *Puccinia striiformis (var tritici)* sample (BC 25) clustered together into a single cluster (OTU 37) with the expected species-level classification (*Puccinia striiformis*).
+The remaining reads from the *P. striiformis (var tritici)* sample clustered into two groups (1 read each) which do not correspond to the expected sample taxonomy.
+The *Botrytis* genus classification of one of the clusters corresponds to another sample present in the library
 and may be indicative of index-switching (where a sequencing error has occurred in the barcode region of the read).
 
 
@@ -173,11 +174,21 @@ A similar plot for all samples in this mock scenario can be seen in @fig-nanoclu
 
 - limitation of using single representative sequence
 
-## Using most abundant sequence for taxonomic assignments less variable than using consensus sequence
+### Comparison of taxonomic assignment using the most abundant sequence or the consensus sequence
 
 In order to explore the accuracy of the taxonomic classifications in the pipeline, two metrics were computed for the even abundance mock scenario (Scenario 1).
-The genera classification proportion metric has been defined as $\frac{\text{\# of reads classified at the genera level}}{\text{total \# of reads from isolate}}$.
-The genera precision metric has been defined as $\frac{\text{\# of reads classified correctly at the genera level}}{\text{\# of reads classified at the genera level}}$.
+The genera classification proportion metric has been defined as:
+
+$$
+\frac{\text{\# of reads classified at the genera level}}{\text{total \# of reads from isolate}}
+$$
+
+The genera precision metric has been defined as:
+
+$$
+\frac{\text{\# of reads classified correctly at the genera level}}{\text{\# of reads classified at the genera level}}
+$$
+
 These metrics were calculated for five library sizes (between 2900 and 145000 reads) for both NanoCLUST and VSEARCH clustering methods (@fig-nanoclustPrecisionAbundance).
 We wanted to explore which representative sequence (most abundant or consensus) of each cluster gave more accurate taxonomic classifications.
 
@@ -211,7 +222,9 @@ Most abundant sequence less variable in precision than consensus - VSEARCH
 
 - limitations of reference database labels, difficult to ensure taxonomic assignments are correct in an automated fashion.
 
-## Sensitivity of cluster thresholds in uneven abundance scenarios (Scenario 2)
+## Uneven abundance Scenario
+
+### Sensitivity of cluster thresholds in uneven abundance scenarios (Scenario 2)
 
 - points at which we lose samples
 - tradeoff -> inflated number of clusters / noisy
