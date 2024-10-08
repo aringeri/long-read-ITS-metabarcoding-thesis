@@ -2,39 +2,42 @@
 title: "Methods"
 ---
 
-## Preparation of reads from fungal isolates for mock scenarios
+## Preparation of reads from fungal taxa for mock scenarios
 
-In order to understand the behaviour of our pipeline under different sampling scenarios, a mock dataset was used based on sequencing data from 65 known fungal isolates.
+In order to understand the behaviour of our pipeline under different sampling scenarios, a mock dataset was used based on sequencing data from 65 known fungal taxa.
 We simulated data that might be encountered when sampling a complex fungal community, by controlling
-the relative proportion of reads from each fungal isolate using various scenarios:
+the relative proportion of reads from each fungal taxa using various scenarios:
 
-1) Even abundance where all fungal isolates have the same relative abundance of read count.
-2) Uneven scenario where a subset of fungal isolates have a much lower abundance relative to the other isolates in the mock sample.
+1) Even abundance where all fungal taxa have the same relative abundance of read count.
+2) Uneven scenario where a subset of fungal taxa have a much lower abundance relative to the other taxa in the mock sample.
 
-@tbl-samplesheet provides the list of fungal species and the number of raw reads that were available to us for generating these mock scenarios.
-The steps to generate and prepare reads for this synthetic dataset are outlined below.
+The raw basecalled reads were provided to us by collaborators from the Schwessinger Group at Australian National University [@anuSchwessingerGroupPlants].
+They have performed: the identification and isolation of all fungal taxa, library preparation (DNA extraction and amplification), sequencing and basecalling.
+@tbl-samplesheet provides the list of fungal taxa and the number of raw reads that were available to us for generating these mock scenarios.
+The steps to generate and prepare reads for these mock datasets are outlined below.
 
 ### DNA extraction, amplification and sequencing
 
-The genomic DNA of 65 fungal strains was extracted with the Qiagen DNeasy Plant mini kit.
-The DNA was extracted from mycelia or spore material of each fungal isolate.
+The genomic DNA of 65 fungal taxa was extracted with the Qiagen DNeasy Plant mini kit.
+The DNA was extracted from mycelia or spore material of each fungal taxa.
 Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse).
 The amplicons were prepared with Oxford Nanopore's Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT).
 The fungal samples plus a negative control were multiplexed and sequenced using a MinION R10.4 flow cell.
 
-### Bioinformatics - Basecalling, trimming and filtering
+### Bioinformatics - Basecalling and primer trimming
 
 The raw ONT data was basecalled and demultiplexed using Guppy v6.4.2 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup).
-The mean read length of amplicons after basecalling was ~2.2 KB as seen in @fig-rawReadQuality.
 
 Sequencing adapters were trimmed from raw basecalled reads using Dorado v0.6.1 with the '`--no-trim-primers`' option to avoid removing primer sequences.
 Cutadapt v4.6 [@Cutadapt] was used to select and trim primers from amplicons that contain both forward (NS5) and reverse primer (LR6) sequences.
 Amplicons where both of these primer sequences could not be detected were excluded from the analysis.
-Cutadapt was also used to re-orient reads that have been sequenced by the reverse strand ('`--revcomp`' option), making it easier to process by downstream tools (@fig-filterTrimFlowchart).
+Cutadapt was also used to re-orient reads that have been sequenced by the reverse strand ('`--revcomp`' option), facilitating analysis by downstream tools (@fig-filterTrimFlowchart).
+
+### Bioinformatics - ITS extraction and quality filtering
 
 The full ITS region of these reads was extracted using ITSxpress v2.0.1 [@Rivers2018] with default settings other than '`--single_end`' and '`--taxa Fungi`' options.
 Chopper v0.7.0 [@DeCoster2023] was used to select reads of the full ITS region having a length between 300-6000bp and mean Phred quality score above Q20.
-Chimeric reads were detected using VSEARCH's [@rognesVSEARCHVersatileOpen2016] denovo and reference based methods.
+Chimeric reads were detected with VSEARCH v2.21.1 [@rognesVSEARCHVersatileOpen2016] using *de novo* and reference based methods.
 The database used for reference based chimera detection of full ITS sequences was the UNITE+INSD 2024 reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255]
 
 ::: {#fig-filterTrimFlowchart}
@@ -69,17 +72,13 @@ digraph {
 }
 ```
 
-::: {custom-style="Caption"}
-The steps taken to prepare raw reads for mock scenarios. Boxes indicate trimming and filtering stages of the pipeline with and the software used is in parentheses.
-:::
-
-Quality filtering of raw reads
+Trimming and quality filtering of raw reads with the software used indicated in parentheses.
 :::
 
 
 ### Sample selection and taxonomic naming validation
 
-To ensure that taxonomic names were used consistently between the fungal isolate samples and the reference database, manual validation of each sample name was performed
+To ensure that taxonomic names were used consistently between the fungal taxa samples and the reference database, manual validation of each sample name was performed
 by conducting searches for the recorded species name of each sample in the 2024 UNITE+INSD reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255].
 Most mismatches were either due to names being misspelled or based on an older taxonomic synonym.
 For example, *Nakaseomyces glabratus* in UNITE was originally recorded by its former name *Candida glabrata*.
@@ -99,15 +98,15 @@ The samples that were excluded (with updated names in parenthesis) were: *Asperg
 
 ## Mock scenarios
 
-After the raw reads from the fungal isolates had been processed as described above, we had a pool of high quality full ITS sequences which we used to simulate different community structures.
+After the raw reads from each fungal taxa had been processed as described above, we had a pool of high quality full ITS sequences which we used to simulate different community structures.
 The steps taken to combine these full ITS sequences into mock scenarios are outlined below.
 Two approaches have been developed for simulating communities with even and uneven species abundance.
 
 ### Scenario 1 - Even abundance
 
-The first mock scenario simulated an even community structure where every fungal isolate has an equal abundance in terms of number of reads.
-Libraries of differing sizes were generated by subsampling an equal number of reads from each fungal isolate.
-For each of the 58 fungal isolates: 20, 50, 167, 1000, 2000 and 2500 reads were randomly selected to produce libraries with sizes of 1160, 2900, 9686, 58000, 116000 and 145000 reads (@fig-equalAbundanceDiagram).
+The first mock scenario simulated an even community structure where every fungal taxa had an equal abundance in terms of number of reads.
+Libraries of differing sizes were generated by subsampling an equal number of reads from each fungal taxa.
+For each of the 58 fungal taxa: 20, 50, 167, 1000, 2000 and 2500 reads were randomly selected to produce libraries with sizes of 1160, 2900, 9686, 58000, 116000 and 145000 reads (@fig-equalAbundanceDiagram).
 Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the '`sample`' command).
 The subsampling was repeated five times for each library size producing a total of 30 libraries (6 libraries $\times$ 5  repetitions).
 The random seed values given to seqtk's '`sample`' command for each repetition were generated deterministically so that each run of the pipeline was reproducible.
@@ -117,41 +116,33 @@ The random seed values given to seqtk's '`sample`' command for each repetition w
 knitr::include_graphics('analysis/images/05-even-sampling-diagram.png')
 ```
 
-:::{custom-style="Caption"}
-The process for generating mock communities with equal abundances. Equal numbers of reads were selected from the set of quality filtered reads of each fungal isolate then combined into a single library. The process was repeated with different subsampling depth to produce libraries with different sizes. Five libraries of each size were created. Clustering and taxonomic assignment was performed on each library individually.
+Process for generating mock communities with equal abundances. Equal numbers of reads were selected from the set of quality filtered reads of each fungal taxa then combined into a single library. The process was repeated with different subsampling depth to produce libraries with different sizes. Five replicate libraries of each size were created where clustering and taxonomic assignment was performed on each library individually.
 :::
-
-Generating even abundance mock scenarios
-:::
-
-### Scenario 2 - Uneven (5 low abundance)
-
-As it is unlikely in a 'real world' environmental sample for all taxa have the same number of reads,
-we explored situations where the number of reads between isolates was unequal.
-For this scenario, we selected five species to be subsampled at a low abundance, while a remaining 50 species were subsampled at a higher abundance (@fig-unevenSamplingDiagram).
-The low-abundance species *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides*,
-were subsampled at levels of 5, 10, 20, 50 and 100 reads respectively.
-The remaining 50 high-abundance species were subsampled at an even rate and mixed with the low-abundance reads.
-This process was repeated to produce different library sizes by subsampling the 'high-abundance' species at rates of 200, 500, 1000 and 2000 reads per isolate, while keeping the 'low-abundance' species unchanged.
-This produced library sizes of 10185, 25185, 50185, 100185 respectively.
 
 :::{#fig-unevenSamplingDiagram}
 
 ![](analysis/images/05-uneven-sampling-diagram.png)
 
-:::{custom-style="Caption"}
 The process for generating mock communities with uneven abundances.
-Five fungal isolates were subsampled at a low rate (between 5 and 100 reads).
+Five fungal taxa were subsampled at a low rate (between 5 and 100 reads).
 The remaining 50 fungal isolates were subsampled at a fixed higher rate.
 The 'high-abundance' fungal isolates were subsampled at rates between 200 and 2000 reads to produce four libraries.
 Clustering and taxonomic assignment was performed on each library individually.
 :::
 
-Generating uneven abundance mock scenarios
-:::
+### Scenario 2 - Uneven (5 low abundance)
+
+As it is unlikely in a 'real world' environmental sample for all taxa have the same number of reads,
+we explored situations where the number of reads between taxa was unequal.
+For this scenario, we selected five species to be subsampled at a low abundance, while a remaining 50 species were subsampled at a higher abundance (@fig-unevenSamplingDiagram).
+The low-abundance species *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides*,
+were subsampled at levels of 5, 10, 20, 50 and 100 reads respectively.
+The remaining 50 high-abundance species were subsampled at an even rate and mixed with the low-abundance reads.
+This process was repeated to produce different library sizes by subsampling the 'high-abundance' taxa at rates of 200, 500, 1000 and 2000 reads per taxon, while keeping the 'low-abundance' taxa unchanged.
+This produced library sizes of 10185, 25185, 50185, 100185 respectively.
 
 
-The species *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides* were randomly selected as the low abundance species.
+*Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides* were randomly selected as the low abundance taxa.
 To simplify the interpretation of this scenario, we ensured that we did not subsample from the same species more than once (i.e. from two fungal isolates with the same species designation).
 To do this, the following fungal isolates were excluded from the set of quality filtered reads: *Austropuccinia psidii* 2, *Cryptococcus gattii VG III*, *Cryptococcus neoformans VNI* in addition to those from Scenario 1.
 
@@ -161,7 +152,7 @@ To do this, the following fungal isolates were excluded from the set of quality 
 For each scenario, full ITS sequences were grouped into approximate species-level OTUs using
 two de-novo clustering approaches (@fig-clusterAssignFlowchart).
 
-The first approach uses centroid-based clustering on sequence similarity as implemented in VSEARCH [@rognesVSEARCHVersatileOpen2016].
+The first approach uses centroid-based clustering on sequence similarity as implemented in VSEARCH v2.21.1 [@rognesVSEARCHVersatileOpen2016].
 The sequences were first de-replicated using VSEARCH's `'--fastx_uniques'` option to merge identical sequences into a single record, then clustered with the `'--cluster_size'` option.
 97% identity was used as the pairwise sequence similarity threshold.
 This clustering approach resulted in many low-abundance operational taxonomic units (OTUs).
@@ -229,13 +220,9 @@ digraph {
   #unite -> dnabarcoder
   }
 ```
-:::{custom-style="Caption"}
-The two clustering approaches used in the pipeline: VSEARCH and NanoCLUST (UMAP + HDBSCAN).
-Stages of the pipeline are shown as boxes with the software tools used in parentheses.
-The two ways of selecting a representative sequence from each cluster are also shown: most abundance sequence and consensus sequence.
-:::
 
-Read clustering
+Read clustering using two clustering VSEARCH and NanoCLUST (UMAP + HDBSCAN), with the software tools used in parentheses.
+A representative sequence from each cluster was selected either based on the most abundant sequence or the consensus sequence.
 :::
 
 ## Bioinformatics - Taxonomic assignments
@@ -243,7 +230,7 @@ Read clustering
 A representative sequence was selected from each cluster to aid their taxonomic assignment.
 Our initial approach used the most abundant sequence as the representative sequence of each cluster.
 The VSEARCH clustering approach provided the most abundant sequences with the '`--centroids`' option.
-To determine the most abundant sequence from clusters in the UMAP + HDBSCAN approach, the VSEARCH '`--fastx_uniques`' command in combination with '`--topn 1`' option was used (@fig-clusterAssignFlowchart).
+To determine the most abundant sequence from clusters in the UMAP + HDBSCAN approach, the VSEARCH v2.21.1 '`--fastx_uniques`' command in combination with '`--topn 1`' option was used (@fig-clusterAssignFlowchart).
 
 Alternatively, a consensus sequence was built from the reads of each cluster following a similar approach used by NanoCLUST (@fig-clusterPolishFlow).
 First, a subset of 200 sequences was selected from each cluster to reduce computation time and space requirements.
@@ -283,13 +270,9 @@ digraph {
 }
 ```
 
-:::{custom-style="Caption"}
-The process of producing a consensus sequence for each cluster by selecting and polishing a draft read.
-An initial draft sequence is selected from the first 200 reads in the cluster, taking the read with the highest Average Nucleotide Identity (ANI) to the other reads.
-The 200 reads used for polishing are first aligned to the draft sequence, then polished using racon and medaka.
-:::
-
-Consensus sequence polishing
+Process of producing a consensus sequence for each cluster by selecting and polishing a draft read.
+An initial draft sequence is selected by taking the read with the highest Average Nucleotide Identity (ANI) from the first 200 reads in the cluster.
+The 200 reads used for polishing were first aligned to the draft sequence, then polished using racon [@vaserFastAccurateNovo2017] and medaka ([https://github.com/nanoporetech/medaka](https://github.com/nanoporetech/medaka)).
 :::
 
 
