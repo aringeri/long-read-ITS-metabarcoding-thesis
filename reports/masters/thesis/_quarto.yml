@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "Metabarcoding of Fungi with Oxford Nanopore Sequencing"
+  title: "A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing"
   author: Alex Ringeri
   chapters:
     - index.qmd
@@ -30,7 +30,7 @@ format:
     reference-doc: custom-reference-doc.docx
 #    reference-doc: templates/CDC_Template.docx
 
-fig-cap-location: top
+#fig-cap-location: top
 execute:
   echo: false
 crossref:

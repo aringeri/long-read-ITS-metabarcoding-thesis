@@ -234,7 +234,7 @@ To determine the most abundant sequence from clusters in the UMAP + HDBSCAN appr
 
 Alternatively, a consensus sequence was built from the reads of each cluster following a similar approach used by NanoCLUST (@fig-clusterPolishFlow).
 First, a subset of 200 sequences was selected from each cluster to reduce computation time and space requirements.
-Then a draft sequence was selected by taking the read with the highest Average Nucleotide Identity (ANI) to all the other sequences with FastANI [@jainHighThroughputANI2018].
+Then a draft sequence was selected by taking the read with the highest Average Nucleotide Identity (ANI) to all the other sequences with FastANI v1.34 [@jainHighThroughputANI2018].
 The 200 reads used for polishing were then aligned to the draft sequence using minimap2 v2.28 [@liMinimap2PairwiseAlignment2018].
 Subsequently, the draft read underwent polishing using Racon v1.5.0 [@vaserFastAccurateNovo2017] then Medaka v1.12.0 ([https://github.com/nanoporetech/medaka](https://github.com/nanoporetech/medaka)).
 As Canu [@korenCanuScalableAccurate2017] is designed as a long-read assembler, it has a strict minimum genome size of 1000 making it unable to polish full ITS sequences from this dataset (which were around 400bp).
