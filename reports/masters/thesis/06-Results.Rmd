@@ -222,7 +222,7 @@ Most abundant sequence less variable in precision than consensus - VSEARCH
 
 :::{#fig-uneven-min-cluster-thresh-nanoclust}
 
-![](analysis/images/06-uneven-min-cluster-nanoclust.png)
+![](analysis/images/06-uneven-min-cluster.png)
 
 :::{custom-style="Caption"}
 The impact of increasing the minimum cluster size parameter for NanoCLUST (UMAP + HDBSCAN) from left to right (values between 2 and 100).
