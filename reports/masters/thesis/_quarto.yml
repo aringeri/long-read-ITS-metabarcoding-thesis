@@ -19,7 +19,7 @@ csl: '../../bioinformatics.csl'
 format:
   html:
     theme: cosmo
-    number-depth: 2
+    number-depth: 3
   pdf:
     documentclass: scrreprt
   docx:
