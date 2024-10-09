@@ -174,16 +174,6 @@ $$
 These metrics were calculated for five library sizes (between 2900 and 145000 reads) for both NanoCLUST and VSEARCH clustering methods (@fig-nanoclustPrecisionAbundance).
 We wanted to explore which representative sequence (most abundant or consensus) of each cluster gave more accurate taxonomic classifications.
 
-:::{#fig-nanoclustPrecisionAbundance}
-
-![](analysis/images/06-precision-nanoclust-abundance.png)
-
-:::{custom-style="Caption"}
-TODO
-:::
-
-Most abundant sequence less variable in precision than consensus - NanoCLUST
-:::
 
 Figure analysis:
 
@@ -191,9 +181,9 @@ Figure analysis:
 - higher precision at lower classification proportion for lowest minimum cluster size (2)
 - minimum cluster size introduces its own variability
 
-:::{#fig-vsearchPrecisionAbundance}
+:::{#fig-nanoclustPrecisionAbundance}
 
-![](analysis/images/06-precision-vsearch-abundance.png)
+![](analysis/images/06-precision-even-abundance.png)
 
 :::{custom-style="Caption"}
 VSEARCH precision ...

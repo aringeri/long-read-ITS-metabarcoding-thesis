@@ -11,6 +11,7 @@ library(stringr)
 
 source('helpers/dnabarcoder.R')
 source('helpers/config.R')
+source('helpers/vsearch.R')
 
 samplesheet <- read_samplesheet(config)
 nsamples <- 58
@@ -128,7 +129,7 @@ precision_summary <- rbind(all_df, all_df_cons) %>%
     species_precision = sum(species_correct) / sum(species_classified),
   )
 
-precision_plot <- cowplot::plot_grid(
+precision_plot <-
   precision_summary %>%
     ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth,
                shape=factor(library_size), colour=factor(method, labels = c("most abundant", "consensus")))) +
@@ -144,25 +145,25 @@ precision_plot <- cowplot::plot_grid(
       scale_x_continuous(labels = scales::percent, n.breaks = 3) +
       scale_shape_discrete(name="Library size") +
       scale_colour_discrete(name="Representative sequence") +
-      labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
+      labs( x="Genera precision (%)", y="Genera classification proportion (%)") +
       theme(aspect.ratio=1)
-)
+
 precision_plot
-ggsave('./images/06-precision-nanoclust-abundance.png', precision_plot)
+# ggsave('./images/06-precision-nanoclust-abundance.png', precision_plot)
 
 
 vsearch_stats <- tibble()
 for (sample_depth in c(20, 50, 167, 1000, 2000, 2500)) {
   for (t in c(0, 0.0005, 0.001, 0.0015)) {
     for (rep in 1:5) {
-      if (sample_depth==2000) {
+      # if (sample_depth==2000) {
         vsearch_cons <- load_vsearch_phyloseq(samplesheet, config$experiment_path, 2000, rep, consensus=T)
         vsearch_stats_cons <- calc_precision(vsearch_cons  %>% filter_taxa_by_thresh(t), samplesheet)
         vsearch_stats_cons$method <- 'consensus'
         vsearch_stats_cons$sample_depth <- 2000
         vsearch_stats_cons$rep <- rep
         vsearch_stats_cons$min_cluster_size <- t
-      }
+      # }
 
 
       vsearch_abund <- load_vsearch_phyloseq(samplesheet, config$experiment_path, sample_depth, rep, consensus=F)
@@ -209,7 +210,17 @@ vsearch_abundance_precision <- vsearch_precision_summary %>%
   scale_shape_discrete(name="Library size") +
   labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
   theme(aspect.ratio=1)
-ggsave('./images/06-precision-vsearch-abundance.png', vsearch_abundance_precision)
+vsearch_abundance_precision
+# ggsave('./images/06-precision-vsearch-abundance.png', vsearch_abundance_precision)
+
+precision_compare_plot <- cowplot::plot_grid(
+  nrow = 1, scale = c(1, .9),
+  align='h', axis='tb',
+  precision_plot + labs(title="NanoCLUST"),
+  vsearch_abundance_precision + labs(title="VSEARCH")
+)
+ggsave('./images/06-precision-even-abundance.png', precision_compare_plot)
+
 
 
 vsearch_precision_summary %>%
