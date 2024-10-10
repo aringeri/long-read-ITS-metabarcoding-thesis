@@ -6,7 +6,7 @@ title: "Supplemental Figures"
 ```{r}
 #| message: false
 #| label: tbl-samplesheet
-#| tbl-cap: List of the species, sequencing barcode, number of raw reads (following basecalling) and number of reads after quality control (QC). Corrections to original based on the UNITE+INSD (v2024) taxonomy [@abarenkovFullUNITEINSDDataset2024] are shown in parenthesis.
+#| tbl-cap: Read statistics from isolated fungal taxa used in mock scenarios. List of the taxa, sequencing barcode, number of raw reads (following basecalling) and number of reads after quality control (QC). Corrections to original based on the UNITE+INSD (v2024) taxonomy [@abarenkovFullUNITEINSDDataset2024] are shown in parenthesis.
 library(dplyr)
 library(flextable)
 
@@ -39,6 +39,23 @@ sample_stats %>%
     inline=F,
     value = as_paragraph("Excluded from uneven abundance scenario")
   )
+```
+
+```{r}
+#| label: tbl-soil-samplesheet
+#| tbl-cap: Read statistics for soil sample data. List of the samples, number of raw reads (following basecalling) and number of reads after quality control (QC).
+soil_sample_stats <-  read.csv('../../../experiments/camille-soil-samples/soil-sample-stats-fmt.csv')
+
+soil_sample_stats %>%
+  select(Sample, Number.of.raw.reads, Number.of.reads.after.QC) %>%
+  rename_with(\(col) gsub('\\.', ' ', col)) %>%
+  flextable() %>%
+  align_text_col(align = "left") %>%
+  align_nottext_col( align = "right") %>%
+  align(j=3, align="right", part="all") %>%
+  width(j=1, width=2, unit = "cm") %>%
+  width(j=2, width=2.5, unit = "cm") %>%
+  width(j=3, width=3, unit = "cm")
 ```
 
 :::{#fig-nanoclustSplitting2}
@@ -76,4 +93,110 @@ flextable(
   align(j=4, align="right", part="all") %>%
   align(j=5, align="right", part="all") %>%
   autofit()
+```
+
+```{r}
+#| label: tbl-software-isolate
+#| tbl-cap: Software used basecalling the fungal isolate dataset used in mock scenarios.
+flextable(data.frame(
+    step='Basecalling',
+    name='guppy',
+    version='v6.4.2',
+    command='guppy_basecaller \\\n\t-i ./calledFast5 \\\n\t-s ./calledFastq \\\n\t-c dna_r10.4.1_e8.2_400bps_sup.cfg \\\n\t-r -x auto --disable_qscore_filtering \\\n\t--barcode_kits "SQK-NBD114-96"  \\\n\t--trim_adapters --compress_fastq'
+  )) %>%
+  set_table_properties(layout='fixed') %>%
+  width(j=1, width=3, unit = "cm") %>%
+  width(j=2, width=2, unit = "cm") %>%
+  width(j=3, width=2, unit = "cm") %>%
+  width(j=4, width=9, unit = "cm")
+```
+
+```{r}
+#| label: tbl-software-soil
+#| tbl-cap: Software used basecalling and demultiplexing the soil sample dataset
+flextable(data.frame(
+    step='Basecalling',
+    name='dorado',
+    version='v0.7.1',
+    command=''
+  ) %>%
+  rbind(data.frame(
+    step='Demultiplexing',
+    name='minibar',
+    version='v0.25',
+    command='minibar.py -F -n 10 \\\n\t../minibar-primers.txt \\\n\t../raw/SoilSamples.fastq.gz'
+  ))
+  ) %>%
+  set_table_properties(layout='fixed') %>%
+  width(j=1, width=3, unit = "cm") %>%
+  width(j=2, width=2, unit = "cm") %>%
+  width(j=3, width=2, unit = "cm") %>%
+  width(j=4, width=9, unit = "cm")
+```
+
+```{r}
+#| label: tbl-software-pipeline
+#| tbl-cap: Software used in pipeline
+flextable(data.frame(
+    step='Adapter trimming',
+    name='dorado',
+    version='v0.6.1'
+  ) %>% rbind(data.frame(
+    step='Primer trimming',
+    name='cutadapt',
+    version='v4.6'
+  )) %>% rbind(data.frame(
+    step='ITS region extraction',
+    name='ITSxpress',
+    version='v2.0.1'
+  )) %>% rbind(data.frame(
+    step='Quality filtering',
+    name='chopper',
+    version='v0.7.0'
+  )) %>% rbind(data.frame(
+    step='Chimera detection\nClustering\nDereplication',
+    name='VSEARCH',
+    version='v2.21.1'
+  )) %>% rbind(data.frame(
+    step='Subsampling reads',
+    name='seqtk',
+    version='v1.4'
+  )) %>% rbind(data.frame(
+    step='Dimension reduction',
+    name='UMAP',
+    version='v0.4.6'
+  )) %>% rbind(data.frame(
+    step='Clustering',
+    name='HDBSCAN',
+    version='v0.8.26'
+  )) %>% rbind(data.frame(
+    step='Taxonomic assignment',
+    name='dnabarcoder',
+    version='v1.0.6'
+  )) %>% rbind(data.frame(
+    step='Fastq/fasta file manipulation',
+    name='seqkit',
+    version='v2.6.1'
+  )) %>% rbind(data.frame(
+    step='Draft read selection',
+    name='fastANI',
+    version='v1.34'
+  )) %>% rbind(data.frame(
+    step='Read mapping',
+    name='minimap',
+    version='v2.28'
+  )) %>% rbind(data.frame(
+    step='Read polishing',
+    name='racon',
+    version='v1.5.0'
+  )) %>% rbind(data.frame(
+    step='Read polishing',
+    name='medaka',
+    version='v1.12.0'
+  ))
+  ) %>%
+  set_table_properties(layout='fixed') %>%
+  width(j=1, width=3, unit = "cm") %>%
+  width(j=2, width=3, unit = "cm") %>%
+  width(j=3, width=3, unit = "cm")
 ```

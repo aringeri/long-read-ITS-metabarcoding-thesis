@@ -11,6 +11,7 @@ library(ggpattern)
 source('./helpers/dnabarcoder.R')
 source('./helpers/config.R')
 source('./helpers/vsearch.R')
+source('./helpers/manual-taxonomy.R')
 
 samplesheet <- read_samplesheet(config)
 
@@ -83,6 +84,16 @@ ggplot_splitting <- function(phylo, df, taxa_labels=FALSE, ncol=NULL, maxY=2200)
 }
 
 organise_df <- function(phylo, subset) {
+  species_level_correct <- function(species_unite, species) {
+    (!is.na(species_unite) & species == species_unite) |
+      # accepted_synonyms %>% filter(alt_species == species & actual_species == species_unite) %>% nrow() > 0
+      species %in% accepted_synonyms$alt_species & species_unite %in% accepted_synonyms$actual_species
+  }
+
+  genus_level_correct <- function(genus_unite, species_unite, genus) {
+    genus == genus_unite | genus %in% accepted_synonyms$alt_genus & species_unite %in% accepted_synonyms$actual_species
+  }
+
   cbind(
     otu_table(phylo),
     tax_table(phylo)[,c('family', 'genus', 'species')]
@@ -96,15 +107,9 @@ organise_df <- function(phylo, subset) {
       join_by(barcode)
     )%>%
     mutate(
-      # match = ifelse(
-      #   !is.na(species_unite) & species == species_unite, "species",
-      #   ifelse(genus == genus_unite, "genus",
-      #     ifelse(family == family_unite, "family",  "mismatch")
-      #   )
-      # )
       match = ifelse(
-        !is.na(species_unite) & species == species_unite, 0,
-        ifelse(genus == genus_unite, 1,
+        species_level_correct(species_unite, species), 0,
+        ifelse(genus_level_correct(genus_unite, species_unite, genus), 1,
           ifelse(family == family_unite, 2,
             ifelse(family == 'unclassified kingdom', 4,3))
         )
@@ -127,12 +132,14 @@ plot_splitting(nanoclust, sample_names(nanoclust)[31:70])
 
 puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
   labs(title = "UMAP + HDBSCAN (NanoCLUST)", x='') +
+  geom_text(aes(label=ifelse(grepl('^49|^57', OTU), "*", '')), hjust=-2.7, vjust=-.2) +
   theme(aspect.ratio = 1)
 puccinias
 ggsave('images/06-cluster-splitting-nanoclust-puccinia.png', puccinias)
 
 puccinias_vsearch <- plot_splitting(vsearch, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
-  labs(title = "VSEARCH (97% identity)") +
+  labs(title = "VSEARCH") +
+  geom_text(aes(label=ifelse(grepl('^5', OTU), "*", '')), hjust=-3, vjust=-.2) +
   theme(aspect.ratio = 1)
 puccinias_vsearch
 ggsave('images/06-cluster-splitting-vsearch-puccinia.png', puccinias_vsearch)
@@ -151,8 +158,40 @@ cand_tax <- as.matrix(tax_table(cand_nanoclust))
 incertae <- cand_tax[,'genus'] == 'Debaryomycetaceae gen Incertae sedis'
 cand_tax[incertae, c('family', 'genus', 'species')] <- 'Debaryomycetaceae family'
 tax_table(cand_nanoclust) <- tax_table(cand_tax)
-candidas <- plot_splitting(cand_nanoclust, paste0('barcode', c(47:57)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
+candidas <- plot_splitting(cand_nanoclust, paste0('barcode', c(47:57)), taxa_labels = F, ncol = 4, maxY=2100) +
   labs(title = "UMAP + HDBSCAN")
+candidas
+
+cand_vsearch <- vsearch
+cand_tax <- as.matrix(tax_table(cand_vsearch))
+incertae <- cand_tax[,'genus'] == 'Debaryomycetaceae gen Incertae sedis'
+cand_tax[incertae, c('family', 'genus', 'species')] <- 'Debaryomycetaceae family'
+tax_table(cand_vsearch) <- tax_table(cand_tax)
+plot_splitting(cand_vsearch, paste0('barcode', c(47:57)), taxa_labels = F, ncol = 4, maxY=2100) +
+  labs(title = "VSEARCH")
+
+candidas_plot_nanoclust <-
+  plot_splitting(cand_nanoclust, paste0('barcode', c(47, 49, 50, 53, 54)), taxa_labels = T, ncol = 5, maxY=2100) +
+    theme(aspect.ratio = 1) +
+    labs(title="UMAP + HDBSCAN (NanoCLUST)")
+ggsave('images/06-cluster-splitting-nanoclust-candida.png', candidas_plot_nanoclust)
+
+
+candidas_plot_vsearch <-
+    plot_splitting(cand_vsearch, paste0('barcode',  c(47, 49, 50, 53, 54)), taxa_labels = T, ncol = 5, maxY=2100) +
+      theme(aspect.ratio = 1) +
+      labs(title="VSEARCH")
+ggsave('images/06-cluster-splitting-vsearch-candida.png', candidas_plot_vsearch)
+
+
+botrytis_plot_nanoclust <- plot_splitting(nanoclust, paste0("barcode", c(31, 32)), taxa_labels = T) +
+  labs(title="UMAP + HDBSCAN (NanoCLUST)") +
+  theme(aspect.ratio = 1)
+botrytis_plot_vsearch <- plot_splitting(vsearch, paste0("barcode", c(31, 32)), taxa_labels = T) +
+  labs(title="VSEARCH") +
+  theme(aspect.ratio = 1)
+ggsave('images/06-cluster-splitting-nanoclust-botrytis.png', botrytis_plot_nanoclust)
+ggsave('images/06-cluster-splitting-vsearch-botrytis.png', botrytis_plot_vsearch)
 
 plot_splitting(vsearch, sample_names(vsearch)[1:30])
 plot_splitting(vsearch, sample_names(vsearch)[31:70])
