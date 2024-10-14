@@ -145,24 +145,42 @@ When considering read loss at these thresholds, compared to VSEARCH, the NanoCLU
 and worse at a library size of 145K reads.
 -->
 
-#### Using fixed cluster size cutoff instead of proportion of library size
+#### Computing number of species after taxonomic assignments and fixed min cluster size cutoff
 
-- limitations of last section
-  - number of otus may not accurately represent the number of species
-    - species can be split into multiple OTUs, but given the same taxonomic assignment
-  - min clusters size as proportion of library size
-    - 0.15% of 100K is
-  - more sensitive approach
+While we were able to demonstrate above that the expected number of species can be recovered by setting a minimum OTU size,
+ number of OTUs may not be an accurate measure of the actual number of species.
+For example one species may have been split into multiple OTUs which have all given the same species-level taxonomic assignment.
+In addition, we wanted to explore using a minimum OTU size threshold that was not proportional to the library size.
+We felt that a minimum OTU size of 0.65% for NanoCLUST and 0.15% for VSEARCH would exclude low abundance species
+and may bias against samples with low read depth.
+
+Here we explored the observed number of species in our even abundance mock community after OTUs had been given taxonomic assignments.
+We performed VSEARCH and NanoCLUST clustering methods on four library sizes of 9686, 58000, 116000, 145000 reads.
+HDBSCAN clustering was performed six times for each library with minimum cluster sizes of: 2, 5, 10, 20, 50 and 100 reads.
+VSEARCH clustering was performed once for each library at 97% identity, then we remove OTUs with fewer than: 2, 5, 10, 20, 50 and 100 reads.
+The most abundant sequence was used at the representative sequence for each OTU and given a taxonomic assignment with dnabarcoder.
+
+For each minimum OTU size, we counted the number of unique taxonomic assignments given at the species level.
+OTUs that were unidentified at the species level were counted as individual species (and not lumped together as a single species).
+Of the OTUs that were given a species-level assignment, we counted the number of species that we knew were in the mock community (@tbl-samplesheet).
+For OTUs that were only identified to genus or family level, we counted how many were expected in our mock community.
+OTUs that were given a taxonomic label at species, genus or family levels but were not expected in the mock community were counted as false positives.
+OTUs that were unidentified at the family level or higher were counted as their own group (@fig-fixed-min-cluster-size-even).
+We also recorded the read loss after applying the minimum OTU size threshold as in the section above.
+
 
 :::{#fig-fixed-min-cluster-size-even}
 ![](/analysis/images/06-n-species-even)
 
-Number of species even
+Number of species after 'collapsing' OTUs with the same species-level taxonomic assignment.
+The even abundance mock community was clustered with VSEARCH and NanoCLUST.
 :::
 
-- core set of species retained after filtering
-- loss more gradual in nanoclust
-- mostly losing genus level + unclassified
+We found that a core set of correctly identified species remained regardless of minimum OTU size.
+VSEARCH seemed to most heavily filter from 'correct' genus-level OTUs and OTUs unidentified from the family level.
+NanoCLUST still overestimating the number of species regardless of min OTU size, but had the benefit of much lower read loss than VSEARCH.
+
+- compare with number of OTUs
 
 #### Comparing cluster delineation between VSEARCH and NanoCLUST
 

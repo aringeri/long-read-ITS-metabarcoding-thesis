@@ -144,8 +144,11 @@ n_otus
 
 label_facet <- function(sample_depth) {
   depth <- as.numeric(sample_depth)
-  lib_size <- if (scenario == 'even') depth*n_samples else 50*depth + sum(5, 10, 20, 50, 100)
-  paste0(lib_size, " reads in library")
+  if (scenario == 'even') {
+    paste(depth*n_samples, " (", depth, " reads per taxa)")
+  } else {
+    paste0(50*depth + sum(5, 10, 20, 50, 100), " reads in library")
+  }
 }
 
 plot <- function(df, expected_samples, title, limits=c(0,255)) {
@@ -223,7 +226,7 @@ plot <- function(df, expected_samples, title, limits=c(0,255)) {
     scale_fill_manual(
       values = cols,
       name="OTU identification level",
-      labels = c("species not from sample set", "unidentified (family and above)", "family in sample set", "genus in sample set", "species in sample set")
+      labels = c("false positive", "unidentified (family and above)", "family in sample set", "genus in sample set", "species in sample set")
     ) +
     # geom_text(aes(label=min_cluster_size*2000*58),y=0) +
     scale_linetype_manual(name='Expected number of species', values="dashed", drop=FALSE) +
@@ -231,7 +234,7 @@ plot <- function(df, expected_samples, title, limits=c(0,255)) {
       cols = vars(sample_depth),
       labeller = as_labeller(label_facet)
     ) +
-    scale_y_continuous(limits = limits) +
+    scale_y_continuous(limits = limits, breaks = c(0,50,100,150, 200, 250)) +
     scale_x_continuous(transform = 'sqrt', breaks = c(2, 5, 10, 20, 50, 100)) +
     # scale_y_continuous(transform = 'log10', breaks=c(55, 100, 1000)) +
     guides( fill = guide_legend(override.aes = c(linetype = 0)) )
