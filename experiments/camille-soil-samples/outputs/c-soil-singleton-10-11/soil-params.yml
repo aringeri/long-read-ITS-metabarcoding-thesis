@@ -1,0 +1,126 @@
+qualityFiltering:
+  ITS1:
+    minQualityPhred: 20
+    minLength: 90
+    maxLength: 2000
+  ITS2:
+    minQualityPhred: 20
+    minLength: 90
+    maxLength: 2000
+  FULL_ITS:
+    minQualityPhred: 20
+    minLength: 300
+    maxLength: 6000
+  LSU:
+    minQualityPhred: 20
+    minLength: 900
+qc_quality_profile: false
+qc_plot_sample_level: true
+sample_barcode_in_file_name: true
+primers:
+  fwd: "TAGAGGAASTAAAAGTCGTAA" # ITS5?
+  rev_rc: "GGTAAGCAGAACTGGCG" # LRU6 (reverse complement)
+region:
+  LSU:
+    classifier: "dada2"
+    rdp_trained_model_dir: "$baseDir/data/db/RDP-LSU/RDPClassifier_fungiLSU_trainsetNo11_trained/"
+chimera_filtering:
+  ref_db: "${baseDir}/data/db/unite2024/unite2024ITS.fasta"
+subsample:
+  enabled: false
+  type: uneven
+  scenarios:
+    - count: 100
+      seed: 93
+      mixin:
+        '20221208.Rep1_Run2_ITS_Fungal_database.Trichomonascus_ciferrii.BC77':
+          prop: 0.05
+        '20221208.Rep1_Run2_ITS_Fungal_database.Erysiphe_necator.BC35':
+          prop: 0.1
+        '20221208.Rep1_Run2_ITS_Fungal_database.Eutypa_lata.BC39':
+          prop: 0.2
+        '20221208.Rep1_Run2_ITS_Fungal_database.Penicillium_chrysogenum.BC71':
+          prop: 0.5
+        '20221208.Rep1_Run2_ITS_Fungal_database.Candid_zeylanoides.BC57':
+          prop: 1
+    - count: 200
+      seed: 8745
+      mixin:
+        '20221208.Rep1_Run2_ITS_Fungal_database.Trichomonascus_ciferrii.BC77':
+          prop: 0.025
+        '20221208.Rep1_Run2_ITS_Fungal_database.Erysiphe_necator.BC35':
+          prop: 0.05
+        '20221208.Rep1_Run2_ITS_Fungal_database.Eutypa_lata.BC39':
+          prop: 0.1
+        '20221208.Rep1_Run2_ITS_Fungal_database.Penicillium_chrysogenum.BC71':
+          prop: 0.25
+        '20221208.Rep1_Run2_ITS_Fungal_database.Candid_zeylanoides.BC57':
+          prop: 0.5
+    - count: 500
+      seed: 77
+      mixin:
+        '20221208.Rep1_Run2_ITS_Fungal_database.Trichomonascus_ciferrii.BC77':
+          prop: 0.01
+        '20221208.Rep1_Run2_ITS_Fungal_database.Erysiphe_necator.BC35':
+          prop: 0.02
+        '20221208.Rep1_Run2_ITS_Fungal_database.Eutypa_lata.BC39':
+          prop: 0.04
+        '20221208.Rep1_Run2_ITS_Fungal_database.Penicillium_chrysogenum.BC71':
+          prop: 0.1
+        '20221208.Rep1_Run2_ITS_Fungal_database.Candid_zeylanoides.BC57':
+          prop: 0.2
+    - count: 1000
+      seed: 42
+      mixin:
+        '20221208.Rep1_Run2_ITS_Fungal_database.Trichomonascus_ciferrii.BC77':
+          prop: 0.005
+        '20221208.Rep1_Run2_ITS_Fungal_database.Erysiphe_necator.BC35':
+          prop: 0.01
+        '20221208.Rep1_Run2_ITS_Fungal_database.Eutypa_lata.BC39':
+          prop: 0.02
+        '20221208.Rep1_Run2_ITS_Fungal_database.Penicillium_chrysogenum.BC71':
+          prop: 0.05
+        '20221208.Rep1_Run2_ITS_Fungal_database.Candid_zeylanoides.BC57':
+          prop: 0.1
+    - count: 2000
+      seed: 4
+      # 5, 10, 20, 50, 100
+      mixin:
+        '20221208.Rep1_Run2_ITS_Fungal_database.Trichomonascus_ciferrii.BC77':
+          prop: 0.0025
+        '20221208.Rep1_Run2_ITS_Fungal_database.Erysiphe_necator.BC35':
+          prop: 0.005
+        '20221208.Rep1_Run2_ITS_Fungal_database.Eutypa_lata.BC39':
+          prop: 0.01
+        '20221208.Rep1_Run2_ITS_Fungal_database.Penicillium_chrysogenum.BC71':
+          prop: 0.025
+        '20221208.Rep1_Run2_ITS_Fungal_database.Candid_zeylanoides.BC57':
+          prop: 0.05
+  repetitions: 1
+cluster:
+  methods:
+    - vsearch
+#    - nanoclust
+  hdbscan:
+    min_cluster_sizes: [5, 10, 20, 50, 100]
+  vsearch:
+    min_cluster_size: 2
+  gather_min_cluster_size_stats: false
+  shuffle:
+    enabled: false
+    seed: 14
+consensus:
+  num_polishing_reads: 200
+  methods: []
+taxonomic_assignment:
+  enabled: false
+  dnabarcoder:
+    ref_db: 'data/db/unite2024/unite2024ITS.fasta'
+    ref_classifications: 'data/db/unite2024/unite2024ITS.classification'
+    cutoffs: 'data/db/dnabarcoder/unite2024ITS.unique.cutoffs.best.json'
+extract:
+  ITS1: false
+  ITS2: false
+  FULL_ITS: true
+  LSU: false
+exclude: []

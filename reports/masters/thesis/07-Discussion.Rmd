@@ -7,9 +7,32 @@ title: "Discussion"
     - my method is stringent as it requires FWD and REV. This could cause bias in a real world scenario
     - make this configurable in pipeline for users
 
+- measures of species recovery
+  - \# otus vs. # species vs. %loss
+  - nanoclust looks like it like it is recovering species when min_cluster_size is high, but actually clumping unrelated taxa together.
+  - nanoclust read loss + # OTUs inconsistent at larger library sizes
+  - Future:
+    - nanoclust might still be useful, but more complicated
+      - closer study of UMAP/HDBSCAN parameters and effect on ITS clustering
+
 - Limitations of assessing correct taxonomic assignments
   - taxonomic labels not always consistent in reference DB
+
+- At low min_cluster_size:
+  - Nanoclust successful at delineating species that VSEARCH at 97% could not
+
+- Taxonomic classification precision
+  - surprisingly:
+    - Nanoclust: lower unclassified and higher precision with lowest minimum OTU size
+    - VSEARCH: lower classification rate when filtering small OTUs
+    - consensus: introducing noise in nanoclust
+      - poor performance for vsearch (explained by grouping unrelated species together)
+      - future: determine source: racon or medaka?
+        - explore better techniques (draft read, etc)
 
 - Recommendations
   - best practices for running
     - minimum sample sizes for recovering rare species
+
+- Future work
+  - taking advantage of long read (LSU, SSU)

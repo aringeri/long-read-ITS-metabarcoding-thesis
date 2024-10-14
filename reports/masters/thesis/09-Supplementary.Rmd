@@ -2,11 +2,8 @@
 title: "Supplemental Figures"
 ---
 
-
 ```{r}
 #| message: false
-#| label: tbl-samplesheet
-#| tbl-cap: Read statistics from isolated fungal taxa used in mock scenarios. List of the taxa, sequencing barcode, number of raw reads (following basecalling) and number of reads after quality control (QC). Corrections to original based on the UNITE+INSD (v2024) taxonomy [@abarenkovFullUNITEINSDDataset2024] are shown in parenthesis.
 library(dplyr)
 library(flextable)
 
@@ -14,125 +11,9 @@ set_flextable_defaults(
   font.size = 10,
   theme_fun = theme_vanilla
 )
-
-sample_stats <-  read.csv('../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv')
-
-sample_stats %>%
-  select(Barcode, Sample, Number.of.raw.reads, Number.of.reads.after.QC) %>%
-  rename_with(\(col) gsub('\\.', ' ', col)) %>%
-  flextable() %>%
-  align_text_col(align = "left") %>%
-  align_nottext_col( align = "right") %>%
-  align(j=4, align="right", part="all") %>%
-  width(j=1, width=2, unit = "cm") %>%
-  width(j=2, width=8, unit = "cm") %>%
-  width(j=3, width=2.5, unit = "cm") %>%
-  width(j=4, width=3, unit = "cm") %>%
-  footnote(
-    i = which(sample_stats$excluded_even), j = 2,
-    ref_symbols = "e,",
-    value = as_paragraph("Excluded from even abundance scenario")
-  ) %>%
-  footnote(
-    i = which(sample_stats$excluded_uneven), j = 2,
-    ref_symbols = "u",
-    inline=F,
-    value = as_paragraph("Excluded from uneven abundance scenario")
-  )
 ```
 
-```{r}
-#| label: tbl-soil-samplesheet
-#| tbl-cap: Read statistics for soil sample data. List of the samples, number of raw reads (following basecalling) and number of reads after quality control (QC).
-soil_sample_stats <-  read.csv('../../../experiments/camille-soil-samples/soil-sample-stats-fmt.csv')
-
-soil_sample_stats %>%
-  select(Sample, Number.of.raw.reads, Number.of.reads.after.QC) %>%
-  rename_with(\(col) gsub('\\.', ' ', col)) %>%
-  flextable() %>%
-  align_text_col(align = "left") %>%
-  align_nottext_col( align = "right") %>%
-  align(j=3, align="right", part="all") %>%
-  width(j=1, width=2, unit = "cm") %>%
-  width(j=2, width=2.5, unit = "cm") %>%
-  width(j=3, width=3, unit = "cm")
-```
-
-:::{#fig-nanoclustSplitting2}
-![](analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png)
-
-![](analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png)
-
-Chart showing how 58 fungal isolates are clustered into OTUs based on a single execution of the even abundance mock scenario.
-Each isolate has been subsampled to 2000 reads and then clustered using the NanoCLUST (UMAP + HDBSCAN) method with a minimum cluster size set to 580 (0.5% of the total library size).
-Bars indicate the abundance of an OTU (number of reads).
-The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the X axis labels (See @tbl-tax-assignments-nanoclust for classifications).
-Green bars indicate that the assignment given to a cluster matches the expected species-level classification.
-Yellow bars indicate a correct genus-level classification.
-Orange bars indicate a correct family-level classification.
-Red bars indicate the classification is incorrect for family-level and above.
-Grey indicates that the cluster could not be given a taxonomic classification at all.
-:::
-
-
-
-```{r}
-#| message: false
-#| label: tbl-tax-assignments-nanoclust
-#| tbl-cap: The set of taxonomic assignments for each cluster in @fig-nanoclustSplitting2. The most abundant sequence of each cluster was given a taxonomic assignment using dnabarcoder and the UNITE 2024 database. The OTU ID column refers clusters found in @fig-nanoclustSplitting2 (x-axis). The genus assignment, species assignment, BLAST score and confidence as reported by dnabarcoder are also shown.
-flextable(
-  read.csv('analysis/tables/all-otus-tax.csv') %>%
-    arrange(OTU.ID) %>%
-    select(OTU.ID, genus, species, score, confidence) %>%
-    mutate(
-      score = scales::percent(score, 0.01),
-      confidence = scales::percent(confidence)
-    ) %>%
-    rename_with(\(col) gsub('\\.', ' ', col))
-) %>%
-  align(j=4, align="right", part="all") %>%
-  align(j=5, align="right", part="all") %>%
-  autofit()
-```
-
-```{r}
-#| label: tbl-software-isolate
-#| tbl-cap: Software used basecalling the fungal isolate dataset used in mock scenarios.
-flextable(data.frame(
-    step='Basecalling',
-    name='guppy',
-    version='v6.4.2',
-    command='guppy_basecaller \\\n\t-i ./calledFast5 \\\n\t-s ./calledFastq \\\n\t-c dna_r10.4.1_e8.2_400bps_sup.cfg \\\n\t-r -x auto --disable_qscore_filtering \\\n\t--barcode_kits "SQK-NBD114-96"  \\\n\t--trim_adapters --compress_fastq'
-  )) %>%
-  set_table_properties(layout='fixed') %>%
-  width(j=1, width=3, unit = "cm") %>%
-  width(j=2, width=2, unit = "cm") %>%
-  width(j=3, width=2, unit = "cm") %>%
-  width(j=4, width=9, unit = "cm")
-```
-
-```{r}
-#| label: tbl-software-soil
-#| tbl-cap: Software used basecalling and demultiplexing the soil sample dataset
-flextable(data.frame(
-    step='Basecalling',
-    name='dorado',
-    version='v0.7.1',
-    command=''
-  ) %>%
-  rbind(data.frame(
-    step='Demultiplexing',
-    name='minibar',
-    version='v0.25',
-    command='minibar.py -F -n 10 \\\n\t../minibar-primers.txt \\\n\t../raw/SoilSamples.fastq.gz'
-  ))
-  ) %>%
-  set_table_properties(layout='fixed') %>%
-  width(j=1, width=3, unit = "cm") %>%
-  width(j=2, width=2, unit = "cm") %>%
-  width(j=3, width=2, unit = "cm") %>%
-  width(j=4, width=9, unit = "cm")
-```
+## Pipeline
 
 ```{r}
 #| label: tbl-software-pipeline
@@ -199,4 +80,131 @@ flextable(data.frame(
   width(j=1, width=3, unit = "cm") %>%
   width(j=2, width=3, unit = "cm") %>%
   width(j=3, width=3, unit = "cm")
+```
+
+## Mock scenarios
+
+```{r}
+#| label: tbl-samplesheet
+#| tbl-cap: Read statistics from isolated fungal taxa used in mock scenarios. List of the taxa, sequencing barcode, number of raw reads (following basecalling) and number of reads after quality control (QC). Corrections to original based on the UNITE+INSD (v2024) taxonomy [@abarenkovFullUNITEINSDDataset2024] are shown in parenthesis.
+sample_stats <-  read.csv('../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv')
+
+sample_stats %>%
+  select(Barcode, Sample, Number.of.raw.reads, Number.of.reads.after.QC) %>%
+  rename_with(\(col) gsub('\\.', ' ', col)) %>%
+  flextable() %>%
+  align_text_col(align = "left") %>%
+  align_nottext_col( align = "right") %>%
+  align(j=4, align="right", part="all") %>%
+  width(j=1, width=2, unit = "cm") %>%
+  width(j=2, width=8, unit = "cm") %>%
+  width(j=3, width=2.5, unit = "cm") %>%
+  width(j=4, width=3, unit = "cm") %>%
+  footnote(
+    i = which(sample_stats$excluded_even), j = 2,
+    ref_symbols = "e,",
+    value = as_paragraph("Excluded from even abundance scenario")
+  ) %>%
+  footnote(
+    i = which(sample_stats$excluded_uneven), j = 2,
+    ref_symbols = "u",
+    inline=F,
+    value = as_paragraph("Excluded from uneven abundance scenario")
+  )
+```
+
+```{r}
+#| label: tbl-software-isolate
+#| tbl-cap: Software used basecalling the fungal isolate dataset used in mock scenarios.
+flextable(data.frame(
+    step='Basecalling +\n Demultiplexing',
+    name='guppy',
+    version='v6.4.2',
+    command='guppy_basecaller \\\n\t-i ./calledFast5 \\\n\t-s ./calledFastq \\\n\t-c dna_r10.4.1_e8.2_400bps_sup.cfg \\\n\t-r -x auto --disable_qscore_filtering \\\n\t--barcode_kits "SQK-NBD114-96"  \\\n\t--trim_adapters --compress_fastq'
+  )) %>%
+  set_table_properties(layout='fixed') %>%
+  width(j=1, width=3, unit = "cm") %>%
+  width(j=2, width=2, unit = "cm") %>%
+  width(j=3, width=2, unit = "cm") %>%
+  width(j=4, width=9, unit = "cm")
+```
+
+:::{#fig-nanoclustSplitting2}
+![](analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png)
+
+![](analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png)
+
+Chart showing how 58 fungal isolates are clustered into OTUs based on a single execution of the even abundance mock scenario.
+Each isolate has been subsampled to 2000 reads and then clustered using the NanoCLUST (UMAP + HDBSCAN) method with a minimum cluster size set to 580 (0.5% of the total library size).
+Bars indicate the abundance of an OTU (number of reads).
+The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the X axis labels (See @tbl-tax-assignments-nanoclust for classifications).
+Green bars indicate that the assignment given to a cluster matches the expected species-level classification.
+Yellow bars indicate a correct genus-level classification.
+Orange bars indicate a correct family-level classification.
+Red bars indicate the classification is incorrect for family-level and above.
+Grey indicates that the cluster could not be given a taxonomic classification at all.
+:::
+
+
+```{r}
+#| message: false
+#| label: tbl-tax-assignments-nanoclust
+#| tbl-cap: The set of taxonomic assignments for each cluster in @fig-nanoclustSplitting2. The most abundant sequence of each cluster was given a taxonomic assignment using dnabarcoder and the UNITE 2024 database. The OTU ID column refers clusters found in @fig-nanoclustSplitting2 (x-axis). The genus assignment, species assignment, BLAST score and confidence as reported by dnabarcoder are also shown.
+flextable(
+  read.csv('analysis/tables/all-otus-tax.csv') %>%
+    arrange(OTU.ID) %>%
+    select(OTU.ID, genus, species, score, confidence) %>%
+    mutate(
+      score = scales::percent(score, 0.01),
+      confidence = scales::percent(confidence)
+    ) %>%
+    rename_with(\(col) gsub('\\.', ' ', col))
+) %>%
+  align(j=4, align="right", part="all") %>%
+  align(j=5, align="right", part="all") %>%
+  autofit()
+```
+
+
+
+## Soil samples
+
+```{r}
+#| label: tbl-soil-samplesheet
+#| tbl-cap: Read statistics for soil sample data. List of the samples, number of raw reads (following basecalling) and number of reads after quality control (QC).
+soil_sample_stats <-  read.csv('../../../experiments/camille-soil-samples/soil-sample-stats-fmt.csv')
+
+soil_sample_stats %>%
+  select(Sample, Number.of.raw.reads, Number.of.reads.after.QC) %>%
+  rename_with(\(col) gsub('\\.', ' ', col)) %>%
+  flextable() %>%
+  align_text_col(align = "left") %>%
+  align_nottext_col( align = "right") %>%
+  align(j=3, align="right", part="all") %>%
+  width(j=1, width=2, unit = "cm") %>%
+  width(j=2, width=2.5, unit = "cm") %>%
+  width(j=3, width=3, unit = "cm")
+```
+
+```{r}
+#| label: tbl-software-soil
+#| tbl-cap: Software used basecalling and demultiplexing the soil sample dataset
+flextable(data.frame(
+    step='Basecalling',
+    name='dorado',
+    version='v0.7.1',
+    command=''
+  ) %>%
+  rbind(data.frame(
+    step='Demultiplexing',
+    name='minibar',
+    version='v0.25',
+    command='minibar.py -F \\\n\t../minibar-primers.txt \\\n\t../raw/SoilSamples.fastq.gz'
+  ))
+  ) %>%
+  set_table_properties(layout='fixed') %>%
+  width(j=1, width=3, unit = "cm") %>%
+  width(j=2, width=2, unit = "cm") %>%
+  width(j=3, width=2, unit = "cm") %>%
+  width(j=4, width=9, unit = "cm")
 ```

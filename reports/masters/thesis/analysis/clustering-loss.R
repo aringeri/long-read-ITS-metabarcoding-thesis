@@ -8,7 +8,7 @@ library(scales)
 source('./helpers/config.R')
 source('./helpers/vsearch.R')
 
-output_dir <- config$experiment_path
+output_dir <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-08-14"
 expected_species <- 55
 n_samples <- 58
 
@@ -66,17 +66,17 @@ otu_counts <- combined_stats %>%
   ) +
   geom_point(size=0.2, alpha=0.1) +
   stat_summary(fun=mean, geom="line") +
-  geom_hline(aes(yintercept = expected_species, linetype='actual'))+#, show.legend =TRUE) +
+  geom_hline(aes(yintercept = expected_species, linetype='55'))+#, show.legend =TRUE) +
   # geom_vline(aes(colour='vsearch'), xintercept = 0.001) +
   # geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
   facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(n_samples * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
   scale_y_continuous(transform = 'log10', breaks = c(0,10,20, 40, expected_species, 100, 200, 400, 800, 1600, 2000)) +
-  scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +#, breaks = c(0, 0.001, seq(0.005, 0.02, by=0.005))) +
+  scale_x_continuous(labels = \(x) label_percent()(as.numeric(x)), limits = c(0,.02)) +#, breaks = c(0, 0.001, seq(0.005, 0.02, by=0.005))) +
   labs(
-    x="Minimum cluster size threshold (proportion of library size)",
-    y="Number of clusters"
+    x="Minimum OTU size (proportion of library size)",
+    y="Number of OTUs"
   ) +
-  scale_linetype_manual(name='', values=c("dashed"), drop=FALSE)
+  scale_linetype_manual(name='Actual species', values=c("dashed"), drop=FALSE)
 
 # K-mer size = 6
 otu_loss <- combined_stats %>%
@@ -89,9 +89,9 @@ otu_loss <- combined_stats %>%
   # geom_vline(aes(colour='nanoplot'), xintercept = 0.005) +
   facet_grid(. ~ sample_depth, labeller = as_labeller(\(x) paste0(n_samples * as.numeric(x), " (", paste0(x, " reads per sample"), ")"))) +
   scale_y_continuous(breaks=\(y) seq(0, max(y), 0.05), labels = \(y) label_percent()(as.numeric(y))) +
-  scale_x_continuous(labels = \(x) label_percent()(as.numeric(x))) +
+  scale_x_continuous(labels = \(x) label_percent()(as.numeric(x)), limits = c(0,.02)) +
   labs(
-    x="Minimum cluster size threshold (proportion of library size)",
+    x="Minimum OTU size (proportion of library size)",
     y="Read loss"
   )
 

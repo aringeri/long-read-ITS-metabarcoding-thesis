@@ -15,22 +15,23 @@ source('helpers/config.R')
 
 samplesheet <- read_samplesheet(config)
 
-# scenario <- 'even'
-scenario <- 'uneven'
+scenario <- 'even'
+# scenario <- 'uneven'
 
 if (scenario == 'even') {
-  experiment_path <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-09-12"
+  experiment_path <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-fixed-2-10-10"
   n_samples <- 58
   total_reads <- config$sample_depth * n_samples
-  sample_depths <- c(1000, 2000, 2500)
-  min_cluster_sizes <- c(0, 0.001, .0025, .005)
-  repetition <- 2
+  sample_depths <- c(167, 1000, 2000, 2500)
+  min_cluster_sizes <- c(2, 5, 10, 20, 50, 100)
+  min_otu_sizes <- c(2, 5, 10, 20, 50, 100)
+  repetition <- 1
 } else { #uneven
   experiment_path <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-uneven-reps-lo-multi-t-09-25"
   n_samples <- 55
   sample_depths <- c(100, 200, 500, 1000, 2000)
-  min_cluster_sizes <- c(0, 5, 10, 50, 100)
-  min_otu_sizes <- c(2, 5, 10, 50, 100)
+  min_cluster_sizes <- c(0, 5, 10, 20, 50, 100)
+  min_otu_sizes <- c(2, 5, 10, 20, 50, 100)
   repetition <- 1
 }
 
@@ -38,43 +39,46 @@ loss_df <- data.frame(method=character(), min_cluster_size=double(), loss=double
 df <- NULL
 for (sample_depth in sample_depths) {
   for (min_cluster_size in min_cluster_sizes) {
-    phylo <- load_nanoclust_phyloseq_3(
-      samplesheet,
-      experiment = experiment_path,
-      sequence_type = 'nanoclust_abundant',
-      reads_per_sample = sample_depth,
-      repetition = repetition,
-      min_cluster_size = min_cluster_size)
+    if (min_cluster_size < sample_depth) {
+      # print(paste0(min_cluster_size, " ", sample_depth))
+      phylo <- load_nanoclust_phyloseq_3(
+        samplesheet,
+        experiment = experiment_path,
+        sequence_type = 'nanoclust_abundant',
+        reads_per_sample = sample_depth,
+        repetition = repetition,
+        min_cluster_size = min_cluster_size)
 
-    otu_tax_and_actual <- merge(tax_table(phylo), otu_table(phylo), by=0) %>%
-      pivot_longer(barcode25:barcode89, names_to = 'barcode', values_to = 'count') %>%
-      filter(count > 0) %>%
-      rename(otu = 'Row.names') %>%
-      left_join(
-        (samplesheet %>%
-          tibble::rownames_to_column("barcode") %>%
-          select(barcode, order_unite, family_unite, genus_unite, species) %>%
-          rename(
-            actual_order = order_unite,
-            actual_family = family_unite,
-            actual_genus = genus_unite,
-            actual_species = species
-          )
-        ),
-        join_by(barcode)
-      )
-    c_size <- if (min_cluster_size == 0) { 2 } else { min_cluster_size }
-    otu_tax_and_actual$min_cluster_size <- min_cluster_size
-    otu_tax_and_actual$sample_depth <- sample_depth
-    df <- rbind(df, otu_tax_and_actual)
+      otu_tax_and_actual <- merge(tax_table(phylo), otu_table(phylo), by=0) %>%
+        pivot_longer(barcode25:barcode89, names_to = 'barcode', values_to = 'count') %>%
+        filter(count > 0) %>%
+        rename(otu = 'Row.names') %>%
+        left_join(
+          (samplesheet %>%
+            tibble::rownames_to_column("barcode") %>%
+            select(barcode, order_unite, family_unite, genus_unite, species) %>%
+            rename(
+              actual_order = order_unite,
+              actual_family = family_unite,
+              actual_genus = genus_unite,
+              actual_species = species
+            )
+          ),
+          join_by(barcode)
+        )
+      c_size <- if (min_cluster_size == 0) { 2 } else { min_cluster_size }
+      otu_tax_and_actual$min_cluster_size <- c_size
+      otu_tax_and_actual$sample_depth <- sample_depth
+      df <- rbind(df, otu_tax_and_actual)
 
-    total_reads <- if (scenario == 'even') sample_depth*n_samples else 50*sample_depth + sum(5, 10, 20, 50, 100)
+      total_reads <- if (scenario == 'even') sample_depth*n_samples else 50*sample_depth + sum(5, 10, 20, 50, 100)
 
-    loss_df <- loss_df %>%
-      add_row(
-        sample_depth = sample_depth,
-        method = "nanoclust", min_cluster_size = c_size,  loss = 1 - sum(sample_sums(phylo))/total_reads
-      )
+      loss_df <- loss_df %>%
+        add_row(
+          sample_depth = sample_depth,
+          method = "nanoclust", min_cluster_size = c_size,  loss = 1 - sum(sample_sums(phylo))/total_reads
+        )
+    }
   }
 }
 
@@ -82,42 +86,44 @@ for (sample_depth in sample_depths) {
 df_vsearch <- NULL
 for (sample_depth in sample_depths) {
   for (min_cluster_size in min_otu_sizes) {
-    phylo <- load_vsearch_phyloseq(samplesheet,
-                          experiment = experiment_path,
-                          reads_per_sample = sample_depth,
-                          repetition = repetition,
-                          consensus = F
-    )
-
-    filtered_phylo <- filter_taxa_by_min_otu_size(phylo, min_cluster_size)
-    otu_tax_and_actual <- merge(tax_table(filtered_phylo), otu_table(filtered_phylo), by=0) %>%
-      pivot_longer(barcode25:barcode89, names_to = 'barcode', values_to = 'count') %>%
-      filter(count > 0) %>%
-      rename(otu = 'Row.names') %>%
-      left_join(
-        (samplesheet %>%
-          tibble::rownames_to_column("barcode") %>%
-          select(barcode, order_unite, family_unite, genus_unite, species) %>%
-          rename(
-            actual_order = order_unite,
-            actual_family = family_unite,
-            actual_genus = genus_unite,
-            actual_species = species
-          )
-        ),
-        join_by(barcode)
+    if (min_cluster_size < sample_depth) {
+      phylo <- load_vsearch_phyloseq(samplesheet,
+                            experiment = experiment_path,
+                            reads_per_sample = sample_depth,
+                            repetition = repetition,
+                            consensus = F
       )
-    otu_tax_and_actual$min_cluster_size <- min_cluster_size
-    otu_tax_and_actual$sample_depth <- sample_depth
-    df_vsearch <- rbind(df_vsearch, otu_tax_and_actual)
 
-    total_reads <- if (scenario == 'even') sample_depth*n_samples else 50*sample_depth + sum(5, 10, 20, 50, 100)
+      filtered_phylo <- filter_taxa_by_min_otu_size(phylo, min_cluster_size)
+      otu_tax_and_actual <- merge(tax_table(filtered_phylo), otu_table(filtered_phylo), by=0) %>%
+        pivot_longer(barcode25:barcode89, names_to = 'barcode', values_to = 'count') %>%
+        filter(count > 0) %>%
+        rename(otu = 'Row.names') %>%
+        left_join(
+          (samplesheet %>%
+            tibble::rownames_to_column("barcode") %>%
+            select(barcode, order_unite, family_unite, genus_unite, species) %>%
+            rename(
+              actual_order = order_unite,
+              actual_family = family_unite,
+              actual_genus = genus_unite,
+              actual_species = species
+            )
+          ),
+          join_by(barcode)
+        )
+      otu_tax_and_actual$min_cluster_size <- min_cluster_size
+      otu_tax_and_actual$sample_depth <- sample_depth
+      df_vsearch <- rbind(df_vsearch, otu_tax_and_actual)
 
-    loss_df <- loss_df %>%
-      add_row(
-        sample_depth = sample_depth,
-        method = "vsearch", min_cluster_size = min_cluster_size, loss = 1 - sum(sample_sums(filtered_phylo))/total_reads
-      )
+      total_reads <- if (scenario == 'even') sample_depth*n_samples else 50*sample_depth + sum(5, 10, 20, 50, 100)
+
+      loss_df <- loss_df %>%
+        add_row(
+          sample_depth = sample_depth,
+          method = "vsearch", min_cluster_size = min_cluster_size, loss = 1 - sum(sample_sums(filtered_phylo))/total_reads
+        )
+    }
   }
 }
 
@@ -142,7 +148,7 @@ label_facet <- function(sample_depth) {
   paste0(lib_size, " reads in library")
 }
 
-plot <- function(df, expected_samples, title, limits=c(0,180)) {
+plot <- function(df, expected_samples, title, limits=c(0,255)) {
   # number of species
   n_species <- df %>%
     group_by(sample_depth, min_cluster_size, otu) %>%
@@ -203,7 +209,14 @@ plot <- function(df, expected_samples, title, limits=c(0,180)) {
     # filter(min_cluster_size != 0)  %>%
     ggplot(aes(x=min_cluster_size)) +
     # geom_col(aes(y=n, fill=factor(id_level, levels=c("other", "family", "genus", "species")))) +
-    geom_col(aes(y=n_matching, fill=factor(id_level, levels=lvls)), width=4) +
+    # geom_bar(
+    #   aes(y = n_matching, group = min_cluster_size),
+    #   colour = "black",
+    #   stat = "summary", fun = sum,
+    #   # fill = "transparent",
+    #   width=1
+    # ) +
+    geom_col(aes(y=n_matching, fill=factor(id_level, levels=lvls)), width=.7) +
     # geom_point(aes(y=n_matching, colour=factor(id_level, levels=c("other", "family", "genus", "species")))) +
     geom_hline(aes(yintercept=55, linetype='55'), show.legend = TRUE) +
     labs(x="minimum OTU size", y="number of species", title = title) +
@@ -219,7 +232,7 @@ plot <- function(df, expected_samples, title, limits=c(0,180)) {
       labeller = as_labeller(label_facet)
     ) +
     scale_y_continuous(limits = limits) +
-    scale_x_continuous(breaks = c(2, 10, 25, 50, 100)) +
+    scale_x_continuous(transform = 'sqrt', breaks = c(2, 5, 10, 20, 50, 100)) +
     # scale_y_continuous(transform = 'log10', breaks=c(55, 100, 1000)) +
     guides( fill = guide_legend(override.aes = c(linetype = 0)) )
 }
@@ -233,7 +246,7 @@ n_species_plot <- cowplot::plot_grid(
       geom_line() +
       geom_point() +
       scale_y_continuous(labels = \(y) label_percent()(as.numeric(y))) +
-      scale_x_continuous(name="minimum OTU size") +
+      scale_x_continuous(transform = 'sqrt', name="minimum OTU size", breaks = c(2, 5, 10, 20, 50, 100)) +
       scale_colour_discrete(name="Clustering method") +
       coord_cartesian(ylim=c(0, 0.075)) +
       facet_grid(
