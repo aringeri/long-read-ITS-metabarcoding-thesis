@@ -111,14 +111,15 @@ load_nanoclust_phyloseq_3 <- function(
   )
   tax <- read_dna_barcoder_classification_nanoclust(classFile[1])
 
-  phylo <- phyloseq(
-    otu_table(otu, taxa_are_rows = TRUE),
-    tax,
-    sample_data(samplesheet)
-  )
-
-  phylo
-  # tax_fix(phylo, min_length = 0, unknowns = 'unidentified', anon_unique = F)
+  if (is.null(samplesheet)) {
+    phyloseq(otu_table(otu, taxa_are_rows = TRUE), tax)
+  } else {
+    phyloseq(
+      otu_table(otu, taxa_are_rows = TRUE),
+      tax,
+      sample_data(samplesheet)
+    )
+  }
 }
 
 load_vsearch_phyloseq <- function(
@@ -137,5 +138,9 @@ load_vsearch_phyloseq <- function(
   )
   tax_table <- read_dna_barcoder_classification_vsearch(classFile[1])
 
-  vsearch_phylo <- phyloseq(vsearch_otus, tax_table, sample_data(samplesheet))
+  if (is.null(samplesheet)) {
+    phyloseq(vsearch_otus, tax_table)
+  } else {
+    phyloseq(vsearch_otus, tax_table, sample_data(samplesheet))
+  }
 }

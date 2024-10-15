@@ -6,6 +6,9 @@ book:
   author: Alex Ringeri
   chapters:
     - index.qmd
+    - 02-Objectives.Rmd
+    - 03-Significance.Rmd
+    - 04-LiteratureReview.Rmd
     - 05-Methods.Rmd
     - 06-Results.Rmd
     - 07-Discussion.Rmd

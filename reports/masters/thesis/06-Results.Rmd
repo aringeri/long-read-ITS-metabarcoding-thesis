@@ -52,9 +52,9 @@ Histograms on X and Y axes indicate the density of reads at respective quality s
 
 #### Minimum cluster size threshold to recover the expected number of species {#sec-cluster-results}
 
-The clustering approaches that were adopted aimed to group full ITS sequences from the same species together in the same OTU.
+The adopted clustering approaches aimed to group full ITS sequences from the same species together in the same OTU.
 The total number of OTUs was used as a measure for successfully estimating the number of species in the mock community.
-In this section we considered the even abundance mock community where 58 fungal taxa were equally represented (@sec-scenario-1).
+In this section we considered the even abundance mock community where 58 fungal taxa were equally represented (@sec-mock-fungal-communities).
 Of the 58 taxa, some had the same species-level designation making for a total of 55 unique species.
 
 Two clustering approaches were tested: a greedy sequence similarity-based clustering approach with VSEARCH and a k-mer signature based clustering approach (as implemented in NanoCLUST).
@@ -68,7 +68,7 @@ We set the cutoff to a proportion of the total library size we tested values bet
 We repeated the test for 6 different library sizes (1160, 2900, 9686, 58000, 116000, and 145000 reads) where each fungal taxa had an equal abundance.
 
 With VSEARCH, we observed consistent behaviour when applying the minimum OTU size cutoff at all library sizes.
-The number of OTUs would begin very high, then 'flatten out' near the expected number of species, then drop off.
+The number of OTUs was very high without a minimum OTU size cutoff, then decreased and 'flattened out' near the expected number of species as the OTU size cutoff increased.
 We observed that setting the minimum OTU size to be 0.15% of the library size consistently recovered the expected number of species.
 
 :::{#fig-compareVsearchNanoclust}
@@ -117,7 +117,7 @@ For library sizes of 1160 reads and above, a minimum cluster size of 0.65% of th
 -->
 
 To aid the comparison of VSEARCH and NanoCLUST clustering methods, we recorded the proportion of reads that were lost due to defining a minimum OTU size.
-We define the proportion of reads loss for VSEARCH as:
+We defined the proportion of reads lost for VSEARCH as:
 
 $$
 \frac{\text{\# of reads removed when filtering OTUs by size}}{\text{\# number of reads in library}}
@@ -130,7 +130,7 @@ $$
 $$
 
 We found that for low library sizes (1160-9686 reads), the NanoCLUST method produced closer estimates of the actual number of species
-with lower read loss than VSEARCH for all minimum OTU size values (@fig-compareVsearchNanoclust).
+with lower read loss than VSEARCH for all minimum OTU sizes.
 For larger library sizes (58K-145K reads) using the VSEARCH method, we observed a consistent pattern read loss for the all library sizes.
 The NanoCLUST method became less consistent for larger library sizes and lost a higher proportion reads to recover the same number of species (@fig-compareVsearchNanoclust).
 <!--
@@ -145,56 +145,66 @@ When considering read loss at these thresholds, compared to VSEARCH, the NanoCLU
 and worse at a library size of 145K reads.
 -->
 
-#### Computing number of species after taxonomic assignments and fixed min cluster size cutoff
+#### Computing number of species after taxonomic assignments
 
 While we were able to demonstrate above that the expected number of species can be recovered by setting a minimum OTU size,
- number of OTUs may not be an accurate measure of the actual number of species.
-For example one species may have been split into multiple OTUs which have all given the same species-level taxonomic assignment.
+ the number of OTUs may not be an accurate measure of the actual number of species.
+For example, one species may have been split into multiple OTUs which have all been given the same species-level taxonomic assignment.
 In addition, we wanted to explore using a minimum OTU size threshold that was not proportional to the library size.
 We felt that a minimum OTU size of 0.65% for NanoCLUST and 0.15% for VSEARCH would exclude low abundance species
 and may bias against samples with low read depth.
 
 Here we explored the observed number of species in our even abundance mock community after OTUs had been given taxonomic assignments.
-We performed VSEARCH and NanoCLUST clustering methods on four library sizes of 9686, 58000, 116000, 145000 reads.
+We performed VSEARCH and NanoCLUST clustering methods on four library sizes of 9686, 58000, 116000 and 145000 reads.
 HDBSCAN clustering was performed six times for each library with minimum cluster sizes of: 2, 5, 10, 20, 50 and 100 reads.
 VSEARCH clustering was performed once for each library at 97% identity, then we remove OTUs with fewer than: 2, 5, 10, 20, 50 and 100 reads.
-The most abundant sequence was used at the representative sequence for each OTU and given a taxonomic assignment with dnabarcoder.
+The most abundant sequence was used at the representative sequence for each OTU and given a taxonomic assignment with dnabarcoder using the UNITE+INSD 2024 database.
 
 For each minimum OTU size, we counted the number of unique taxonomic assignments given at the species level.
 OTUs that were unidentified at the species level were counted as individual species (and not lumped together as a single species).
-Of the OTUs that were given a species-level assignment, we counted the number of species that we knew were in the mock community (@tbl-samplesheet).
-For OTUs that were only identified to genus or family level, we counted how many were expected in our mock community.
-OTUs that were given a taxonomic label at species, genus or family levels but were not expected in the mock community were counted as false positives.
-OTUs that were unidentified at the family level or higher were counted as their own group (@fig-fixed-min-cluster-size-even).
-We also recorded the read loss after applying the minimum OTU size threshold as in the section above.
+Of the OTUs that were given a species-level assignment, we counted the number of species that were known to be in the mock community (@tbl-samplesheet).
+For OTUs that were only identified to genus or family level, we counted the number of OTUs that had genus or family level labels that were known to be in the mock community.
+OTUs that were identified at species, genus or family levels but whose taxonomic label were not expected in the mock community were counted as false positives.
+OTUs that were unidentified at the family level or higher were counted as their own group.
+We also recorded the read loss after applying the minimum OTU size threshold as in the section above (@fig-fixed-min-cluster-size-even).
 
 
 :::{#fig-fixed-min-cluster-size-even}
 ![](/analysis/images/06-n-species-even)
 
 Number of species after 'collapsing' OTUs with the same species-level taxonomic assignment.
-The even abundance mock community was clustered with VSEARCH and NanoCLUST.
+The even abundance mock community was clustered with VSEARCH and NanoCLUST, and six minimum OTU sizes were tested (2, 5, 10, 20, 50, 100).
+Each OTU was given a taxonomic assignment with dnabarcoder using the UNITE+INSD 2024 database.
+The blue line shows the number of OTUs after clustering.
+Green bars show the number of species that were known to be in the mock community.
+Yellow bars show the number of OTUs that were assigned at the genus level, and whose genus label was known to be in the mock community.
+Orange bars show the number of OTUs that were assigned at the family level, and whose family label was known to be in the mock community.
+Red bars show the number of OTUs that were assigned at the species, genus or family level but whose taxonomic label was not found in the mock community.
+Grey bars show the number of OTUs that were unidentified at the family level or above.
+The process was repeated for four library sizes of 9686, 58000, 116000 and 145000 reads.
+The bottom row of plots show the proportion of reads that are lost after applying the minimum OTU size cutoff.
 :::
 
-We found that a core set of correctly identified species remained regardless of minimum OTU size.
-VSEARCH seemed to most heavily filter from 'correct' genus-level OTUs and OTUs unidentified from the family level.
-NanoCLUST still overestimating the number of species regardless of min OTU size, but had the benefit of much lower read loss than VSEARCH.
+We found that a core set of species from the mock community remained regardless of minimum OTU size (green bars in @fig-fixed-min-cluster-size-even).
+As the minimum OTU size increased, VSEARCH filtered most from OTUs assigned to genera from the mock community and OTUs unidentified at the family level and above.
+NanoCLUST overestimated the number of species regardless of the minimum OTU size, but had the benefit of much lower read loss than VSEARCH.
 
-- compare with number of OTUs
+- 'Collapsing' OTUs by their species-level identification, greater reduction of OTUs with NanoCLUST
+  - number of OTUS may be more meaningful for VSEARCH
 
 #### Comparing cluster delineation between VSEARCH and NanoCLUST
 
-To investigate if closely related species were recovered during clustering, we looked at a single execution of the even abundance scenario (Scenario 1) where 2000 reads were selected
-from each of the 58 fungal isolates giving a total library size of 116K reads.
+To investigate if closely related species were recovered during clustering,
+we looked at a single execution of the even abundance mock scenario where 2000 reads were selected from each of the 58 fungal taxa giving a total library size of 116K reads.
 Reads were clustered separately with the NanoCLUST and VSEARCH methods.
-Reads that were clustered with the UMAP + HDBSCAN method (NanoCLUST) used a minimum cluster size of 580 (0.5% of the library size).
+Reads that were clustered with the UMAP + HDBSCAN method (NanoCLUST) used a minimum cluster size of 580 reads (0.5% of the library size).
 Reads were clustered using VSEARCH at 97% identity and clusters that had fewer than 174 reads (0.15% of library size) were removed.
 Taxonomy was assigned to the most abundant sequence of each cluster with dnabarcoder and the UNITE+INSD 2024 reference database.
 
 The samples from the order *Pucciniales* are shown in @fig-splittingPuccinia.
-Using the NanoCLUST method, the majority of reads from the *Puccinia striiformis (var tritici)* sample (BC 25) clustered together into a single cluster (OTU 37) with the expected species-level classification (*Puccinia striiformis*).
-The remaining reads from the *P. striiformis (var tritici)* sample clustered into two groups (1 read each) which do not correspond to the expected sample taxonomy.
-The *Botrytis* genus classification of one of the clusters corresponds to another sample present in the library
+Using the NanoCLUST method, the majority of reads from the *Puccinia striiformis (var tritici)* sample (BC 25) clustered together into a single OTU (OTU 37) with the expected species-level classification (*Puccinia striiformis*).
+The remaining reads from the *P. striiformis (var tritici)* sample clustered into two groups (1 read each) which did not correspond to the expected taxonomic label.
+The *Botrytis* genus classification of one of these clusters corresponds to another funga taxa present in the library
 and may be indicative of index-switching (where a sequencing error has occurred in the barcode region of the read).
 
 
@@ -212,13 +222,13 @@ Grey bars indicate that the cluster could not be given any taxonomic classificat
 Bars marked with an asterix (*) indicate that taxonomic labels differed between reference database and our sample but were still considered the same species.
 :::
 
-In the *Puccinia graminis* sample (BC 27), when using the NanoCLUST method, the majority of the reads have been split into two clusters, both of which
-have been classified as the expected *P. graminis* species.
-Using the VSEARCH method, the majority of the *Puccinia graminis* reads cluster into a single correctly identified OTU.
-This likely indicates biological variation in the sequences from the *P. graminis* sample that NanoCLUST is capable of detecting.
-The majority of reads for both *Austropuccinia psidii* samples (BC 28 and 36) have been split into the same two clusters (OTU 38 and 21)
-which have been given the classification *Puccinia psidii*.
-A similar plot for all samples in this mock scenario can be seen in @fig-nanoclustSplitting2 and @tbl-tax-assignments-nanoclust.
+For *Puccinia graminis* (BC 27) when using the NanoCLUST method, the majority of the reads were split into two OTUs, both of which
+were classified as the expected *P. graminis* species.
+Using the VSEARCH method, the majority of the *Puccinia graminis* reads clustered into a single correctly identified OTU.
+This likely indicates that biological variation exists in the *P. graminis* sample that the NanoCLUST method was capable of detecting while VSEARCH (at 97% identity) could not.
+The majority of reads for both *Austropuccinia psidii* samples (BC 28 and 36) were split into the same two OTUs (OTU 38 and 21)
+which have been classified as *Puccinia psidii*.
+A similar plot for all samples in this mock community can be seen in @fig-nanoclustSplitting2 and @tbl-tax-assignments-nanoclust.
 
 - show results for:
   - Candida
@@ -270,11 +280,11 @@ Clustering of genus *Cryptococcus*
 
 #### Comparison of taxonomic assignment using the most abundant sequence or the consensus sequence
 
-In order to explore the accuracy of the taxonomic classifications in the pipeline, two metrics were computed for the even abundance mock scenario (Scenario 1).
-The genera classification proportion metric has been defined as:
+To explore the accuracy of the taxonomic classifications in the pipeline, two metrics were computed for the even abundance mock scenario (Scenario 1).
+The genera classification proportion metric was defined as:
 
 $$
-\frac{\text{\# of reads classified at the genera level}}{\text{total \# of reads from isolate}}
+\frac{\text{\# of reads classified at the genera level}}{\text{total \# of reads from the fungal taxa}}
 $$
 
 The genera precision metric has been defined as:
@@ -284,7 +294,7 @@ $$
 $$
 
 These metrics were calculated for five library sizes (between 2900 and 145000 reads) for both NanoCLUST and VSEARCH clustering methods (@fig-nanoclustPrecisionAbundance).
-We wanted to explore which representative sequence (most abundant or consensus) of each cluster gave more accurate taxonomic classifications.
+We explored which technique for selecting a representative sequence from an OTU gave more accurate taxonomic classifications: most abundant sequence or consensus sequence.
 
 
 Figure analysis:
@@ -308,34 +318,47 @@ Most abundant sequence less variable in precision than consensus - VSEARCH
 
 ### Uneven abundance Scenario
 
+<!--
 #### Minimum cluster size threshold to recover the expected number of species
 
 :::{#fig-n-species-uneven}
 ![](analysis/images/06-n-species-uneven.png)
 
 
+Number of species after 'collapsing' OTUs with the same species-level taxonomic assignment.
+The uneven abundance mock community was clustered with VSEARCH and NanoCLUST, and six minimum OTU sizes were tested (2, 5, 10, 20, 50, 100).
+Each OTU was given a taxonomic assignment with dnabarcoder using the UNITE+INSD 2024 database.
+The blue line shows the number of OTUs after clustering.
+Green bars show the number of species that were known to be in the mock community.
+Yellow bars show the number of OTUs that were assigned at the genus level, and whose genus label was known to be in the mock community.
+Orange bars show the number of OTUs that were assigned at the family level, and whose family label was known to be in the mock community.
+Red bars show the number of OTUs that were assigned at the species, genus or family level but whose taxonomic label was not found in the mock community.
+Grey bars show the number of OTUs that were unidentified at the family level or above.
+The process was repeated for five library sizes of 5185, 10185, 25185, 50185, 100185 reads.
+The bottom row of plots show the proportion of reads that are lost after applying the minimum OTU size cutoff.
 :::
+-->
 
 #### Sensitivity of cluster thresholds in uneven abundance scenarios (Scenario 2)
 
 - points at which we lose samples
 - tradeoff -> inflated number of clusters / noisy
 - min cluster size as proportion of library size not robust for uneven sampling approaches
+- As minimum cluster size increases, reads from 'low-abundance' fungal isolates are merged with those from
+unrelated taxa (i.e. reads from *Eutypa lata* are clustered together with those identified as *Puccinia psidii* at minimum cluster size equal to 20).
 
 :::{#fig-uneven-min-cluster-thresh-nanoclust}
 
 ![](analysis/images/06-uneven-min-cluster.png)
 
-:::{custom-style="Caption"}
-The impact of increasing the minimum cluster size parameter for NanoCLUST (UMAP + HDBSCAN) from left to right (values between 2 and 100).
-Only clusters containing reads from the five 'low-abundance' fungal isolates are shown.
+Impact of increasing the minimum OTU size for NanoCLUST (UMAP + HDBSCAN) and VSEARCH from left to right (values between 2 and 100).
+OTUs containing reads from the five 'low abundance' fungal taxa are shown.
+The low abundance fungal taxa are *Trichomanascus ciferri*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides* which
+have abundance of 5, 10, 20, 50 and 100 reads respectively.
+The remaining 50 taxa in the mock community each have an abundance of 2000 reads.
 OTUs and their taxonomic classification (given by dnabarcoder) are shown on the x-axis.
-As minimum cluster size increases, reads from 'low-abundance' fungal isolates are merged with those from
-unrelated taxa (i.e. reads from *Eutypa lata* are clustered together with those identified as *Puccinia psidii* at minimum cluster size equal to 20).
-
-:::
-
-Impact of min_cluster_size on low abundance clusters in NanoCLUST
+Coloured bars show the proportion of reads belonging to the fungal taxa within an OTU.
+The dotted line indicates the minimum OTU size threshold.
 :::
 
 

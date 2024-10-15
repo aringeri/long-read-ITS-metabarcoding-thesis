@@ -15,8 +15,8 @@ source('helpers/config.R')
 
 samplesheet <- read_samplesheet(config)
 
-scenario <- 'even'
-# scenario <- 'uneven'
+# scenario <- 'even'
+scenario <- 'uneven'
 
 if (scenario == 'even') {
   experiment_path <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-fixed-2-10-10"
@@ -39,7 +39,7 @@ loss_df <- data.frame(method=character(), min_cluster_size=double(), loss=double
 df <- NULL
 for (sample_depth in sample_depths) {
   for (min_cluster_size in min_cluster_sizes) {
-    if (min_cluster_size < sample_depth) {
+    if (min_cluster_size <= sample_depth) {
       # print(paste0(min_cluster_size, " ", sample_depth))
       phylo <- load_nanoclust_phyloseq_3(
         samplesheet,
@@ -86,7 +86,7 @@ for (sample_depth in sample_depths) {
 df_vsearch <- NULL
 for (sample_depth in sample_depths) {
   for (min_cluster_size in min_otu_sizes) {
-    if (min_cluster_size < sample_depth) {
+    if (min_cluster_size <= sample_depth) {
       phylo <- load_vsearch_phyloseq(samplesheet,
                             experiment = experiment_path,
                             reads_per_sample = sample_depth,
@@ -142,6 +142,11 @@ n_otus <- df_vsearch %>%
   count()
 n_otus
 
+n_otus_NC <- df %>%
+  group_by(sample_depth,min_cluster_size) %>%
+  distinct(otu) %>%
+  count()
+
 label_facet <- function(sample_depth) {
   depth <- as.numeric(sample_depth)
   if (scenario == 'even') {
@@ -165,6 +170,10 @@ plot <- function(df, expected_samples, title, limits=c(0,255)) {
     group_by(sample_depth, min_cluster_size) %>%
     summarise(n = sum(n))
 
+  n_otus <- df %>%
+    group_by(sample_depth,min_cluster_size) %>%
+    distinct(otu) %>%
+    count()
 
   n_taxa_from_samples <- df %>%
     group_by(sample_depth, min_cluster_size, otu) %>%
@@ -222,6 +231,7 @@ plot <- function(df, expected_samples, title, limits=c(0,255)) {
     geom_col(aes(y=n_matching, fill=factor(id_level, levels=lvls)), width=.7) +
     # geom_point(aes(y=n_matching, colour=factor(id_level, levels=c("other", "family", "genus", "species")))) +
     geom_hline(aes(yintercept=55, linetype='55'), show.legend = TRUE) +
+    geom_line(aes(y=n, x=min_cluster_size, colour='blue'), data=n_otus, show.legend = TRUE) +
     labs(x="minimum OTU size", y="number of species", title = title) +
     scale_fill_manual(
       values = cols,
@@ -234,16 +244,21 @@ plot <- function(df, expected_samples, title, limits=c(0,255)) {
       cols = vars(sample_depth),
       labeller = as_labeller(label_facet)
     ) +
-    scale_y_continuous(limits = limits, breaks = c(0,50,100,150, 200, 250)) +
+    # scale_y_continuous(limits = limits, breaks = c(0,50,100,150, 200, 250)) +
+    scale_colour_manual(name="Total OTUs", values='blue', label='') +
+    scale_y_continuous(breaks = c(0,50,100,150, 200, 250)) +
+    coord_cartesian(ylim=limits) +
     scale_x_continuous(transform = 'sqrt', breaks = c(2, 5, 10, 20, 50, 100)) +
     # scale_y_continuous(transform = 'log10', breaks=c(55, 100, 1000)) +
     guides( fill = guide_legend(override.aes = c(linetype = 0)) )
 }
 
+lims <- if (scenario == 'even') c(0,255) else c(0, 180)
+
 n_species_plot <- cowplot::plot_grid(
   ncol = 1, axis='lr', align='hv',
-  plot(df, expected_samples, title="UMAP + HDBSCAN (NanoCLUST)") + guides(fill='none', linetype='none'),
-  plot(df_vsearch, expected_samples, title="VSEARCH" ) ,
+  plot(df, expected_samples, title="UMAP + HDBSCAN (NanoCLUST)", limits=lims) + guides(fill='none', linetype='none'),
+  plot(df_vsearch, expected_samples, title="VSEARCH", limits = lims) + guides( colour='none') ,
   loss_df %>%
     ggplot(aes(x=min_cluster_size, y=loss, colour=method)) +
       geom_line() +

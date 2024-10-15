@@ -170,7 +170,7 @@ Many of the parameters to stages of the pipeline are also configurable:
 - Percent identity for VSEARCH clustering
 - Ability to specify custom reference databases
 
-## Mock fungal communities
+## Mock fungal communities {#sec-mock-fungal-communities}
 
 In order to understand the behaviour of our pipeline under different sampling scenarios, a mock dataset was constructed using sequences from 65 fungal taxa which had been isolated and identified from mycelia or spores. 
 We constructed mock fungal communites by selecting and mixing reads from individual fungal taxa and
