@@ -293,7 +293,7 @@ $$
 \frac{\text{\# of reads classified correctly at the genera level}}{\text{\# of reads classified at the genera level}}
 $$
 
-These metrics were calculated for five library sizes (between 2900 and 145000 reads) for both NanoCLUST and VSEARCH clustering methods (@fig-nanoclustPrecisionAbundance).
+These metrics were calculated for five library sizes (between 2900 and 145000 reads) for both NanoCLUST and VSEARCH clustering methods (@fig-precision).
 We explored which technique for selecting a representative sequence from an OTU gave more accurate taxonomic classifications: most abundant sequence or consensus sequence.
 
 
@@ -303,15 +303,10 @@ Figure analysis:
 - higher precision at lower classification proportion for lowest minimum cluster size (2)
 - minimum cluster size introduces its own variability
 
-:::{#fig-nanoclustPrecisionAbundance}
-
+:::{#fig-precision}
 ![](analysis/images/06-precision-even-abundance.png)
 
-:::{custom-style="Caption"}
-VSEARCH precision ...
-:::
-
-Most abundant sequence less variable in precision than consensus - VSEARCH
+Comparing classification proportion and precision of most abundant sequence vs. consensus sequence.
 :::
 
 - limitations of reference database labels, difficult to ensure taxonomic assignments are correct in an automated fashion.

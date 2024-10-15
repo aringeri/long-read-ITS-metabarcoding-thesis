@@ -12,6 +12,7 @@ library(stringr)
 source('helpers/dnabarcoder.R')
 source('helpers/config.R')
 source('helpers/vsearch.R')
+source('helpers/manual-taxonomy.R')
 
 samplesheet <- read_samplesheet(config)
 nsamples <- 58
@@ -42,8 +43,8 @@ calc_precision <- function(phylo, samplesheet) {
       # .by = c(barcode, genus.actual, genus.expected),
       # total = sum(count)
       .by = barcode,
-      genus_correct = sum((genus_unite == genus)*count),
-      species_correct = sum((species_unite == species.actual)*count),
+      genus_correct = sum((genus_unite == genus | (genus %in% accepted_synonyms$alt_genus & species_unite %in% accepted_synonyms$actual_species))*count),
+      species_correct = sum((species_unite == species.actual | (species.actual %in% accepted_synonyms$alt_species & species_unite %in% accepted_synonyms$actual_species))*count),
       total = sum(count)
     ) %>%
     replace_na(list(species_correct = 0)) # NAs coming through for genus only samples
@@ -134,7 +135,8 @@ precision_plot <-
     ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth,
                shape=factor(library_size), colour=factor(method, labels = c("most abundant", "consensus")))) +
       geom_point() +
-      expand_limits(x=c(.75, .825), y=c(.8, 1)) +
+      # expand_limits(x=c(.75, .825), y=c(.82, 1)) +
+      expand_limits(y=c(.82, 1)) +
       facet_grid(
         rows=vars(min_cluster_size), cols=vars(method),
         labeller = as_labeller(\(x)
@@ -198,8 +200,8 @@ vsearch_precision_summary <- vsearch_stats %>%
 vsearch_abundance_precision <- vsearch_precision_summary %>%
   filter(method == 'abundance') %>%
   ggplot(aes(x=genus_precision, y=genus_classification_prop_by_depth, shape=factor(library_size))) +
-  geom_point() +
-  # expand_limits(x=c(.75, .825), y=c(.8, 1)) +
+  geom_point(aes(colour='most abundant')) + #colour='#35BBC0') +
+  expand_limits(x=c(.76, .85), y=c(.82, 1)) +
   facet_grid(rows=vars(min_cluster_size), cols=vars(method),
     labeller = as_labeller(\(x)
       ifelse(is.na(as.numeric(x)), "most abundant", paste0("min OTU size (", scales::percent(as.numeric(x)), ")"))
@@ -209,7 +211,8 @@ vsearch_abundance_precision <- vsearch_precision_summary %>%
   scale_x_continuous(labels = scales::percent) +
   scale_shape_discrete(name="Library size") +
   labs(x="Genera precision (%)", y="Genera classification proportion (%)") +
-  theme(aspect.ratio=1)
+  theme(aspect.ratio=1) +
+  guides( colour='none')
 vsearch_abundance_precision
 # ggsave('./images/06-precision-vsearch-abundance.png', vsearch_abundance_precision)
 
