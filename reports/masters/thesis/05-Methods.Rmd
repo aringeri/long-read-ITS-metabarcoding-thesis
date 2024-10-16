@@ -236,8 +236,31 @@ As it is unlikely in a 'real world' environmental sample for all taxa have the s
 *Trichomonascus ciferrii*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides* were randomly selected as the low abundance taxa. To simplify the interpretation of this scenario, we ensured that we did not subsample from the same species more than once (i.e. from two fungal taxa with the same species-level designation). To do this, the following fungal taxa were excluded from the set of quality filtered reads: *Austropuccinia psidii* 2, *Cryptococcus gattii VG III*, *Cryptococcus neoformans VNI* in addition to those from Scenario 1.
 See the footnotes in @tbl-samplesheet to see which taxa were excluded from mock scenarios.
 
-## Soil sample dataset
+## Real world - Soil case study
 
 Soil samples: [@tbl-soil-samplesheet]
 
-protocol: https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1?step=2.28
+### DNA extraction, amplification and sequencing
+
+sequencing protocol: https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1?step=2.28 .
+primers FWD + REV.
+
+### Bioinformatics - basecalling and demultiplexing
+
+dorado v5 sup model.
+demultiplex with minibar, custom barcoding.
+See @tbl-software-soil for commands.
+
+### Sample selection
+
+One sample AP6 excluded due to having much lower read count that other samples.
+
+### Metabarcoding pipeline
+
+default settings:
+
+- min Q20 etc.
+- cluster full dataset (~3 million reads) with VSEARCH
+- cluster random subset of dataset (100K reads) with nanoclust
+  - 4K reads per sample, except PCRNegCon -> 2400
+- dnabarcoder

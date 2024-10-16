@@ -1,3 +1,7 @@
 ---
 title: "Objectives and Research Question"
 ---
+
+- develop and test pipeline on modelled and real data
+- validate that ONT metabarcoding is feasible for environmental studies of fungi
+- develop set of reasonable 'defaults' for others who want to perform metabarcoding of fungi

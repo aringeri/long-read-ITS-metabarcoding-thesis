@@ -29,6 +29,11 @@ soil_full_phylo <- phyloseq(otu_table(otus), tax_table)
 filt <- soil_full_phylo #%>% filter_taxa_by_min_otu_size(700)
 filt
 
+# TODO filter by sample 0.005
+# ?prune_samples()
+# sample_sums(soil_full_phylo) * .005
+ntaxa(soil_full_phylo)
+estimate_richness(soil_full_phylo, measures = 'Observed')
 soil_full_phylo
 
 filt %>%

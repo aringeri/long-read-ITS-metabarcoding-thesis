@@ -154,19 +154,19 @@ In addition, we wanted to explore using a minimum OTU size threshold that was no
 We felt that a minimum OTU size of 0.65% for NanoCLUST and 0.15% for VSEARCH would exclude low abundance species
 and may bias against samples with low read depth.
 
-Here we explored the observed number of species in our even abundance mock community after OTUs had been given taxonomic assignments.
+Here we explored the observed number of species in our even abundance mock community after assigning OTUs.
 We performed VSEARCH and NanoCLUST clustering methods on four library sizes of 9686, 58000, 116000 and 145000 reads.
 HDBSCAN clustering was performed six times for each library with minimum cluster sizes of: 2, 5, 10, 20, 50 and 100 reads.
-VSEARCH clustering was performed once for each library at 97% identity, then we remove OTUs with fewer than: 2, 5, 10, 20, 50 and 100 reads.
+VSEARCH clustering was performed once for each library at 97% identity, then OTUs with fewer than: 2, 5, 10, 20, 50 and 100 reads were removed.
 The most abundant sequence was used at the representative sequence for each OTU and given a taxonomic assignment with dnabarcoder using the UNITE+INSD 2024 database.
 
 For each minimum OTU size, we counted the number of unique taxonomic assignments given at the species level.
-OTUs that were unidentified at the species level were counted as individual species (and not lumped together as a single species).
+<!-- OTUs that were unidentified at the species level were counted as individual species (and not lumped together as a single species). -->
 Of the OTUs that were given a species-level assignment, we counted the number of species that were known to be in the mock community (@tbl-samplesheet).
 For OTUs that were only identified to genus or family level, we counted the number of OTUs that had genus or family level labels that were known to be in the mock community.
 OTUs that were identified at species, genus or family levels but whose taxonomic label were not expected in the mock community were counted as false positives.
-OTUs that were unidentified at the family level or higher were counted as their own group.
-We also recorded the read loss after applying the minimum OTU size threshold as in the section above (@fig-fixed-min-cluster-size-even).
+OTUs that were unidentified at the family level or higher were counted as their own group (@fig-fixed-min-cluster-size-even).
+We also recorded the read loss after applying the minimum OTU size threshold as in the section above.
 
 
 :::{#fig-fixed-min-cluster-size-even}
@@ -185,12 +185,11 @@ The process was repeated for four library sizes of 9686, 58000, 116000 and 14500
 The bottom row of plots show the proportion of reads that are lost after applying the minimum OTU size cutoff.
 :::
 
-We found that a core set of species from the mock community remained regardless of minimum OTU size (green bars in @fig-fixed-min-cluster-size-even).
-As the minimum OTU size increased, VSEARCH filtered most from OTUs assigned to genera from the mock community and OTUs unidentified at the family level and above.
+We observed that 'collapsing' OTUs by their species-level identification was more accurate in estimating the number of species in the mock community compared to using the number OTUs.
+We found that a core set of species from the mock community remained regardless of minimum OTU size or library size (green bars in @fig-fixed-min-cluster-size-even).
+When increasing the library size, we observed an increase in OTUs that were unidentified or assigned to genera or families of the mock community for both NanoCLUST and VSEARCH.
+Increasing the minimum OTU size with VSEARCH mostly removed OTUs that were unidentified or assigned to genera from the mock community.
 NanoCLUST overestimated the number of species regardless of the minimum OTU size, but had the benefit of much lower read loss than VSEARCH.
-
-- 'Collapsing' OTUs by their species-level identification, greater reduction of OTUs with NanoCLUST
-  - number of OTUS may be more meaningful for VSEARCH
 
 #### Comparing cluster delineation between VSEARCH and NanoCLUST
 
@@ -334,16 +333,14 @@ The bottom row of plots show the proportion of reads that are lost after applyin
 :::
 -->
 
-#### Sensitivity of cluster thresholds in uneven abundance scenarios (Scenario 2)
+#### Sensitivity of cluster thresholds in uneven abundance scenarios
 
-- points at which we lose samples
-- tradeoff -> inflated number of clusters / noisy
-- min cluster size as proportion of library size not robust for uneven sampling approaches
-- As minimum cluster size increases, reads from 'low-abundance' fungal isolates are merged with those from
-unrelated taxa (i.e. reads from *Eutypa lata* are clustered together with those identified as *Puccinia psidii* at minimum cluster size equal to 20).
+To explore the impact of a minimum OTU size cutoff on low-abundance species, we created a mock scenario where a small subset of fungal taxa had much lower abundance than others.
+This mock community contained a total of 55 fungal taxa.
+The 50 high-abundance taxa each had an abundance of 2000 reads, while the remaining 5 taxa had abundances of 5, 10, 20, 50 and 100 reads, making for a total library size of 100185 reads.
+We investigated the minimum OTU sizes that will cause low-abundance taxa to be lost @fig-uneven-min-cluster-thresh.
 
-:::{#fig-uneven-min-cluster-thresh-nanoclust}
-
+:::{#fig-uneven-min-cluster-thresh}
 ![](analysis/images/06-uneven-min-cluster.png)
 
 Impact of increasing the minimum OTU size for NanoCLUST (UMAP + HDBSCAN) and VSEARCH from left to right (values between 2 and 100).
@@ -355,6 +352,13 @@ OTUs and their taxonomic classification (given by dnabarcoder) are shown on the 
 Coloured bars show the proportion of reads belonging to the fungal taxa within an OTU.
 The dotted line indicates the minimum OTU size threshold.
 :::
+
+We observed that when increasing the minimum cluster size parameter for HDBSCAN (the clustering algorithm used by NanoCLUST),
+reads from 'low-abundance' fungal taxa are placed in OTUs with unrelated taxa.
+For example in @fig-uneven-min-cluster-thresh when setting the minimum cluster size to 100 reads, we see reads from *Eutypa lata* were clustered together into an OTU which was classified as the distantly related *Dipodascus capitatus*.
+
+For VSEARCH, the effect of a minimum OTU size was predictable in removing low-abundance OTUs.
+Low-abundance taxa such as *Trichomanascus ciferri* and *Erysiphe necator* were lost at smaller minimum OTU sizes than expected because they had been split into smaller OTUs.
 
 
 ## Soil samples

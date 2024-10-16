@@ -1,3 +1,7 @@
 ---
 title: "Significance"
 ---
+
+- democratization
+- a lot of interest in ONT due to cost, accessibility of use
+- not all users may have background in biology or bioinformatics

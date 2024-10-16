@@ -2,18 +2,31 @@
 title: "Discussion"
 ---
 
+## Quality control
+
 - QC approach
   - limitations of primer trimming
     - my method is stringent as it requires FWD and REV. This could cause bias in a real world scenario
     - make this configurable in pipeline for users
+  - Although in our real world case study we still retained many sequences, indication of better basecalling
 
-- measures of species recovery
+## Clustering
+
+- Measures of species recovery
   - \# otus vs. # species vs. %loss
-  - nanoclust looks like it like it is recovering species when min_cluster_size is high, but actually clumping unrelated taxa together.
+  - misleading - nanoclust looks like it is recovering species when min_cluster_size is high, but actually clumping unrelated taxa together.
   - nanoclust read loss + # OTUs inconsistent at larger library sizes
-  - Future:
-    - nanoclust might still be useful, but more complicated
-      - closer study of UMAP/HDBSCAN parameters and effect on ITS clustering
+
+- Nanoclust unable to cluster large datasets
+  - performance reasons
+  - designed for more conserved 16S regions, care needs to be taken when applying to variable ITS regions.
+
+- Future:
+  - nanoclust might still be useful, but more complicated
+    - closer study of UMAP/HDBSCAN parameters and effect on ITS clustering
+    - method should not be applied blindly
+
+## Taxonomic assignments
 
 - Limitations of assessing correct taxonomic assignments
   - taxonomic labels not always consistent in reference DB
@@ -30,9 +43,17 @@ title: "Discussion"
       - future: determine source: racon or medaka?
         - explore better techniques (draft read, etc)
 
-- Recommendations
+- some consistent false positives
+  - human error?
+
+- many OTUs unclassified in soil data
+  - dnabarcoder too stringent?
+  - limitation of reference database when working with Australian fungi
+
+## Recommendations
   - best practices for running
     - minimum sample sizes for recovering rare species
 
-- Future work
-  - taking advantage of long read (LSU, SSU)
+## Future work
+  - taking advantage of long amplicon (LSU, SSU)
+    - aid unclassified species
