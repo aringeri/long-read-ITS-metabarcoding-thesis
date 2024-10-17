@@ -238,29 +238,35 @@ See the footnotes in @tbl-samplesheet to see which taxa were excluded from mock 
 
 ## Real world - Soil case study
 
-Soil samples: [@tbl-soil-samplesheet]
+To test the pipeline on a real world environmental sample, a set of soil samples were made available to me.
+24 samples were collected from soil beneath four species of trees in heathy woodland from the Cranbourne Conservation area in Victoria, Australia (@tbl-soil-samplesheet).
+Six soil samples were taken for each tree species, which were: *Allocasuarina littoralis*, *Allocasuarina paradoxa*, *Eucalyptus viminalis* and *Eucalyptus cephalocarpa*.
+Two control samples were sequenced: one control contained (ExCon) only the extraction kit and the other was a negative PCR control (PCRNegCon).
 
 ### DNA extraction, amplification and sequencing
 
-sequencing protocol: https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1?step=2.28 .
-primers FWD + REV.
+Genomic DNA (gDNA) was extracted from all soil samples.
+One *Eucalyptus cephalocarpa* sample (EC4) was excluded due to low gDNA concentration.
+Library preparation and sequencing of extract gDNA followed the protocol found at [https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1](https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1).
+This protocol amplified full ITS and partial LSU regions with primers that already included DNA barcodes [@Hebert2023.11.29.569282; @ohtaDNAMetabarcodingWorkflow2023a].
+The modified forward primer was ITS1_F_KYO2 and reverse primer was LR6.
+Amplicons were sequenced using the Oxford Nanopore MinION 10.4.1.
 
 ### Bioinformatics - basecalling and demultiplexing
 
-dorado v5 sup model.
-demultiplex with minibar, custom barcoding.
-See @tbl-software-soil for commands.
+The raw ONT data was basecalled using Dorado v0.7.1 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup@v5.0.0).
+Due to the custom barcoding scheme, basecalled reads were demultiplexed with minibar v0.25 (@tbl-software-soil).
 
 ### Sample selection
 
-One sample AP6 excluded due to having much lower read count that other samples.
+One *Allocasuarina paradoxa* (AP6) sample was excluded due to having much lower read count that other samples (@tbl-software-soil).
+This left 24 samples (22 soil samples + 2 controls) for downstream processing.
 
 ### Metabarcoding pipeline
 
-default settings:
+The set of demultiplexed reads was passed to the metabarcoding pipeline with default settings.
+Due to a large library size after quality control (~3 million reads), computational constraints did not allow the NanoCLUST approach to cluster the full dataset.
+Instead, VSEARCH was used to cluster the full dataset, while NanoCLUST was used to cluster a subset of ~94K reads.
+4000 reads were randomly sampled from each of the 22 soil samples and the extraction control (ExCon), while 2400 reads were available from the PCR negative control (PCRNegCon).
+The resulting OTUs were classified by their most abundant sequence using dnabarcoder and the UNITE+INSD 2024 reference database.
 
-- min Q20 etc.
-- cluster full dataset (~3 million reads) with VSEARCH
-- cluster random subset of dataset (100K reads) with nanoclust
-  - 4K reads per sample, except PCRNegCon -> 2400
-- dnabarcoder

@@ -158,14 +158,14 @@ vsearch_stats <- tibble()
 for (sample_depth in c(20, 50, 167, 1000, 2000, 2500)) {
   for (t in c(0, 0.0005, 0.001, 0.0015)) {
     for (rep in 1:5) {
-      # if (sample_depth==2000) {
-        vsearch_cons <- load_vsearch_phyloseq(samplesheet, config$experiment_path, 2000, rep, consensus=T)
+      if (sample_depth==2000) {
+        vsearch_cons <- load_vsearch_phyloseq(samplesheet, config$experiment_path, sample_depth, rep, consensus=T)
         vsearch_stats_cons <- calc_precision(vsearch_cons  %>% filter_taxa_by_thresh(t), samplesheet)
         vsearch_stats_cons$method <- 'consensus'
-        vsearch_stats_cons$sample_depth <- 2000
+        vsearch_stats_cons$sample_depth <- sample_depth
         vsearch_stats_cons$rep <- rep
         vsearch_stats_cons$min_cluster_size <- t
-      # }
+      }
 
 
       vsearch_abund <- load_vsearch_phyloseq(samplesheet, config$experiment_path, sample_depth, rep, consensus=F)
