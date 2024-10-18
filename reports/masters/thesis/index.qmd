@@ -2,7 +2,8 @@
 title: "Introduction"
 ---
 
-Fungi form the second largest kingdom of life and is estimated to
+<!-- TODO: update reference -->
+Fungi form the second-largest kingdom of life and is estimated to
 contain up to 3.8 million species [@Hawksworth2017]. As of 2017, only
 120,000 species have been formally described. Fungi have diverse living
 forms and similarly have diverse strategies of energy
@@ -104,4 +105,4 @@ sequencing for metabarcoding of soil microbial community
 structure [@Wiryawan2022] and rapid pathogen
 detection [@Hong2020; @Ohta2023]. Other published works tested the use
 of ONT for metabarcoding using mock fungal
-communities [@Baloglu2021; @Mafune2020].
+communities [@Baloglu2021; @Mafune2020; @langsiriTargetedSequencingAnalysis2023].

@@ -15,8 +15,8 @@ source('helpers/config.R')
 
 samplesheet <- read_samplesheet(config)
 
-# scenario <- 'even'
-scenario <- 'uneven'
+scenario <- 'even'
+# scenario <- 'uneven'
 
 if (scenario == 'even') {
   experiment_path <- "../../../../experiments/66-fungal-isolate-ONT/outputs/isolate-even-reps-fixed-2-10-10"
@@ -155,6 +155,65 @@ label_facet <- function(sample_depth) {
     paste0(50*depth + sum(5, 10, 20, 50, 100), " reads in library")
   }
 }
+
+otu_assignments <- df %>%
+  group_by(sample_depth, min_cluster_size, otu) %>%
+  filter(min_cluster_size == 2 & sample_depth == 2000) %>%
+  # summarise_all(first) %>%
+  mutate(
+    id_level = ifelse(
+      species != 'unidentified',
+      'species',
+      ifelse(
+        genus != 'unidentified',
+        'genus',
+        ifelse(
+          family != 'unidentified',
+          'family',
+          'unidentified (family and above)'
+        )
+      )
+    )
+  ) %>%
+  group_by(
+    sample_depth,
+    min_cluster_size,
+    id_level
+  ) %>%
+  filter(not(species %in% expected_samples$species) & not(genus %in% expected_samples$genus))
+
+otu_assignments %>%
+  arrange(desc(count)) %>%
+  View()
+
+df_vsearch %>%
+  group_by(sample_depth, min_cluster_size, otu) %>%
+  filter(min_cluster_size == 5 & sample_depth == 2000) %>%
+  # summarise_all(first) %>%
+  mutate(
+    id_level = ifelse(
+      species != 'unidentified',
+      'species',
+      ifelse(
+        genus != 'unidentified',
+        'genus',
+        ifelse(
+          family != 'unidentified',
+          'family',
+          'unidentified (family and above)'
+        )
+      )
+    )
+  ) %>%
+  group_by(
+    sample_depth,
+    min_cluster_size,
+    id_level
+  ) %>%
+  filter(not(species %in% expected_samples$species) & not(genus %in% expected_samples$genus)) %>%
+  arrange(desc(count)) %>%
+  View()
+
 
 plot <- function(df, expected_samples, title, limits=c(0,255)) {
   # number of species

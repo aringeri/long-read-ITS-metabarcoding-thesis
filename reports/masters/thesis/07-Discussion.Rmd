@@ -50,6 +50,8 @@ title: "Discussion"
   - dnabarcoder too stringent?
   - limitation of reference database when working with Australian fungi
 
+- mismatch with dnabarcoder cutoffs and pipeline 97% cutoff
+
 ## Recommendations
   - best practices for running
     - minimum sample sizes for recovering rare species

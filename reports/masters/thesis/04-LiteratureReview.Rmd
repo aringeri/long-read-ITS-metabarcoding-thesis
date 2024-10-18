@@ -1,6 +1,77 @@
 ---
-title: "Background"
+title: "Literature Review"
 ---
+
+## Fungal barcode regions {#sec-fungal-marker-regions}
+<!-- TODO switch order -->
+
+Molecular barcoding is a technique for identifying organisms using a
+unique DNA region (or barcode) that is common to the group of targeted
+organisms [@Taberlet2018]. The variability of a DNA sequence among
+species provides the ability to discriminate between taxa [@Hebert2003].
+For an ideal molecular barcode, the interspecific variation is much
+higher than the intraspecific variation [@Schoch2012]. The difference
+between these variations is called the barcode gap [@Puillandre2012]. A
+barcode is optimal when the sequence is unique to one species are there
+is little variability of the barcode within that same species [@Schoch2012].
+
+<!-- TODO review wording -->
+In fungi, barcode regions used for species identification are often from regions
+that encode the nuclear ribosomal RNA (rRNA) and more rarely from other
+regions that encode proteins [@Schoch2012]. The nuclear rRNA region
+contains the 18S small subunit (SSU), 5.8S and 28S large subunit (LSU)
+rRNA genes. These genes are transcribed by RNA polymerase I and two
+spacer regions (ITS1 and ITS2) between the genes are removed through
+post-transcriptional modifications. The region covering the two spacers
+are referred to as the internal transcribed spacer (ITS) region and
+typically spans 500--700 bases but is highly variable among fungal
+groups (see @fig-its-region-simple) [@Nilsson2019a].
+
+:::{#fig-its-region-simple}
+![](resources/images/ITS-region-(2021 Furneaux).png)
+
+A simplified map of the ITS region showing common primer sites and
+typical amplicon lengths (edited from @Furneaux2021a)
+:::
+
+Due to read length limitations of short-read sequencing platforms,
+generally only one of the ITS1 or ITS2 subregions (250-400 bases) are
+targeted for sequencing [@Nilsson2019a]. The limitations of using the
+ITS1 or ITS2 subregions in isolation is that they have lower taxonomic
+resolution and universal primer sites are less convenient than the full
+ITS region (see [@Tedersoo2022] and [@Tedersoo2015]).
+
+The ITS region has limitations on its coverage of taxa and is unsuitable
+for some groups of fungi. For example some species in the
+*Microsporidia* group may lack the ITS region, and other orchid root
+symbionts (*Tulasnellaceae*) have mutations in primer
+sites [@Allen1976; @Tedersoo2022]. The arbuscular mycorrhizal
+*Glomeromycota* have highly variable copies of the ITS region, with up
+to 20% divergence in a single multinucleate spore [@Schoch2012]. For
+these reasons, metabarcoding studies targeting arbuscular mycorrhizal
+fungi commonly use SSU or LSU instead of
+ITS [@delavauxEnvironmentalIdentificationArbuscular2022; @opikOnlineDatabaseMaarjAM2010].
+Other fungal genera such as *Trichoderma* and *Fusarium* lack
+variability, making the ITS region unsuitable to discriminate between
+species [@Tedersoo2022].
+
+Copy numbers of the ITS region can vary between species and
+non-identical copies can co-exist within the same
+individual [@bradshawExtensiveIntragenomicVariation2023]. This can lead
+to amplification bias, inflating diversity in organisms with higher copy
+numbers [@Nilsson2019a]. Despite these limitations, ITS has a much
+higher PCR amplification success rate compared to protein-coding genes
+such as RPB1, RPB2 and MCM7 and is therefore better suited for
+metabarcoding [@Schoch2012].
+
+Other rDNA genes used as fungal barcodes are the 18S SSU and 28S LSU.
+Since they encode RNA involved in ribosome formation, these regions are
+highly conserved and there is often insufficient variation in the SSU
+and LSU regions to discriminate between many basidiomycete and
+ascomycete species [@Schoch2012]. Nevertheless, the SSU and LSU markers
+can be very useful at higher taxonomic levels to resolve the
+evolutionary history of genera, families, order and class [@Nilsson2019a].
+
 
 ## Sequencing methods {#sec-sequencing-methods}
 
@@ -74,6 +145,7 @@ was the high raw error rate which had been reported to range between 1%
 and up to 15% [@Baloglu2021; @Rang2018]. Techniques to improve accuracy
 are advancing with new chemistry and basecalling. ONT is now claiming a
 raw read accuracy rate of 99.5% with the latest Q20+
+<!-- TODO - update reference here -->
 chemistry [@NanoporeQ20] which is comparable to Illumina MiSeq.
 
 The technology works by threading a single strand of DNA (or RNA)
@@ -117,9 +189,7 @@ analysed to determine the sequence of nucleotides. The electrical signal
 is influenced by the nucleotides that occupy the pore at a given
 time [@Wick2019]. First generation basecallers used hidden markov models
 (HMMs) to predict the DNA sequence and required the raw signal to be
-segmented into discrete events (see Figure
-[5](#fig:hmm-basecalling){reference-type="ref"
-reference="fig:hmm-basecalling"}, [@Rang2018]). Newer basecallers such
+segmented into discrete events (see @fig-hmm-basecalling, [@Rang2018]). Newer basecallers such
 as DeepNano [@DeepNano], Albacore and Guppy [@Technologies] have
 improved accuracy by shifting away from HMMs to use neural
 networks [@Wick2019; @Rang2018]. Newer basecallers also use the raw
@@ -133,6 +203,7 @@ codon usage and base modifications [@Rang2018]. For example, when
 BasecRAWller [@Stoiber2017] was trained on an *E. coli* dataset, the
 accuracy of basecalling human data was much lower than on new *E. coli*
 data [@Stoiber2017].
+<!-- TODO update based on review with Abigail -->
 
 :::{#fig-hmm-basecalling
 ![](resources/images/HMM-basecalling.png)
@@ -148,75 +219,7 @@ studies [@Nilsson2019a; @Tedersoo2022]. While the quality of reads is
 improving with better basecalling and consensus methods, special
 considerations in our analysis pipeline will be needed if we wish to
 leverage the benefits of long reads to accurately identify fungi.
-
-## Fungal barcode regions {#sec-fungal-marker-regions}
-
-Molecular barcoding is a technique for identifying organisms using a
-unique DNA region (or barcode) that is common to the group of targeted
-organisms [@Taberlet2018]. The variability of a DNA sequence among
-species provides the ability to discriminate between taxa [@Hebert2003].
-For an ideal molecular barcode, the interspecific variation is much
-higher than the intraspecific variation [@Schoch2012]. The difference
-between these variations is called the barcode gap [@Puillandre2012]. A
-barcode is optimal when the sequence is unique to one species are there
-is little variability of the barcode in that same species [@Schoch2012].
-
-In fungi, genes used for species identification are usually from regions
-that encode the nuclear ribosomal RNA (rRNA) and more rarely from other
-regions that encode proteins [@Schoch2012]. The nuclear rRNA region
-contains the 18S small subunit (SSU), 5.8S and 28S large subunit (LSU)
-rRNA genes. These genes are transcribed by RNA polymerase I and two
-spacer regions (ITS1 and ITS2) between the genes are removed through
-post-transcriptional modifications. The region covering the two spacers
-are referred to as the internal transcribed spacer (ITS) region and
-typically spans 500--700 bases but is highly variable among fungal
-groups (see @fig-its-region-simple) [@Nilsson2019a].
-
-:::{#fig-its-region-simple}
-![](resources/images/ITS-region-(2021 Furneaux).png)
-
-A simplified map of the ITS region showing common primer sites and
-typical amplicon lengths (edited from @Furneaux2021a)
-:::
-
-Due to read length limitations of short-read sequencing platforms,
-generally only one of the ITS1 or ITS2 subregions (250-400 bases) are
-targeted for sequencing [@Nilsson2019a]. The limitations of using the
-ITS1 or ITS2 subregions in isolation is that they have lower taxonomic
-resolution and universal primer sites are less convenient than the full
-ITS region (see [@Tedersoo2022] and [@Tedersoo2015]).
-
-The ITS region has limitations on its coverage of taxa and is unsuitable
-for some groups of fungi. For example some species in the
-*Microsporidia* group may lack the ITS region, and other orchid root
-symbionts (*Tulasnellaceae*) have mutations in primer
-sites [@Allen1976; @Tedersoo2022]. The arbuscular mycorrhizal
-*Glomeromycota* have highly variable copies of the ITS region, with up
-to 20% divergence in a single multinucleate spore [@Schoch2012]. For
-these reasons, metabarcoding studies targeting arbuscular mycorrhizal
-fungi commonly use SSU or LSU instead of
-ITS [@delavauxEnvironmentalIdentificationArbuscular2022; @opikOnlineDatabaseMaarjAM2010].
-Other fungal genera such as *Trichoderma* and *Fusarium* lack
-variability, making ITS unsuitable to discriminate between
-species [@Tedersoo2022].
-
-Copy numbers of the ITS region can vary between species and
-non-identical copies can co-exist within the same
-individual [@bradshawExtensiveIntragenomicVariation2023]. This can lead
-to amplification bias, inflating diversity in organisms with higher copy
-numbers [@Nilsson2019a]. Despite these limitations, ITS has a mucher
-higher PCR amplification success rate compared to protein coding genes
-such as RPB1, RPB2 and MCM7 and is therefore better suited for
-metabarcoding [@Schoch2012].
-
-Other rDNA genes used as fungal barcodes are the 18S SSU and 28S LSU.
-Since they encode RNA involved in ribosome formation, these regions are
-highly conserved and there is often insufficient variation in the SSU
-and LSU regions to discriminate between many basidiomycete and
-ascomycete species [@Schoch2012]. Nevertheless, the SSU and LSU markers
-can be very useful at higher taxonomic levels to resolve the
-evolutionary history of genera, families, order and fungal
-class [@Nilsson2019a].
+<!-- TODO update this paragraph -->
 
 ## Bioinformatic analysis {#sec-bioinformatic-analysis}
 
@@ -235,7 +238,10 @@ the process of sorting the resulting reads by that unique tag so the
 original sample can be recovered [@Id2018]. Demultiplexing is often
 incorporated into metabarcoding pipeline tools targeting short-read data
 such as AMPtk [@Palmer2018], mothur [@Schloss2009] and
-QIIME2 [@Bolyen2019]. The demultiplexing tool DeepBinner [@Id2018]
+QIIME2 [@Bolyen2019].
+<!-- TODO: maybe use some more up to pipelines date ones here? or remove -->
+
+The demultiplexing tool DeepBinner [@Id2018]
 follows an approach that is unique to ONT data, where reads are
 classified based on raw electrical signals (in fast5 files) as opposed
 to classifying reads after basecalling. This approach was observed to
@@ -250,7 +256,10 @@ ends from short-read data. Specific tools for adapter trimming of ONT
 data such as Porechop [@Wick] are designed for long reads and can handle
 special cases where adapters are occasionally found within the middle of
 a read [@Wick].
+<!-- TODO: comment that Porechop and guppy historically used, but now dorado supports trimming -->
 
+
+<!-- TODO: remove this -->
 It is worth noting that many quality filtering tools have been developed
 for bacterial 16S sequence data and may therefore not be adequate to
 handle fungal ITS sequences, due to its variation in length and high
@@ -268,6 +277,7 @@ use for amplicon sequence variant techniques (discussed in
 Similarly, LSUx [@Furneaux] is a tool for extracting the 5.8S, ITS2, and
 28S regions [@Furneaux2021a].
 
+<!-- TODO: Remove this -->
 For sequencing platforms that use paired reads, such as Illumina, it is
 common to disregard unpaired reads as a way to discard low quality
 reads [@Tedersoo2022]. Nevertheless, some taxa can fail to pair
@@ -287,6 +297,7 @@ NanoFilt [@DeCoster2018] and Chopper [@DeCoster2023] accept or reject an
 entire read based on an average quality score threshold. For ONT reads
 with variable quality, stretches of the read with high sequence quality
 may still be salvaged using Prowler [@Lee2021] or Filtlong [@Wicka].
+<!-- TODO: reword this for filtlong -- windowing? -->
 
 Index switching (also known at tag jumps) is the process where the
 identifying tag of a sample is misread, based on PCR or sequencing
@@ -300,15 +311,22 @@ in samples [@guenay-greunkeHandlingTargetedAmplicon2021; @Tedersoo2022].
 
 ### Clustering {#sec-clustering}
 
+- Clustering
+  - OTU vs ASV
+  - open/closed/de novo
+  - nanoclust
+    - dimension reduction
+    - hdbscan - density based
+
 In a metabarcoding pipeline, clustering is the process of aggregating
 DNA sequences into groups called Operational Taxonomic Units (OTUs)
 based on a sequence similarity threshold [@Cline2017; @Blaxter2005]. The
 similarity thresholds of OTUs usually range from 95% to 100%, most often
 delineating species at 97% [@Tedersoo2022; @Joos2020]. Three types of
-clustering frequently seen in metabarcoding are: de novo, closed
+clustering frequently seen in metabarcoding are: *de novo*, closed
 reference and open reference clustering [@Tedersoo2022; @Cline2017].
 
-De novo clustering is one of the widely employed methods for defining
+*De novo* clustering is one of the widely employed methods for defining
 fungal OTUs, where clustering is performed based on the similarity of
 sequences within the same data set [@Cline2017]. The OTUs generated by
 de novo clustering are dependent on the data set in which they are
@@ -338,7 +356,7 @@ discriminate biological sequences from errors on the basis that we
 expect to observe biological sequences more frequently than sequences
 that contain errors [@Callahan2017]. ASV methods can detect small
 biological sequence variants, such as infraspecific variation (i.e.
-between poplations within a species), while disregarding errors
+between populations within a species), while disregarding errors
 introduced through sequencing or library preparation, therefore
 increasing the taxonomic resolution of the
 results [@Joos2020; @Glassman2018]. Compared to OTU clustering that are
@@ -382,20 +400,35 @@ such as GenBank
 ([www.ncbi.nlm.nih.gov/genbank](www.ncbi.nlm.nih.gov/genbank){.uri}) are
 problematic for taxonomic assignment as a significant number of entries
 are incorrectly identified at the species
-level [@Nilsson2006; @Bidartondo2008]. Curated databases such as
-UNITE [@Koljalg2005] address this problem by maintaining high quality
+level [@Nilsson2006; @Bidartondo2008].
+<!-- TODO: check if still relevant -->
+Curated databases such as UNITE [@Koljalg2005] address this problem by maintaining high quality
 reference records of ITS sequences and curating taxonomic designation by
 researchers well versed in the taxonomic groups [@Abarenkov2010].
 Similarly, the Ribosomal Data Project (RDP) [@Cole2014] provides curated
 fungal LSU sequences while Silva [@Quast2013] provides both SSU and LSU
-reference sequences. A drawback of curated databases is that they have
+reference sequences.
+A drawback of curated databases is that they have
 limited taxonomic coverage and do not always include the most recently
 published sequences [@Furneaux2021a].
+
+<!--
+The most common sequence similarity approach for taxonomic classification is a search using the Basic Local Alignment Search Tool (BLAST) algorithm (Altschul et. al., 1990; Camacho et al., 2009), where pairwise comparisons are made between representative sequences and those in a reference database to assign the closest matching reference (Taberlet et al., 2018; Tedersoo et al., 2022).
+Using heuristics, BLAST allows for considerably faster searches of sequence similarity compared to exact alignment algorithms such as Smith-Waterman or Needleman-Wunsch (Camacho et al., 2009).
+The BLAST algorithm can massively reduce search space by scanning a database of sequences for small, fixed size subsequences (knows as words), then these matching sites are used as starting points to initiate more in-depth alignment.
+
+BLAST is highly sensitive alignment but is also computationally intensive and may not be practical for classifying huge numbers of sequences (Ye et al., 2019), and furthermore may not be the most accurate classification option for long ITS metabarcoding pipelines (Lu et. al., 2022), especially when using with fixed threshold values of sequence similarity (Vu et. al., 2022).
+-->
 
 A common method for taxonomic assignment is a BLAST [@Camacho2009a]
 search, where pairwise comparisons are made between representative
 sequences and those in a reference database to assign the closest
 matching reference [@Taberlet2018; @Tedersoo2022].
+
+- similarity scores must be determined *a priori*
+- dnabarcoder
+- minimap2
+- kraken2
 
 Alternative methods that use fixed length subsequence (k-mer) searches
 to assign taxonomy include Naive Bayesian Classifier [@Wang2007],
@@ -405,12 +438,20 @@ assign unknown sequences, therefore they are highly dependent on having
 high taxonomic coverage in the reference
 database [@Furneaux2021a; @Ceballos-Escalera2022].
 
+- RDP?
+
 Phylogenetic placement algorithms such as pplacer [@FA2010] and
 EPA-ng [@Barbera2019] place amplicon reads onto a pre-established
 phylogenetic tree. They are not well suited for ITS sequences due to the
 high variability in length and content that produces alignments with low
 accuracy, but work well with more conserved regions such as 16S, SSU and
 LSU [@Furneaux2021a; @Tedersoo2022].
+
+- ML assignment approaches
+  - Ribosomal Database Project naïve Bayes classifier
+  - emu
+  - HyenaDNA (Nguyen et al, 2024)
+  - mycoai
 
 Taxonomic assignment of fungi from studies using long-read sequences
 (PacBio or ONT) follow similar methods to the ones described above. The
@@ -427,6 +468,7 @@ In [@Tedersoo2018; @loitRelativePerformanceMinION2019], ITS subregions
 were extracted from reads using ITSx and assigned using top BLAST hits
 against the UNITE reference database.
 
+<!-- TODO remove this -->
 Alternative approaches extract multiple barcodes from the same PacBio
 read to improve taxonomic
 assignment [@Meidl2021; @Furneaux2021a; @eshghisahraeiEffectsOperationalTaxonomic2022].

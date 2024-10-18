@@ -13,7 +13,7 @@ source('helpers/dnabarcoder.R')
 source('helpers/vsearch.R')
 source('helpers/config.R')
 
-soil_full_dataset <- '../../../../experiments/camille-soil-samples/outputs/c-soil-singleton-10-11/'
+soil_full_dataset <- '../../../../experiments/camille-soil-samples/outputs/c-soil-singleton-10-17/'
 experiment <- soil_full_dataset
 
 otus <- readRDS(glue('{experiment}/phyloseq/FULL_ITS/ALL_READS/1/all_samples/all_samples.phyloseq.rds'))
@@ -26,8 +26,42 @@ classFile <- list.files(
 tax_table <- read_dna_barcoder_classification_vsearch(classFile[1])
 soil_full_phylo <- phyloseq(otu_table(otus), tax_table)
 
+df <- data.frame()
+tax_df <- tax_table %>% as.data.frame()
+for (i in 1:nrow(tax_table)) {
+  new_row <- tax_df[i,]
+  new_row[, tax_df[i,] == 'unidentified' ] <- rownames(new_row)
+  df <- rbind(df,
+    new_row
+  )
+}
+new_tax_table <- tax_table(as.matrix(df))
+new_soil_full_phylo <- phyloseq(new_tax_table, otu_table(soil_full_phylo))
+tax_glom(new_soil_full_phylo, taxrank='species')
+tax_table(new_soil_full_phylo)[, 'species'] %>% head()
+
+stats <- data.frame()
+min_otu_threshes <- seq(from = 0, to=0.1, by=.001)
+for (thresh in min_otu_threshes) {
+  filtered <- filter_otu_by_sample(new_soil_full_phylo, thresh)
+  stats <- rbind(stats,
+    data.frame(
+      min_out = thresh,
+      n_otus = filtered %>% ntaxa(),
+      n_species = filtered %>% tax_table() %>% as.data.frame() %>% select(species) %>% distinct() %>% summarise(n=n())
+    )
+  )
+}
+
+stats %>%
+  ggplot(aes(x=min_out, y=n_otus)) +
+  geom_point() +
+  geom_line(aes(y=n), colour='red')
+
 filt <- soil_full_phylo #%>% filter_taxa_by_min_otu_size(700)
 filt
+
+
 
 # TODO filter by sample 0.005
 # ?prune_samples()
