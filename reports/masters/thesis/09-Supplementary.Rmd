@@ -1,6 +1,4 @@
----
-title: "Supplemental Figures"
----
+# Appendices {#.appendices}
 
 ```{r}
 #| message: false
@@ -15,9 +13,8 @@ set_flextable_defaults(
 
 ## Pipeline
 
+:::{#apptbl-software-pipeline}
 ```{r}
-#| label: tbl-software-pipeline
-#| tbl-cap: Software used in pipeline
 flextable(data.frame(
     step='Adapter trimming',
     name='dorado',
@@ -82,11 +79,14 @@ flextable(data.frame(
   width(j=3, width=3, unit = "cm")
 ```
 
+Software used in pipeline
+:::
+
+
 ## Mock scenarios
 
+:::{#apptbl-samplesheet}
 ```{r}
-#| label: tbl-samplesheet
-#| tbl-cap: Read statistics from isolated fungal taxa used in mock scenarios. List of the taxa, sequencing barcode, number of raw reads (following basecalling) and number of reads after quality control (QC). Corrections to original based on the UNITE+INSD (v2024) taxonomy [@abarenkovFullUNITEINSDDataset2024] are shown in parenthesis.
 sample_stats <-  read.csv('../../../experiments/66-fungal-isolate-ONT/sample-stats-fmt.csv')
 
 sample_stats %>%
@@ -113,9 +113,12 @@ sample_stats %>%
   )
 ```
 
+Read statistics from isolated fungal taxa used in mock scenarios. List of the taxa, sequencing barcode, number of raw reads (following basecalling) and number of reads after quality control (QC). Corrections to original based on the UNITE+INSD (v2024) taxonomy [@abarenkovFullUNITEINSDDataset2024] are shown in parenthesis.
+:::
+
+
+:::{#apptbl-software-isolate}
 ```{r}
-#| label: tbl-software-isolate
-#| tbl-cap: Software used basecalling the fungal isolate dataset used in mock scenarios.
 flextable(data.frame(
     step='Basecalling +\n Demultiplexing',
     name='guppy',
@@ -129,7 +132,10 @@ flextable(data.frame(
   width(j=4, width=9, unit = "cm")
 ```
 
-:::{#fig-nanoclustSplitting2}
+Software used basecalling the fungal isolate dataset used in mock scenarios.
+:::
+
+:::{#appfig-nanoclustSplitting2}
 ![](analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png)
 
 ![](analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png)
@@ -137,7 +143,7 @@ flextable(data.frame(
 Chart showing how 58 fungal isolates are clustered into OTUs based on a single execution of the even abundance mock scenario.
 Each isolate has been subsampled to 2000 reads and then clustered using the NanoCLUST (UMAP + HDBSCAN) method with a minimum cluster size set to 580 (0.5% of the total library size).
 Bars indicate the abundance of an OTU (number of reads).
-The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the X axis labels (See @tbl-tax-assignments-nanoclust for classifications).
+The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the X axis labels (See @apptbl-tax-assignments-nanoclust for classifications).
 Green bars indicate that the assignment given to a cluster matches the expected species-level classification.
 Yellow bars indicate a correct genus-level classification.
 Orange bars indicate a correct family-level classification.
@@ -146,10 +152,9 @@ Grey indicates that the cluster could not be given a taxonomic classification at
 :::
 
 
+:::{#apptbl-tax-assignments-nanoclust}
 ```{r}
 #| message: false
-#| label: tbl-tax-assignments-nanoclust
-#| tbl-cap: The set of taxonomic assignments for each cluster in @fig-nanoclustSplitting2. The most abundant sequence of each cluster was given a taxonomic assignment using dnabarcoder and the UNITE 2024 database. The OTU ID column refers clusters found in @fig-nanoclustSplitting2 (x-axis). The genus assignment, species assignment, BLAST score and confidence as reported by dnabarcoder are also shown.
 flextable(
   read.csv('analysis/tables/all-otus-tax.csv') %>%
     arrange(OTU.ID) %>%
@@ -165,13 +170,14 @@ flextable(
   autofit()
 ```
 
+The set of taxonomic assignments for each cluster in @appfig-nanoclustSplitting2. The most abundant sequence of each cluster was given a taxonomic assignment using dnabarcoder and the UNITE 2024 database. The OTU ID column refers clusters found in @appfig-nanoclustSplitting2 (x-axis). The genus assignment, species assignment, BLAST score and confidence as reported by dnabarcoder are also shown.
+:::
 
 
-## Soil samples
+## Real world - Soil case study
 
+:::{#apptbl-soil-samplesheet}
 ```{r}
-#| label: tbl-soil-samplesheet
-#| tbl-cap: Read statistics for soil sample data. List of the samples, number of raw reads (following basecalling) and number of reads after quality control (QC).
 soil_sample_stats <-  read.csv('../../../experiments/camille-soil-samples/soil-sample-stats-fmt.csv')
 
 soil_sample_stats %>%
@@ -186,9 +192,12 @@ soil_sample_stats %>%
   width(j=3, width=3, unit = "cm")
 ```
 
+Read statistics for soil sample data. List of the samples, number of raw reads (following basecalling) and number of reads after quality control (QC).
+:::
+
+
+:::{#apptbl-software-soil}
 ```{r}
-#| label: tbl-software-soil
-#| tbl-cap: Software used basecalling and demultiplexing the soil sample dataset
 flextable(data.frame(
     step='Basecalling',
     name='dorado',
@@ -208,3 +217,6 @@ flextable(data.frame(
   width(j=3, width=2, unit = "cm") %>%
   width(j=4, width=9, unit = "cm")
 ```
+
+Software used basecalling and demultiplexing the soil sample dataset
+:::

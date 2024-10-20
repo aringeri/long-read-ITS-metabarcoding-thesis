@@ -13,8 +13,8 @@ book:
     - 06-Results.Rmd
     - 07-Discussion.Rmd
     - 08-Conclusion.Rmd
-    - 09-Supplementary.Rmd
     - 10-References.Rmd
+    - 09-Supplementary.Rmd
 
 bibliography: '../../references.bib'
 csl: '../../bioinformatics.csl'
@@ -38,3 +38,14 @@ execute:
   echo: false
 crossref:
   chapters: false
+  custom:
+    - kind: float
+      reference-prefix: Table A
+      caption-prefix: Table A
+      key: apptbl
+      space-before-numbering: false
+      caption-location: top
+    - kind: float
+      reference-prefix: Figure A
+      key: appfig
+      space-before-numbering: false

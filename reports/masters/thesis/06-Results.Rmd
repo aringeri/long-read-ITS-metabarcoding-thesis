@@ -6,7 +6,7 @@ title: "Results"
 
 ### Quality control
 
-After quality control, there was considerable read loss across the fungal taxa used to construct the mock scenarios (@tbl-samplesheet).
+After quality control, there was considerable read loss across the fungal taxa used to construct the mock scenarios (@apptbl-samplesheet).
 A minimum of 2500 reads per taxa was required to construct even-abundance mock scenarios with library sizes nearing 150K reads
 ($58 \text{ taxa} \times 2500 \text{ reads} = 145000\text{ reads}$).
 This can be seen in @fig-readCountDistributionBySample, where seven samples are excluded.
@@ -162,7 +162,7 @@ The most abundant sequence was used at the representative sequence for each OTU 
 
 For each minimum OTU size, we counted the number of unique taxonomic assignments given at the species level.
 <!-- OTUs that were unidentified at the species level were counted as individual species (and not lumped together as a single species). -->
-Of the OTUs that were given a species-level assignment, we counted the number of species that were known to be in the mock community (@tbl-samplesheet).
+Of the OTUs that were given a species-level assignment, we counted the number of species that were known to be in the mock community (@apptbl-samplesheet).
 For OTUs that were only identified to genus or family level, we counted the number of OTUs that had genus or family level labels that were known to be in the mock community.
 OTUs that were identified at species, genus or family levels but whose taxonomic label were not expected in the mock community were counted as false positives.
 OTUs that were unidentified at the family level or higher were counted as their own group (@fig-fixed-min-cluster-size-even).
@@ -227,7 +227,7 @@ Using the VSEARCH method, the majority of the *Puccinia graminis* reads clustere
 This likely indicates that biological variation exists in the *P. graminis* sample that the NanoCLUST method was capable of detecting while VSEARCH (at 97% identity) could not.
 The majority of reads for both *Austropuccinia psidii* samples (BC 28 and 36) were split into the same two OTUs (OTU 38 and 21)
 which have been classified as *Puccinia psidii*.
-A similar plot for all samples in this mock community can be seen in @fig-nanoclustSplitting2 and @tbl-tax-assignments-nanoclust.
+A similar plot for all samples in this mock community can be seen in @appfig-nanoclustSplitting2 and @apptbl-tax-assignments-nanoclust.
 
 - show results for:
   - Candida
