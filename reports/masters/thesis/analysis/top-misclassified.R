@@ -87,13 +87,15 @@ otu_tax_and_actual <- merge(classifications, otus, by=0) %>%
     join_by(barcode)
   )
 
-otu_tax_and_actual %>%
+top_mis_ided <- otu_tax_and_actual %>%
   filter(genus != 'unidentified') %>%
   filter(genus != actual_genus) %>%
   filter(not(genus %in% accepted_synonyms$alt_genus) | not(actual_species %in% accepted_synonyms$actual_species)) %>%
-  filter(count > 500) %>%
+  filter(count > 200) %>%
   arrange(desc(count)) %>%
   filter(actual_species != 'Candida zeylanoides') %>%
   rename(n_reads=count, dnabarcoder_classification=species) %>%
-  select(otu, actual_species, n_reads, dnabarcoder_classification, score, cutoff, confidence) %>%
-  View()
+  select(otu, barcode, actual_species, n_reads, dnabarcoder_classification, score, cutoff, confidence)
+  # arrange(as.numeric(otu))
+
+write.csv(top_mis_ided %>% select(-confidence), 'tables/top-misidentified-nc.csv', row.names = F)

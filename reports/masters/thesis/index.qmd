@@ -2,10 +2,21 @@
 title: "Introduction"
 ---
 
+```{r libraryImports}
+#| message: false
+library(dplyr)
+library(flextable)
+
+set_flextable_defaults(
+  font.size = 10,
+  theme_fun = theme_vanilla
+)
+```
+
 <!-- TODO: update reference -->
-Fungi form the second-largest kingdom of life and is estimated to
-contain up to 3.8 million species [@Hawksworth2017]. As of 2017, only
-120,000 species have been formally described. Fungi have diverse living
+Fungi form the third-largest kingdom of life and is estimated to
+contain between two and three million species [@niskanenPushingFrontiersBiodiversity2023]. To date, approximately
+161,000 species have been formally described [@indexfungorumpartnershipSpeciesFungorum2024]. Fungi have diverse living
 forms and similarly have diverse strategies of energy
 production [@peayDimensionsBiodiversityEarth2016]. Fungi are widely
 distributed and take on different ecological roles in terrestrial and

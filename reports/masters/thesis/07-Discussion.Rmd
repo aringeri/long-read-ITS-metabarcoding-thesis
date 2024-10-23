@@ -2,60 +2,161 @@
 title: "Discussion"
 ---
 
+```{r}
+#| message: false
+library(dplyr)
+library(flextable)
+
+set_flextable_defaults(
+        font.size = 10,
+        theme_fun = theme_vanilla
+)
+```
+
+Our results indicate that this ONT workflow is effective for detecting the major fungal taxa from our mock communities
+with less clear results in Australian soil samples due to a high rate of unclassified OTUs.
+We have observed consistent patterns of clustering for VSEARCH and NanoCLUST and have begun to uncover the effect each parameter has on these methods.
+We have found that most abundant sequence performed most reliably for classifying OTUs at the genus level.
+- well-represented taxa detected reliably
+
+
 ## Quality control
 
-- QC approach
-  - limitations of primer trimming
-    - my method is stringent as it requires FWD and REV. This could cause bias in a real world scenario
-    - make this configurable in pipeline for users
-  - Although in our real world case study we still retained many sequences, indication of better basecalling
+Our approach to quality control aimed to considerably reduce noise from error-prone ONT sequences.
+In our mock dataset, by setting a minimum quality score of Q20 and requiring both forward and reverse primers to be present on a read resulted in the removal of 85% of the dataset (@fig-readLossByStage).
+This QC approach is stringent and could bias against some taxa in a real world scenario, and we aim to make this configurable in pipeline for end users.
+The reads for the mock dataset were generated in 2022 are not able to use the latest dorado's basecalling model (v5.0.0 at the time of writing).
+We observed that this is less of a problem with modern ONT chemistry and basecalling because in our real world case study we still retained many more sequences (~40% loss of reads).
+
 
 ## Clustering
 
+We have demonstrated that VSEARCH and NanoCLUST clustering methods produced comparable results and
+both were able to successfully delineate major taxa in our mock scenarios.
+NanoCLUST was more sensitive to biological variation than VSEARCH as it often split a single taxa into multiple OTUs
+(for example: *Puccinia graminis* in @fig-splittingPuccinia).
+This splitting is potentially indicative of ITS haplotype variation, this could be confirmed by closer analysis of the sequences within each OTU.
+We expect that reclustering the data with VSEARCH with a higher percent identity threshold may be able to detect same signal.
+
+- ? VSEARCH merged more taxa together? <!-- TODO confirm -->
+- nanoclust read loss + # OTUs inconsistent at larger library sizes
+  - when set too high minimum cluster size parameter produced less stable clustering
+
+Our metrics of species recovery (number of OTUs, number of species and percentage of reads lost) gave insight into broad patterns of clustering,
+but had limitations when comparing VSEARCH and NanoCLUST clustering methods.
+We found that treating percentage loss as a measure of the success to be misleading because
+NanoCLUST often produced lower read loss than VSEARCH but clustered unrelated taxa together (@fig-compareVsearchNanoclust and @fig-uneven-min-cluster-thresh).
+This suboptimal grouping of unrelated taxa can be explained by HDBSCAN clustering algorithm:
+As the minimum cluster size parameter is increased, nearby clusters are merged together.
+<!-- When taken too far, clustering will deviate from biological reality as it using an indirect mapping of kmer profile -> UMAP -->
+<!-- Therefore, when set too high, the minimum cluster size parameter -->
+Due to dimension reduction via UMAP, it is not necessarily easy to interpret distance.
+Care should be taken when setting this and other HDBSCAN parameters to reflect the biological implications.
+NanoCLUST originally designed for more conserved 16S regions in Bacteria, parameters validated against 16S data may not be suitable for variable ITS regions in fungi.
+
 - Measures of species recovery
   - \# otus vs. # species vs. %loss
-  - misleading - nanoclust looks like it is recovering species when min_cluster_size is high, but actually clumping unrelated taxa together.
-  - nanoclust read loss + # OTUs inconsistent at larger library sizes
-
-- Nanoclust unable to cluster large datasets
-  - performance reasons
-  - designed for more conserved 16S regions, care needs to be taken when applying to variable ITS regions.
-
-- Future:
-  - nanoclust might still be useful, but more complicated
-    - closer study of UMAP/HDBSCAN parameters and effect on ITS clustering
-    - method should not be applied blindly
-
-## Taxonomic assignments
-
-- Limitations of assessing correct taxonomic assignments
-  - taxonomic labels not always consistent in reference DB
-
+  - for low min_cluster_size params NanoCLUST successful
 - At low min_cluster_size:
   - Nanoclust successful at delineating species that VSEARCH at 97% could not
 
-- Taxonomic classification precision
-  - surprisingly:
-    - Nanoclust: lower unclassified and higher precision with lowest minimum OTU size
-    - VSEARCH: lower classification rate when filtering small OTUs
-    - consensus: introducing noise in nanoclust
-      - poor performance for vsearch (explained by grouping unrelated species together)
-      - future: determine source: racon or medaka?
-        - explore better techniques (draft read, etc)
 
-- some consistent false positives
-  - human error?
+NanoCLUST was unsuitable for clustering large datasets due to computational limitations.
+In our case, the soil sample dataset contained 1.8 million reads resulted much higher memory use than was possible with our attempts (maximum 128GB).
+By default, the NanoCLUST pipeline samples 100K reads from the given dataset and is expected to use between 32GB-36GB of RAM [@iterGenomicsITERNanoCLUST2024].
+<!-- - The NanoCLUST pipeline defaults to subsampling 100K reads from the given dataset.
+  - Depending on use case, may not have enough depth -->
+
+Despite some limitations, NanoCLUST is a complex and dynamic clustering approach that shows promise for clustering highly variable ITS sequences.
+While VSEARCH uses a fixed similarity metric which is much easier to understand, NanoCLUST may be better suited to cluster fungal groups that contain different rates of variability at the ITS locus.
+We know that there are limitations of using a single fixed sequence identity thresholds to delineate taxa across the entire fungal tree of life [@vuDNABarcodingAnalysis2016; @vuLargescaleGenerationAnalysis2019; @vuDnabarcoderOpensourceSoftware2022].
+Dnabarcoder is a tool that tackles this problem by predicting multiple sequence identity cutoffs for different fungal clades based on a reference dataset.
+Further work - clade level delineation can be modeled using k-mer frequency, retained in dimension reduction and density based clustering.
+
+- basecall quality -> eventually approaching the use of ASVs (dada2)
+- clusters not dataset-dependent, at cost of overestimating abundance. [@Callahan2017; Tedersoo]
+<!-- TODO citation -->
+
+## Taxonomic assignments
+
+In our mock communities, in the best cases we observed a classification rate of ~95% and genera-level precision between 82-85%.
+This demonstrated that in a controlled scenario a significant proportion of the major taxa were correctly identified.
+However, there were a number of major taxa that were consistently misidentified regardless of clustering approach ([@tbl-top-misidentified]).
+
+:::{#tbl-top-misidentified}
+```{r}
+flextable(
+  read.csv('analysis/tables/top-misidentified-nc.csv') %>%
+    rename_all(\(x) gsub('_', ' ', x)) %>%
+    mutate(
+      score = scales::percent(score, 0.01),
+      cutoff = scales::percent(cutoff, 0.01)
+    )
+)
+```
+
+Top 10 misidentified OTUs in even-abundance scenario (2000 reads per taxa) using NanoCLUST.
+These misidentifications were also common across VSEARCH trials as well.
+The columns show: the OTU which the taxon was clustered, the barcode identifying the taxon at time of sequencing,
+the taxon's 'known' species-level identification, the number of reads from the taxon in the OTU, the classification given by dnabarcoder,
+the BLAST identity score against the reference sequence, and the similarity cutoff used by dnabarcoder to classify at the species level.
+:::
+
+- potential contamination for some taxa:
+  - Kluyveromyces marxianus, Candida orthopsilosis and Candida albicans are taxa that are present in the mock community from other samples.
+- potential mislabelling of samples:  Diaporthe sp and Asteroma sp #2
+  - expect both Asteroma sp. to cluster together at 97%
+  - classification for Asteroma sp. #2 is a Diaporthe genus
+    - although Asteroma and Diaporthe both in Diaporthales order, so expect them to be somewhat similar
+- Difficult to be conclusive, finer grain look at sequences in the sample may give further insight.
+
+A significant limitation of assessing correct taxonomic assignments in an automated way is not having a consistent approach for taxonomic nomenclature.
+Often fungal taxa have many taxonomic synonyms which makes the process of validating the output of a classifier problematic.
+A simple approach that only considers the taxonomic labels can lead to false negatives as it doesn't take into consideration - a name's history, or changes.
+
+- our approach involved manual validation of some mock community members (but was not exhaustive).
+- This approach would not scale well for larger mock communities.
+
+In terms of the precision of taxonomic classifications made in our scenarios,
+surprisingly, we found the lowest rate of unclassified taxa and highest rate of correct taxonomic assignments occurred at minimal OTU filtering for NanoCLUST and VSEARCH (@fig-precision).
+This went against our expectations that low-abundance OTUs were mostly erroneous and would produce false classifications.
+We expect that these small OTUs are the product of sequencing errors that make them different enough from major OTUs but still have similar enough sequences to the 'correct' reference database entry.
+Further investigation for patterns in these low-abundance OTUs may be fruitful for separating signal from noise.
+
+When comparing the classification accuracy of most-abundant sequences versus consensus sequences (@fig-precision), we found that
+most-abundant sequence gave less variable results.
+We expected the consensus sequence approach used by NanoCLUST to drastically improve classification precision by correcting sequencing errors.
+However, due to increased variability, we expect that there was significant biological variation present within OTUs which in turn introduced noise from the consensus algorithm.
+
+  - poor performance for vsearch
+
+As NanoCLUST was originally intended for more conserved 16S sequences, the consensus approach may need significant adjustment for highly variable ITS sequences.
+If we were to pursue consensus sequences in the future, it would be important to determine source of errors in the resulting sequence.
+Are racon or medaka ideal for this approach?
+Also, we would closer look at OTU composition at the sequence level to determine if OTUs are suitable for consensus error correction (do they align).
+
 
 - many OTUs unclassified in soil data
   - dnabarcoder too stringent?
   - limitation of reference database when working with Australian fungi
 
-- mismatch with dnabarcoder cutoffs and pipeline 97% cutoff
+- limitation of VSEARCH with dnabarcoder
+  - mismatch with dnabarcoder cutoffs and pipeline VSEARCH 97% cutoff
+  - potential to clump unrelated species in same OTU
 
 ## Recommendations
   - best practices for running
     - minimum sample sizes for recovering rare species
+      - we were able to correctly identify a low-abundance taxa of 5 reads to family level, compared to 50 other taxa at 2000 reads (1:400). total library size of around 100K reads. (with nanoclust min cluster size = 2)
+      - (could identify taxa with 10 reads to genus level.)
+      - VSEARCH had split this taxa into multiple OTUs (size ~2)
+      - NanoCLUST only assigned at family level due to representative sequence, could be resolved by assigning more sequences
+      - drawback
+        - overestimated the number of species 100 (182 OTUs) vs 55
+        - high number of unclassified OTUs
+      - potential use case of identifying rare pathogens
 
 ## Future work
   - taking advantage of long amplicon (LSU, SSU)
     - aid unclassified species
+    - phylogenetic methods

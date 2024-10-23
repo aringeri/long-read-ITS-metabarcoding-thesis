@@ -2,6 +2,17 @@
 title: "Results"
 ---
 
+```{r}
+#| message: false
+library(dplyr)
+library(flextable)
+
+set_flextable_defaults(
+        font.size = 10,
+        theme_fun = theme_vanilla
+)
+```
+
 ## Mock scenarios
 
 ### Quality control
@@ -96,7 +107,7 @@ The dashed line indicates the actual number of species in the mock scenario.
 
 Alternatively, we tested the k-mer based clustering approach used by the NanoCLUST pipeline.
 Within the NanoCLUST pipeline, HDBSCAN is the algorithm that performs the clustering and requires specifying a minimum cluster size parameter *a priori*.
-<!-- The minimum cluster size parameter used by the HDBSCAN significantly impacts the resulting number of clusters by limiting the groupings that can be considered a cluster [@ParameterSelectionHDBSCAN].
+<!-- The minimum cluster size parameter used by the HDBSCAN significantly impacts the resulting number of clusters by limiting the groupings that can be considered a cluster [@lelandmcinnesParameterSelectionHDBSCAN2016].
 -->
 Similar to our approach with VSEARCH, we tested multiple values of HDBSCAN's minimum cluster size parameter on the even abundance mock community for 6 different library sizes (1160, 2900, 9686, 58000, 116000, and 145000 reads).
 We tested a range of minimum cluster size parameters between 0% and 2% of the total library size.
@@ -423,5 +434,11 @@ Each step was executed in order from left to right. Note the y-axis has been plo
 
 
 ### Clustering and taxonomic assignment
+
+- Top 30 OTUs (VSEARCH full dataset)
+
+```{r}
+flextable(read.csv('./analysis/tables/soil-top30-otus-vsearch.csv'))
+```
 
 #### Effect of minimum cluster size on number of OTUs and number of species

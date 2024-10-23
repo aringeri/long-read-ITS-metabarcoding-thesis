@@ -162,5 +162,5 @@ uneven_cutoff_plot <- cowplot::plot_grid(ncol = 1, axis='lr', align='hv',
   plot(vsearch_data_2, "VSEARCH") + guides(fill='none', linetype='none')
 )
 uneven_cutoff_plot
-ggsave('images/06-uneven-min-cluster.png', uneven_cutoff_plot)
+# ggsave('images/06-uneven-min-cluster.png', uneven_cutoff_plot)
 
