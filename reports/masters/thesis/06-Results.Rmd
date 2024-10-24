@@ -438,7 +438,22 @@ Each step was executed in order from left to right. Note the y-axis has been plo
 - Top 30 OTUs (VSEARCH full dataset)
 
 ```{r}
-flextable(read.csv('./analysis/tables/soil-top30-otus-vsearch.csv'))
+#| message: false
+#| warning: false
+flextable(
+  read.csv('./analysis/tables/soil-top30-otus-vsearch.csv') %>%
+    rename_all(\(x) gsub('_', ' ', x)) %>%
+    mutate(
+      score = scales::percent(score, 0.01),
+      cutoff = scales::percent(as.numeric(cutoff), 0.01)
+    )
+)
 ```
+
+:::{#fig-soil-classified}
+![](analysis/images/06-soil-unidentified.png)
+
+The proportion of phylum-level classifications.
+:::
 
 #### Effect of minimum cluster size on number of OTUs and number of species

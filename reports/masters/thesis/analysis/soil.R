@@ -71,9 +71,6 @@ filt
 
 
 
-# TODO filter by sample 0.005
-# ?prune_samples()
-# sample_sums(soil_full_phylo) * .005
 ntaxa(soil_full_phylo)
 estimate_richness(soil_full_phylo, measures = 'Observed')
 soil_full_phylo
@@ -188,29 +185,31 @@ pruned_top_30_nc <- prune_taxa(top_30_otus_nc$OTU, subset_nc) %>%
 prop_id_vsearch <- soil_full_phylo %>%
   # filter_otu_by_sample(0.0015) %>%
   # filter_taxa_by_min_otu_size(50) %>%
-  transform_sample_counts(\(x) x/sum(x)) %>%
+  # transform_sample_counts(\(x) x/sum(x)) %>%
   # prune_samples('sample_AL4', .) %>%
-  tax_glom(taxrank="kingdom") %>%
-  plot_bar(fill="kingdom != \"unidentified\"") +
-  scale_fill_discrete(name='kingdom identified') +
+  tax_glom(taxrank="phylum") %>%
+  plot_bar(fill="phylum != \"unidentified\"") +
   scale_y_continuous(name='Relative abundance') +
   labs(title="VSEARCH (full dataset)") +
   theme(aspect.ratio = 1, axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 prop_id_nc <- subset_nc %>%
-  transform_sample_counts(\(x) x/sum(x)) %>%
+  # transform_sample_counts(\(x) x/sum(x)) %>%
   # prune_samples('sample_AL4', .) %>%
-  tax_glom(taxrank="kingdom") %>%
-  plot_bar(fill="kingdom != \"unidentified\"") +
-  scale_fill_discrete(name='kingdom identified') +
+  tax_glom(taxrank="phylum") %>%
+  plot_bar(fill="phylum != \"unidentified\"") +
+  scale_fill_discrete(name='phylum', labels = c('unidentified', 'identified')) +
   scale_y_continuous(name='Relative abundance') +
   labs(title="NanoCLUST (100K reads)") +
   theme(aspect.ratio = 1, axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-cowplot::plot_grid(ncol = 2,
-  prop_id_vsearch, #+ guides(fill='none'),
+unident_plot <- cowplot::plot_grid(ncol = 2, align='v', axis='tb',
+  prop_id_vsearch + guides(fill='none'),
   prop_id_nc
 )
+unident_plot
+
+ggsave('images/06-soil-unidentified.png', unident_plot)
 
 subset_nc %>%
   filter_otu_by_sample(0.005) %>%
