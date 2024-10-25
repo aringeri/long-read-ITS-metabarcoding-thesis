@@ -1,0 +1,55 @@
+"OTU.ID","kingdom","phylum","class","order","family","genus","species","score","cutoff","confidence"
+"1","Fungi","Basidiomycota","Tremellomycetes","Tremellales","Cryptococcaceae","Cryptococcus","Cryptococcus gattii",0.99879,0.98,0.9068
+"10","Fungi","Ascomycota","Leotiomycetes","Helotiales","Erysiphaceae","Erysiphe","Erysiphe necator",1,0.991,0.8232
+"11","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Debaryomycetaceae","Yamadazyma","Yamadazyma mexicana",1,0.994,0.741
+"12","Fungi","Basidiomycota","Tremellomycetes","Trichosporonales","Trichosporonaceae","Trichosporon","Trichosporon asahii",1,0.991,0.8232
+"13","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Botrytis","Botrytis genus",1,0.973,0.9248
+"14","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom",0.860046525,0.973,0
+"15","Fungi","Basidiomycota","Ustilaginomycetes","Ustilaginales","Ustilaginaceae","Sporisorium","Sporisorium scitamineum",1,0.968,0.9332
+"16","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Pleosporaceae","Pyrenophora","Pyrenophora tritici-repentis",1,0.991,0.8232
+"17","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetaceae","Kluyveromyces","Kluyveromyces marxianus",0.9575,0.881,0.8249
+"18","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Phaffomycetaceae","Wickerhamomyces","Wickerhamomyces anomalus",1,0.982,0.8696
+"19","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Pichiaceae","Pichia","Pichia genus",1,0.993,0.9561
+"2","Fungi","Ascomycota","Eurotiomycetes","Eurotiales","Aspergillaceae","Penicillium","Penicillium rubens",1,0.991,0.8232
+"20","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom",1,0.982,0.8696
+"21","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Nectriaceae","Fusarium","Fusarium pseudograminearum",1,0.973,0.9248
+"22","Fungi","Ascomycota","Sordariomycetes","Xylariales","Diatrypaceae","Cryptovalsa","Cryptovalsa ampelina",1,0.973,0.9248
+"23","Fungi","Ascomycota","Pezizomycetes","Pezizales","Tuberaceae","Tuber","Tuber brumale",1,0.992,0.9031
+"24","Fungi","Ascomycota","Leotiomycetes","Thelebolales","Thelebolaceae","Inopinatum","Inopinatum lactosum",1,0.991,0.8232
+"25","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetales fam Incertae sedis","Candida","Candida albicans",0.99501,0.956,0.5727
+"26","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetales fam Incertae sedis","Candida","Candida dubliniensis",1,0.952,0.9638
+"27","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Trichomonascaceae","Blastobotrys","Blastobotrys proliferans",1,0.975,0.7325
+"28","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetales fam Incertae sedis","Candida","Candida parapsilosis",1,0.956,0.5727
+"29","Fungi","Ascomycota","Sordariomycetes","Microascales","Microascaceae","Scedosporium","Scedosporium aurantiacum",1,0.996,0.9516
+"3","Fungi","Ascomycota","Sordariomycetes","Xylariales","Diatrypaceae","Eutypa","Eutypa lata",1,0.973,0.9248
+"30","Fungi","Ascomycota","Sordariomycetes","Xylariales","Xylariaceae","Entoleuca","Entoleuca genus",1,0.991,0.8232
+"31","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Leptosphaeriaceae","Leptosphaeria","Leptosphaeria maculans",1,0.992,0.9071
+"32","Fungi","Ascomycota","Eurotiomycetes","Eurotiales","Aspergillaceae","Aspergillus","Aspergillus flavus",1,0.996,0.8916
+"33","Fungi","Ascomycota","Leotiomycetes","Helotiales","Sclerotiniaceae","Sclerotinia","Sclerotinia sclerotiorum",1,0.991,0.8232
+"34","Fungi","Basidiomycota","Agaricomycetes","Agaricales","Cortinariaceae","Cortinarius","Cortinarius genus",1,0.975,0.7325
+"35","Fungi","Basidiomycota","Tremellomycetes","Tremellales","Cryptococcaceae","Cryptococcus","Cryptococcus gattii",1,0.991,0.8232
+"36","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Trichomonascaceae","Blastobotrys","Blastobotrys adeninivorans",0.8750079,0.991,0
+"37","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetales fam Incertae sedis","Nakazawaea","Nakazawaea ernobii",1,0.991,0.8232
+"38","Fungi","Basidiomycota","Microbotryomycetes","Sporidiobolales","Sporidiobolaceae","Rhodotorula","Rhodotorula mucilaginosa",1,0.878,0.9669
+"39","Fungi","Ascomycota","Dothideomycetes","Mycosphaerellales","Mycosphaerellaceae","Zymoseptoria","Zymoseptoria tritici",0.99667,0.956,0.5727
+"4","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom",1,0.973,0.9248
+"40","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom",1,0.956,0.5727
+"41","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Debaryomycetaceae","Kurtzmaniella","Kurtzmaniella genus",1,0.968,0.9332
+"42","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Dipodascaceae","Dipodascus","Dipodascus capitatus",1,0.987,0.9315
+"43","Fungi","Basidiomycota","Exobasidiomycetes","Microstromatales","Quambalariaceae","Quambalaria","Quambalaria cyanescens",1,0.993,0.9109
+"44","Fungi","Ascomycota","Dothideomycetes","Botryosphaeriales","Botryosphaeriaceae","Diplodia","Diplodia seriata",1,0.991,0.8232
+"45","Fungi","Basidiomycota","Pucciniomycetes","Pucciniales","Pucciniaceae","Puccinia","Puccinia striiformis",1,0.993,0.9561
+"46","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Debaryomycetaceae family","Debaryomycetaceae family","Debaryomycetaceae family",1,0.994,0.9016
+"47","Fungi","Ascomycota","Sordariomycetes","Diaporthales","Gnomoniaceae","Gnomoniopsis","Gnomoniopsis paraclavulata",1,0.991,0.8232
+"48","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetales fam Incertae sedis","Candida","Candida orthopsilosis",1,0.976,0.8041
+"49","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetales fam Incertae sedis","Candida","Candida tropicalis",1,0.991,0.8232
+"5","Fungi","Basidiomycota","Pucciniomycetes","Pucciniales","Pucciniaceae","Puccinia","Puccinia psidii",1,0.991,0.8232
+"50","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Pichiaceae","Komagataella","Komagataella pastoris",1,0.991,0.8232
+"51","Fungi","Ascomycota","Sordariomycetes","Diaporthales","Diaporthaceae","Diaporthe","Diaporthe foeniculina",1,0.973,0.9248
+"52","Fungi","Ascomycota","Sordariomycetes","Microascales","Microascaceae","Scedosporium","Scedosporium boydii",1,0.991,0.8232
+"53","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Saccharomycetaceae","Nakaseomyces","Nakaseomyces genus",1,0.991,0.8232
+"54","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom","unclassified kingdom",1,0.97,0.8666
+"6","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Trichomonascaceae","Trichomonascus","Trichomonascus genus",0.78,0.991,0
+"7","Fungi","Ascomycota","Saccharomycetes","Saccharomycetales","Debaryomycetaceae","Yamadazyma","Yamadazyma scolyti",0.7925,0.991,0
+"8","Fungi","Basidiomycota","Pucciniomycetes","Pucciniales","Pucciniaceae","Puccinia","Puccinia graminis",0.905,0.896,0.9087
+"9","Fungi","Basidiomycota","Tremellomycetes","Tremellales","Cryptococcaceae","Cryptococcus","Cryptococcus neoformans",1,0.977,0.9314

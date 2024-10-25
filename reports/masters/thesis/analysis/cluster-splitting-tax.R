@@ -51,6 +51,7 @@ ggplot_splitting <- function(phylo, df, taxa_labels=FALSE, ncol=NULL, maxY=2200)
     ggplot( aes(x=OTU, y=count, fill=factor(match, levels = levs)) ) +
     geom_col() +
     # geom_col_pattern(aes(pattern_shape = factor(match)), pattern = 'pch', pattern_density = 0.5) +
+    geom_text(aes(label=ifelse(manual_match, "*", '')), hjust=-2.7, vjust=-.2) +
     geom_label(aes(label = count, fill=factor(match, levels = levs)), vjust = -0.2, size = 3, show.legend = FALSE) +
     facet_wrap(~barcode,
                labeller = as_labeller(\(x)  paste0(
@@ -94,6 +95,10 @@ organise_df <- function(phylo, subset) {
     genus == genus_unite | genus %in% accepted_synonyms$alt_genus & species_unite %in% accepted_synonyms$actual_species
   }
 
+  family_level_correct <- function(family_unite, species_unite, family) {
+    family == family_unite | family %in% accepted_synonyms$alt_family & species_unite %in% accepted_synonyms$actual_species
+  }
+
   cbind(
     otu_table(phylo),
     tax_table(phylo)[,c('family', 'genus', 'species')]
@@ -110,10 +115,14 @@ organise_df <- function(phylo, subset) {
       match = ifelse(
         species_level_correct(species_unite, species), 0,
         ifelse(genus_level_correct(genus_unite, species_unite, genus), 1,
-          ifelse(family == family_unite, 2,
+          ifelse(family_level_correct(family_unite, species_unite, family), 2,
             ifelse(family == 'unclassified kingdom', 4,3))
         )
       ),
+      manual_match =
+        species %in% accepted_synonyms$alt_species & species_unite %in% accepted_synonyms$actual_species |
+          genus %in% accepted_synonyms$alt_genus & species_unite %in% accepted_synonyms$actual_species |
+          family %in% accepted_synonyms$alt_family & species_unite %in% accepted_synonyms$actual_species
     ) %>%
     filter(barcode %in% subset) %>%
     mutate(
@@ -132,14 +141,14 @@ plot_splitting(nanoclust, sample_names(nanoclust)[31:70])
 
 puccinias <- plot_splitting(nanoclust, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
   labs(title = "UMAP + HDBSCAN (NanoCLUST)", x='') +
-  geom_text(aes(label=ifelse(grepl('^49|^57', OTU), "*", '')), hjust=-2.7, vjust=-.2) +
+  # geom_text(aes(label=ifelse(grepl('^49|^57', OTU), "*", '')), hjust=-2.7, vjust=-.2) +
   theme(aspect.ratio = 1)
 puccinias
 ggsave('images/06-cluster-splitting-nanoclust-puccinia.png', puccinias)
 
 puccinias_vsearch <- plot_splitting(vsearch, paste0('barcode', c(25, 27, 28, 36)), taxa_labels = TRUE, ncol = 4, maxY=2100) +
   labs(title = "VSEARCH") +
-  geom_text(aes(label=ifelse(grepl('^5', OTU), "*", '')), hjust=-3, vjust=-.2) +
+  # geom_text(aes(label=ifelse(grepl('^5', OTU), "*", '')), hjust=-3, vjust=-.2) +
   theme(aspect.ratio = 1)
 puccinias_vsearch
 ggsave('images/06-cluster-splitting-vsearch-puccinia.png', puccinias_vsearch)
@@ -206,12 +215,23 @@ plot_splitting(vsearch, sample_names(vsearch)[31:70])
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-1-30.png', plot_splitting(nanoclust, sample_names(nanoclust)[1:30]))
 ggsave('images/06-cluster-splitting-nanoclust-with-tax-31.png', plot_splitting(nanoclust, sample_names(nanoclust)[31:70]))
 
-tax_to_show <- tax_table(nanoclust) %>% as.matrix()
-tax_to_show[tax_to_show[,'genus'] == 'Debaryomycetaceae gen Incertae sedis', c('family', 'genus', 'species') ] <- 'Debaryomycetaceae family'
-tax_to_show[tax_to_show[,'genus'] == 'Pucciniaceae gen Incertae sedis', c('family', 'genus', 'species') ] <- 'Pucciniaceae family'
-tax_to_show <- merge(tax_to_show, nanoclust_tax[, c('score', 'cutoff', 'confidence')], by = 0) %>% arrange(Row.names) %>%
-  rename(OTU.ID = 'Row.names')
-write.csv(tax_to_show, 'tables/all-otus-tax.csv', row.names = F)
+ggsave('images/06-cluster-splitting-vsearch-with-tax-1-30.png', plot_splitting(vsearch, sample_names(vsearch)[1:30]))
+ggsave('images/06-cluster-splitting-vsearch-with-tax-31.png', plot_splitting(vsearch, sample_names(vsearch)[31:70]))
+
+write_tax_to_table <- function(phylo) {
+  tax_to_show <- tax_table(phylo) %>% as.matrix()
+  tax_to_show[tax_to_show[,'genus'] == 'Debaryomycetaceae gen Incertae sedis', c('family', 'genus', 'species') ] <- 'Debaryomycetaceae family'
+  tax_to_show[tax_to_show[,'genus'] == 'Pucciniaceae gen Incertae sedis', c('family', 'genus', 'species') ] <- 'Pucciniaceae family'
+  tax_to_show <- merge(tax_to_show, nanoclust_tax[, c('score', 'cutoff', 'confidence')], by = 0) %>% arrange(Row.names) %>%
+    rename(OTU.ID = 'Row.names')
+  tax_to_show
+}
+
+write_tax_to_table(nanoclust) %>%
+  write.csv('tables/all-otus-tax.csv', row.names = F)
+
+write_tax_to_table(vsearch) %>%
+  write.csv('tables/all-otus-tax-vsearch.csv', row.names = F)
 
 left_join(tax_to_show, nanoclust_tax, join_by())
 

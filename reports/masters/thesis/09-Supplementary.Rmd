@@ -135,6 +135,8 @@ flextable(data.frame(
 Software used basecalling the fungal isolate dataset used in mock scenarios.
 :::
 
+### Clustering - NanoCLUST
+
 :::{#appfig-nanoclustSplitting2}
 ![](analysis/images/06-cluster-splitting-nanoclust-with-tax-1-30.png)
 
@@ -143,12 +145,13 @@ Software used basecalling the fungal isolate dataset used in mock scenarios.
 Chart showing how 58 fungal isolates are clustered into OTUs based on a single execution of the even abundance mock scenario.
 Each isolate has been subsampled to 2000 reads and then clustered using the NanoCLUST (UMAP + HDBSCAN) method with a minimum cluster size set to 580 (0.5% of the total library size).
 Bars indicate the abundance of an OTU (number of reads).
-The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the X axis labels (See @apptbl-tax-assignments-nanoclust for classifications).
-Green bars indicate that the assignment given to a cluster matches the expected species-level classification.
+The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the X axis labels (See @apptbl-tax-assignments-nanoclust for classifications).
+Green bars indicate that the assignment given to an OTU matches the expected species-level classification.
 Yellow bars indicate a correct genus-level classification.
 Orange bars indicate a correct family-level classification.
 Red bars indicate the classification is incorrect for family-level and above.
-Grey indicates that the cluster could not be given a taxonomic classification at all.
+Grey indicates that the OTU could not be given a taxonomic classification at all.
+Bars marked with an asterix (*) indicate that taxonomic labels differed between reference database and our sample but were still considered the same species.
 :::
 
 
@@ -170,8 +173,51 @@ flextable(
   autofit()
 ```
 
-The set of taxonomic assignments for each cluster in @appfig-nanoclustSplitting2. The most abundant sequence of each cluster was given a taxonomic assignment using dnabarcoder and the UNITE 2024 database. The OTU ID column refers clusters found in @appfig-nanoclustSplitting2 (x-axis). The genus assignment, species assignment, BLAST score and confidence as reported by dnabarcoder are also shown.
+The set of taxonomic assignments for each OTU in @appfig-nanoclustSplitting2. The most abundant sequence of each OTU was given a taxonomic assignment using dnabarcoder and the UNITE 2024 database. The OTU ID column refers OTUs found in @appfig-nanoclustSplitting2 (x-axis). The genus assignment, species assignment, BLAST score and confidence as reported by dnabarcoder are also shown.
 :::
+
+### Clustering - VSEARCH
+
+:::{#appfig-vsearchSplittingFull}
+![](analysis/images/06-cluster-splitting-vsearch-with-tax-1-30.png)
+
+![](analysis/images/06-cluster-splitting-vsearch-with-tax-31.png)
+
+Chart showing how 58 fungal isolates are clustered into OTUs based on a single execution of the even abundance mock scenario.
+Each isolate has been subsampled to 2000 reads and then clustered using VSEARCH at 97% identity.
+OTUs with less than 174 reads were removed (0.15% of the total library size).
+Bars indicate the abundance of an OTU (number of reads).
+The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the X axis labels (See @apptbl-tax-assignments-vsearch for classifications).
+Green bars indicate that the assignment given to a OTU matches the expected species-level classification.
+Yellow bars indicate a correct genus-level classification.
+Orange bars indicate a correct family-level classification.
+Red bars indicate the classification is incorrect for family-level and above.
+Grey indicates that the OTU could not be given a taxonomic classification at all.
+Bars marked with an asterix (*) indicate that taxonomic labels differed between reference database and our sample but were still considered the same species.
+:::
+
+
+:::{#apptbl-tax-assignments-vsearch}
+```{r}
+#| message: false
+flextable(
+        read.csv('analysis/tables/all-otus-tax-vsearch.csv') %>%
+                arrange(OTU.ID) %>%
+                select(OTU.ID, genus, species, score, confidence) %>%
+                mutate(
+                        score = scales::percent(score, 0.01),
+                        confidence = scales::percent(confidence)
+                ) %>%
+                rename_with(\(col) gsub('\\.', ' ', col))
+) %>%
+        align(j=4, align="right", part="all") %>%
+        align(j=5, align="right", part="all") %>%
+        autofit()
+```
+
+The set of taxonomic assignments for each OTU in @appfig-vsearchSplittingFull. The most abundant sequence of each OTU was given a taxonomic assignment using dnabarcoder and the UNITE 2024 database. The OTU ID column refers to OTUs found in @appfig-vsearchSplittingFull (x-axis). The genus assignment, species assignment, BLAST score and confidence as reported by dnabarcoder are also shown.
+:::
+
 
 
 ## Real world - Soil case study
