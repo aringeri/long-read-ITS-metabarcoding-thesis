@@ -146,9 +146,13 @@ ggsave('images/06-cluster-splitting-vsearch-puccinia.png', puccinias_vsearch)
 
 
 cryptococcus <- plot_splitting(nanoclust, paste0('barcode', 58:62), taxa_labels = TRUE, ncol = 4, maxY=2100) +
-  labs(title = "UMAP + HDBSCAN")
+  labs(title = "UMAP + HDBSCAN (NanoCLUST)") +
+  theme(aspect.ratio = 1) +
+  labs(x="")
 cryptococcus_vsearch <- plot_splitting(vsearch, paste0('barcode', 58:62), taxa_labels = TRUE, ncol = 4, maxY=2100) +
-  labs(title = "VSEARCH")
+  labs(title = "VSEARCH") +
+  theme(aspect.ratio = 1)
+
 ggsave('images/06-cluster-splitting-nanoclust-cryptococcus.png', cryptococcus)
 ggsave('images/06-cluster-splitting-vsearch-cryptococcus.png', cryptococcus_vsearch)
 
@@ -159,7 +163,9 @@ incertae <- cand_tax[,'genus'] == 'Debaryomycetaceae gen Incertae sedis'
 cand_tax[incertae, c('family', 'genus', 'species')] <- 'Debaryomycetaceae family'
 tax_table(cand_nanoclust) <- tax_table(cand_tax)
 candidas <- plot_splitting(cand_nanoclust, paste0('barcode', c(47:57)), taxa_labels = F, ncol = 4, maxY=2100) +
-  labs(title = "UMAP + HDBSCAN")
+  labs(title = "UMAP + HDBSCAN") +
+  theme(aspect.ratio = 1) +
+  labs(x="")
 candidas
 
 cand_vsearch <- vsearch
@@ -171,23 +177,24 @@ plot_splitting(cand_vsearch, paste0('barcode', c(47:57)), taxa_labels = F, ncol 
   labs(title = "VSEARCH")
 
 candidas_plot_nanoclust <-
-  plot_splitting(cand_nanoclust, paste0('barcode', c(47, 49, 50, 53, 54)), taxa_labels = T, ncol = 5, maxY=2100) +
+  plot_splitting(cand_nanoclust, paste0('barcode', c(47, 49, 53, 54)), taxa_labels = T, ncol = 5, maxY=2100) +
     theme(aspect.ratio = 1) +
-    labs(title="UMAP + HDBSCAN (NanoCLUST)")
+    labs(title="UMAP + HDBSCAN (NanoCLUST)", x="")
 ggsave('images/06-cluster-splitting-nanoclust-candida.png', candidas_plot_nanoclust)
 
 
 candidas_plot_vsearch <-
-    plot_splitting(cand_vsearch, paste0('barcode',  c(47, 49, 50, 53, 54)), taxa_labels = T, ncol = 5, maxY=2100) +
+    plot_splitting(cand_vsearch, paste0('barcode',  c(47, 49, 53, 54)), taxa_labels = T, ncol = 5, maxY=2100) +
       theme(aspect.ratio = 1) +
       labs(title="VSEARCH")
 ggsave('images/06-cluster-splitting-vsearch-candida.png', candidas_plot_vsearch)
 
 
-botrytis_plot_nanoclust <- plot_splitting(nanoclust, paste0("barcode", c(31, 32)), taxa_labels = T) +
+botrytis_plot_nanoclust <- plot_splitting(nanoclust, paste0("barcode", c(30, 31, 32)), taxa_labels = T) +
   labs(title="UMAP + HDBSCAN (NanoCLUST)") +
-  theme(aspect.ratio = 1)
-botrytis_plot_vsearch <- plot_splitting(vsearch, paste0("barcode", c(31, 32)), taxa_labels = T) +
+  theme(aspect.ratio = 1) +
+  labs(x="")
+botrytis_plot_vsearch <- plot_splitting(vsearch, paste0("barcode", c(30, 31, 32)), taxa_labels = T) +
   labs(title="VSEARCH") +
   theme(aspect.ratio = 1)
 ggsave('images/06-cluster-splitting-nanoclust-botrytis.png', botrytis_plot_nanoclust)

@@ -142,7 +142,7 @@ $$
 
 We found that for low library sizes (1160-9686 reads), the NanoCLUST method produced closer estimates of the actual number of species
 with lower read loss than VSEARCH for all minimum OTU sizes.
-For larger library sizes (58K-145K reads) using the VSEARCH method, we observed a consistent pattern read loss for the all library sizes.
+For larger library sizes (58K-145K reads) using the VSEARCH method, we observed a consistent pattern read loss for all library sizes.
 The NanoCLUST method became less consistent for larger library sizes and lost a higher proportion reads to recover the same number of species (@fig-compareVsearchNanoclust).
 <!--
 For example, using the VSEARCH method, 5% of reads were lost when the minimum OTU size was set to 0.5% (of library size) for all library sizes.
@@ -175,7 +175,7 @@ For each minimum OTU size, we counted the number of unique taxonomic assignments
 <!-- OTUs that were unidentified at the species level were counted as individual species (and not lumped together as a single species). -->
 Of the OTUs that were given a species-level assignment, we counted the number of species that were known to be in the mock community (@apptbl-samplesheet).
 For OTUs that were only identified to genus or family level, we counted the number of OTUs that had genus or family level labels that were known to be in the mock community.
-OTUs that were identified at species, genus or family levels but whose taxonomic label were not expected in the mock community were counted as false positives.
+OTUs that were identified at species, genus or family levels but whose taxonomic labels were not expected in the mock community were counted as false positives.
 OTUs that were unidentified at the family level or higher were counted as their own group (@fig-fixed-min-cluster-size-even).
 We also recorded the read loss after applying the minimum OTU size threshold as in the section above.
 
@@ -214,7 +214,7 @@ Taxonomy was assigned to the most abundant sequence of each cluster with dnabarc
 The samples from the order *Pucciniales* are shown in @fig-splittingPuccinia.
 Using the NanoCLUST method, the majority of reads from the *Puccinia striiformis (var tritici)* sample (BC 25) clustered together into a single OTU (OTU 37) with the expected species-level classification (*Puccinia striiformis*).
 The remaining reads from the *P. striiformis (var tritici)* sample clustered into two groups (1 read each) which did not correspond to the expected taxonomic label.
-The *Botrytis* genus classification of one of these clusters corresponds to another funga taxa present in the library
+The *Botrytis* genus classification of one of these clusters corresponds to another fungal taxa present in the library
 and may be indicative of index-switching (where a sequencing error has occurred in the barcode region of the read).
 
 
@@ -224,7 +224,7 @@ and may be indicative of index-switching (where a sequencing error has occurred 
 ![](analysis/images/06-cluster-splitting-vsearch-puccinia.png)
 
 Clustering of *Pucciniales* using the NanoCLUST (UMAP + HDBSCAN) vs VSEARCH methods.
-Bars indicate the abundance of a cluster (number of reads).
+Bars indicate the number of reads from a taxon placed into an OTU.
 The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the x-axis labels.
 Green bars indicate that the assignment given to a cluster matches the expected species-level classification.
 Red bars indicate that the classification is incorrect for family-level and above.
@@ -240,52 +240,66 @@ The majority of reads for both *Austropuccinia psidii* samples (BC 28 and 36) we
 which have been classified as *Puccinia psidii*.
 A similar plot for all samples in this mock community can be seen in @appfig-nanoclustSplitting2 and @apptbl-tax-assignments-nanoclust.
 
-- show results for:
-  - Candida
-    - consistent results between VSEARCH and NanoCLUST
-    - BC53 + BC54 result same clusters
-    - BC49 + BC50 unclassified
-    - more noise in nanoclust
-    - BC53 found in BC47 - potential contamination?
-  - Cryptococcus
-    - VSEARCH splits cryptococcus gatii VG I into 3 main clusters
-        - shares cluster with C. neoformans VN IV
-        - while nanoclust does not
-    - VSEARCH OTU 9 present in all cryptococcuss samples
-    - significant crossover of:
-        - candida ortholopsis (BC54) found in Crypto. gattii VG III
-        - kluveromyces marxianus (BC67) in C. neofarmans VNI
-        - consistent in vsearch and nanoclust
-  - Botrytis
-    - share same OTU
-
 :::{#fig-splittingCandida}
 ![](analysis/images/06-cluster-splitting-nanoclust-candida.png)
 
 ![](analysis/images/06-cluster-splitting-vsearch-candida.png)
 
-Clustering of selected *Candida*
+Clustering of selected *Candida* using the NanoCLUST (UMAP + HDBSCAN) vs VSEARCH methods.
+Bars indicate the number of reads from a taxon placed into an OTU.
+The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the x-axis labels. Green bars indicate that the assignment given to a cluster matches the expected species-level classification.
+Red bars indicate that the classification is incorrect for family-level and above.
+Grey bars indicate that the cluster could not be given any taxonomic classification at all.
 :::
+
+We observed similar clustering behaviour between VSEARCH and NanoCLUST for taxa in the genus *Candida* (@fig-splittingCandida).
+With VSEARCH, sequences from *C. albicans* (BC47) were placed into three OTUs.
+The OTU that received the most reads from *C. albicans* was classified correctly, while the other two were classified to other taxa in the mock community (*C. orthopsilosis* and *C. metapsilosis*).
+A similar pattern was observed using NanoCLUST, although the major OTU was not classified correctly at the species-level and there were many more low-abundance OTUs (below 40 reads).
+The majority of sequences from *C. caryicola* (BC49) were placed into two unclassified OTUs for both clustering methods.
+Sequences from *C. metapsilosis* (BC53) and *C. orthopsilosis* (BC54) showed significant similarity.
+VSEARCH placed the majority of reads from both taxa in the same OTU, while NanoCLUST placed a similar proportion of reads from each taxon into two major OTUs.
+
+:::{#fig-splittingCryptococcus}
+![](analysis/images/06-cluster-splitting-nanoclust-cryptococcus.png)
+
+![](analysis/images/06-cluster-splitting-vsearch-cryptococcus.png)
+
+Clustering of genus *Cryptococcus* using the NanoCLUST (UMAP + HDBSCAN) vs VSEARCH methods.
+Bars indicate the number of reads from a taxon placed into an OTU.
+The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the x-axis labels. Green bars indicate that the assignment given to a cluster matches the expected species-level classification.
+Red bars indicate that the classification is incorrect for family-level and above.
+Grey bars indicate that the cluster could not be given any taxonomic classification at all.
+:::
+
+In the genus *Cryptococcus*, with NanoCLUST, reads from *C. gattii VG I* (BC59) were placed into one major OTU with the correct species-level assignment while VSEARCH split reads into three major OTUs (@fig-splittingCryptococcus).
+With VSEARCH, we observed a significant proportion of reads from all four *Cryptococcus* taxa were placed into the same OTU (OTU 9), while with NanoCLUST this only occurred for three of the taxa (*C. gattii* VG III (BC60), *C. neoformans* VNI (BC61) and *C. neoformans* VN IV (BC62)).
+A proportion of reads from *Cryptococcus gatii* VG III (BC60) were misclassified as *Candida ortholopsis*,
+while a proportion of reads from *Cryptococcus neoformans* VNI (BC61) were misclassified as *Kluveromyces marxianus*.
+
+<!--
+    - candida ortholopsis (BC54) found in Crypto. gattii VG III
+    - kluveromyces marxianus (BC67) in C. neofarmans VNI
+    - consistent in vsearch and nanoclust
+-->
+
+In *Candida* and *Cryptococcus*, with these clustering settings, we observed many more low-abundance OTUs with incorrect taxonomic assignments at the family-level and above for NanoCLUST compared to VSEARCH.
 
 :::{#fig-splittingBotrytis}
 ![](analysis/images/06-cluster-splitting-nanoclust-botrytis.png)
 
 ![](analysis/images/06-cluster-splitting-vsearch-botrytis.png)
 
-Clustering of genus *Botrytis*
+Clustering of family *Sclerotiniaceae* using the NanoCLUST (UMAP + HDBSCAN) vs VSEARCH methods.
+Bars indicate the number of reads from a taxon placed into an OTU.
+The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each cluster is shown in the x-axis labels. Green bars indicate that the assignment given to a cluster matches the expected species-level classification.
+Red bars indicate that the classification is incorrect for family-level and above.
+Grey bars indicate that the cluster could not be given any taxonomic classification at all.
 :::
 
-:::{#fig-splittingBotrytis}
-![](analysis/images/06-cluster-splitting-nanoclust-cryptococcus.png)
-
-![](analysis/images/06-cluster-splitting-vsearch-cryptococcus.png)
-
-Clustering of genus *Cryptococcus*
-:::
-
-
-
-#### OTU clumping
+For the *Sclerotiniaceae* family, we found that both *Botrytis* taxa (BC31 and BC32) were placed in the same OTU for both NanoCLUST and VSEARCH.
+With VSEARCH, 516 reads from *Sclerotinia sclerotiorum* were also placed in the same OTU with the *Botrytis* taxa.
+With NanoCLUST, the majority of reads were placed into one correctly identified OTU.
 
 
 #### Comparison of taxonomic assignment using the most abundant sequence or the consensus sequence
@@ -435,20 +449,7 @@ Each step was executed in order from left to right. Note the y-axis has been plo
 
 ### Clustering and taxonomic assignment
 
-- Top 30 OTUs (VSEARCH full dataset)
-
-```{r}
-#| message: false
-#| warning: false
-flextable(
-  read.csv('./analysis/tables/soil-top30-otus-vsearch.csv') %>%
-    rename_all(\(x) gsub('_', ' ', x)) %>%
-    mutate(
-      score = scales::percent(score, 0.01),
-      cutoff = scales::percent(as.numeric(cutoff), 0.01)
-    )
-)
-```
+The top 30 largest OTUS can be seen in @apptbl-top-30-soil-vsearch and @apptbl-top-30-soil-nanoclust.
 
 :::{#fig-soil-classified}
 ![](analysis/images/06-soil-unidentified.png)

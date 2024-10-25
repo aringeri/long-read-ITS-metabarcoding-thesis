@@ -49,8 +49,7 @@ Advances in high-throughput sequencing (HTS) has provided the capacity
 to identify many species from bulk environmental samples such as
 soil [@Furneaux2021a]. This procedure (metabarcoding) works by
 extracting the total genomic DNA of all organisms within a sample,
-followed by the amplification of the genetic markers (barcodes) of the
-organisms of interest using polymerase chain reaction
+followed by the amplification of the barcode region of interest using polymerase chain reaction
 (PCR) [@Lindahl2013]. The amplified DNA is processed through a high
 throughput sequencing workflow (such as Illumina, PacBio or Oxford
 Nanopore). Using computational techniques, sequence data can be analysed
@@ -68,7 +67,7 @@ in isolation, where long-read (Third-generation HTS) technologies are
 capable of targeting the entire ITS region and beyond [@Nilsson2019a]
 :::
 
-The genetic marker most commonly used for metabarcoding of fungi is the
+The barcode region most commonly used for metabarcoding of fungi is the
 internal transcribed spacer (ITS) region which is found between the 18S
 and 28S subunits of the nuclear ribosome, also known as the small
 subunit (SSU) and large subunit (LSU) respectively [@Tedersoo2022]. The
@@ -80,7 +79,7 @@ can be designed to cover a high range of Fungi [@Schoch2012]. See
 metabarcoding. Because they are non-coding, the ITS regions are highly
 variable and provide high inter- and intraspecies
 resolution [@Schoch2012]. Advantages and drawbacks of using the ITS
-region compared with other genetic markers will be discussed in detail
+region compared with other barcode regions will be discussed in detail
 in @sec-fungal-marker-regions.
 
 High throughput sequencing (HTS) technologies have been adopted for

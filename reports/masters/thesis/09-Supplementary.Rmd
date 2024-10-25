@@ -74,7 +74,7 @@ flextable(data.frame(
   ))
   ) %>%
   set_table_properties(layout='fixed') %>%
-  width(j=1, width=3, unit = "cm") %>%
+  width(j=1, width=5, unit = "cm") %>%
   width(j=2, width=3, unit = "cm") %>%
   width(j=3, width=3, unit = "cm")
 ```
@@ -97,7 +97,7 @@ sample_stats %>%
   align_nottext_col( align = "right") %>%
   align(j=4, align="right", part="all") %>%
   width(j=1, width=2, unit = "cm") %>%
-  width(j=2, width=8, unit = "cm") %>%
+  width(j=2, width=8.5, unit = "cm") %>%
   width(j=3, width=2.5, unit = "cm") %>%
   width(j=4, width=3, unit = "cm") %>%
   footnote(
@@ -187,7 +187,7 @@ soil_sample_stats %>%
   align_text_col(align = "left") %>%
   align_nottext_col( align = "right") %>%
   align(j=3, align="right", part="all") %>%
-  width(j=1, width=2, unit = "cm") %>%
+  width(j=1, width=2.5, unit = "cm") %>%
   width(j=2, width=2.5, unit = "cm") %>%
   width(j=3, width=3, unit = "cm")
 ```
@@ -219,4 +219,40 @@ flextable(data.frame(
 ```
 
 Software used basecalling and demultiplexing the soil sample dataset
+:::
+
+:::{#apptbl-top-30-soil-vsearch}
+```{r}
+#| message: false
+#| warning: false
+flextable(
+  read.csv('./analysis/tables/soil-top30-otus-vsearch.csv') %>%
+    rename_all(\(x) gsub('_', ' ', x)) %>%
+    mutate(
+      score = scales::percent(score, 0.01),
+      cutoff = scales::percent(as.numeric(cutoff), 0.01)
+    )
+)
+```
+
+Top 30 largest OTUs in the soil case study dataset after clustering the full set of reads (~3 million) with VSEARCH.
+Each column shows: the classification given by dnabarcoder, the number of reads in the OTU, the BLAST identity score for the classification, the percent identity cutoff used by dnabarcoder, the UNITE+INSD reference identifier of the closest match, and the name of the closest match from the UNITE+INSD database.
+:::
+
+:::{#apptbl-top-30-soil-nanoclust}
+```{r}
+#| message: false
+#| warning: false
+flextable(
+  read.csv('./analysis/tables/soil-top30-otus-nanoclust.csv') %>%
+    rename_all(\(x) gsub('_', ' ', x)) %>%
+    mutate(
+      score = scales::percent(score, 0.01),
+      cutoff = scales::percent(as.numeric(cutoff), 0.01)
+    )
+)
+```
+
+Top 30 largest OTUs in the soil case study dataset after clustering the full set of reads (~3 million) with NanoCLUST.
+Each column shows: the classification given by dnabarcoder, the number of reads in the OTU, the BLAST identity score for the classification, the percent identity cutoff used by dnabarcoder, the UNITE+INSD reference identifier of the closest match, and the name of the closest match from the UNITE+INSD database.
 :::

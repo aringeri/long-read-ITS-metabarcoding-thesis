@@ -11,7 +11,7 @@ species provides the ability to discriminate between taxa [@Hebert2003].
 For an ideal molecular barcode, the interspecific variation is much
 higher than the intraspecific variation [@Schoch2012]. The difference
 between these variations is called the barcode gap [@Puillandre2012]. A
-barcode is optimal when the sequence is unique to one species are there
+barcode is optimal when the sequence is unique to one species and there
 is little variability of the barcode within that same species [@Schoch2012].
 
 <!-- TODO review wording -->
@@ -85,7 +85,7 @@ The high throughput sequencing (HTS) technologies 454 pyrosequencing and
 IonTorrent emerged in the 2000s that allowed for automated sequencing
 of mixed samples, enabling the identification of tens to hundreds of
 taxa from multiple samples [@Jumpponen2009]. The rapid adoption of 454
-pyrosequencing lead to an influx of sequencing data and a boom of the
+pyrosequencing led to an influx of sequencing data and a boom of the
 fungal ecology field [@Hibbett2009]. The 454 pyrosequencing platform was
 primarily adopted for fungal ecology studies between 2008 and 2014 and
 was capable of producing 1.2 million reads with a length of up to 1000
@@ -121,7 +121,7 @@ opposed to clusters of DNA molecules as in Illumina sequencing
 recently, the low read quality of these techniques has been a limitation
 for metabarcoding studies [@Nilsson2019a].
 
-:::{#fig-NGS-comparison height=300}
+:::{#fig-NGS-comparison width=8cm}
 ![](resources/images/Illumina-NGS.png)
 
 In the Illumina sequencing process, DNA fragments hybridise and are fixed to the bottom of a nanowell.
@@ -181,7 +181,7 @@ ONT's first product was the smartphone sized MinION, which was released
 in 2014 [@ONTHistory2023]. Improved versions of their nanopore and motor
 proteins have been iteratively released starting with version R6 (in 2014)
 and their latest being R10.4.1 [@Wang2021; @OxfordNanoporeTechnologies2024].
-It is worth noting that none of specifications for the proteins used in
+It is worth noting that none of the specifications for the proteins used in
 these systems have been fully disclosed by ONT [@Wang2021].
 
 Basecalling is the step where raw electrical signals from the device are
@@ -189,7 +189,7 @@ analysed to determine the sequence of nucleotides. The electrical signal
 is influenced by the nucleotides that occupy the pore at a given
 time [@Wick2019].
 Historically, basecallers used hidden markov models
-(HMMs) to predict the DNA sequence, but modern basecallers have adopting neural networks
+(HMMs) to predict the DNA sequence, but modern basecallers have adopted neural networks
 and improved accuracy significantly [@Wick2019; @Rang2018].
 ONT’s latest basecaller is Dorado [@OxfordNanoporeTechnologies] which is: open source, optimised for graphics processing units (GPUs)
 and replaces ONT’s previous (now unsupported) basecaller Guppy.
@@ -291,7 +291,7 @@ biological sequence variants, such as infraspecific variation (i.e.
 between populations within a species), while disregarding errors
 introduced through sequencing or library preparation, therefore
 increasing the taxonomic resolution of the results [@Joos2020; @Glassman2018].
-Compared to OTU clustering where identity threshold are defined *a priori*, ASVs have the advantage to be more precise,
+Compared to OTU clustering where identity thresholds are defined *a priori*, ASVs have the advantage to be more precise,
 reusable and reproducible [@Callahan2017].
 ASVs are largely used in metabarcoding studies targeting conserved regions such as the bacterial
 16S.
@@ -302,7 +302,7 @@ individuals [@Tedersoo2022].
 Therefore, ASV approaches tend to overestimate richness of common fungal
 species (due to haplotype variation) and underestimate richness of rare
 species (by removing rare variants) [@Tedersoo2022; @Joos2020].
-Nevertheless, when analyzing diversity patterns based on dominant
+Nevertheless, when analysing diversity patterns based on dominant
 members of fungal communities, results are usually similar between ASV
 and OTU based approaches [@Glassman2018].
 
@@ -316,7 +316,7 @@ HDBSCAN requires setting a minimum cluster size parameter which controls how man
  and has the effect of filtering out small clusters or merging nearby clusters together [@lelandmcinnesParameterSelectionHDBSCAN2016].
 NanoCLUST has been developed for the analysis of 16S rRNA amplicons but other researchers [@langsiriTargetedSequencingAnalysis2023] have had success applying the same approach to fungal ITS sequences.
 
-:::{#fig-nanoclust-steps}
+:::{#fig-nanoclust-steps width=15cm}
 ![](resources/images/NanoCLUST-langsiri-cropped.png)
 
 Steps for clustering reads with NanoCLUST.
@@ -329,7 +329,7 @@ Adapted from: [@langsiriTargetedSequencingAnalysis2023]
 
 ### Taxonomic assignment {#sec-taxonomic-assignment}
 
-In fungal metabarcdoing, taxonomic assignment is the process of classifying sequences to species or
+In fungal metabarcoding, taxonomic assignment is the process of classifying sequences to species or
 higher taxonomic ranks [@Taberlet2018]. If the sequences have been
 clustered into OTUs, a representative sequence from each OTU is used for
 the classification [@Tedersoo2022]. Sequences can also be given a taxonomic assignment directly without

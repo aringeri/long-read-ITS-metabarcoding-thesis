@@ -8,6 +8,7 @@ library(scales)
 library(tidytext)
 library(microViz)
 library(stringr)
+library(decontam)
 
 source('helpers/dnabarcoder.R')
 source('helpers/vsearch.R')
@@ -29,9 +30,36 @@ soil_full_classifications <- read.csv(classFile, sep='\t', row.names = 1) %>%
   mutate_at(vars(read, barcode, size), \(str) gsub('.*=', '', str)) %>%
   tibble::column_to_rownames('read')
 
+sample_ids <- data.frame(
+  row.names = colnames(otus),
+  name = gsub('sample_', '', colnames(otus)),
+  is_control = grepl('Con', colnames(otus))
+) %>%
+  mutate(type = substr(name, 1, 2))
 tax_table <- read_dna_barcoder_classification_vsearch(classFile[1])
-soil_full_phylo <- phyloseq(otu_table(otus), tax_table)
+soil_full_phylo <- phyloseq(otu_table(otus), tax_table, sample_data(sample_ids))
 
+contams <- isContaminant(soil_full_phylo, method='prevalence', neg='is_control')#, threshold=0.5)
+
+soil_full_phylo_noncontam <- prune_taxa(!contams$contaminant, soil_full_phylo)
+
+soil_full_phylo_noncontam %>%
+  # filter_otu_by_sample(0.0015) %>%
+  plot_richness()
+  estimate_richness(measures = 'Observed')
+
+soil_full_phylo_noncontam %>%
+  filter_otu_by_sample(0.0015) %>%
+  plot_heatmap()
+
+?ordinate(soil_full_phylo_noncontam)
+
+p <- soil_full_phylo_noncontam %>%
+  filter_otu_by_sample(0.0015) %>%
+  prune_samples(!sample_ids$is_control, .)
+
+o <- ordinate(p, method='PCoA', distance='bray')
+plot_ordination(p, o, color='type')
 
 # make unique taxa if unidentified at any taxonomic level
 df <- data.frame()
@@ -81,7 +109,6 @@ top_30_otus <- taxa_sums(soil_full_phylo) %>% data.frame(count = .) %>%
   arrange(desc(count)) %>%
   slice_head(n=30)
 
-?filter_taxa()
 pruned_top_30 <- prune_taxa(top_30_otus$OTU, soil_full_phylo) %>%
   tax_fix(unknowns = 'unidentified', anon_unique = F)
 
@@ -130,11 +157,7 @@ top_30_full_soil_with_closest_match <- x %>%
 
 write.csv(top_30_full_soil_with_closest_match, file='./tables/soil-top30-otus-vsearch.csv', row.names = F)
 
-load_nc <- function(experiment, min_cluster_size) {
-  otu <- read.csv(glue('{experiment}/hdbscan_clustering/FULL_ITS/4000/1/{min_cluster_size}/otu_table/otu_table.tsv'), sep = '\t', row.names = 1)
-  otu <- otu[order(as.numeric(rownames(otu))), ]
-  otu <- otu[rownames(otu) != -1, ]
-
+load_tax_nc <- function(experiment, min_cluster_size) {
   classFile <- list.files(
     glue('{experiment}/dnabarcoder/nanoclust_abundant/FULL_ITS/4000/1/{min_cluster_size}/classify/'),
     pattern='*.unite2024ITS_BLAST.classification',
@@ -147,12 +170,39 @@ load_nc <- function(experiment, min_cluster_size) {
     filter(cluster != -1) %>%
     arrange(as.numeric(cluster)) %>%
     tibble::column_to_rownames("cluster")
+  tax
+}
+
+load_nc <- function(experiment, min_cluster_size) {
+  otu <- read.csv(glue('{experiment}/hdbscan_clustering/FULL_ITS/4000/1/{min_cluster_size}/otu_table/otu_table.tsv'), sep = '\t', row.names = 1)
+  otu <- otu[order(as.numeric(rownames(otu))), ]
+  otu <- otu[rownames(otu) != -1, ]
+
+  tax <- load_tax_nc(experiment, min_cluster_size)
   tax <- tax_table(as.matrix(tax[, !(names(tax) %in% c('read', 'barcode', 'size', 'ReferenceID', 'rank', 'score', 'cutoff', 'confidence'))]))
 
   phyloseq(otu_table(otu, taxa_are_rows = TRUE), tax)
 }
 
 subset_nc <- load_nc(soil_subset_dataset, 2)
+sample_data(subset_nc) <- sample_ids
+tax_nc <- load_tax_nc(soil_subset_dataset, 2)
+
+nc_decontam <- isContaminant(subset_nc, method="prevalence", neg='is_control')
+nc_p_decontam <- prune_taxa(!nc_decontam$contaminant, subset_nc)
+
+plot_richness(nc_p_decontam, measures='Observed')
+
+nc_o <- nc_p_decontam %>% prune_samples(!sample_ids$is_control, .) #%>%
+  # filter_otu_by_sample(0.0015)
+
+o_nc <- ordinate(nc_o, method='PCoA')
+plot_scree(o_nc)
+plot_ordination(nc_o, o_nc, color = 'type', label='name')
+
+plot_net(
+  nc_p_decontam %>% prune_samples(!sample_ids$is_control, .),
+  point_label = "name", color = 'type', laymeth="graphopt")
 
 top_30_otus_nc <- taxa_sums(subset_nc) %>% data.frame(count = .) %>%
   tibble::rownames_to_column("OTU") %>%
@@ -162,23 +212,32 @@ top_30_otus_nc <- taxa_sums(subset_nc) %>% data.frame(count = .) %>%
 pruned_top_30_nc <- prune_taxa(top_30_otus_nc$OTU, subset_nc) %>%
   tax_fix(unknowns = 'unidentified', anon_unique = F)
 
-# x_nc <- tax_table(pruned_top_30_nc)[, 'species'] %>%
-#   merge(top_30_otus_nc, by.x = 0, by.y = 'OTU') %>%
-#   rename(OTU = Row.names) %>%
-#   arrange(desc(count)) %>%
-#   left_join(
-#     soil_full_classifications %>% tibble::rownames_to_column("OTU") %>%
-#       select(OTU, score, cutoff, ReferenceID),
-#     join_by(OTU)
-#   )
-#
-# common <- x %>%
-#   left_join(unite2024, join_by(ReferenceID == id)) %>%
-#   select(ReferenceID:species.y) %>%
-#   filter(ReferenceID != '') %>%
-#   distinct(ReferenceID, .keep_all = TRUE) %>%
-#   tibble::column_to_rownames("ReferenceID") %>%
-#   rename(species=species.y)
+
+
+top_30_nc_w_cutoff <- top_30_otus_nc %>%
+  merge(
+    tax_table(pruned_top_30_nc)[, 'species'] %>% as.data.frame() %>% rename(classification = species),
+    by.x = 'OTU', by.y = 0) %>%
+  merge(tax_nc %>% select(ReferenceID, score, cutoff),
+    by.x = 'OTU', by.y = 0)
+
+
+closest_match_nc <- left_join(top_30_nc_w_cutoff, unite2024, join_by(ReferenceID == id)) %>%
+  select(ReferenceID:species) %>%
+  filter(ReferenceID != '') %>%
+  distinct(ReferenceID, .keep_all = TRUE) %>%
+  tibble::column_to_rownames("ReferenceID") %>%
+  as.matrix() %>% tax_table() %>% tax_fix(unknowns = 'unidentified') %>%
+  as.data.frame() %>% tibble::rownames_to_column("ReferenceID") %>%
+  select(ReferenceID, species)
+
+top_30_nc_w_cutoff %>%
+  left_join(closest_match_nc, join_by("ReferenceID")) %>%
+  arrange(desc(count)) %>%
+  rename(closest_match = species) %>%
+  select(classification, count, score, cutoff, ReferenceID, closest_match) %>%
+  write.csv(file='./tables/soil-top30-otus-nanoclust.csv', row.names = F)
+
 
 
 # plot proportion identified
@@ -189,9 +248,10 @@ prop_id_vsearch <- soil_full_phylo %>%
   # prune_samples('sample_AL4', .) %>%
   tax_glom(taxrank="phylum") %>%
   plot_bar(fill="phylum != \"unidentified\"") +
-  scale_y_continuous(name='Relative abundance') +
+  # scale_y_continuous(name='Relative abundance') +
   labs(title="VSEARCH (full dataset)") +
   theme(aspect.ratio = 1, axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+prop_id_vsearch
 
 prop_id_nc <- subset_nc %>%
   # transform_sample_counts(\(x) x/sum(x)) %>%
@@ -199,7 +259,7 @@ prop_id_nc <- subset_nc %>%
   tax_glom(taxrank="phylum") %>%
   plot_bar(fill="phylum != \"unidentified\"") +
   scale_fill_discrete(name='phylum', labels = c('unidentified', 'identified')) +
-  scale_y_continuous(name='Relative abundance') +
+  # scale_y_continuous(name='Relative abundance') +
   labs(title="NanoCLUST (100K reads)") +
   theme(aspect.ratio = 1, axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 

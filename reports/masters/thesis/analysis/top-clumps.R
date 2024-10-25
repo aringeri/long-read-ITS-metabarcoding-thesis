@@ -140,12 +140,13 @@ vsearch_merged <- merge(vsearch_classifications, vsearch_otus, by=0) %>%
     join_by(barcode)
   )
 
-vsearch_merged %>%
+major_clumps_vsearch <- vsearch_merged %>%
   mutate(size = as.numeric(size)) %>%
   group_by(otu) %>%
   filter(all(sum(count > 300) > 1)) %>%
   filter(count > 15) %>%
   select(otu, genus, species, count, barcode, actual_genus, actual_species) %>%
-  arrange(otu, actual_genus, actual_species) %>%
-  View()
+  arrange(otu, actual_genus, actual_species)
+
+View(major_clumps_vsearch)
 
