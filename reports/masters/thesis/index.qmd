@@ -13,28 +13,26 @@ set_flextable_defaults(
 )
 ```
 
-<!-- TODO: update reference -->
 Fungi form the third-largest kingdom of life and is estimated to
 contain between two and three million species [@niskanenPushingFrontiersBiodiversity2023]. To date, approximately
 161,000 species have been formally described [@indexfungorumpartnershipSpeciesFungorum2024]. Fungi have diverse living
-forms and similarly have diverse strategies of energy
-production [@peayDimensionsBiodiversityEarth2016]. Fungi are widely
-distributed and take on different ecological roles in terrestrial and
-aquatic habitats [@Phukhamsakda2022]. Saprotrophic fungi break down
+forms, are widely
+distributed and take on numerous ecological roles in terrestrial and
+aquatic habitats [@peayDimensionsBiodiversityEarth2016; @Phukhamsakda2022].
+Saprotrophic fungi break down
 organic matter and are involved in nutrient cycling, while others form
 mutually beneficial interactions with other species such as the
 formation of mycorrhiza between plants and fungi [@Frey2019]. Other
-fungi form pathogenic interactions which can be extremely damaging to
+fungi form pathogenic interactions causing considerable damage to
 human health and agriculture [@C.2020].
 
 When performing ecological studies, it is important to reliably detect
 and identify fungi in a given environment. Metabarcoding is a technique
 for identifying the organisms that are present in an environment by
-taking a sample and analysing its genomic content after amplification of
+sampling and analysing genomic content after amplification of
 DNA barcodes [@Taberlet2018]. Applications of metabarcoding include: the
-profiling of communities, analysis of diversity and to determine
-ecological patterns and interactions indirectly through
-correlations [@Kisand2012; @Corrales2021; @Taberlet2018].
+profiling of communities, analysis of diversity and inferring
+ecological patterns [@Kisand2012; @Corrales2021; @Taberlet2018].
 
 Fungi can be identified using morphological features of sporing (or
 asexual) structures or by isolating them in culture from the environment
@@ -42,29 +40,25 @@ of interest [@Allen1976]. The presence of reproductive structures is
 often brief and a vast number of fungal lineages (such as
 ectomycorrhizal fungi) are difficult to isolate in culture. DNA
 barcoding provides a solution to this problem by detecting the DNA of
-targeted organisms in an environment without direct observation
-[@Hajibabaei2011].
+targeted organisms without direct observation [@Hajibabaei2011].
 
 Advances in high-throughput sequencing (HTS) has provided the capacity
 to identify many species from bulk environmental samples such as
-soil [@Furneaux2021a]. This procedure (metabarcoding) works by
-extracting the total genomic DNA of all organisms within a sample,
-followed by the amplification of the barcode region of interest using polymerase chain reaction
-(PCR) [@Lindahl2013]. The amplified DNA is processed through a high
-throughput sequencing workflow (such as Illumina, PacBio or Oxford
-Nanopore). Using computational techniques, sequence data can be analysed
-and compared with reference databases to identify taxa. The accuracy of
-this taxonomic assignment step depends heavily on the quality of the
+soil [@Tedersoo2022]. This procedure (metabarcoding) works by
+extracting the genomic DNA of all organisms within a sample,
+followed by the amplification of a barcode region of interest using the polymerase chain reaction
+(PCR) [@Lindahl2013]. The amplified DNA is sequenced by a HTS platform such as Illumina, PacBio or Oxford
+Nanopore.
+Using computational techniques, sequences can be analysed and compared with reference databases to identify taxa.
+The accuracy of these taxonomic classifications depends heavily on the quality of the
 reference data used [@Tedersoo2022].
 
 :::{#fig-metabarcoding-workflow}
 ![](resources/images/fungal-metabarcoding.png)
 
 The main steps for a fungal metabarcoding workflow along
-with depiction of the nuclear ribosomal RNA operon. Short-read
-(Second-generation HTS) technologies target the ITS1 or ITS2 subregion
-in isolation, where long-read (Third-generation HTS) technologies are
-capable of targeting the entire ITS region and beyond [@Nilsson2019a]
+with a depiction of the nuclear ribosomal RNA operon. Short-read technologies target the ITS1 or ITS2 subregion
+in isolation, while long-read technologies are capable of targeting the entire ITS region and beyond [@Nilsson2019a]
 :::
 
 The barcode region most commonly used for metabarcoding of fungi is the
@@ -78,11 +72,10 @@ can be designed to cover a high range of Fungi [@Schoch2012]. See
 @fig-metabarcoding-workflow for a general overview of fungal
 metabarcoding. Because they are non-coding, the ITS regions are highly
 variable and provide high inter- and intraspecies
-resolution [@Schoch2012]. Advantages and drawbacks of using the ITS
-region compared with other barcode regions will be discussed in detail
-in @sec-fungal-marker-regions.
+resolution [@Schoch2012]. Further discussion on the advantages and drawbacks of using the ITS
+region can be found in @sec-fungal-marker-regions.
 
-High throughput sequencing (HTS) technologies have been adopted for
+HTS technologies have been adopted for
 metabarcoding due to their large sequencing capacity and their ability
 to characterize DNA sequences from mixed samples in comparison to
 traditional methods such as Sanger sequencing [@Nilsson2019a].
@@ -102,17 +95,18 @@ PacBio provide much longer read lengths compared to Illumina HTS
 methods. ONT sequencing is comparatively cheap and can be performed in a
 basic molecular lab and even in the field [@Mafune2020; @Baloglu2021].
 Until recently, the high error rate made nanopore sequencing unsuitable
-for metabarcoding studies [@Zhang2023]. The promise of third generation
-sequencing for fungal metabarcoding is that long read lengths are able
+for metabarcoding studies [@Zhang2023]. The prospect of long-read
+sequencing for fungal metabarcoding is that the longer reads will be able
 to cover multiple marker genes, including the full ribosomal operon, and
 can provide more reliable phylogenetic placement and discovery of new
-fungal lineages [@Tedersoo2018]. Sequencing technologies will be
-discussed further in
-@sec-sequencing-methods.
+fungal lineages [@Tedersoo2018].
+Sequencing technologies will be discussed further in @sec-sequencing-methods.
 
 In the existing research, studies have explored the use of ONT
 sequencing for metabarcoding of soil microbial community
-structure [@Wiryawan2022] and rapid pathogen
-detection [@Hong2020; @Ohta2023]. Other published works tested the use
-of ONT for metabarcoding using mock fungal
+structure [@Wiryawan2022], rapid pathogen
+detection [@Hong2020; @Ohta2023], and testing the use
+of ONT for metabarcoding of mock fungal
 communities [@Baloglu2021; @Mafune2020; @langsiriTargetedSequencingAnalysis2023].
+In this study, we integrated common approaches to fungal metabarcoding into a bioinformatic pipeline with a focus on analysing ONT data.
+We validated our metabarcoding approaches with mock fungal communities and demonstrated how the pipeline performed on real environmental soil samples.

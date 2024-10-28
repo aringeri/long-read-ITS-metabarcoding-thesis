@@ -2,6 +2,9 @@
 title: "Significance"
 ---
 
-- democratization
-- a lot of interest in ONT due to cost, accessibility of use
-- not all users may have background in biology or bioinformatics
+There is currently a need for easily accessible bioinformatic tools for mycologists and microbial ecologists,
+as well as for end-users working in the conservation of fungi, plants and animals who are undertaking environmental metabarcoding.
+Due to its relatively low cost and portability, ONT has made sequencing much more accessible by enabling groups to purchase and run their own sequencing devices that would otherwise not be able to afford it.
+This democratisation of technology has provided much wider access to sequencing techniques, gaining the interest of those who may not have a background in biology or informatics.
+This research project aims at filling this gap by providing a tool to serve as a starting point for those working in the fungal metabarcoding space.
+We aim to draw from multiple disciplines of software development and biology, and characterise how ONT performs for modelled and real world data.

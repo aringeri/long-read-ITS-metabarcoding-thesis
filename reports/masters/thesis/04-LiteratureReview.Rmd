@@ -136,8 +136,7 @@ Source: [@Aigrain2021].
 
 The PacBio HiFi sequencing platform can provide read lengths of 10--25
 KB and improves error rates through circular sequencing which allows the
-same molecule to be sequenced repetitively, therefore reducing the
-chance of errors [@PacBio2023; @Allen1976].
+same molecule to be sequenced repetitively [@PacBio2023; @Allen1976].
 PacBio HiFi reads can reach a base
 call accuracy comparable to Illumina of 99.9% [@Aigrain2021], but the
 relatively high cost is a major drawback for its
@@ -196,6 +195,8 @@ and replaces ONT’s previous (now unsupported) basecaller Guppy.
 
 ## Bioinformatic analysis {#sec-bioinformatic-analysis}
 
+Here we will outline the key computational steps common to many metabarcoding analyses (@fig-metabarcoding-workflow).
+
 ### Quality filtering {#sec-quality-filtering}
 
 Quality filtering is an initial step in a metabarcoding pipeline that
@@ -252,10 +253,9 @@ In the context of metabarcoding, clustering is the process of aggregating
 DNA sequences into groups based on a similarity metric.
 
 A commonly used similarity metric used in metabarcoding is sequence identity
-and is defined as the proportion of characters that match exactly between two sequences.
+and is defined as the proportion of nucleotides that match exactly between two sequences.
 Sequences are considered to be in the same cluster when the pairwise sequence identity is above a predefined threshold.
-When the sequence identity threshold to cluster a set of sequences is below 100%,
-the resulting clusters are called Operational Taxonomic Units (OTUs) [@Cline2017; @Blaxter2005].
+The resulting clusters are called Operational Taxonomic Units (OTUs) [@Cline2017; @Blaxter2005].
 For fungal metabarcoding, sequence identity thresholds of OTUs usually range from 95% to 100%, most often
 delineating species at 97% [@Tedersoo2022; @Joos2020].
 Three types of clustering frequently seen in metabarcoding are: closed
@@ -283,7 +283,7 @@ Sequences are first clustered based on similarity to those in a reference databa
 by *de novo* clustering of the unassigned sequences [@Cline2017].
 
 The amplicon sequence variant (ASV, also called the exact sequence variant) approach
-differs significantly from traditional OTU based clustering by aiming to
+differs significantly from traditional OTU clustering by aiming to
 correct errors in reads then group the reads by 100% identity.
 ASV methods discriminate biological sequences from errors on the expectation that errors are rare [@Callahan2017].
 ASV methods can detect small
@@ -367,22 +367,19 @@ The BLAST algorithm can massively reduce search space by scanning a database of 
 then these matching sites are used as starting points to initiate more in-depth alignment.
 Fixed BLAST percent identity cutoffs have often been used to classify sequences at a given taxonomic rank
 (i.e. 98%, 90% and 85% sequence identity to assign species, genus and family as in [@tedersooFungalBiogeographyGlobal2014]),
-but this approach is limiting because fixed thresholds that accurately delineate taxa in one part of the fungal tree
+but this approach is restrictive because fixed thresholds that accurately delineate taxa in one part of the fungal tree
 of life may not be accurate for other clades in the tree [@vuDNABarcodingAnalysis2016; @vuLargescaleGenerationAnalysis2019; @vuDnabarcoderOpensourceSoftware2022].
 Dnabarcoder is a tool that has been developed to address this issue by predicting similarity cutoffs for different fungal clades in a reference sequence dataset and can also classify sequences (via BLAST) using these predicted cutoff [@vuDnabarcoderOpensourceSoftware2022].
 
-- minimap2
-- kraken2
+Minimap2 [@liMinimap2PairwiseAlignment2018a] and Kraken2 [@woodImprovedMetagenomicAnalysis2019] can be used as alternatives to BLAST for taxonomic classification.
+They both use minimisers [@robertsReducingStorageRequirements2004] to improve performance and handle long, potentially noisy reads.
 
-Alternative methods that use fixed length subsequence (k-mer) searches
-to assign taxonomy include Naive Bayesian Classifier [@Wang2007],
-SINTAX [@Edgar2016a] and IDTAXA [@Murali2018]. These methods use
-information on the variability within taxa from a reference database to
-assign unknown sequences, therefore they are highly dependent on having
-high taxonomic coverage in the reference
-database [@Furneaux2021a; @Ceballos-Escalera2022].
-
-- kraken2
+Alternatively, there is an expanding field of machine learning (ML) techniques to classify sequences.
+Generally, ML techniques optimise a computer model to correctly identify sequences from a training set (where taxonomic identity of sequences are known).
+The trained model is then used to classify new, unseen sequences.
+ML techniques will not be discussed in detail here but some notable tools for taxonomic classification are: the Naive Bayesian Classifier [@Wang2007],
+SINTAX [@Edgar2016a] and IDTAXA [@Murali2018].
+Recent neural network based ML methods such as MycoAI [@romeijnMycoAIFastAccurate2024] show promise in performing rapidly with comparable accuracy to other classification methods.
 
 Phylogenetic placement algorithms such as pplacer [@FA2010] and
 EPA-ng [@Barbera2019] place amplicon reads onto a pre-established
@@ -391,11 +388,7 @@ high variability in length and content that produces alignments with low
 accuracy, but work well with more conserved regions such as 16S, SSU and
 LSU [@Furneaux2021a; @Tedersoo2022].
 
-- ML assignment approaches
-  - Ribosomal Database Project naïve Bayes classifier
-  - emu
-  - HyenaDNA (Nguyen et al, 2024)
-  - mycoai
+<!--
 
 Taxonomic assignment of fungi from studies using long-read sequences
 (PacBio or ONT) follow similar methods to the ones described above. The
@@ -412,6 +405,8 @@ In [@Tedersoo2018; @loitRelativePerformanceMinION2019], ITS subregions
 were extracted from reads using ITSx and assigned using top BLAST hits
 against the UNITE reference database.
 
+
+
 Alternative approaches extract multiple barcodes from the same PacBio
 read to improve taxonomic
 assignment [@Meidl2021; @Furneaux2021a; @eshghisahraeiEffectsOperationalTaxonomic2022].
@@ -424,6 +419,7 @@ In [@Furneaux2021a], the use of a phylogenetic tree increased the
 percentage of reads assigned to genus from 46% to 73% and family from
 62% to 81%. These approaches are expected to be applicable to ONT data
 and enhance the recovery of rare taxa [@Furneaux2021a].
+-->
 
 High throughput sequencing techniques applied to metabarcoding have
 detected a high diversity of fungal taxa that are undescribed and entire

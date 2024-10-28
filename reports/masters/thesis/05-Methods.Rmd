@@ -239,10 +239,10 @@ See the footnotes in @apptbl-samplesheet to see which taxa were excluded from mo
 
 ## Real world - Soil case study
 
-To test the pipeline on a real world environmental sample, a set of soil samples were made available to me.
+To test the pipeline on a real world environmental sample, a set of soil samples were made available.
 24 samples were collected from soil beneath four species of trees in heathy woodland from the Cranbourne Conservation area in Victoria, Australia (@apptbl-soil-samplesheet).
-Six soil samples were taken for each tree species, which were: *Allocasuarina littoralis*, *Allocasuarina paradoxa*, *Eucalyptus viminalis* and *Eucalyptus cephalocarpa*.
-Two control samples were sequenced: one control contained (ExCon) only the extraction kit and the other was a negative PCR control (PCRNegCon).
+Six soil samples were taken from soil beneath each of the tree species: *Allocasuarina littoralis*, *Allocasuarina paradoxa*, *Eucalyptus viminalis* and *Eucalyptus cephalocarpa*.
+Two control samples were sequenced: one control (ExCon) contained only the contents of the DNA extraction kit and the other was a negative PCR control (PCRNegCon).
 
 ### DNA extraction, amplification and sequencing
 
@@ -268,6 +268,14 @@ This left 24 samples (22 soil samples + 2 controls) for downstream processing.
 The set of demultiplexed reads was passed to the metabarcoding pipeline with default settings.
 Due to a large library size after quality control (~3 million reads), computational constraints did not allow the NanoCLUST approach to cluster the full dataset.
 Instead, VSEARCH was used to cluster the full dataset, while NanoCLUST was used to cluster a subset of ~94K reads.
-4000 reads were randomly sampled from each of the 22 soil samples and the extraction control (ExCon), while 2400 reads were available from the PCR negative control (PCRNegCon).
+4000 reads were randomly sampled from each of the 22 soil samples and the DNA extraction control (ExCon), while 2400 reads were available from the PCR negative control (PCRNegCon).
 The resulting OTUs were classified by their most abundant sequence using dnabarcoder and the UNITE+INSD 2024 reference database.
+
+### Data analysis
+
+For each clustering method, an OTU table and classifications table was imported into the phyloseq v1.48.0 R package [@mcmurdiePhyloseqPackageReproducible2013].
+The decontam v1.24.0 [@davisSimpleStatisticalIdentification2018] R package was used to remove contaminant sequences identified in the two control samples.
+Low-abundance OTUs were filtered in a sample-wise fashion: OTUs were removed from a sample if they were smaller than 0.15% of the total number of reads in the sample.
+This cutoff was chosen based on the results of experimentation with the mock community trials.
+
 

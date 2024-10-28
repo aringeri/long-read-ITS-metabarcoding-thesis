@@ -136,7 +136,7 @@ Are racon or medaka ideal for this approach?
 Also, we would closer look at OTU composition at the sequence level to determine if OTUs are suitable for consensus error correction (do they align).
 
 
-The real-world soil case studies produces vastly different outcomes than our mock scenarios.
+The real-world soil case study produces vastly different outcomes than our mock scenarios.
 They had much larger library size (3million) and also native australian fungi that are not well represented in reference databases (CITE).
 - many OTUs unclassified in soil data
   - dnabarcoder too stringent?

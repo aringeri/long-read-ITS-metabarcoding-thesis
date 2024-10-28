@@ -670,6 +670,26 @@
   file = {/Users/alex/Zotero/storage/2ZVA2KIQ/cutadapt.pdf}
 }
 
+@article{davisSimpleStatisticalIdentification2018,
+  title = {Simple Statistical Identification and Removal of Contaminant Sequences in Marker-Gene and Metagenomics Data},
+  author = {Davis, Nicole M. and Proctor, Diana M. and Holmes, Susan P. and Relman, David A. and Callahan, Benjamin J.},
+  date = {2018-12},
+  journaltitle = {Microbiome},
+  shortjournal = {Microbiome},
+  volume = {6},
+  number = {1},
+  pages = {1--14},
+  publisher = {BioMed Central},
+  issn = {2049-2618},
+  doi = {10.1186/s40168-018-0605-2},
+  url = {https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-018-0605-2},
+  urldate = {2024-10-28},
+  abstract = {The accuracy of microbial community surveys based on marker-gene and metagenomic sequencing (MGS) suffers from the presence of contaminants—DNA sequences not truly present in the sample. Contaminants come from various sources, including reagents. Appropriate laboratory practices can reduce contamination, but do not eliminate it. Here we introduce decontam ( https://github.com/benjjneb/decontam ), an open-source R package that implements a statistical classification procedure that identifies contaminants in MGS data based on two widely reproduced patterns: contaminants appear at higher frequencies in low-concentration samples and are often found in negative controls. Decontam classified amplicon sequence variants (ASVs) in a human oral dataset consistently with prior microscopic observations of the microbial taxa inhabiting that environment and previous reports of contaminant taxa. In metagenomics and marker-gene measurements of a dilution series, decontam substantially reduced technical variation arising from different sequencing protocols. The application of decontam to two recently published datasets corroborated and extended their conclusions that little evidence existed for an indigenous placenta microbiome and that some low-frequency taxa seemingly associated with preterm birth were contaminants. Decontam improves the quality of metagenomic and marker-gene sequencing by identifying and removing contaminant DNA sequences. Decontam integrates easily with existing MGS workflows and allows researchers to generate more accurate profiles of microbial communities at little to no additional cost.},
+  issue = {1},
+  langid = {english},
+  file = {/Users/alex/Zotero/storage/D8XFAAK6/Davis et al_2018_Simple statistical identification and removal of contaminant sequences in.pdf}
+}
+
 @article{DeCoster2018,
   title = {{{NanoPack}}: {{Visualizing}} and Processing Long-Read Sequencing Data},
   author = {De Coster, Wouter and D'Hert, Svenn and Schultz, Darrin T. and Cruts, Marc and Van Broeckhoven, Christine},
@@ -1921,6 +1941,24 @@
   file = {/Users/alex/Zotero/storage/S82REGHU/Li_2018_Minimap2.pdf;/Users/alex/Zotero/storage/I2SCSJT3/4994778.html}
 }
 
+@article{liMinimap2PairwiseAlignment2018a,
+  title = {Minimap2: Pairwise Alignment for Nucleotide Sequences},
+  shorttitle = {Minimap2},
+  author = {Li, Heng},
+  date = {2018-09-15},
+  journaltitle = {Bioinformatics},
+  shortjournal = {Bioinformatics},
+  volume = {34},
+  number = {18},
+  pages = {3094--3100},
+  issn = {1367-4803},
+  doi = {10.1093/bioinformatics/bty191},
+  url = {https://doi.org/10.1093/bioinformatics/bty191},
+  urldate = {2024-10-28},
+  abstract = {Recent advances in sequencing technologies promise ultra-long reads of ∼100 kb in average, full-length mRNA or cDNA reads in high throughput and genomic contigs over 100 Mb in length. Existing alignment programs are unable or inefficient to process such data at scale, which presses for the development of new alignment algorithms.Minimap2 is a general-purpose alignment program to map DNA or long mRNA sequences against a large reference database. It works with accurate short reads of ≥100\,bp in length, ≥1\,kb genomic reads at error rate ∼15\%, full-length noisy Direct RNA or cDNA reads and assembly contigs or closely related full chromosomes of hundreds of megabases in length. Minimap2 does split-read alignment, employs concave gap cost for long insertions and deletions and introduces new heuristics to reduce spurious alignments. It is 3–4 times as fast as mainstream short-read mappers at comparable accuracy, and is ≥30 times faster than long-read genomic or cDNA mappers at higher accuracy, surpassing most aligners specialized in one type of alignment.https://github.com/lh3/minimap2Supplementary data are available at Bioinformatics online.},
+  file = {/Users/alex/Zotero/storage/CYAUI5ZL/Li_2018_Minimap2.pdf;/Users/alex/Zotero/storage/VWDKDNPQ/4994778.html}
+}
+
 @article{Lindahl2013,
   title = {Fungal Community Analysis by High-Throughput Sequencing of Amplified Markers - a User's Guide},
   author = {Lindahl, Björn D. and Nilsson, R. Henrik and Tedersoo, Leho and Abarenkov, Kessy and Carlsen, Tor and Kjøller, Rasmus and Kõljalg, Urmas and Pennanen, Taina and Rosendahl, Søren and Stenlid, Jan and Kauserud, Håvard},
@@ -2092,6 +2130,25 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Computational Geometry,Computer Science - Machine Learning,Statistics - Machine Learning},
   file = {/Users/alex/Zotero/storage/YWDSFCMK/McInnes et al_2020_UMAP.pdf;/Users/alex/Zotero/storage/IK2A9C5B/1802.html}
+}
+
+@article{mcmurdiePhyloseqPackageReproducible2013,
+  title = {Phyloseq: {{An R Package}} for {{Reproducible Interactive Analysis}} and {{Graphics}} of {{Microbiome Census Data}}},
+  shorttitle = {Phyloseq},
+  author = {McMurdie, Paul J. and Holmes, Susan},
+  date = {2013-04-22},
+  journaltitle = {PLOS ONE},
+  shortjournal = {PLOS ONE},
+  volume = {8},
+  number = {4},
+  pages = {e61217},
+  publisher = {Public Library of Science},
+  issn = {1932-6203},
+  doi = {10.1371/journal.pone.0061217},
+  url = {https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0061217},
+  urldate = {2024-10-28},
+  abstract = {Background The analysis of microbial communities through DNA sequencing brings many challenges: the integration of different types of data with methods from ecology, genetics, phylogenetics, multivariate statistics, visualization and testing. With the increased breadth of experimental designs now being pursued, project-specific statistical analyses are often needed, and these analyses are often difficult (or impossible) for peer researchers to independently reproduce. The vast majority of the requisite tools for performing these analyses reproducibly are already implemented in R and its extensions (packages), but with limited support for high throughput microbiome census data. Results Here we describe a software project, phyloseq, dedicated to the object-oriented representation and analysis of microbiome census data in R. It supports importing data from a variety of common formats, as well as many analysis techniques. These include calibration, filtering, subsetting, agglomeration, multi-table comparisons, diversity analysis, parallelized Fast UniFrac, ordination methods, and production of publication-quality graphics; all in a manner that is easy to document, share, and modify. We show how to apply functions from other R packages to phyloseq-represented data, illustrating the availability of a large number of open source analysis techniques. We discuss the use of phyloseq with tools for reproducible research, a practice common in other fields but still rare in the analysis of highly parallel microbiome census data. We have made available all of the materials necessary to completely reproduce the analysis and figures included in this article, an example of best practices for reproducible research. Conclusions The phyloseq project for R is a new open-source software package, freely available on the web from both GitHub and Bioconductor.},
+  langid = {english}
 }
 
 @article{mcmurdieWasteNotWant2014,
@@ -2448,6 +2505,25 @@
   doi = {10.1101/2023.04.14.536971},
   url = {http://biorxiv.org/content/early/2023/04/15/2023.04.14.536971.abstract},
   abstract = {The study of microbiota has been revolutionized by the development of DNA metabarcoding. This sequence-based approach enables the direct detection of microorganisms without the need for culture and isolation, which significantly reduces analysis time and offers more comprehensive taxonomic profiles across broad phylogenetic lineages. While there has been an accumulating number of researches on bacteria, molecular phylogenetic analysis of fungi still remains challenging due to the lack of standardized tools and the incompleteness of reference databases limiting the accurate and precise identification of fungal taxa. Here, we present a DNA metabarcoding workflow for characterizing fungal microbiota with high taxonomic resolution. This method involves amplifying longer stretches of ribosomal RNA operons and sequencing them using nanopore long-read sequencing technology. The resulting reads were error-polished to generate consensus sequences with 99.5–100\% accuracy, which were then aligned against reference genome assemblies. The efficacy of this method was explored using a polymicrobial mock community and patient-derived specimens, demonstrating the marked potential of long-read sequencing combined with consensus calling for accurate taxonomic classification. Our approach offers a powerful tool for the rapid identification of pathogenic fungi and has the promise to significantly improve our understanding of the role of fungi in health and disease.Competing Interest StatementThe authors have declared no competing interest.}
+}
+
+@article{ondovInteractiveMetagenomicVisualization2011,
+  title = {Interactive Metagenomic Visualization in a {{Web}} Browser},
+  author = {Ondov, Brian D. and Bergman, Nicholas H. and Phillippy, Adam M.},
+  date = {2011-09-30},
+  journaltitle = {BMC bioinformatics},
+  shortjournal = {BMC Bioinformatics},
+  volume = {12},
+  eprint = {21961884},
+  eprinttype = {pmid},
+  pages = {385},
+  issn = {1471-2105},
+  doi = {10.1186/1471-2105-12-385},
+  abstract = {BACKGROUND: A critical output of metagenomic studies is the estimation of abundances of taxonomical or functional groups. The inherent uncertainty in assignments to these groups makes it important to consider both their hierarchical contexts and their prediction confidence. The current tools for visualizing metagenomic data, however, omit or distort quantitative hierarchical relationships and lack the facility for displaying secondary variables. RESULTS: Here we present Krona, a new visualization tool that allows intuitive exploration of relative abundances and confidences within the complex hierarchies of metagenomic classifications. Krona combines a variant of radial, space-filling displays with parametric coloring and interactive polar-coordinate zooming. The HTML5 and JavaScript implementation enables fully interactive charts that can be explored with any modern Web browser, without the need for installed software or plug-ins. This Web-based architecture also allows each chart to be an independent document, making them easy to share via e-mail or post to a standard Web server. To illustrate Krona's utility, we describe its application to various metagenomic data sets and its compatibility with popular metagenomic analysis tools. CONCLUSIONS: Krona is both a powerful metagenomic visualization tool and a demonstration of the potential of HTML5 for highly accessible bioinformatic visualizations. Its rich and interactive displays facilitate more informed interpretations of metagenomic analyses, while its implementation as a browser-based application makes it extremely portable and easily adopted into existing analysis packages. Both the Krona rendering code and conversion tools are freely available under a BSD open-source license, and available from: http://krona.sourceforge.net.},
+  langid = {english},
+  pmcid = {PMC3190407},
+  keywords = {Computational Biology,Gastrointestinal Tract,Humans,Internet,Metagenomics,Software},
+  file = {/Users/alex/Zotero/storage/4PK453WH/Ondov et al_2011_Interactive metagenomic visualization in a Web browser.pdf}
 }
 
 @online{ONTHistory2023,
@@ -2989,6 +3065,23 @@
   file = {/Users/alex/Zotero/storage/QI9HNR6F/bf3f09bd-3af6-45be-a2c4-bd5c285cab8a.html}
 }
 
+@article{robertsReducingStorageRequirements2004,
+  title = {Reducing Storage Requirements for Biological Sequence Comparison},
+  author = {Roberts, Michael and Hayes, Wayne and Hunt, Brian R. and Mount, Stephen M. and Yorke, James A.},
+  date = {2004-12-12},
+  journaltitle = {Bioinformatics},
+  shortjournal = {Bioinformatics},
+  volume = {20},
+  number = {18},
+  pages = {3363--3369},
+  issn = {1367-4803},
+  doi = {10.1093/bioinformatics/bth408},
+  url = {https://doi.org/10.1093/bioinformatics/bth408},
+  urldate = {2024-10-28},
+  abstract = {Motivation: Comparison of nucleic acid and protein sequences is a fundamental tool of modern bioinformatics. A dominant method of such string matching is the ‘seed-and-extend’ approach, in which occurrences of short subsequences called ‘seeds’ are used to search for potentially longer matches in a large database of sequences. Each such potential match is then checked to see if it extends beyond the seed. To be effective, the seed-and-extend approach needs to catalogue seeds from virtually every substring in the database of search strings. Projects such as mammalian genome assemblies and large-scale protein matching, however, have such large sequence databases that the resulting list of seeds cannot be stored in RAM on a single computer. This significantly slows the matching process.Results: We present a simple and elegant method in which only a small fraction of seeds, called ‘minimizers’, needs to be stored. Using minimizers can speed up string-matching computations by a large factor while missing only a small fraction of the matches found using all seeds.},
+  file = {/Users/alex/Zotero/storage/YXWWQG9H/Roberts et al_2004_Reducing storage requirements for biological sequence comparison.pdf;/Users/alex/Zotero/storage/V6236VRQ/202143.html}
+}
+
 @article{rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021,
   title = {{{NanoCLUST}}: A Species-Level Analysis of {{16S rRNA}} Nanopore Sequencing Data},
   shorttitle = {{{NanoCLUST}}},
@@ -3024,6 +3117,25 @@
   abstract = {Background VSEARCH is an open source and free of charge multithreaded 64-bit tool for processing and preparing metagenomics, genomics and population genomics nucleotide sequence data. It is designed as an alternative to the widely used USEARCH tool (Edgar, 2010) for which the source code is not publicly available, algorithm details are only rudimentarily described, and only a memory-confined 32-bit version is freely available for academic use. Methods When searching nucleotide sequences, VSEARCH uses a fast heuristic based on words shared by the query and target sequences in order to quickly identify similar sequences, a similar strategy is probably used in USEARCH. VSEARCH then performs optimal global sequence alignment of the query against potential target sequences, using full dynamic programming instead of the seed-and-extend heuristic used by USEARCH. Pairwise alignments are computed in parallel using vectorisation and multiple threads. Results VSEARCH includes most commands for analysing nucleotide sequences available in USEARCH version 7 and several of those available in USEARCH version 8, including searching (exact or based on global alignment), clustering by similarity (using length pre-sorting, abundance pre-sorting or a user-defined order), chimera detection (reference-based or de novo), dereplication (full length or prefix), pairwise alignment, reverse complementation, sorting, and subsampling. VSEARCH also includes commands for FASTQ file processing, i.e., format detection, filtering, read quality statistics, and merging of paired reads. Furthermore, VSEARCH extends functionality with several new commands and improvements, including shuffling, rereplication, masking of low-complexity sequences with the well-known DUST algorithm, a choice among different similarity definitions, and FASTQ file format conversion. VSEARCH is here shown to be more accurate than USEARCH when performing searching, clustering, chimera detection and subsampling, while on a par with USEARCH for paired-ends read merging. VSEARCH is slower than USEARCH when performing clustering and chimera detection, but significantly faster when performing paired-end reads merging and dereplication. VSEARCH is available at https://github.com/torognes/vsearch under either the BSD 2-clause license or the GNU General Public License version 3.0. Discussion VSEARCH has been shown to be a fast, accurate and full-fledged alternative to USEARCH. A free and open-source versatile tool for sequence analysis is now available to the metagenomics community.},
   langid = {english},
   file = {/Users/alex/Zotero/storage/QB23UZCW/Rognes et al_2016_VSEARCH.pdf}
+}
+
+@article{romeijnMycoAIFastAccurate2024,
+  title = {{{MycoAI}}: {{Fast}} and Accurate Taxonomic Classification for Fungal {{ITS}} Sequences},
+  shorttitle = {{{MycoAI}}},
+  author = {Romeijn, Luuk and Bernatavicius, Andrius and Vu, Duong},
+  date = {2024},
+  journaltitle = {Molecular Ecology Resources},
+  volume = {24},
+  number = {8},
+  pages = {e14006},
+  issn = {1755-0998},
+  doi = {10.1111/1755-0998.14006},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/1755-0998.14006},
+  urldate = {2024-10-28},
+  abstract = {Efficient and accurate classification of DNA barcode data is crucial for large-scale fungal biodiversity studies. However, existing methods are either computationally expensive or lack accuracy. Previous research has demonstrated the potential of deep learning in this domain, successfully training neural networks for biological sequence classification. We introduce the MycoAI Python package, featuring various deep learning models such as BERT and CNN tailored for fungal Internal Transcribed Spacer (ITS) sequences. We explore different neural architecture designs and encoding methods to identify optimal models. By employing a multi-head output architecture and multi-level hierarchical label smoothing, MycoAI effectively generalizes across the taxonomic hierarchy. Using over 5 million labelled sequences from the UNITE database, we develop two models: MycoAI-BERT and MycoAI-CNN. While we emphasize the necessity of verifying classification results by AI models due to insufficient reference data, MycoAI still exhibits substantial potential. When benchmarked against existing classifiers such as DNABarcoder and RDP on two independent test sets with labels present in the training dataset, MycoAI models demonstrate high accuracy at the genus and higher taxonomic levels, with MycoAI-CNN being the fastest and most accurate. In terms of efficiency, MycoAI models can classify over 300,000 sequences within 5 min. We publicly release the MycoAI models, enabling mycologists to classify their ITS barcode data efficiently. Additionally, MycoAI serves as a platform for developing further deep learning-based classification methods. The source code for MycoAI is available under the MIT Licence at https://github.com/MycoAI/MycoAI.},
+  langid = {english},
+  keywords = {deep learning,fungi,metabarcoding,mycology,neural networks,transformers},
+  file = {/Users/alex/Zotero/storage/TTXRSGHK/Romeijn et al_2024_MycoAI.pdf;/Users/alex/Zotero/storage/EWB9HVPF/1755-0998.html}
 }
 
 @article{Runnel2022,
@@ -3262,7 +3374,7 @@
   issue = {9},
   langid = {english},
   keywords = {airborne transmission,highly pathogenic avian influenza,influenza,pandemic},
-  file = {/Users/alex/Zotero/storage/PINW2RJR/Sutton - 2018 - The Pandemic Threat of Emerging H5 and H7 Avian In.pdf}
+  file = {/Users/alex/Zotero/storage/PINW2RJR/Sutton_2018_The Pandemic Threat of Emerging H5 and H7 Avian Influenza Viruses.pdf}
 }
 
 @article{szeImpactDNAPolymerase2019,
@@ -3306,6 +3418,23 @@
   langid = {english},
   organization = {ResearchGate},
   file = {/Users/alex/Zotero/storage/8F9AYUKS/Comparison-of-current-common-NGS-platforms_tbl2_301638630.html}
+}
+
+@software{taudiereMiscMetabarPackageFacilitate2023,
+  title = {{{MiscMetabar}}: An {{R}} Package to Facilitate Visualization and Reproducibility in Metabarcoding Analysis},
+  shorttitle = {{{MiscMetabar}}},
+  author = {Taudière, Adrien},
+  date = {2023-12},
+  origdate = {2020-06-02T10:02:00Z},
+  journaltitle = {Journal of Open Source Software},
+  volume = {8},
+  number = {92},
+  pages = {6038},
+  doi = {10.21105/joss.06038},
+  url = {https://joss.theoj.org/papers/10.21105/joss.06038},
+  urldate = {2024-10-28},
+  abstract = {R package MiscMetabar: Miscellaneous functions for metabarcoding analysis},
+  file = {/Users/alex/Zotero/storage/DBF3I9L5/Taudière_2023_MiscMetabar.pdf}
 }
 
 @article{Taylor2016,
@@ -3745,6 +3874,26 @@
   abstract = {Soil environment, both biotic (e.g., microbial community) and abiotic (e.g., nutrients and water availability) factors determine soil fertility and health and are directly affected by soil management systems. However, only limited studies evaluate the combined effect of nutrients availability and soil disturbance on the soil bacteria community structure, especially in conventional agricultural practices, on the forests converted to agricultural land. This study aimed to provide a viewpoint of the effect of different soil management systems, i.e., forest soil (natural process) and tilled land, on soil bacteria community structure on forest converted to agricultural land, according to a metagenomics approach. Moreover, each land use was sampled to identify the bacterial community using 16S gene as a biomarker. The sequencing was performed using MinION (Oxford Nanopore Technologies) to read the DNA sequence from each soil sample. Principle Component Analysis (PCA) was performed to comprehend the relationship between availability of nutrients and bacterial diversity. The results revealed that the concentrations of soil micronutrients, such as iron, zinc, and magnesium, were significantly higher in forest soil than in tilled land. According to diversity indices, soil bacteria were more diverse in forest soil than in tilled land. Forest soil had more distinctive taxa than tilled land. Several species comprised the most abundant taxa, such as Candidatus Koribacter versatilis, Candidatus Solibacter usiatus, Rhodoplanes sp., Luteitalea pratensis, and Betaproteobacteria bacterium, were more scarce in tilled land. On the distinctive taxa in each soil sample, Anseongella ginsenosidimutans and Janthinobacterium sp. were the most abundant species in forest and tilled land, respectively. According to PCA analysis, soil management system affected the soil micro-and macronutrients also microbial community structure between forest and tilled land. In conclusion, soil management influences the essential nutrient content and bacterial community structure of soil. Better management should be adopted to maintain soil quality near forest soil},
   keywords = {Forest soil,Metagenome,Soil bacteria,Soil nutrients,Tilled land},
   file = {/Users/alex/Zotero/storage/DQA2ZVUM/soil-microbial-structuer.pdf}
+}
+
+@article{woodImprovedMetagenomicAnalysis2019,
+  title = {Improved Metagenomic Analysis with {{Kraken}} 2},
+  author = {Wood, Derrick E. and Lu, Jennifer and Langmead, Ben},
+  date = {2019-12},
+  journaltitle = {Genome Biology},
+  shortjournal = {Genome Biol},
+  volume = {20},
+  number = {1},
+  pages = {1--13},
+  publisher = {BioMed Central},
+  issn = {1474-760X},
+  doi = {10.1186/s13059-019-1891-0},
+  url = {https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0},
+  urldate = {2024-10-28},
+  abstract = {Although Kraken’s k-mer-based approach provides a fast taxonomic classification of metagenomic sequence data, its large memory requirements can be limiting for some applications. Kraken 2 improves upon Kraken 1 by reducing memory usage by 85\%, allowing greater amounts of reference genomic data to be used, while maintaining high accuracy and increasing speed fivefold. Kraken 2 also introduces a translated search mode, providing increased sensitivity in viral metagenomics analysis.},
+  issue = {1},
+  langid = {english},
+  file = {/Users/alex/Zotero/storage/G4E4U8HX/Wood et al_2019_Improved metagenomic analysis with Kraken 2.pdf}
 }
 
 @article{xiaoChallengesSolutionsQuality2016,

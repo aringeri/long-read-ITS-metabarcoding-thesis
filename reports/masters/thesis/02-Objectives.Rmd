@@ -1,7 +1,21 @@
 ---
-title: "Objectives and Research Question"
+title: "Objectives"
 ---
 
-- develop and test pipeline on modelled and real data
-- validate that ONT metabarcoding is feasible for environmental studies of fungi
-- develop set of reasonable 'defaults' for others who want to perform metabarcoding of fungi
+The goal of this research project is to develop a bioinformatic pipeline to characterise fungal communities from long-read Oxford Nanopore sequences.
+As part of this higher-level goal, we aim to achieve the following:
+
+1. Establish a procedure for handling errors from nanopore sequencing and separate noise from true genetic diversity.
+2. Validate that the pipeline can correctly identify taxa in modelled data.
+3. Test the pipeline's behaviour on real environmental sequences.
+4. Publish software that serves as a foundation for others when starting their own analysis of nanopore sequences.
+5. Develop guidelines for end-users of the pipeline,
+   - for example the minimum number of reads to 'get a reasonable result'.
+   - minimum quality scores
+   - reasonable default parameters
+
+<!--
+4. Validate that the use of ONT is feasible for environmental metabarcoding of fungi.
+   - compare clustering methods
+   - compare taxonomic assignment strategies using most abundant sequence or consensus sequence.
+-->

@@ -454,7 +454,39 @@ The top 30 largest OTUS can be seen in @apptbl-top-30-soil-vsearch and @apptbl-t
 :::{#fig-soil-classified}
 ![](analysis/images/06-soil-unidentified.png)
 
-The proportion of phylum-level classifications.
+The proportion of phylum-level classifications by sample.
+Each bar represents the number of reads in each sample that are either classified to phylum level (blue) or not (red).
 :::
 
-#### Effect of minimum cluster size on number of OTUs and number of species
+
+:::{#fig-AL-krona}
+![](analysis/images/krona/AL-vsearch.svg)
+
+Krona chart to genus level from all *Allocasuarina littoralis* samples.
+Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011]
+:::
+
+
+:::{#fig-AP-krona}
+![](analysis/images/krona/AP-vsearch.svg)
+
+Krona chart to genus level from all *Allocasuarina paradoxa* samples.
+Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011]
+:::
+
+
+:::{#fig-EC-krona}
+![](analysis/images/krona/EC-vsearch.svg)
+
+Krona chart to genus level from all *Eucalyptus cephalocarpa* samples.
+Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011]
+:::
+
+
+:::{#fig-EV-krona}
+![](analysis/images/krona/EV-vsearch.svg)
+
+Krona chart to genus level from all *Eucalyptus viminalis* samples.
+Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011]
+:::
+

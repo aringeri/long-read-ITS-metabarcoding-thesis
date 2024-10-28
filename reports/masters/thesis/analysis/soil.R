@@ -10,6 +10,7 @@ library(microViz)
 library(stringr)
 library(decontam)
 
+
 source('helpers/dnabarcoder.R')
 source('helpers/vsearch.R')
 source('helpers/config.R')
@@ -52,11 +53,22 @@ soil_full_phylo_noncontam %>%
   filter_otu_by_sample(0.0015) %>%
   plot_heatmap()
 
+
+
 ?ordinate(soil_full_phylo_noncontam)
 
 p <- soil_full_phylo_noncontam %>%
   filter_otu_by_sample(0.0015) %>%
   prune_samples(!sample_ids$is_control, .)
+
+
+plot_bar(p %>%
+  transform_sample_counts(\(x) x/sum(x)) %>%
+  # prune_taxa(as.logical(tax_table(p)[, 'phylum'] != 'unidentified'), .) %>%
+  tax_glom('class')
+  ,
+  # x='type',
+ fill='class')# + facet_wrap(~ name)
 
 o <- ordinate(p, method='PCoA', distance='bray')
 plot_ordination(p, o, color='type')
