@@ -248,7 +248,7 @@ flextable(data.frame(
     step='Basecalling',
     name='dorado',
     version='v0.7.1',
-    command=''
+    command='dorado '
   ) %>%
   rbind(data.frame(
     step='Demultiplexing',
@@ -281,7 +281,7 @@ flextable(
 )
 ```
 
-Top 30 largest OTUs in the soil case study dataset after clustering the full set of reads (~3 million) with VSEARCH.
+Top 30 largest OTUs in the soil case study dataset after clustering the full set of reads (~3 million) with VSEARCH at 97% identity.
 Each column shows: the classification given by dnabarcoder, the number of reads in the OTU, the BLAST identity score for the classification, the percent identity cutoff used by dnabarcoder, the UNITE+INSD reference identifier of the closest match, and the name of the closest match from the UNITE+INSD database.
 :::
 

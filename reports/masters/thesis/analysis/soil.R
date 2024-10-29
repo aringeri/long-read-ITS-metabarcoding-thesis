@@ -40,6 +40,10 @@ sample_ids <- data.frame(
 tax_table <- read_dna_barcoder_classification_vsearch(classFile[1])
 soil_full_phylo <- phyloseq(otu_table(otus), tax_table, sample_data(sample_ids))
 
+n_identified <- sum(taxa_sums(prune_taxa(as.logical(tax_table[,'kingdom'] != 'unidentified'), soil_full_phylo)))
+n_total <- 1848487
+n_unidentified / n_total
+
 contams <- isContaminant(soil_full_phylo, method='prevalence', neg='is_control')#, threshold=0.5)
 
 soil_full_phylo_noncontam <- prune_taxa(!contams$contaminant, soil_full_phylo)
@@ -70,7 +74,7 @@ plot_bar(p %>%
   # x='type',
  fill='class')# + facet_wrap(~ name)
 
-o <- ordinate(p, method='PCoA', distance='bray')
+o <- ordinate(p, distance='bray')
 plot_ordination(p, o, color='type')
 
 # make unique taxa if unidentified at any taxonomic level
@@ -258,10 +262,11 @@ prop_id_vsearch <- soil_full_phylo %>%
   # filter_taxa_by_min_otu_size(50) %>%
   # transform_sample_counts(\(x) x/sum(x)) %>%
   # prune_samples('sample_AL4', .) %>%
-  tax_glom(taxrank="phylum") %>%
-  plot_bar(fill="phylum != \"unidentified\"") +
+  tax_glom(taxrank="kingdom") %>%
+  plot_bar(fill="kingdom != \"unidentified\"") +
   # scale_y_continuous(name='Relative abundance') +
   labs(title="VSEARCH (full dataset)") +
+  scale_fill_discrete(name='kingdom', labels = c('unidentified', 'identified')) +
   theme(aspect.ratio = 1, axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 prop_id_vsearch
 
@@ -281,7 +286,7 @@ unident_plot <- cowplot::plot_grid(ncol = 2, align='v', axis='tb',
 )
 unident_plot
 
-ggsave('images/06-soil-unidentified.png', unident_plot)
+ggsave('images/06-soil-unidentified.png', prop_id_vsearch)
 
 subset_nc %>%
   filter_otu_by_sample(0.005) %>%
