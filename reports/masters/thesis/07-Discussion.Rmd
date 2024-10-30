@@ -152,6 +152,7 @@ it would be important to determine whether source of errors in the resulting seq
 The real-world soil case study displayed considerably different groups of fungi than those present in our mock scenarios.
 The library size of the soil data (1.8 million reads) was much larger than any of the mock scenarios we tested.
 and also native australian fungi that are not well represented in reference databases (CITE).
+
 - many OTUs unclassified in soil data
   - dnabarcoder too stringent?
     - aim to have precise classification, over high-level classification

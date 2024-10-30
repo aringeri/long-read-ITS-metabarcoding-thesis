@@ -248,7 +248,7 @@ flextable(data.frame(
     step='Basecalling',
     name='dorado',
     version='v0.7.1',
-    command='dorado '
+    command=''
   ) %>%
   rbind(data.frame(
     step='Demultiplexing',
