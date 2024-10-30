@@ -1,11 +1,11 @@
 "otu","barcode","actual_species","n_reads","dnabarcoder_classification","score","cutoff"
 "136","barcode72","Pichia kudriavzevii",1996,"Komagataella pastoris",1,0.991
-"85","barcode83","Diaporthe sp",1996,"Gnomoniopsis paraclavulata",1,0.996
-"85","barcode87","Asteroma sp",1995,"Gnomoniopsis paraclavulata",1,0.996
+"85","barcode83","Diaporthe sp CCL067",1996,"Gnomoniopsis paraclavulata",1,0.996
+"85","barcode87","Asteroma sp CCL068",1995,"Gnomoniopsis paraclavulata",1,0.996
 "1","barcode43","Aspergillus fumigatus",1920,"Inopinatum lactosum",1,0.991
 "20","barcode65","Geotrichum candidum",1675,"Dipodascus capitatus",0.905,0.896
-"109","barcode88","Asteroma sp",1620,"Diaporthe foeniculina",1,0.991
+"109","barcode88","Asteroma sp CCL060",1620,"Diaporthe foeniculina",1,0.991
 "11","barcode66","Kluyveromyces lactis",1579,"Candida albicans",1,0.973
 "119","barcode61","Cryptococcus neoformans",1169,"Kluyveromyces marxianus",1,0.991
 "183","barcode60","Cryptococcus gattii",703,"Candida orthopsilosis",0.99764,0.973
-"43","barcode88","Asteroma sp",211,"Diaporthe foeniculina",0.99591,0.991
+"43","barcode88","Asteroma sp CCL060",211,"Diaporthe foeniculina",0.99591,0.991

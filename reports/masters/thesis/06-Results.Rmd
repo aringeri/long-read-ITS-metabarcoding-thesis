@@ -449,17 +449,17 @@ Each step was executed in order from left to right. Note the y-axis has been plo
 
 The full set of quality filtered reads were clustered with VSEARCH at 97% identity and the most-abundant sequence of each
 OTU was classified using dnabarcoder and the UNITE+INSD 2024 database.
+OTUs were removed from samples if they were smaller than 0.15% of the number of reads in the sample.
 The top 30 largest OTUS can be seen in @apptbl-top-30-soil-vsearch.
-A high proportion of OTUs could not be given a classification by dnabarcoder, where 71.7% of 1,590,965 reads were considered unclassified at the kingdom level (@fig-soil-classified).
-
-- number of OTUs/species present in each sample
-
+A high proportion of OTUs could not be given a classification by dnabarcoder.
+71.7% of 1,590,965 reads were considered unclassified at the kingdom level and
+451 of all 775 OTUs were unclassified at the kingdom level (@fig-soil-classified).
 
 :::{#fig-soil-classified}
 ![](analysis/images/06-soil-unidentified.png)
 
-The proportion of phylum-level classifications by sample.
-Each bar represents the number of reads in each sample that are either classified to phylum level (blue) or not (red).
+The proportion of kingdom-level classifications by sample.
+Each bar represents the number of reads in each sample that are either classified to kingdom level (blue) or not (red).
 :::
 
 The classifications by tree species are shown in @fig-AL-krona and @fig-EC-krona
