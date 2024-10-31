@@ -180,7 +180,7 @@ The following parameters of the workflow are also configurable:
 
 In order to understand the behaviour of our workflow under different sampling scenarios, a mock dataset was constructed using sequences from 65 fungal taxa which had been isolated and identified from mycelia or spores.
 We constructed mock communities by mixing reads from these taxa and
- aimed to model data that might be encountered when sampling a complex fungal community.
+ aimed to emulate data that might be encountered when sampling a complex fungal community.
 We constructed two varieties of mock scenarios by controlling the relative proportion of reads from each fungal taxon:
 
 1)  Even abundance where all fungal taxa had the same relative abundance of read count.
@@ -201,7 +201,7 @@ The raw ONT data was basecalled and demultiplexed using Guppy v6.4.2 with the su
 #### Bioinformatics - Selection of high quality full ITS sequences
 
 The basecalled reads were passed to the adapter trimming, primer trimming, ITS extraction, quality filtering and chimera detection stages of our workflow described in @sec-pipeline-description.
-At this point, we had a pool of high quality full ITS sequences which we used to model different community structures.
+At this point, we had a pool of high quality full ITS sequences which we used to construct different mock community structures.
 
 After being processed by the workflow, 7 of the 65 fungal taxa were excluded from the mock dataset leaving 58 taxa available for mock scenarios.
 6 of the 7 taxa were excluded due to having a low number of reads.
