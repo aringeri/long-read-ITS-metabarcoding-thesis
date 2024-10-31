@@ -11,7 +11,7 @@ set_flextable_defaults(
 )
 ```
 
-## Pipeline
+## Workflow
 
 :::{#apptbl-software-pipeline}
 ```{r}
@@ -79,7 +79,7 @@ flextable(data.frame(
   width(j=3, width=3, unit = "cm")
 ```
 
-Software used in pipeline
+Software used in workflow
 :::
 
 

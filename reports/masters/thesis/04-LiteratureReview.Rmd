@@ -166,7 +166,7 @@ ratcheted through the pore (see
 :::{#fig-nanopore-schematic}
 ![](resources/images/nanopore-schematic.png)
 
-Illustration of Nanopore sequencing.
+Illustration of Oxford Nanopore Technologies sequencing.
 A double-stranded DNA (dsDNA) molecule (or RNA–DNA hybrid)
 is first unwound with the help of a motor protein, then the negatively charged single-stranded
 DNA (or RNA) is ratcheted through the nanopore

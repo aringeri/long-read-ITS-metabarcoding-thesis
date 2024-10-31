@@ -47,8 +47,8 @@ to identify many species from bulk environmental samples such as
 soil [@Tedersoo2022]. This procedure (metabarcoding) works by
 extracting the genomic DNA of all organisms within a sample,
 followed by the amplification of a barcode region of interest using the polymerase chain reaction
-(PCR) [@Lindahl2013]. The amplified DNA is sequenced by a HTS platform such as Illumina, PacBio or Oxford
-Nanopore.
+(PCR) [@Lindahl2013].
+The amplified DNA is sequenced by a HTS platform such as Illumina, PacBio or Oxford Nanopore Technologies.
 Using computational techniques, sequences can be analysed and compared with reference databases to identify taxa.
 The accuracy of these taxonomic classifications depends heavily on the quality of the
 reference data used [@Tedersoo2022].
@@ -94,7 +94,7 @@ Sequencing platforms such as Oxford Nanopore Technologies (ONT) and
 PacBio provide much longer read lengths compared to Illumina HTS
 methods. ONT sequencing is comparatively cheap and can be performed in a
 basic molecular lab and even in the field [@Mafune2020; @Baloglu2021].
-Until recently, the high error rate made nanopore sequencing unsuitable
+Until recently, the high error rate made ONT sequencing unsuitable
 for metabarcoding studies [@Zhang2023]. The prospect of long-read
 sequencing for fungal metabarcoding is that the longer reads will be able
 to cover multiple marker genes, including the full ribosomal operon, and
@@ -108,5 +108,5 @@ structure [@Wiryawan2022], rapid pathogen
 detection [@Hong2020; @Ohta2023], and testing the use
 of ONT for metabarcoding of mock fungal
 communities [@Baloglu2021; @Mafune2020; @langsiriTargetedSequencingAnalysis2023].
-In this study, we integrated common approaches to fungal metabarcoding into a bioinformatic pipeline with a focus on analysing ONT data.
-We validated our metabarcoding approaches with mock fungal communities and demonstrated how the pipeline performed on real environmental soil samples.
+In this study, we integrated common approaches to fungal metabarcoding into a bioinformatic workflow with a focus on analysing ONT data.
+We validated our metabarcoding approaches with mock fungal communities and demonstrated how the workflow performed on real environmental soil samples.

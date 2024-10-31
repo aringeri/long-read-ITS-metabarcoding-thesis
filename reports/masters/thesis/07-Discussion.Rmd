@@ -26,7 +26,7 @@ considerably higher error rates than those produced by other sequencing platform
 With a mean read quality of Q13.2, our approach to quality control aimed to significantly decrease noise by setting stringent quality thresholds.
 Setting a minimum quality score of Q20 and requiring both forward and reverse primers to be present on reads resulted in the removal of 85% of the dataset (@fig-readLossByStage).
 This QC approach may be overly stringent and bias against some taxa if applied generally in real world scenarios.
-Therefore, we aim to make these quality filtering settings configurable in the pipeline so end-users can determine their own acceptable level of error.
+Therefore, we aim to make these quality filtering settings configurable in the workflow so end-users can determine their own acceptable level of error.
 It should be noted that the sequences for the mock dataset were generated in 2022 and were not compatible with dorado's latest basecalling model (v5.0.0 at the time of writing).
 We observed that using modern ONT chemistry and the latest basecalling model for our soil samples resulted in many more sequences being retained (40% loss versus the 85% loss in the mock scenarios).
 

@@ -2,13 +2,13 @@
 title: "Methods"
 ---
 
-## Pipeline description {#sec-pipeline-description}
+## Workflow description {#sec-pipeline-description}
 
-Our approach for metabarcoding long-read fungal ITS amplicons was packaged into a pipeline using the Nextflow workflow language [@ditommasoNextflowEnablesReproducible2017].
-As input, the pipeline takes a set of `fastq` formatted files where each file contains the basecalled sequences from each sample.
-The stages of the metabarcoding pipeline are outlined below.
-The full set of software and versions used in the pipeline can be found in @apptbl-software-pipeline.
-We have named the pipeline nanoporcini, and it is accessible online at [https://github.com/aringeri/nanoporcini](https://github.com/aringeri/nanoporcini).
+Our approach for metabarcoding long-read fungal ITS amplicons was packaged into a workflow using the Nextflow language [@ditommasoNextflowEnablesReproducible2017].
+As input, the workflow takes a set of `fastq` formatted files where each file contains the basecalled sequences from each sample.
+The stages of the metabarcoding workflow are outlined below.
+The full set of software and versions used can be found in @apptbl-software-pipeline.
+We have named the workflow nanoporcini, and it is accessible online at [https://github.com/aringeri/nanoporcini](https://github.com/aringeri/nanoporcini).
 
 ### Adapter and primer trimming
 
@@ -59,7 +59,7 @@ For each scenario, full ITS sequences were grouped into approximate species-leve
 
 The first approach uses centroid-based clustering on sequence similarity as implemented in VSEARCH v2.21.1 [@rognesVSEARCHVersatileOpen2016]. The sequences were first de-replicated using VSEARCH's '`--fastx_uniques`' option to merge identical sequences into a single record, then clustered with the '`--cluster_size`' option. 97% identity was used as the pairwise sequence similarity threshold. This clustering approach resulted in many low-abundance operational taxonomic units (OTUs). Methods for selecting a threshold to remove low-abundance spurious OTUs are explored in @sec-even-scenario.
 
-The second clustering approach grouped sequences by similarity of their k-mer signatures. We followed the clustering approach used by the tool NanoCLUST [@rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021; @langsiriTargetedSequencingAnalysis2023]. Each sequence was transformed into a k-mer frequency vector and stored in a tabular format. In our pipeline, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST). The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020]. Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan]. The '`cluster_selection_epsilon`' parameter used in HDBSCAN was set to 0.5, while the multiple '`min_cluster_size`' parameters were tested and explored in @sec-even-scenario.
+The second clustering approach grouped sequences by similarity of their k-mer signatures. We followed the clustering approach used by the tool NanoCLUST [@rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021; @langsiriTargetedSequencingAnalysis2023]. Each sequence was transformed into a k-mer frequency vector and stored in a tabular format. In our workflow, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST). The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020]. Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan]. The '`cluster_selection_epsilon`' parameter used in HDBSCAN was set to 0.5, while the multiple '`min_cluster_size`' parameters were tested and explored in @sec-even-scenario.
 
 ::: {#fig-clusterAssignFlowchart}
 ```{dot}
@@ -156,14 +156,18 @@ Stages of consensus sequence generation. The process of producing a consensus se
 
 The representative sequence from each OTU was then given a taxonomic assignment with dnabarcoder v1.0.6 [@vuDnabarcoderOpensourceSoftware2022]. In this case, full ITS sequences were classified against the UNITE+INSD 2024 reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255] using precomputed similarity cutoffs provided by the dnabarcoder project [@vuDnabarcoderOpensourceSoftware2022].
 
-### Pipeline implementation
+### Workflow implementation
 
-The pipeline was implemented using the Nextflow workflow language [@ditommasoNextflowEnablesReproducible2017]. The pipeline was developed to run with Singularity [@kurtzerSingularityScientificContainers2017] or Docker [@merkel2014docker] containers. A container-based approach is flexible and allows the pipeline to run on all systems that support either one of these container platforms. It also simplifies the setup of dependencies and ensures that the versions of dependencies are reproducible between installations. The pipeline only requires Nextflow and a container platform (Singularity or Docker) to be installed.
+The workflow was implemented using the Nextflow language [@ditommasoNextflowEnablesReproducible2017].
+The workflow was developed to run with Singularity [@kurtzerSingularityScientificContainers2017] or Docker [@merkel2014docker] containers.
+A container-based approach is flexible and allows the workflow to run on all systems that support either one of these container platforms.
+It also simplifies the setup of dependencies and ensures that the versions of dependencies are reproducible between installations.
+The workflow only requires Nextflow and a container platform (Singularity or Docker) to be installed.
 
-The source code for the pipeline is available online at [https://github.com/aringeri/nanoporcini](https://github.com/aringeri/nanoporcini).
+The source code for the workflow is available online at [https://github.com/aringeri/nanoporcini](https://github.com/aringeri/nanoporcini).
 
 It can be configured to run to customise the use of system resources such as number of threads or RAM.
-The following parameters of the pipeline are also configurable:
+The following parameters of the workflow are also configurable:
 
 - Forward and reverse primer sequences
 - Minimum quality score for full ITS sequences
@@ -174,7 +178,7 @@ The following parameters of the pipeline are also configurable:
 
 ## Mock fungal communities {#sec-mock-fungal-communities}
 
-In order to understand the behaviour of our pipeline under different sampling scenarios, a mock dataset was constructed using sequences from 65 fungal taxa which had been isolated and identified from mycelia or spores. 
+In order to understand the behaviour of our workflow under different sampling scenarios, a mock dataset was constructed using sequences from 65 fungal taxa which had been isolated and identified from mycelia or spores.
 We constructed mock communities by mixing reads from these taxa and
  aimed to model data that might be encountered when sampling a complex fungal community.
 We constructed two varieties of mock scenarios by controlling the relative proportion of reads from each fungal taxon:
@@ -188,7 +192,7 @@ The raw basecalled reads were provided to us by collaborators from the Schwessin
 
 #### DNA extraction, amplification and sequencing
 
-The genomic DNA of 65 fungal taxa was extracted with the Qiagen DNeasy Plant mini kit. The DNA was extracted from mycelia or spore material of each fungal taxa. Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse) (@fig-its-region-simple). The amplicons were prepared with Oxford Nanopore's Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT). The fungal samples plus a negative control were multiplexed and sequenced using a MinION R10.4 flow cell.
+The genomic DNA of 65 fungal taxa was extracted with the Qiagen DNeasy Plant mini kit. The DNA was extracted from mycelia or spore material of each fungal taxa. Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse) (@fig-its-region-simple). The amplicons were prepared with ONT's Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT). The fungal samples plus a negative control were multiplexed and sequenced using a MinION R10.4 flow cell.
 
 #### Bioinformatics - Basecalling
 
@@ -196,10 +200,10 @@ The raw ONT data was basecalled and demultiplexed using Guppy v6.4.2 with the su
 
 #### Bioinformatics - Selection of high quality full ITS sequences
 
-The basecalled reads were passed to the adapter trimming, primer trimming, ITS extraction, quality filtering and chimera detection stages of our pipeline described in @sec-pipeline-description.
+The basecalled reads were passed to the adapter trimming, primer trimming, ITS extraction, quality filtering and chimera detection stages of our workflow described in @sec-pipeline-description.
 At this point, we had a pool of high quality full ITS sequences which we used to model different community structures.
 
-After being processed by the pipeline, 7 of the 65 fungal taxa were excluded from the mock dataset leaving 58 taxa available for mock scenarios.
+After being processed by the workflow, 7 of the 65 fungal taxa were excluded from the mock dataset leaving 58 taxa available for mock scenarios.
 6 of the 7 taxa were excluded due to having a low number of reads.
 Due to differences in chimera detection behaviour between reference databases, 1 of the 7 taxa was excluded erroneously under the impression that it had a low number of reads.
 
@@ -217,7 +221,7 @@ To ensure that taxonomic names were used consistently between the fungal samples
 
 ### Scenario 1 - Even abundance {#sec-scenario-1}
 
-The first mock scenario modelled an even community structure where every fungal taxa had an equal abundance in terms of number of reads. Libraries of differing sizes were generated by subsampling an equal number of reads from each taxa. For each of the 58 taxa: 20; 50; 167; 1,000; 2,000 and 2,500 reads were randomly selected to produce libraries with sizes of 1,160; 2,900; 9,686; 58,000; 116,000 and 145,000 reads (@fig-equalAbundanceDiagram). Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the '`sample`' command). The subsampling was repeated five times for each library size producing a total of 30 libraries (6 libraries $\times$ 5 repetitions). The random seed values given to seqtk's '`sample`' command for each repetition were generated deterministically so that each run of the pipeline was reproducible.
+The first mock scenario emulated an even community structure where every fungal taxa had an equal abundance in terms of number of reads. Libraries of differing sizes were generated by subsampling an equal number of reads from each taxa. For each of the 58 taxa: 20; 50; 167; 1,000; 2,000 and 2,500 reads were randomly selected to produce libraries with sizes of 1,160; 2,900; 9,686; 58,000; 116,000 and 145,000 reads (@fig-equalAbundanceDiagram). Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the '`sample`' command). The subsampling was repeated five times for each library size producing a total of 30 libraries (6 libraries $\times$ 5 repetitions). The random seed values given to seqtk's '`sample`' command for each repetition were generated deterministically so that each run of the workflow was reproducible.
 
 ::: {#fig-equalAbundanceDiagram width=15cm}
 ```{r}
@@ -243,7 +247,7 @@ The footnotes in @apptbl-samplesheet show which taxa were excluded from mock sce
 
 ## Real world - Soil case study
 
-A set of soil samples were made available to us to test the pipeline on a real world environmental data.
+A set of soil samples were made available to us to test the workflow on a real world environmental data.
 24 samples were collected from soil beneath four trees species in heathy woodland from the Cranbourne Conservation area in Victoria, Australia (@apptbl-soil-samplesheet).
 Six soil samples were taken from soil beneath each of the tree species: *Allocasuarina littoralis*, *Allocasuarina paradoxa*, *Eucalyptus viminalis* and *Eucalyptus cephalocarpa*.
 Two control samples were sequenced: one control (ExCon) contained only the contents of the DNA extraction kit and the other was a negative PCR control (PCRNegCon).
@@ -255,7 +259,7 @@ One *Eucalyptus cephalocarpa* sample (EC4) was excluded due to low gDNA concentr
 Library preparation and sequencing of extracted gDNA followed the protocol found at [https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1](https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1).
 This protocol used a custom barcoding scheme which amplified full ITS and partial LSU regions with primers which included DNA barcodes [@Hebert2023.11.29.569282; @ohtaDNAMetabarcodingWorkflow2023a].
 The modified forward primer was ITS1_F_KYO2 and reverse primer was LR6.
-Amplicons were sequenced using the Oxford Nanopore MinION 10.4.1.
+Amplicons were sequenced using the ONT MinION 10.4.1.
 
 ### Bioinformatics - basecalling and demultiplexing
 
@@ -267,9 +271,9 @@ Due to the custom barcoding scheme, basecalled reads were demultiplexed with min
 One *Allocasuarina paradoxa* (AP6) sample was excluded due to having much lower read count than other samples (@apptbl-software-soil).
 This left 24 samples (22 soil samples + 2 controls) for downstream processing.
 
-### Metabarcoding pipeline
+### Metabarcoding workflow
 
-The set of demultiplexed reads was passed to the metabarcoding pipeline with default settings.
+The set of demultiplexed reads was passed to the metabarcoding workflow with default settings.
 Due to a large library size after quality control (~1.8 million reads), computational constraints did not allow the NanoCLUST approach to cluster the full dataset.
 Instead, VSEARCH was used to cluster the full dataset.
 Singleton OTUs were removed after clustering and the remaining OTUs were classified by their most abundant sequence using dnabarcoder and the UNITE+INSD 2024 reference database.

@@ -2,20 +2,12 @@
 title: "Objectives"
 ---
 
-The goal of this research project is to develop a bioinformatic pipeline to characterise fungal communities from long-read Oxford Nanopore sequences.
+The goal of this research project is to develop a bioinformatic workflow to characterise fungal communities from long-read ONT sequences.
 As part of this higher-level goal, we aim to achieve the following:
 
-1. Establish a procedure for handling errors from nanopore sequencing and separate noise from true genetic diversity.
-2. Validate that the pipeline can correctly identify taxa in modelled data.
-3. Test the pipeline's behaviour on real environmental sequences.
-4. Publish software that serves as a foundation for others when starting their own analysis of nanopore sequences.
-5. Develop guidelines for end-users of the pipeline,
-   - for example the minimum number of reads to 'get a reasonable result'.
-   - minimum quality scores
-   - reasonable default parameters
-
-<!--
-4. Validate that the use of ONT is feasible for environmental metabarcoding of fungi.
-   - compare clustering methods
-   - compare taxonomic assignment strategies using most abundant sequence or consensus sequence.
--->
+1. Apply filtering and processing workflows which extract taxonomic informative regions from fungal long-read rDNA sequencing amplicons
+2. Evaluate clustering and taxonomic assignment methods on extracted rDNA regions.
+3. Assess established workflows (#1 and 2) on a mock fungal long-read rDNA dataset.
+4. Apply developed workflows on a real world soil long-read rDNA locus dataset.
+5. Publish workflow software that serve others in their own analysis of ONT rDNA datasets.
+6. Develop guidelines for end-users of the workflow.
