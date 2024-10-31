@@ -459,7 +459,7 @@ A high proportion of OTUs could not be given a classification by dnabarcoder.
 :::{#fig-soil-classified}
 ![](analysis/images/06-soil-unidentified.png)
 
-The proportion of kingdom-level classifications by sample.
+The proportion of kingdom-level classifications in real world soil samples.
 Each bar represents the number of reads in each sample that are either classified to kingdom level (blue) or not (red).
 :::
 
@@ -488,7 +488,7 @@ Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMet
 
 Classifications from *Allocasuarina* samples. Krona chart shows genus level classifications from all *Allocasuarina littoralis* and *Allocasuarina paradoxa* samples.
 Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011].
-Interactive versions of these figures are available online at: https://aringeri.github.io/long-read-ITS-metabarcoding-thesis/06-Results.html#fig-AL-krona
+Interactive versions of these figures are available online at: [https://aringeri.github.io/long-read-ITS-metabarcoding-thesis/06-Results.html#fig-AL-krona](https://aringeri.github.io/long-read-ITS-metabarcoding-thesis/06-Results.html#fig-AL-krona)
 :::
 
 
@@ -514,7 +514,7 @@ Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMet
 
 Classifications from *Eucalyptus* samples. Krona chart shows genus level classifications from all *Eucalyptus cephalocarpa* and *Eucalyptus viminalis* samples.
 Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011].
-Interactive versions of these figures are available online at: https://aringeri.github.io/long-read-ITS-metabarcoding-thesis/06-Results.html#fig-EC-krona
+Interactive versions of these figures are available online at: [https://aringeri.github.io/long-read-ITS-metabarcoding-thesis/06-Results.html#fig-EC-krona](https://aringeri.github.io/long-read-ITS-metabarcoding-thesis/06-Results.html#fig-EC-krona)
 :::
 
 

@@ -6,6 +6,6 @@ We have demonstrated that ONT sequencing has emerged as a promising approach for
 Our workflow was capable of detecting major taxa in mock communities.
 However, while our approach was capable of detecting rare OTUs, it became difficult to differentiate true rare OTUs from false positives.
 We have made our workflow available publicly available for use by others ([https://github.com/aringeri/nanoporcini](https://github.com/aringeri/nanoporcini)).
-We confirmed ongoing difficulties with classifying underrepresented Australian fungal taxa in the UNITE database.
+We confirmed existing difficulties with classifying underrepresented Australian fungal taxa in the UNITE database.
 However, we feel that this presents an opportunity for long-read technology in future work by capturing more conserved regions such as the 28S (LSU) marker.
 If ONT basecalling quality improves at the same rate as it has over the last two years, we expect ONT to rival the status quo.

@@ -16,7 +16,7 @@ set_flextable_defaults(
 Our results indicate that our workflow is effective for detecting the major fungal taxa from our mock communities
 with less clear results in Australian soil samples due to the high rate of unclassified OTUs.
 We observed consistent patterns in clustering with VSEARCH and our customised NanoCLUST implementation.
-We have tested the impact of a minimum cluster size threshold and found that the lowest cluster size threshold gives the highest classification accuracy at the cost of overestimating species diversity.
+We have tested the impact of a minimum cluster size threshold and found that the lowest cluster size threshold gave the highest classification accuracy at the cost of overestimating species diversity.
 We found that an OTU's most abundant sequence was most reliable for classifying OTUs at the genus level.
 
 ## Quality control
@@ -25,23 +25,21 @@ As expected from ONT sequencing, the reads used to construct our mock scenarios 
 considerably higher error rates than those produced by other sequencing platforms such as Illumina and PacBio [@anslanGreatDifferencesPerformance2018a; @tedersooGlobalSoilMycobiome2021; @tedersooPacBioMetabarcodingFungi2018].
 With a mean read quality of Q13.2, our approach to quality control aimed to significantly decrease noise by setting stringent quality thresholds.
 Setting a minimum quality score of Q20 and requiring both forward and reverse primers to be present on reads resulted in the removal of 85% of the dataset (@fig-readLossByStage).
-This QC approach may be overly stringent and bias against some taxa if applied generally in real world scenarios.
+This QC approach may be overly conservative and bias against some taxa if applied generally in real world scenarios.
 Therefore, we aim to make these quality filtering settings configurable in the workflow so end-users can determine their own acceptable level of error.
 It should be noted that the sequences for the mock dataset were generated in 2022 and were not compatible with dorado's latest basecalling model (v5.0.0 at the time of writing).
 We observed that using modern ONT chemistry and the latest basecalling model for our soil samples resulted in many more sequences being retained (40% loss versus the 85% loss in the mock scenarios).
 
-- basecalling and chemistry, trend in improving quality, approaching that of illumina
-
 ## Clustering
 
-We have demonstrated that VSEARCH and NanoCLUST clustering methods produced comparable results and
+We have demonstrated that clustering with VSEARCH and our NanoCLUST implementation produced comparable results and
 both were able to successfully delineate major taxa in our mock scenarios.
-NanoCLUST was generally more sensitive to biological variation than VSEARCH in some fungal groups as it split single taxa into multiple OTUs
+The NanoCLUST implementation was generally more sensitive to biological variation than VSEARCH in some fungal groups as it split single taxa into multiple OTUs
 (for example: *Pucciniales* (@fig-splittingPuccinia), *Cryptococcus* (@fig-splittingCryptococcus) and *Sclerotiniaceae* (@fig-splittingBotrytis)).
 The splitting of taxa in NanoCLUST may suggest the presence of ITS haplotype variants in these fungal groups.
 This interpretation should be treated with caution as the UMAP dimension reduction technique cannot guarantee the preservation of all structure in the lower dimensional space [@mittalDimensionalityReductionUsing2024; @asnicarMachineLearningMicrobiologists2024].
 Closer analysis of the sequences found in each OTU may give further insight into the true source of this variation.
-We anticipate that by increasing the clustering identity used by VSEARCH above 97%, these taxa would also be split into multiple OTUs, although this was not tested.
+We anticipate that by increasing the clustering identity used by VSEARCH, these taxa would also be split into multiple OTUs, although this was not tested.
 
 The metrics we used to measure species recovery (number of OTUs, number of species and percentage of reads lost) gave insight into broad patterns of clustering, but had limitations when comparing clustering methods.
 We found that the number of OTUs was a good initial measure for comparing clustering methods as it was relatively efficient to compute.
@@ -58,11 +56,8 @@ For VSEARCH, the minimum OTU size cutoff is applied after clustering on a fixed 
 In our NanoCLUST implementation, HDBSCAN recomputed the set of OTUs for each `min_cluster_size` value and is therefore more dynamic than VSEARCH.
 
 We found that interpreting the percentage of reads lost as a measure of the success was misleading.
-NanoCLUST often lost fewer reads than VSEARCH but clustered unrelated taxa together as the minimum OTU size cutoff increased (@fig-compareVsearchNanoclust and @fig-uneven-min-cluster-thresh).
+Our NanoCLUST implementation often lost fewer reads than VSEARCH but clustered unrelated taxa together as the minimum OTU size cutoff increased (@fig-compareVsearchNanoclust and @fig-uneven-min-cluster-thresh).
 The HDBSCAN algorithm had the unexpected behaviour of merging small clusters together as the `min_cluster_size` parameter increased [@lelandmcinnesParameterSelectionHDBSCAN2016].
-This demonstrates that care should be taken when optimising parameters.
-While low read loss is ideal, it may have unintended implications in the resulting clustering.
-<!-- Care should be taken when setting HDBSCAN parameters to reflect the biological implications. -->
 The original NanoCLUST pipeline [@rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021] was designed for more conserved 16S regions in Bacteria, parameters validated against 16S data may not be suitable for variable ITS regions in fungi.
 
 Our NanoCLUST implementation was unsuitable for clustering large datasets due to computational limitations.
@@ -149,9 +144,10 @@ it would be important to determine whether the source of errors in the resulting
   - potential to clump unrelated species in same OTU
 -->
 
-The real-world soil case study displayed remarkably different patterns in taxonomic assignments than in our mock scenarios.
+The real world soil case study displayed remarkably different patterns in taxonomic assignments than in our mock scenarios.
 58% of the 775 OTUs recovered in the soil case study were unidentified at the kingdom level using dnabarcoder.
-Many of these were in the top 30 most abundant OTUs and had between 40% to 93.75% identity to their closest matches in the UNITE+INSD database(@apptbl-top-30-soil-vsearch).
+Many of these were in the top 30 most abundant OTUs and had between 40% to 93.75% identity to their closest matches
+in the UNITE+INSD database (@apptbl-top-30-soil-vsearch).
 The class level is the highest taxonomic rank that dnabarcoder can assign with the published pre-computed ITS cutoffs [@vuDnabarcoderOpensourceSoftware2022].
 If dnabarcoder cannot classify a sequence to class level, it will remain unidentified at the phylum and kingdom levels.
 The classes *Basidiomycota* and *Ascomycota* require a similarity of 94.2% and 93.4% respectively, leaving many of our OTUs unclassified.
@@ -166,8 +162,6 @@ The amplicons from the soil case study include the partial LSU region which may 
 This approach may also enable phylogenetic methods and leverage existing approaches taken for studying arbuscular mycorrhizal fungi [@delavauxUtilityLargeSubunit2021; @vetrovskyGlobalAMFungiGlobalDatabase2023].
 The EUKARYOME reference databases [@tedersooEUKARYOMERRNAGene2024] would be a useful additional resource which contains curated sequences for SSU, ITS and LSU markers for all eukaryotes.
 
-- consistent naming across each region
-
 
 ## Recommendations
 
@@ -175,22 +169,14 @@ In determining the smallest library size required for reliably detecting taxa,
 in our even-abundance mock scenarios,
 we found that 10,000 reads across 58 taxa (167 reads per taxon) worked well for recovering species present with minimal OTU filtering (@fig-fixed-min-cluster-size-even).
 Higher sampling rates resulted in more misidentified and unclassified OTUS and benefited from more aggressive filtering.
-Although if using NanoCLUST to cluster, we would not recommend high values of the `min_cluster_size` parameter due to merging of unrelated taxa as discussed above and @fig-uneven-min-cluster-thresh.
+Although if using NanoCLUST to cluster, we would not recommend high values of the `min_cluster_size` parameter due to merging of unrelated taxa as discussed above and shown in @fig-uneven-min-cluster-thresh.
 If focusing on detecting rare OTUs, we suggest using minimal OTU filtering.
-In our uneven mock community, we were able to recover a taxon with 5 reads in a library with ~100K reads and a 1:400 proportion with the largest taxa.
-
-  - will lead to overestimating diversity and more false positives
-
-While this our mock scenarios are artificial and might not translate directly to a real world scenario,
-
-- suggest using mock community controls when sequencing to calibrate https://www.atcc.org/products/msa-1010
-
-A minimum mean quality score of Q20 was used for our analyses, but as we demonstrated ONT basecalling accuracy is improving, and the number of reads generated was high, therefore considerable read depth may be beneficial to increase this quality threshold with the latest ONT technology.
+In our uneven mock community, we were able to recover a taxon with 5 reads in a library with ~100K reads with minimum OTU sizes of 2 and 5.
+While low abundance taxa are recovered there is a drawback of overestimating diversity and a higher rate of false positives.
 
 <!--
-## Future work
-  - taking advantage of long amplicon (LSU, SSU)
-    - aid unclassified species
-    - phylogenetic methods
-  - try other classification methods
+While this our mock scenarios are artificial and might not translate directly to a real world scenario,
+- suggest using mock community controls when sequencing to calibrate https://www.atcc.org/products/msa-1010
 -->
+
+A minimum mean quality score of Q20 was used for our analyses, but as we demonstrated ONT basecalling accuracy is improving, and the number of reads generated was high, therefore considerable read depth may be beneficial to increase this quality threshold with the latest ONT technology.
