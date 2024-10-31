@@ -8,6 +8,7 @@ Our approach for metabarcoding long-read fungal ITS amplicons was packaged into 
 As input, the pipeline takes a set of `fastq` formatted files where each file contains the basecalled sequences from each sample.
 The stages of the metabarcoding pipeline are outlined below.
 The full set of software and versions used in the pipeline can be found in @apptbl-software-pipeline.
+We have named the pipeline nanoporcini, and it is accessible online at [https://github.com/aringeri/nanoporcini](https://github.com/aringeri/nanoporcini).
 
 ### Adapter and primer trimming
 
@@ -49,7 +50,7 @@ digraph {
 }
 ```
 
-Trimming and quality filtering of raw reads with the software used in parentheses.
+Stages of trimming and quality filtering. The process in which trimming and quality filtering is applied to raw reads with the software used in parentheses.
 :::
 
 ### Clustering
@@ -110,7 +111,7 @@ digraph {
   }
 ```
 
-Read clustering using two approaches: VSEARCH and NanoCLUST (UMAP + HDBSCAN), with the software tools used in parentheses. A representative sequence from each operational taxonomic unit (OTU) was selected either based on the most abundant sequence or the consensus sequence.
+Stages of clustering. Reads are clustered using two approaches: VSEARCH and NanoCLUST (UMAP + HDBSCAN), with the software tools used in parentheses. A representative sequence from each operational taxonomic unit (OTU) was selected either based on the most abundant sequence or the consensus sequence.
 :::
 
 ### Taxonomic assignments
@@ -150,7 +151,7 @@ digraph {
 }
 ```
 
-Process of producing a consensus sequence for each OTU by selecting and polishing a draft read. An initial draft sequence is selected by taking the read with the highest Average Nucleotide Identity (ANI) from the first 200 reads in the OTU. The 200 reads used for polishing were first aligned to the draft sequence, then polished using racon [@vaserFastAccurateNovo2017] and medaka (<https://github.com/nanoporetech/medaka>).
+Stages of consensus sequence generation. The process of producing a consensus sequence for each OTU by selecting and polishing a draft read. An initial draft sequence is selected by taking the read with the highest Average Nucleotide Identity (ANI) from the first 200 reads in the OTU. The 200 reads used for polishing were first aligned to the draft sequence, then polished using racon [@vaserFastAccurateNovo2017] and medaka (<https://github.com/nanoporetech/medaka>).
 :::
 
 The representative sequence from each OTU was then given a taxonomic assignment with dnabarcoder v1.0.6 [@vuDnabarcoderOpensourceSoftware2022]. In this case, full ITS sequences were classified against the UNITE+INSD 2024 reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255] using precomputed similarity cutoffs provided by the dnabarcoder project [@vuDnabarcoderOpensourceSoftware2022].
@@ -159,7 +160,7 @@ The representative sequence from each OTU was then given a taxonomic assignment 
 
 The pipeline was implemented using the Nextflow workflow language [@ditommasoNextflowEnablesReproducible2017]. The pipeline was developed to run with Singularity [@kurtzerSingularityScientificContainers2017] or Docker [@merkel2014docker] containers. A container-based approach is flexible and allows the pipeline to run on all systems that support either one of these container platforms. It also simplifies the setup of dependencies and ensures that the versions of dependencies are reproducible between installations. The pipeline only requires Nextflow and a container platform (Singularity or Docker) to be installed.
 
-The source code for the pipeline is available online at (www.github.com).
+The source code for the pipeline is available online at [https://github.com/aringeri/nanoporcini](https://github.com/aringeri/nanoporcini).
 
 It can be configured to run to customise the use of system resources such as number of threads or RAM.
 The following parameters of the pipeline are also configurable:
@@ -202,7 +203,7 @@ After being processed by the pipeline, 7 of the 65 fungal taxa were excluded fro
 6 of the 7 taxa were excluded due to having a low number of reads.
 Due to differences in chimera detection behaviour between reference databases, 1 of the 7 taxa was excluded erroneously under the impression that it had a low number of reads.
 
-A minimum of 2500 reads per taxa was required to construct even-abundance mock scenarios with library sizes nearing 150K reads
+A minimum of 2,500 reads per taxa was required to construct even-abundance mock scenarios with library sizes nearing 150K reads
 ($58 \text{ taxa} \times 2500 \text{ reads} = 145000\text{ reads}$).
 The samples that were excluded (with updated names in parentheses) were: *Aspergillus niger*, *Naganishia albida* (*Cryptococcus albidus*), *Geotrichum candidum* (*Galactomyces geotrichum*), *Meyerozyma guilliermondii*, Yarrowia lipolytica, *Fusarium proliferatum* and *Puccinia recondita* (*Puccinia triticina*).
 The footnotes in @apptbl-samplesheet indicate which taxa were excluded from mock scenarios.
@@ -216,7 +217,7 @@ To ensure that taxonomic names were used consistently between the fungal samples
 
 ### Scenario 1 - Even abundance {#sec-scenario-1}
 
-The first mock scenario modelled an even community structure where every fungal taxa had an equal abundance in terms of number of reads. Libraries of differing sizes were generated by subsampling an equal number of reads from each taxa. For each of the 58 taxa: 20, 50, 167, 1000, 2000 and 2500 reads were randomly selected to produce libraries with sizes of 1160, 2900, 9686, 58000, 116000 and 145000 reads (@fig-equalAbundanceDiagram). Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the '`sample`' command). The subsampling was repeated five times for each library size producing a total of 30 libraries (6 libraries $\times$ 5 repetitions). The random seed values given to seqtk's '`sample`' command for each repetition were generated deterministically so that each run of the pipeline was reproducible.
+The first mock scenario modelled an even community structure where every fungal taxa had an equal abundance in terms of number of reads. Libraries of differing sizes were generated by subsampling an equal number of reads from each taxa. For each of the 58 taxa: 20; 50; 167; 1,000; 2,000 and 2,500 reads were randomly selected to produce libraries with sizes of 1,160; 2,900; 9,686; 58,000; 116,000 and 145,000 reads (@fig-equalAbundanceDiagram). Seqtk v1.4 [@Lh3SeqtkToolkit] was used to perform the subsampling (with the '`sample`' command). The subsampling was repeated five times for each library size producing a total of 30 libraries (6 libraries $\times$ 5 repetitions). The random seed values given to seqtk's '`sample`' command for each repetition were generated deterministically so that each run of the pipeline was reproducible.
 
 ::: {#fig-equalAbundanceDiagram width=15cm}
 ```{r}
@@ -229,7 +230,7 @@ Process for generating mock communities with equal abundances. Equal numbers of 
 ::: {#fig-unevenSamplingDiagram width=15cm}
 ![](analysis/images/05-uneven-sampling-diagram.png)
 
-The process for generating mock communities with uneven abundances. Five fungal taxa were subsampled at a low rate (between 5 and 100 reads). The remaining 50 fungal taxa were subsampled at a fixed higher rate. The 'high-abundance' fungal taxa were subsampled at rates between 200 and 2000 reads to produce four libraries. Clustering and taxonomic assignment was performed on each library individually.
+Process for generating mock communities with uneven abundances. Five fungal taxa were subsampled at a low rate (between 5 and 100 reads). The remaining 50 fungal taxa were subsampled at a fixed higher rate. The 'high-abundance' fungal taxa were subsampled at rates between 200 and 2,000 reads to produce four libraries. Clustering and taxonomic assignment was performed on each library individually.
 :::
 
 ### Scenario 2 - Uneven (5 low abundance)
@@ -269,16 +270,16 @@ This left 24 samples (22 soil samples + 2 controls) for downstream processing.
 ### Metabarcoding pipeline
 
 The set of demultiplexed reads was passed to the metabarcoding pipeline with default settings.
-Due to a large library size after quality control (~3 million reads), computational constraints did not allow the NanoCLUST approach to cluster the full dataset.
-Instead, VSEARCH was used to cluster the full dataset, while NanoCLUST was used to cluster a subset of ~94K reads.
-4000 reads were randomly sampled from each of the 22 soil samples and the DNA extraction control (ExCon), while 2400 reads were available from the PCR negative control (PCRNegCon).
-The resulting OTUs were classified by their most abundant sequence using dnabarcoder and the UNITE+INSD 2024 reference database.
+Due to a large library size after quality control (~1.8 million reads), computational constraints did not allow the NanoCLUST approach to cluster the full dataset.
+Instead, VSEARCH was used to cluster the full dataset.
+Singleton OTUs were removed after clustering and the remaining OTUs were classified by their most abundant sequence using dnabarcoder and the UNITE+INSD 2024 reference database.
 
 ### Data analysis
 
-For each clustering method, an OTU table and classifications table was imported into the phyloseq v1.48.0 R package [@mcmurdiePhyloseqPackageReproducible2013].
+An OTU table and dnabarcoder's classifications table was imported into the phyloseq v1.48.0 R package [@mcmurdiePhyloseqPackageReproducible2013].
 The decontam v1.24.0 [@davisSimpleStatisticalIdentification2018] R package was used to remove contaminant sequences identified in the two control samples.
 Low-abundance OTUs were filtered in a sample-wise fashion: OTUs were removed from a sample if they were smaller than 0.15% of the total number of reads in the sample.
 This cutoff was chosen based on the results of experimentation with the mock community trials.
+The scripts used to perform this analysis have been published on GitHub for reference: [https://github.com/aringeri/long-read-ITS-metabarcoding-thesis/tree/main/reports/masters/thesis/analysis](https://github.com/aringeri/long-read-ITS-metabarcoding-thesis/tree/main/reports/masters/thesis/analysis).
 
 

@@ -56,8 +56,8 @@ reference data used [@Tedersoo2022].
 :::{#fig-metabarcoding-workflow}
 ![](resources/images/fungal-metabarcoding.png)
 
-The main steps for a fungal metabarcoding workflow along
-with a depiction of the nuclear ribosomal RNA operon. Short-read technologies target the ITS1 or ITS2 subregion
+The main steps for a fungal metabarcoding workflow.
+Depicted is the nuclear ribosomal RNA operon where short-read technologies target the ITS1 or ITS2 subregion
 in isolation, while long-read technologies are capable of targeting the entire ITS region and beyond [@Nilsson2019a]
 :::
 

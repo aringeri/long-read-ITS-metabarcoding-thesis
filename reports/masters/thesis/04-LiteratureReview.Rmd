@@ -29,8 +29,8 @@ groups (@fig-its-region-simple) [@Nilsson2019a].
 :::{#fig-its-region-simple}
 ![](resources/images/ITS-region-(2021 Furneaux).png)
 
-A simplified map of the ITS region showing common primer sites and
-typical amplicon lengths (edited from @Furneaux2021a)
+Simplified map of the ITS region.
+Common primer sites and typical amplicon lengths are shown (edited from @Furneaux2021a)
 :::
 
 Due to read length limitations of short-read sequencing platforms,
@@ -124,7 +124,7 @@ for metabarcoding studies [@Nilsson2019a].
 :::{#fig-NGS-comparison width=8cm}
 ![](resources/images/Illumina-NGS.png)
 
-In the Illumina sequencing process, DNA fragments hybridise and are fixed to the bottom of a nanowell.
+Illumina sequencing process. DNA fragments hybridise and are fixed to the bottom of a nanowell.
 These fragments are amplified into a cluster of identical sequences.
 Fluorescent dye–labeled dNTPs are incorporated into a complementary DNA strand by a DNA-polymerase.
 Synthesis is paused after each dNTP is incorporated allowing the device to take an image of the flow cell.
@@ -166,6 +166,7 @@ ratcheted through the pore (see
 :::{#fig-nanopore-schematic}
 ![](resources/images/nanopore-schematic.png)
 
+Illustration of Nanopore sequencing.
 A double-stranded DNA (dsDNA) molecule (or RNA–DNA hybrid)
 is first unwound with the help of a motor protein, then the negatively charged single-stranded
 DNA (or RNA) is ratcheted through the nanopore
@@ -319,7 +320,7 @@ NanoCLUST has been developed for the analysis of 16S rRNA amplicons but other re
 :::{#fig-nanoclust-steps width=15cm}
 ![](resources/images/NanoCLUST-langsiri-cropped.png)
 
-Steps for clustering reads with NanoCLUST.
+Illustration of NanoCLUST clustering.
 Reads are transformed into a k-mer frequency vector and stored in a tabular format.
 Uniform Manifold Approximation and Projection (UMAP) is applied to reduce the multidimensional tabular structure into two dimensions.
 The Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) algorithm clusters points in two-dimensional space.

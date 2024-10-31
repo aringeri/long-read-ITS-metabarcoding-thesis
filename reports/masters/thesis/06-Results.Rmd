@@ -18,7 +18,7 @@ set_flextable_defaults(
 ### Quality control
 
 After quality control, there was considerable read loss across the fungal taxa used to construct the mock scenarios (@apptbl-samplesheet).
-A minimum of 2500 reads per taxa was required to construct even-abundance mock scenarios with library sizes nearing 150K reads
+A minimum of 2,500 reads per taxa was required to construct even-abundance mock scenarios with library sizes nearing 150K reads
 ($58 \text{ taxa} \times 2500 \text{ reads} = 145000\text{ reads}$).
 This can be seen in @fig-readCountDistributionBySample, where seven samples are excluded.
 
@@ -27,13 +27,13 @@ This can be seen in @fig-readCountDistributionBySample, where seven samples are 
 knitr::include_graphics('analysis/images/06-read-count-distribution-by-sample.png')
 ```
 
-The distribution of read counts per sample before (A) and after (B) quality control processing. Reads having less than 2500 reads were excluded from mock scenarios (dotted line in B). Note the x-axis is on a log scale.
+Read loss after quality control. The distribution of read counts per sample before (A) and after (B) quality control processing. Reads having less than 2,500 reads were excluded from mock scenarios (dotted line in B). Note the x-axis is on a log scale.
 :::
 
 Tracking read counts at each stage of the pipeline has shown that the majority of reads were lost in the primer trimming and quality filtering stages of the pipeline (@fig-readLossByStage).
 An average of 32.37% of reads were lost across samples after applying cutadapt to select and trim amplicons that contain both forward (ITS1F) and reverse primer (LR3) sequences.
 The extraction of the full ITS region led to an average loss of 10.65% trimmed reads across samples.
-An average of 71.82% of full ITS sequences were lost after selecting reads between 300-6000bp in length and having a mean quality score above Q20 (Phred scale).
+An average of 71.82% of full ITS sequences were lost after selecting reads between 300-6,000bp in length and having a mean quality score above Q20 (Phred scale).
 Such large loss of reads can be attributed to many of the reads from the dataset being below the minimum mean quality threshold of Q20 (@fig-rawReadQuality).
 
 ::: {#fig-readLossByStage}
@@ -76,7 +76,7 @@ VSEARCH significantly over-estimated the number of species in the mock community
 Furthermore, this over-estimation was exacerbated as the library size increased.
 As a significant proportion of these OTUs had low abundance, to recover the expected number of species in the mock community, we implemented a crude cutoff which removed OTUs below a minimum size.
 We set the cutoff to a proportion of the total library size and tested values between 0% and 2% (@fig-compareVsearchNanoclust).
-We repeated the test for 6 different library sizes (1160, 2900, 9686, 58000, 116000, and 145000 reads) where all fungal taxa had equal abundances.
+We repeated the test for 6 different library sizes (1,160; 2,900; 9,686; 58,000; 116,000; and 145,000 reads) where all fungal taxa had equal abundances.
 
 With VSEARCH, we observed consistent behaviour when applying the minimum OTU size cutoff at all library sizes.
 The number of OTUs was very high without a minimum OTU size cutoff, then decreased and stabilised near the expected number of species as the OTU size cutoff increased.
@@ -85,7 +85,8 @@ We observed that setting the minimum OTU size to be 0.15% of the library size co
 :::{#fig-compareVsearchNanoclust}
 ![](analysis/images/06-otu-count-and-loss.png)
 
-Impact of a minimum OTU size cutoff on the number of OTUs and the proportion of read loss between NanoCLUST (in red) and VSEARCH (in blue) clustering methods.
+Impact of a minimum OTU size cutoff on clustering methods.
+The number of OTUs and the proportion of read loss is shown for NanoCLUST (in red) and VSEARCH (in blue) clustering methods.
 These are results from the even abundance scenario.
 Plots have been organised in columns by increasing library size.
 The top row of plots shows the number of OTUs after applying a minimum cluster size cutoff that is a proportion of the library size.
@@ -107,11 +108,11 @@ The dashed line indicates the actual number of species in the mock scenario.
 
 Alternatively, we tested the k-mer based clustering approach used by the NanoCLUST pipeline.
 Within the NanoCLUST pipeline, HDBSCAN is the algorithm that performs the clustering and requires specifying a minimum cluster size parameter *a priori*.
-Similar to our approach with VSEARCH, we tested multiple values of HDBSCAN's minimum cluster size parameter on the even abundance mock community for 6 different library sizes (1160, 2900, 9686, 58000, 116000, and 145000 reads).
+Similar to our approach with VSEARCH, we tested multiple values of HDBSCAN's minimum cluster size parameter on the even abundance mock community for 6 different library sizes (1,160; 2,900; 9,686; 58,000; 116,000; and 145,000 reads).
 We tested a range of minimum cluster sizes between 0% and 2% of the total library size.
-We found that when the minimum cluster size parameter was set to its minimum value (2 reads), the NanoCLUST method overestimated the number of species for library sizes of 1160 reads and above.
+We found that when the minimum cluster size parameter was set to its minimum value (2 reads), the NanoCLUST method overestimated the number of species for library sizes of 1,160 reads and above.
 With the minimum cluster size parameter set to 2, the number of OTUs showed a positive correlation with library size but not as dramatically as with VSEARCH.
-For library sizes of 1160 reads and above, a minimum cluster size of 0.65% of the total library size consistently recovered the expected number of species.
+For library sizes of 1,160 reads and above, a minimum cluster size of 0.65% of the total library size consistently recovered the expected number of species.
 
 <!--
   :::{#fig-nanoclustOTUs}
@@ -138,7 +139,7 @@ $$
 \frac{\text{\# of unclustered reads}}{\text{\# number of reads in library}}
 $$
 
-We found that for low library sizes (1160-9686 reads), the NanoCLUST method produced closer estimates of the actual number of species
+We found that for low library sizes (1,160-9,686 reads), the NanoCLUST method produced closer estimates of the actual number of species
 with lower read loss than VSEARCH for all minimum OTU sizes.
 For larger library sizes (58K-145K reads) using the VSEARCH method, we observed a consistent pattern of read loss for all library sizes.
 The NanoCLUST method became less consistent for larger library sizes and lost a higher proportion reads to recover the same number of species as VSEARCH (@fig-compareVsearchNanoclust).
@@ -164,7 +165,7 @@ We felt that a minimum OTU size of 0.65% for NanoCLUST and 0.15% for VSEARCH wou
 and may bias against samples with low read depth.
 
 Here we explored the observed number of species in our even abundance mock community after assigning OTUs.
-We performed VSEARCH and NanoCLUST clustering methods on four library sizes of 9686, 58000, 116000 and 145000 reads.
+We performed VSEARCH and NanoCLUST clustering methods on four library sizes of 9,686; 58,000; 116,000 and 145,000 reads.
 HDBSCAN clustering was performed six times for each library with minimum cluster sizes of: 2, 5, 10, 20, 50 and 100 reads.
 VSEARCH clustering was performed once for each library at 97% identity, then OTUs with fewer than: 2, 5, 10, 20, 50 and 100 reads were removed.
 The most abundant sequence was used at the representative sequence for each OTU and given a taxonomic assignment with dnabarcoder using the UNITE+INSD 2024 database.
@@ -190,7 +191,7 @@ Yellow bars show the number of OTUs that were assigned at the genus level, and w
 Orange bars show the number of OTUs that were assigned at the family level, and whose family label was known to be in the mock community.
 Red bars show the number of OTUs that were assigned at the species, genus or family level but whose taxonomic label was not found in the mock community.
 Grey bars show the number of OTUs that were unidentified at the family level or above.
-The process was repeated for four library sizes of 9686, 58000, 116000 and 145000 reads.
+The process was repeated for four library sizes of 9,686; 58,000; 116,000 and 145,000 reads.
 The bottom row of plots show the proportion of reads that are lost after applying the minimum OTU size cutoff.
 :::
 
@@ -203,7 +204,7 @@ NanoCLUST overestimated the number of species regardless of the minimum OTU size
 #### Comparing cluster delineation between VSEARCH and NanoCLUST
 
 To investigate if closely related species could be distinguished after clustering,
-we looked at a single execution of the even abundance mock scenario where 2000 reads were selected from each of the 58 fungal taxa giving a total library size of 116K reads.
+we looked at a single execution of the even abundance mock scenario where 2,000 reads were selected from each of the 58 fungal taxa giving a total library size of 116K reads.
 Reads were clustered separately with the NanoCLUST and VSEARCH methods.
 Reads that were clustered with the NanoCLUST method used a minimum cluster size of 580 reads (0.5% of the library size).
 VSEARCH clustering used a 97% identity and OTUs that had fewer than 174 reads (0.15% of library size) were removed.
@@ -221,7 +222,7 @@ and may be indicative of index-switching (where a sequencing error has occurred 
 
 ![](analysis/images/06-cluster-splitting-vsearch-puccinia.png)
 
-Clustering of *Pucciniales* using the NanoCLUST (UMAP + HDBSCAN) vs VSEARCH methods.
+Clustering of *Pucciniales* using the NanoCLUST (UMAP + HDBSCAN) and VSEARCH methods.
 Each plot shows the reads from a single fungal taxon and bars indicate the number of reads from the taxon placed in an OTU.
 The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the x-axis labels.
 Green bars indicate that the assignment given to an OTU matches the expected species-level classification.
@@ -243,7 +244,7 @@ A similar plot for all samples in this mock community can be seen in @appfig-nan
 
 ![](analysis/images/06-cluster-splitting-vsearch-candida.png)
 
-Clustering of selected *Candida* using the NanoCLUST (UMAP + HDBSCAN) vs VSEARCH methods.
+Clustering of selected *Candida* using the NanoCLUST (UMAP + HDBSCAN) and VSEARCH methods.
 Each plot shows the reads from a single fungal taxon and bars indicate the number of reads from the taxon placed in an OTU.
 The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the x-axis labels.
 Green bars indicate that the assignment given to an OTU matches the expected species-level classification.
@@ -265,7 +266,7 @@ VSEARCH placed the majority of reads from both taxa in the same OTU, while NanoC
 
 ![](analysis/images/06-cluster-splitting-vsearch-cryptococcus.png)
 
-Clustering of genus *Cryptococcus* using the NanoCLUST (UMAP + HDBSCAN) vs VSEARCH methods.
+Clustering of genus *Cryptococcus* using the NanoCLUST (UMAP + HDBSCAN) and VSEARCH methods.
 Each plot shows the reads from a single fungal taxon and bars indicate the number of reads from the taxon placed in an OTU.
 The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the x-axis labels.
 Green bars indicate that the assignment given to an OTU matches the expected species-level classification.
@@ -284,7 +285,7 @@ while a proportion of reads from *Cryptococcus neoformans* VNI (BC61) were miscl
 
 ![](analysis/images/06-cluster-splitting-vsearch-botrytis.png)
 
-Clustering of family *Sclerotiniaceae* using the NanoCLUST (UMAP + HDBSCAN) vs VSEARCH methods.
+Clustering of family *Sclerotiniaceae* using the NanoCLUST (UMAP + HDBSCAN) and VSEARCH methods.
 Each plot shows the reads from a single fungal taxon and bars indicate the number of reads from the taxon placed in an OTU.
 The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the x-axis labels.
 Green bars indicate that the assignment given to an OTU matches the expected species-level classification.
@@ -316,7 +317,7 @@ $$
 \frac{\text{\# of reads classified correctly at the genera level}}{\text{\# of reads classified at the genera level}}
 $$
 
-These metrics were calculated for five library sizes (between 2900 and 145000 reads) for both NanoCLUST and VSEARCH clustering methods (@fig-precision).
+These metrics were calculated for five library sizes (between 2,900 and 145,000 reads) for both NanoCLUST and VSEARCH clustering methods (@fig-precision).
 We explored which representative sequence from an OTU gave more accurate taxonomic classifications: most abundant sequence or consensus sequence.
 Consensus sequences were generated by polishing a subset of sequences from each OTU as described in @sec-pipeline-description.
 
@@ -331,7 +332,7 @@ Manual adjustments were made for the following assignments that would have been 
 ![](analysis/images/06-precision-even-abundance.png)
 
 Comparing the proportion of classified reads and the precision of classifications at the genera level between the most abundant sequence and consensus sequence.
-Classification metrics were calculated for the even-abundance mock scenario with five library sizes of 2900, 9686, 58000, 116000 and 145000 reads.
+Classification metrics were calculated for the even-abundance mock scenario with five library sizes of 2,900; 9,686; 58,000; 116,000 and 145,000 reads.
 Five replicates were performed for each library.
 Red points show classification proportion and precision when using the most abundance sequence from OTUs.
 Blue points show classification proportion and precision when using a consensus sequence from OTUs.
@@ -367,7 +368,7 @@ Yellow bars show the number of OTUs that were assigned at the genus level, and w
 Orange bars show the number of OTUs that were assigned at the family level, and whose family label was known to be in the mock community.
 Red bars show the number of OTUs that were assigned at the species, genus or family level but whose taxonomic label was not found in the mock community.
 Grey bars show the number of OTUs that were unidentified at the family level or above.
-The process was repeated for five library sizes of 5185, 10185, 25185, 50185, 100185 reads.
+The process was repeated for five library sizes of 5,185; 10,185; 25,185; 50,185 and 100,185 reads.
 The bottom row of plots show the proportion of reads that are lost after applying the minimum OTU size cutoff.
 :::
 -->
@@ -376,7 +377,7 @@ The bottom row of plots show the proportion of reads that are lost after applyin
 
 To explore the impact that a minimum OTU size cutoff might have on rare species in a real environmental sample, we modelled a scenario where a subset of fungal taxa had much lower abundance than others.
 This mock community contained a total of 55 fungal taxa where
-50 taxa each had an abundance of 2000 reads, while the remaining five taxa had abundances of 5, 10, 20, 50 and 100 reads, making for a total library size of 100185 reads.
+50 taxa each had an abundance of 2,000 reads, while the remaining five taxa had abundances of 5, 10, 20, 50 and 100 reads, making for a total library size of 100,185 reads.
 We examined the minimum OTU size cutoff at which low-abundance taxa would be lost (@fig-uneven-min-cluster-thresh).
 
 :::{#fig-uneven-min-cluster-thresh}
@@ -389,7 +390,7 @@ Coloured bars show the proportion of reads belonging to the fungal taxa within a
 Minimum OTU sizes of 2, 5, 10, 20, 50 and 100 were tested and shown in plots arranged from left to right.
 The low-abundance fungal taxa are *Trichomanascus ciferri*, *Erysiphe necator*, *Eutypa lata*, *Penicillium chrysogenum* and *Candida zeylanoides* which
 had abundances of 5, 10, 20, 50 and 100 reads respectively.
-The remaining 50 taxa in the mock community each had an abundance of 2000 reads.
+The remaining 50 taxa in the mock community each had an abundance of 2,000 reads.
 The dotted line indicates the minimum OTU size relative to the OTU size.
 :::
 
@@ -431,7 +432,7 @@ After tracking the number of reads through the primer trimming, ITS extraction, 
 We observed considerably more reads being retained after the primer trimming step for the soil samples as compared to the mock fungal samples (14.85% loss vs. 32.37% loss), which is likely due to the higher read quality
 but also due to the demultiplexing approach having already detected and filtered reads that did not match the amplicon primers.
 We also noted that the extraction kit (ExCon) and PCR negative control had a relatively low number of reads as expected after these stages.
-The sample AP6 was excluded from further processing due to having a significantly lower read count (1173) compared to the other samples.
+The sample AP6 was excluded from further processing due to having a significantly lower read count (1,173) compared to the other samples.
 
 :::{#fig-qc-soil}
 
@@ -447,7 +448,7 @@ Each step was executed in order from left to right. Note the y-axis has been plo
 
 ### Clustering and taxonomic assignment
 
-The full set of quality filtered reads were clustered with VSEARCH at 97% identity and the most-abundant sequence of each
+The full set of quality filtered reads were clustered with VSEARCH at 97% identity and the most abundant sequence of each
 OTU was classified using dnabarcoder and the UNITE+INSD 2024 database.
 Low-abundance OTUs were removed from samples if they were smaller than 0.15% of the number of reads in the sample.
 The top 30 largest OTUS can be seen in @apptbl-top-30-soil-vsearch.
@@ -465,49 +466,57 @@ Each bar represents the number of reads in each sample that are either classifie
 The classifications by tree species are shown in @fig-AL-krona and @fig-EC-krona
 and show a higher proportion of fungi are classified in *Eucalyptus* species compared to *Allocasuarina*.
 
-:::{#fig-AL-krona layout-ncol=2}
+:::{#fig-AL-krona layout-ncol=2 .content-visible when-format="html"}
+```{=html}
+<iframe width="400" height="500" src="analysis/krona/AL.html" title="Webpage example"></iframe>
+<figcaption>A. litteralis</figcaption>
+```
+
+```{=html}
+<iframe width="400" height="500" src="analysis/krona/AP.html" title="Webpage example"></iframe>
+<figcaption>A. paradoxa</figcaption>
+```
+
+Classifications from *Allocasuarina* samples. Krona chart shows genus level classifications from all *Allocasuarina littoralis* and *Allocasuarina paradoxa* samples.
+Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011].
+:::
+
+:::{#fig-AL-krona layout-ncol=2 .content-hidden when-format="html"}
 ![A. litteralis](analysis/images/krona/AL-vsearch.svg)
 
 ![A. paradoxa](analysis/images/krona/AP-vsearch.svg)
 
-Krona chart showing genus level classifications from all *Allocasuarina littoralis* and *Allocasuarina paradoxa* samples.
-Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011]
+Classifications from *Allocasuarina* samples. Krona chart shows genus level classifications from all *Allocasuarina littoralis* and *Allocasuarina paradoxa* samples.
+Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011].
+Interactive versions of these figures are available online at: https://aringeri.github.io/long-read-ITS-metabarcoding-thesis/06-Results.html#fig-AL-krona
 :::
 
 
-<!--
-:::{#fig-AP-krona}
-![](analysis/images/krona/AP-vsearch.svg)
+:::{#fig-EC-krona layout-ncol=2 .content-visible when-format="html"}
+```{=html}
+<iframe width="400" height="500" src="analysis/krona/EC.html" title="Webpage example"></iframe>
+<figcaption>E. cephalocarpa</figcaption>
+```
 
-Krona chart to genus level from all *Allocasuarina paradoxa* samples.
-Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011]
+```{=html}
+<iframe width="400" height="500" src="analysis/krona/EV.html" title="Webpage example"></iframe>
+<figcaption>E. viminalis</figcaption>
+```
+
+Classifications from *Eucalyptus* samples. Krona chart shows genus level classifications from all *Eucalyptus cephalocarpa* and *Eucalyptus viminalis* samples.
+Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011].
 :::
--->
 
-:::{#fig-EC-krona layout-ncol=2}
+:::{#fig-EC-krona layout-ncol=2 .content-hidden when-format="html"}
 ![E. cephalocarpa](analysis/images/krona/EC-vsearch.svg)
 
 ![E. viminalis](analysis/images/krona/EV-vsearch.svg)
 
-Krona chart showing genus level classifications from all *Eucalyptus cephalocarpa* and *Eucalyptus viminalis* samples.
-Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011]
+Classifications from *Eucalyptus* samples. Krona chart shows genus level classifications from all *Eucalyptus cephalocarpa* and *Eucalyptus viminalis* samples.
+Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011].
+Interactive versions of these figures are available online at: https://aringeri.github.io/long-read-ITS-metabarcoding-thesis/06-Results.html#fig-EC-krona
 :::
 
 
-<!--
-:::{#fig-EV-krona}
-![](analysis/images/krona/EV-vsearch.svg)
-
-Krona chart to genus level from all *Eucalyptus viminalis* samples.
-Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011]
-:::
--->
-
-
-<!--
-```{=html}
-<iframe width="780" height="500" src="analysis/krona/AL.html" title="Webpage example"></iframe>
-```
--->
 
 

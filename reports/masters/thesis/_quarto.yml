@@ -7,13 +7,14 @@ book:
   author: Alex Ringeri
   chapters:
     - index.qmd
+    - 04-LiteratureReview.Rmd
     - 02-Objectives.Rmd
     - 03-Significance.Rmd
-    - 04-LiteratureReview.Rmd
     - 05-Methods.Rmd
     - 06-Results.Rmd
     - 07-Discussion.Rmd
     - 08-Conclusion.Rmd
+    - Acknowledgements.Rmd
     - 10-References.Rmd
     - 09-Supplementary.Rmd
 

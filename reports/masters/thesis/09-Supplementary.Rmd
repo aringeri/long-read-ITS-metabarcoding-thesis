@@ -143,7 +143,7 @@ Software used basecalling the fungal isolate dataset used in mock scenarios.
 ![](analysis/images/06-cluster-splitting-nanoclust-with-tax-31.png)
 
 Chart showing how 58 fungal isolates are clustered into OTUs based on a single execution of the even abundance mock scenario.
-Each isolate has been subsampled to 2000 reads and then clustered using the NanoCLUST (UMAP + HDBSCAN) method with a minimum cluster size set to 580 (0.5% of the total library size).
+Each isolate has been subsampled to 2,000 reads and then clustered using the NanoCLUST (UMAP + HDBSCAN) method with a minimum cluster size set to 580 (0.5% of the total library size).
 Bars indicate the abundance of an OTU (number of reads).
 The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the X axis labels (See @apptbl-tax-assignments-nanoclust for classifications).
 Green bars indicate that the assignment given to an OTU matches the expected species-level classification.
@@ -184,7 +184,7 @@ The set of taxonomic assignments for each OTU in @appfig-nanoclustSplitting2. Th
 ![](analysis/images/06-cluster-splitting-vsearch-with-tax-31.png)
 
 Chart showing how 58 fungal isolates are clustered into OTUs based on a single execution of the even abundance mock scenario.
-Each isolate has been subsampled to 2000 reads and then clustered using VSEARCH at 97% identity.
+Each isolate has been subsampled to 2,000 reads and then clustered using VSEARCH at 97% identity.
 OTUs with less than 174 reads were removed (0.15% of the total library size).
 Bars indicate the abundance of an OTU (number of reads).
 The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the X axis labels (See @apptbl-tax-assignments-vsearch for classifications).
