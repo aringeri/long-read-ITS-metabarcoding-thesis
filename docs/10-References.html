@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing - 10&nbsp; References</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./09-Supplementary.html" rel="next">
+<link href="./Acknowledgements.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-References.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">References</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-LiteratureReview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature Review</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Objectives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objectives</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Significance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-Methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-Results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Results</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Discussion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discussion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-Conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-References.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-Supplementary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Appendices</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">References</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-abarenkovFullUNITEINSDDataset2024" class="csl-entry" role="listitem">
+Abarenkov,K. <em>et al.</em> (2024) <a href="https://doi.org/10.15156/BIO/2959330">Full
+<span>UNITE</span>+<span>INSD</span> dataset for <span>Fungi</span></a>.
+</div>
+<div id="ref-Abarenkov2010" class="csl-entry" role="listitem">
+Abarenkov,K. <em>et al.</em> (2010) <a href="https://doi.org/10.1111/j.1469-8137.2009.03160.x">The
+<span>UNITE</span> database for molecular identification of fungi –
+recent updates and future perspectives</a>. <em>New Phytologist</em>,
+<strong>186</strong>, 281–285.
+</div>
+<div id="ref-Aigrain2021" class="csl-entry" role="listitem">
+Aigrain,L. (2021) <a href="https://doi.org/10.1042/bio_2021_135">Beginner’s guide to
+next-generation sequencing</a>. <em>The Biochemist</em>,
+<strong>43</strong>, 58–64.
+</div>
+<div id="ref-anslanGreatDifferencesPerformance2018a" class="csl-entry" role="listitem">
+Anslan,S. <em>et al.</em> (2018) <a href="https://doi.org/10.3897/mycokeys.39.28109">Great differences in
+performance and outcome of high-throughput sequencing data analysis
+platforms for fungal metabarcoding</a>. <em>MycoKeys</em>, 29.
+</div>
+<div id="ref-anuSchwessingerGroupPlants" class="csl-entry" role="listitem">
+ANU <a href="https://biology.anu.edu.au/research/research-groups/schwessinger-group-plants-fungi-evolution">Schwessinger
+<span>Group</span> - <span>Plants</span>, fungi, evolution | <span>ANU
+Research School</span> of <span>Biology</span></a>.
+</div>
+<div id="ref-asnicarMachineLearningMicrobiologists2024" class="csl-entry" role="listitem">
+Asnicar,F. <em>et al.</em> (2024) <a href="https://doi.org/10.1038/s41579-023-00984-1">Machine learning for
+microbiologists</a>. <em>Nat Rev Microbiol</em>, <strong>22</strong>,
+191–205.
+</div>
+<div id="ref-Baloglu2021" class="csl-entry" role="listitem">
+Baloğlu,B. <em>et al.</em> (2021) <a href="https://doi.org/10.1111/2041-210X.13561">A workflow for accurate
+metabarcoding using nanopore <span>MinION</span> sequencing</a>.
+<em>Methods in Ecology and Evolution</em>, <strong>12</strong>, 794–804.
+</div>
+<div id="ref-Barbera2019" class="csl-entry" role="listitem">
+Barbera,P. <em>et al.</em> (2019) <a href="https://doi.org/10.1093/sysbio/syy054"><span class="nocase">EPA-ng</span>: <span>Massively</span> parallel
+evolutionary placement of genetic sequences</a>. <em>Systematic
+Biology</em>, <strong>68</strong>, 365–369.
+</div>
+<div id="ref-Bengtsson-Palme2013" class="csl-entry" role="listitem">
+Bengtsson-Palme,J. <em>et al.</em> (2013) <a href="https://doi.org/10.1111/2041-210X.12073">Improved software
+detection and extraction of <span>ITS1</span> and <span>ITS2</span> from
+ribosomal <span>ITS</span> sequences of fungi and other eukaryotes for
+analysis of environmental sequencing data</a>. <em>Methods in Ecology
+and Evolution</em>, <strong>4</strong>, 914–919.
+</div>
+<div id="ref-Bidartondo2008" class="csl-entry" role="listitem">
+Bidartondo,M.I. (2008) <a href="https://doi.org/10.1126/science.319.5870.1616a">Preserving
+accuracy in <span>GenBank</span></a>. <em>Science</em>,
+<strong>319</strong>, 1616.
+</div>
+<div id="ref-BioIT2013" class="csl-entry" role="listitem">
+BioIT (2013) <a href="https://www.bio-itworld.com/news/2013/10/16/six-years-after-acquisition-roche-quietly-shutters-454">Six
+years after acquisition, roche quietly shutters 454</a>.
+</div>
+<div id="ref-Blaxter2005" class="csl-entry" role="listitem">
+Blaxter,M. <em>et al.</em> (2005) <a href="https://doi.org/10.1098/rstb.2005.1725">Defining operational
+taxonomic units using <span>DNA</span> barcode data</a>.
+<em>Philosophical Transactions of the Royal Society B: Biological
+Sciences</em>, <strong>360</strong>, 1935–1943.
+</div>
+<div id="ref-bradshawExtensiveIntragenomicVariation2023" class="csl-entry" role="listitem">
+Bradshaw,M.J. <em>et al.</em> (2023) <a href="https://doi.org/10.1016/j.isci.2023.107317">Extensive intragenomic
+variation in the internal transcribed spacer region of fungi</a>.
+<em>iScience</em>, <strong>26</strong>.
+</div>
+<div id="ref-californiaacademyofsciencesCalacademyresearchMinibarDual2024" class="csl-entry" role="listitem">
+California Academy of Sciences (2024) <a href="https://github.com/calacademy-research/minibar">Calacademy-research/minibar:
+<span>Dual</span> barcode and primer demultiplexing for
+<span>MinION</span> sequenced reads</a>.
+</div>
+<div id="ref-Callahan2017" class="csl-entry" role="listitem">
+Callahan,B.J. <em>et al.</em> (2017) <a href="https://doi.org/10.1038/ismej.2017.119">Exact sequence variants
+should replace operational taxonomic units in marker-gene data
+analysis</a>. <em>ISME Journal</em>, <strong>11</strong>, 2639–2643.
+</div>
+<div id="ref-Camacho2009a" class="csl-entry" role="listitem">
+Camacho,C. <em>et al.</em> (2009) <a href="https://doi.org/10.1186/1471-2105-10-421"><span>BLAST</span>+:
+<span>Architecture</span> and applications</a>. <em>BMC
+Bioinformatics</em>, <strong>10</strong>, 1–9.
+</div>
+<div id="ref-Cline2017" class="csl-entry" role="listitem">
+Cline,L.C. <em>et al.</em> (2017) <a href="https://doi.org/10.1111/NPH.14752">Moving beyond de novo
+clustering in fungal community ecology</a>. <em>New Phytologist</em>,
+<strong>216</strong>, 629–634.
+</div>
+<div id="ref-Cole2014" class="csl-entry" role="listitem">
+Cole,J.R. <em>et al.</em> (2014) <a href="https://doi.org/10.1093/nar/gkt1244">Ribosomal <span>Database
+Project</span>: <span>Data</span> and tools for high throughput <span class="nocase">rRNA</span> analysis</a>. <em>Nucleic Acids
+Research</em>, <strong>42</strong>, 633–642.
+</div>
+<div id="ref-Corrales2021" class="csl-entry" role="listitem">
+Corrales,A. <em>et al.</em> (2021) <a href="https://doi.org/10.1016/j.funeco.2020.101023">Fungal communities
+associated with roots of two closely related <span>Juglandaceae</span>
+species with a disjunct distribution in the tropics</a>. <em>Fungal
+Ecology</em>, <strong>50</strong>, 101023.
+</div>
+<div id="ref-davisSimpleStatisticalIdentification2018" class="csl-entry" role="listitem">
+Davis,N.M. <em>et al.</em> (2018) <a href="https://doi.org/10.1186/s40168-018-0605-2">Simple statistical
+identification and removal of contaminant sequences in marker-gene and
+metagenomics data</a>. <em>Microbiome</em>, <strong>6</strong>, 1–14.
+</div>
+<div id="ref-DeCoster2018" class="csl-entry" role="listitem">
+De Coster,W. <em>et al.</em> (2018) <a href="https://doi.org/10.1093/bioinformatics/bty149"><span>NanoPack</span>:
+<span>Visualizing</span> and processing long-read sequencing data</a>.
+<em>Bioinformatics</em>, <strong>34</strong>, 2666–2669.
+</div>
+<div id="ref-DeCoster2023" class="csl-entry" role="listitem">
+De Coster,W. and Rademakers,R. (2023) <a href="https://doi.org/10.1093/bioinformatics/btad311"><span>NanoPack2</span>:
+Population-scale evaluation of long-read sequencing data</a>.
+<em>Bioinformatics</em>, <strong>39</strong>, 0–2.
+</div>
+<div id="ref-delavauxEnvironmentalIdentificationArbuscular2022" class="csl-entry" role="listitem">
+Delavaux,C.S. <em>et al.</em> (2022) <a href="https://doi.org/10.1007/s00572-022-01068-3">Environmental
+identification of arbuscular mycorrhizal fungi using the <span class="nocase">LSU rDNA</span> gene region: An expanded database and
+improved pipeline</a>. <em>Mycorrhiza</em>, <strong>32</strong>,
+145–153.
+</div>
+<div id="ref-delavauxUtilityLargeSubunit2021" class="csl-entry" role="listitem">
+Delavaux,C.S. <em>et al.</em> (2021) <a href="https://doi.org/10.1111/nph.17080">Utility of large subunit for
+environmental sequencing of arbuscular mycorrhizal fungi: A new
+reference database and pipeline</a>. <em>New Phytologist</em>,
+<strong>229</strong>, 3048–3052.
+</div>
+<div id="ref-ditommasoNextflowEnablesReproducible2017" class="csl-entry" role="listitem">
+Di Tommaso,P. <em>et al.</em> (2017) <a href="https://doi.org/10.1038/nbt.3820">Nextflow enables reproducible
+computational workflows</a>. <em>Nat Biotechnol</em>,
+<strong>35</strong>, 316–319.
+</div>
+<div id="ref-Edgar2016a" class="csl-entry" role="listitem">
+Edgar,R.C. (2016) <span>SINTAX</span>: A simple
+non-<span>Bayesian</span> taxonomy classifier for <span>16S</span> and
+<span>ITS</span> sequences. <em>bioRxiv</em>, 074161.
+</div>
+<div id="ref-RealTime2009" class="csl-entry" role="listitem">
+Eid,J. <em>et al.</em> (2009) <a href="https://doi.org/10.1126/science.1162986">Real-time
+<span>DNA</span> sequencing from single polymerase molecules</a>.
+<em>Science</em>, <strong>323</strong>, 133–138.
+</div>
+<div id="ref-C.2020" class="csl-entry" role="listitem">
+Fisher,M.C. <em>et al.</em> (2020) <a href="https://doi.org/10.1128/mbio.00449-20">Threats posed by the fungal
+kingdom to humans, wildlife, and agriculture</a>. <em>mBio</em>,
+<strong>11</strong>, 10.1128/mbio.00449–20.
+</div>
+<div id="ref-Frey2019" class="csl-entry" role="listitem">
+Frey,S.D. (2019) <a href="https://doi.org/10.1146/annurev-ecolsys-110617-062331">Mycorrhizal
+fungi as mediators of soil organic matter dynamics</a>. <em>Annual
+Review of Ecology, Evolution, and Systematics</em>, <strong>50</strong>,
+237–259.
+</div>
+<div id="ref-Furneaux2021a" class="csl-entry" role="listitem">
+Furneaux,B. <em>et al.</em> (2021) <a href="https://doi.org/10.1111/1755-0998.13387">Long- and short-read
+metabarcoding technologies reveal similar spatiotemporal structures in
+fungal communities</a>. <em>Molecular Ecology Resources</em>,
+<strong>21</strong>, 1833–1849.
+</div>
+<div id="ref-doi:10.1139/b96-190" class="csl-entry" role="listitem">
+Gardes,M. and Bruns,T.D. (1996) <a href="https://doi.org/10.1139/b96-190">Community structure of
+ectomycorrhizal fungi in a <span>Pinus</span> muricata forest: Above-
+and below-ground views</a>. <em>Canadian Journal of Botany</em>,
+<strong>74</strong>, 1572–1583.
+</div>
+<div id="ref-Glassman2018" class="csl-entry" role="listitem">
+Glassman,S.I. and Martiny,J.B.H. (2018) Broadscale ecological patterns
+are robust to use of exact. <em>mSphere</em>, <strong>3</strong>,
+e00148–18.
+</div>
+<div id="ref-Hajibabaei2011" class="csl-entry" role="listitem">
+Hajibabaei,M. <em>et al.</em> (2011) <a href="https://doi.org/10.1371/journal.pone.0017497">Environmental
+barcoding: <span>A</span> next-generation sequencing approach for
+biomonitoring applications using river benthos</a>. <em>PLOS ONE</em>,
+<strong>6</strong>, e17497.
+</div>
+<div id="ref-Hakimzadeh2023" class="csl-entry" role="listitem">
+Hakimzadeh,A. <em>et al.</em> (2023) <a href="https://doi.org/10.1111/1755-0998.13847">A pile of pipelines:
+<span>An</span> overview of the bioinformatics software for
+metabarcoding data analyses</a>. <em>Molecular Ecology Resources</em>,
+1–17.
+</div>
+<div id="ref-He2015" class="csl-entry" role="listitem">
+He,Y. <em>et al.</em> (2015) <a href="https://doi.org/10.1186/s40168-015-0081-x">Stability of
+operational taxonomic units: An important but neglected property for
+analyzing microbial diversity</a>. <em>Microbiome</em>,
+<strong>3</strong>, 1–10.
+</div>
+<div id="ref-Hebert2023.11.29.569282" class="csl-entry" role="listitem">
+Hebert,P.D. <em>et al.</em> (2023) <a href="https://doi.org/10.1101/2023.11.29.569282">Barcode
+<span>100K</span> specimens: <span>In</span> a single nanopore run</a>.
+<em>bioRxiv</em>.
+</div>
+<div id="ref-Hebert2003" class="csl-entry" role="listitem">
+Hebert,P.D.N. <em>et al.</em> (2003) <a href="https://doi.org/10.1098/rspb.2002.2218">Biological identifications
+through <span>DNA</span> barcodes</a>. <em>Proceedings of the Royal
+Society B: Biological Sciences</em>, <strong>270</strong>, 313–321.
+</div>
+<div id="ref-Hibbett2009" class="csl-entry" role="listitem">
+Hibbett,D.S. <em>et al.</em> (2009) <a href="http://www.jstor.org/stable/27735777">Fungal ecology catches
+fire</a>. <em>The New Phytologist</em>, <strong>184</strong>, 279–282.
+</div>
+<div id="ref-Hong2020" class="csl-entry" role="listitem">
+Hong,N.T.T. <em>et al.</em> (2020) <a href="https://doi.org/10.1016/j.jinf.2019.12.011">Cerebrospinal fluid
+<span>MinION</span> sequencing of <span class="nocase">16S rRNA</span>
+gene for rapid and accurate diagnosis of bacterial meningitis</a>.
+<em>Journal of Infection</em>, <strong>80</strong>, 469–496.
+</div>
+<div id="ref-IlluminaInc.2016" class="csl-entry" role="listitem">
+Illumina Inc. (2016) <a href="https://www.illumina.com/content/dam/illumina-marketing/documents/products/datasheets/datasheet-hiseq-x-ten.pdf"><span>HiSeq
+X</span> series of sequencing systems</a>.
+</div>
+<div id="ref-Inc.2023" class="csl-entry" role="listitem">
+Illumina Inc. (2023) <a href="https://www.illumina.com/systems/sequencing-platforms.html">Illumina
+sequencing platforms</a>.
+</div>
+<div id="ref-IlluminaQuality" class="csl-entry" role="listitem">
+Illumina Inc. <a href="https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/quality-scores.html">Measuring
+sequencing accuracy</a>.
+</div>
+<div id="ref-indexfungorumpartnershipSpeciesFungorum2024" class="csl-entry" role="listitem">
+Index Fungorum Partnership (2024) <a href="https://www.speciesfungorum.org/Names/Names.asp">Species
+<span>Fungorum</span></a>.
+</div>
+<div id="ref-iterGenomicsITERNanoCLUST2024" class="csl-entry" role="listitem">
+ITER,G.D. (2024) <a href="https://github.com/genomicsITER/NanoCLUST"><span class="nocase">genomicsITER</span>/<span>NanoCLUST</span></a>.
+</div>
+<div id="ref-jainHighThroughputANI2018" class="csl-entry" role="listitem">
+Jain,C. <em>et al.</em> (2018) <a href="https://doi.org/10.1038/s41467-018-07641-9">High throughput
+<span>ANI</span> analysis of <span>90K</span> prokaryotic genomes
+reveals clear species boundaries</a>. <em>Nat Commun</em>,
+<strong>9</strong>, 5114.
+</div>
+<div id="ref-James2020" class="csl-entry" role="listitem">
+James,T.Y. <em>et al.</em> (2020) <a href="https://doi.org/10.1146/annurev-micro-022020-051835">Toward a
+fully resolved fungal tree of life</a>. <em>Annual Review of
+Microbiology</em>, <strong>74</strong>, 291–313.
+</div>
+<div id="ref-johnstonImpactsPlannedBurning2024" class="csl-entry" role="listitem">
+Johnston,M.T. <em>et al.</em> (2024) <a href="https://doi.org/10.1016/j.foreco.2024.121958">Impacts of planned
+burning on the fungal diversity and vascular plants in a heathy
+woodland</a>. <em>Forest Ecology and Management</em>,
+<strong>563</strong>, 121958.
+</div>
+<div id="ref-Joos2020" class="csl-entry" role="listitem">
+Joos,L. <em>et al.</em> (2020) <a href="https://doi.org/10.1186/s12864-020-07126-4">Daring to be
+differential: Metabarcoding analysis of soil and plant-related microbial
+communities using amplicon sequence variants and operational taxonomical
+units</a>. <em>BMC Genomics</em>, <strong>21</strong>, 1–17.
+</div>
+<div id="ref-Jumpponen2009" class="csl-entry" role="listitem">
+Jumpponen,A. and Jones,K.L. (2009) <a href="https://doi.org/10.1111/j.1469-8137.2009.02990.x">Massively
+parallel 454 sequencing indicates hyperdiverse fungal communities in
+temperate <span>Quercus</span> macrocarpa phyllosphere</a>. <em>New
+Phytologist</em>, <strong>184</strong>, 438–448.
+</div>
+<div id="ref-Kisand2012" class="csl-entry" role="listitem">
+Kisand,V. <em>et al.</em> (2012) <a href="https://doi.org/10.1371/journal.pone.0043630">Phylogenetic and
+functional metagenomic profiling for assessing microbial biodiversity in
+environmental monitoring</a>. <em>PLOS ONE</em>, <strong>7</strong>,
+e43630.
+</div>
+<div id="ref-Klaubauf2010" class="csl-entry" role="listitem">
+Klaubauf,S. <em>et al.</em> (2010) <a href="https://doi.org/10.1007/s13225-010-0053-1">Molecular diversity of
+fungal communities in agricultural soils from <span>Lower
+Austria</span></a>. <em>Fungal Diversity</em>, <strong>44</strong>,
+65–75.
+</div>
+<div id="ref-Koljalg2005" class="csl-entry" role="listitem">
+Kõljalg,U. <em>et al.</em> (2005) <a href="https://doi.org/10.1111/j.1469-8137.2005.01376.x"><span>UNITE</span>:
+<span>A</span> database providing web-based methods for the molecular
+identification of ectomycorrhizal fungi</a>. <em>New Phytologist</em>,
+<strong>166</strong>, 1063–1068.
+</div>
+<div id="ref-korenCanuScalableAccurate2017" class="csl-entry" role="listitem">
+Koren,S. <em>et al.</em> (2017) <a href="https://doi.org/10.1101/gr.215087.116">Canu: Scalable and accurate
+long-read assembly via adaptive k-mer weighting and repeat
+separation</a>. <em>Genome Res.</em>, <strong>27</strong>, 722–736.
+</div>
+<div id="ref-kurtzerSingularityScientificContainers2017" class="csl-entry" role="listitem">
+Kurtzer,G.M. <em>et al.</em> (2017) <a href="https://doi.org/10.1371/journal.pone.0177459">Singularity:
+<span>Scientific</span> containers for mobility of compute</a>. <em>PLOS
+ONE</em>, <strong>12</strong>, e0177459.
+</div>
+<div id="ref-langsiriTargetedSequencingAnalysis2023" class="csl-entry" role="listitem">
+Langsiri,N. <em>et al.</em> (2023) <a href="https://doi.org/10.1186/s43008-023-00125-6">Targeted sequencing
+analysis pipeline for species identification of human pathogenic fungi
+using long-read nanopore sequencing</a>. <em>IMA Fungus</em>,
+<strong>14</strong>, 1–18.
+</div>
+<div id="ref-Lee2021" class="csl-entry" role="listitem">
+Lee,S. <em>et al.</em> (2021) <a href="https://doi.org/10.1093/bioinformatics/btab630">Prowler: A novel
+trimming algorithm for <span>Oxford Nanopore</span> sequence data</a>.
+<em>Bioinformatics</em>, <strong>37</strong>, 3936–3937.
+</div>
+<div id="ref-lelandmcinnesParameterSelectionHDBSCAN2016" class="csl-entry" role="listitem">
+Leland McInnes <em>et al.</em> (2016) <a href="https://hdbscan.readthedocs.io/en/latest/parameter_selection.html">Parameter
+<span>Selection</span> for <span>HDBSCAN</span>* — hdbscan 0.8.1
+documentation</a>.
+</div>
+<div id="ref-Lh3SeqtkToolkit" class="csl-entry" role="listitem">
+<a href="https://github.com/lh3/seqtk">Lh3/seqtk: <span>Toolkit</span>
+for processing sequences in <span>FASTA</span>/<span>Q</span>
+formats</a>.
+</div>
+<div id="ref-liMinimap2PairwiseAlignment2018" class="csl-entry" role="listitem">
+Li,H. (2018a) <a href="https://doi.org/10.1093/bioinformatics/bty191">Minimap2: Pairwise
+alignment for nucleotide sequences</a>. <em>Bioinformatics</em>,
+<strong>34</strong>, 3094–3100.
+</div>
+<div id="ref-liMinimap2PairwiseAlignment2018a" class="csl-entry" role="listitem">
+Li,H. (2018b) <a href="https://doi.org/10.1093/bioinformatics/bty191">Minimap2: Pairwise
+alignment for nucleotide sequences</a>. <em>Bioinformatics</em>,
+<strong>34</strong>, 3094–3100.
+</div>
+<div id="ref-Lindahl2013" class="csl-entry" role="listitem">
+Lindahl,B.D. <em>et al.</em> (2013) <a href="https://doi.org/10.1111/nph.12243">Fungal community analysis by
+high-throughput sequencing of amplified markers - a user’s guide</a>.
+<em>New Phytologist</em>, <strong>199</strong>, 288–299.
+</div>
+<div id="ref-Mafune2020" class="csl-entry" role="listitem">
+Mafune,K.K. <em>et al.</em> (2020) <a href="https://doi.org/10.2144/btn-2019-0072">A rapid approach to
+profiling diverse fungal communities using the <span>MinION</span>™
+nanopore sequencer</a>. <em>BioTechniques</em>, <strong>68</strong>,
+72–78.
+</div>
+<div id="ref-Cutadapt" class="csl-entry" role="listitem">
+Martin,M. (2011) <a href="https://doi.org/10.14806/ej.17.1.200">Cutadapt
+removes adapter sequences from high-throughput sequencing reads</a>.
+<em>EMBnet.journal</em>, 10–12.
+</div>
+<div id="ref-FA2010" class="csl-entry" role="listitem">
+Matsen,F.A. <em>et al.</em> (2010) <a href="http://dx.doi.org/10.1186/1471-2105-11-538">Pplacer: Linear time
+maximum-likelihood and <span>Bayesian</span> phylogenetic placement of
+sequences onto a fixed reference tree</a>. <em>BMC Bioinformatics</em>,
+<strong>11</strong>, 538.
+</div>
+<div id="ref-mcinnes2017hdbscan" class="csl-entry" role="listitem">
+McInnes,L. <em>et al.</em> (2017) Hdbscan: <span>Hierarchical</span>
+density based clustering. <em>J. Open Source Softw.</em>,
+<strong>2</strong>, 205.
+</div>
+<div id="ref-mcinnesUMAPUniformManifold2020" class="csl-entry" role="listitem">
+McInnes,L. <em>et al.</em> (2020) <a href="https://doi.org/10.48550/arXiv.1802.03426"><span>UMAP</span>:
+<span>Uniform Manifold Approximation</span> and <span>Projection</span>
+for <span>Dimension Reduction</span></a>.
+</div>
+<div id="ref-mcmurdiePhyloseqPackageReproducible2013" class="csl-entry" role="listitem">
+McMurdie,P.J. and Holmes,S. (2013) <a href="https://doi.org/10.1371/journal.pone.0061217">Phyloseq: <span>An R
+Package</span> for <span>Reproducible Interactive Analysis</span> and
+<span>Graphics</span> of <span>Microbiome Census Data</span></a>.
+<em>PLOS ONE</em>, <strong>8</strong>, e61217.
+</div>
+<div id="ref-merkel2014docker" class="csl-entry" role="listitem">
+Merkel,D. <em>et al.</em> (2014) Docker: Lightweight linux containers
+for consistent development and deployment. <em>Linux j</em>,
+<strong>239</strong>, 2.
+</div>
+<div id="ref-mittalDimensionalityReductionUsing2024" class="csl-entry" role="listitem">
+Mittal,M. <em>et al.</em> (2024) <a href="https://doi.org/10.1109/ICAIT61638.2024.10690797">Dimensionality
+<span>Reduction Using UMAP</span> and <span>TSNE Technique</span></a>.
+In, <em>2024 <span>Second International Conference</span> on
+<span>Advances</span> in <span>Information Technology</span>
+(<span>ICAIT</span>)</em>., pp. 1–5.
+</div>
+<div id="ref-Murali2018" class="csl-entry" role="listitem">
+Murali,A. <em>et al.</em> (2018) <a href="https://doi.org/10.1186/s40168-018-0521-5"><span>IDTAXA</span>:
+<span>A</span> novel approach for accurate taxonomic classification of
+microbiome sequences</a>. <em>Microbiome</em>, <strong>6</strong>, 1–14.
+</div>
+<div id="ref-Murigneux2020" class="csl-entry" role="listitem">
+Murigneux,V. <em>et al.</em> (2020) <a href="https://doi.org/10.1093/gigascience/giaa146">Comparison of
+long-read methods for sequencing and assembly of a plant genome</a>.
+<em>GigaScience</em>, <strong>9</strong>.
+</div>
+<div id="ref-NanoporetechDorado2024" class="csl-entry" role="listitem">
+<a href="https://github.com/nanoporetech/dorado">Nanoporetech/dorado</a>
+(2024).
+</div>
+<div id="ref-Nilsson2019a" class="csl-entry" role="listitem">
+Nilsson,R.H., Anslan,S., <em>et al.</em> (2019) <a href="https://doi.org/10.1038/s41579-018-0116-y">Mycobiome diversity:
+High-throughput sequencing and identification of fungi</a>. <em>Nature
+Reviews Microbiology</em>, <strong>17</strong>, 95–109.
+</div>
+<div id="ref-Nilsson2006" class="csl-entry" role="listitem">
+Nilsson,R.H. <em>et al.</em> (2006) <a href="https://doi.org/10.1371/journal.pone.0000059">Taxonomic
+reliability of <span>DNA</span> sequences in public sequences databases:
+<span>A</span> fungal perspective</a>. <em>PLoS ONE</em>,
+<strong>1</strong>.
+</div>
+<div id="ref-Nilsson2019" class="csl-entry" role="listitem">
+Nilsson,R.H., Larsson,K.H., <em>et al.</em> (2019) <a href="https://doi.org/10.1093/nar/gky1022">The <span>UNITE</span>
+database for molecular identification of fungi: <span>Handling</span>
+dark taxa and parallel taxonomic classifications</a>. <em>Nucleic Acids
+Research</em>, <strong>47</strong>, D259–D264.
+</div>
+<div id="ref-nilssonWhatMycologistsShould2023" class="csl-entry" role="listitem">
+Nilsson,R.H. <em>et al.</em> (2023) <a href="https://doi.org/10.1101/2023.02.25.529721">What mycologists should
+talk about when they are talking about the <span>International
+Code</span> of <span>Nomenclature</span> for algae, fungi, and
+plants</a>. 2023.02.25.529721.
+</div>
+<div id="ref-niskanenPushingFrontiersBiodiversity2023" class="csl-entry" role="listitem">
+Niskanen,T. <em>et al.</em> (2023) <a href="https://doi.org/10.1146/annurev-environ-112621-090937">Pushing the
+<span>Frontiers</span> of <span>Biodiversity Research</span>:
+<span>Unveiling</span> the <span>Global Diversity</span>,
+<span>Distribution</span>, and <span>Conservation</span> of
+<span>Fungi</span></a>. <em>Annual Review of Environment and
+Resources</em>, <strong>48</strong>, 149–176.
+</div>
+<div id="ref-Nygaard2020" class="csl-entry" role="listitem">
+Nygaard,A.B. <em>et al.</em> (2020) <a href="https://doi.org/10.1038/s41598-020-59771-0">A preliminary study on
+the potential of <span>Nanopore MinION</span> and <span class="nocase">Illumina MiSeq 16S rRNA</span> gene sequencing to
+characterize building-dust microbiomes</a>. <em>Scientific reports</em>,
+<strong>10</strong>, 3209.
+</div>
+<div id="ref-ohtaDNAMetabarcodingWorkflow2023a" class="csl-entry" role="listitem">
+Ohta,A. <em>et al.</em> (2023a) <a href="https://doi.org/10.1101/2023.04.14.536971"><span>DNA</span>
+metabarcoding workflow utilizing nanopore long-read sequencing and
+consensus generation for rapid identification of fungal taxa with high
+phylogenetic resolution</a>. <em>bioRxiv</em>, 2023.04.14.536971.
+</div>
+<div id="ref-Ohta2023" class="csl-entry" role="listitem">
+Ohta,A. <em>et al.</em> (2023b) <a href="https://doi.org/10.1038/s41598-023-37016-0">Using nanopore
+sequencing to identify fungi from clinical samples with high
+phylogenetic resolution</a>. <em>Scientific Reports</em>,
+<strong>13</strong>, 1–13.
+</div>
+<div id="ref-ondovInteractiveMetagenomicVisualization2011" class="csl-entry" role="listitem">
+Ondov,B.D. <em>et al.</em> (2011) <a href="https://doi.org/10.1186/1471-2105-12-385">Interactive metagenomic
+visualization in a <span>Web</span> browser</a>. <em>BMC
+Bioinformatics</em>, <strong>12</strong>, 385.
+</div>
+<div id="ref-opikOnlineDatabaseMaarjAM2010" class="csl-entry" role="listitem">
+Öpik,M. <em>et al.</em> (2010) <a href="https://doi.org/10.1111/j.1469-8137.2010.03334.x">The online
+database <span>MaarjAM</span> reveals global and ecosystemic
+distribution patterns in arbuscular mycorrhizal fungi
+(<span>Glomeromycota</span>)</a>. <em>New Phytologist</em>,
+<strong>188</strong>, 223–241.
+</div>
+<div id="ref-ONTHistory2023" class="csl-entry" role="listitem">
+Oxford Nanopore Technologies (2023) <a href="https://nanoporetech.com/about-us/history">Company history</a>.
+</div>
+<div id="ref-oxfordnanoporetechnologiesNanoporeSequencingAccuracy2024" class="csl-entry" role="listitem">
+Oxford Nanopore Technologies (2024a) <a href="https://nanoporetech.com/platform/accuracy">Nanopore sequencing
+accuracy</a>.
+</div>
+<div id="ref-OxfordNanoporeTechnologies2024" class="csl-entry" role="listitem">
+<a href="https://nanoporetech.com/">Oxford <span>Nanopore
+Technologies</span></a> (2024b).
+</div>
+<div id="ref-PacBio2023" class="csl-entry" role="listitem">
+PacBio (2023) <a href="https://www.pacb.com/blog/long-read-sequencing/">Sequencing 101:
+Long-read sequencing</a>.
+</div>
+<div id="ref-payneBulkVisGraphicalViewer2019" class="csl-entry" role="listitem">
+Payne,A. <em>et al.</em> (2019) <a href="https://doi.org/10.1093/bioinformatics/bty841"><span>BulkVis</span>:
+A graphical viewer for <span>Oxford</span> nanopore bulk
+<span>FAST5</span> files</a>. <em>Bioinformatics</em>,
+<strong>35</strong>, 2193–2198.
+</div>
+<div id="ref-peayDimensionsBiodiversityEarth2016" class="csl-entry" role="listitem">
+Peay,K.G. <em>et al.</em> (2016) <a href="https://doi.org/10.1038/nrmicro.2016.59">Dimensions of
+biodiversity in the <span>Earth</span> mycobiome</a>. <em>Nat Rev
+Microbiol</em>, <strong>14</strong>, 434–447.
+</div>
+<div id="ref-Phukhamsakda2022" class="csl-entry" role="listitem">
+Phukhamsakda,C. <em>et al.</em> (2022) <a href="https://doi.org/10.1007/s13225-022-00502-3">The numbers of fungi:
+Contributions from traditional taxonomic studies and challenges of
+metabarcoding</a>. In, <em>Fungal diversity</em>., pp. 327–386.
+</div>
+<div id="ref-Puillandre2012" class="csl-entry" role="listitem">
+Puillandre,N. <em>et al.</em> (2012) <a href="https://doi.org/10.1111/j.1365-294X.2011.05239.x"><span>ABGD</span>,
+automatic barcode gap discovery for primary species delimitation</a>.
+<em>Molecular Ecology</em>, <strong>21</strong>, 1864–1877.
+</div>
+<div id="ref-Quast2013" class="csl-entry" role="listitem">
+Quast,C. <em>et al.</em> (2013) <a href="https://doi.org/10.1093/nar/gks1219">The <span>SILVA</span>
+ribosomal <span>RNA</span> gene database project: <span>Improved</span>
+data processing and web-based tools</a>. <em>Nucleic Acids
+Research</em>, <strong>41</strong>, 590–596.
+</div>
+<div id="ref-Rang2018" class="csl-entry" role="listitem">
+Rang,F.J. <em>et al.</em> (2018) <a href="https://doi.org/10.1186/s13059-018-1462-9">From squiggle to
+basepair: <span>Computational</span> approaches for improving nanopore
+sequencing read accuracy</a>. <em>Genome Biology</em>,
+<strong>19</strong>, 1–11.
+</div>
+<div id="ref-retterExploringTaxonomicComposition2019" class="csl-entry" role="listitem">
+Retter,A. <em>et al.</em> (2019) <a href="https://doi.org/10.3897/BDJ.7.e35332">Exploring the taxonomic
+composition of two fungal communities on the <span>Swedish</span> west
+coast through metabarcoding</a>. <em>Biodiversity Data Journal</em>,
+<strong>7</strong>, e35332.
+</div>
+<div id="ref-Rivers2018" class="csl-entry" role="listitem">
+Rivers,A.R. <em>et al.</em> (2018) <a href="https://doi.org/10.12688/F1000RESEARCH.15704.1"><span>ITSxpress</span>:
+<span>Software</span> to rapidly trim internally transcribed spacer
+sequences with quality scores for marker gene analysis [version 1; peer
+review: 2 approved]</a>. <em>F1000Research</em>, <strong>7</strong>.
+</div>
+<div id="ref-robertsReducingStorageRequirements2004" class="csl-entry" role="listitem">
+Roberts,M. <em>et al.</em> (2004) <a href="https://doi.org/10.1093/bioinformatics/bth408">Reducing storage
+requirements for biological sequence comparison</a>.
+<em>Bioinformatics</em>, <strong>20</strong>, 3363–3369.
+</div>
+<div id="ref-rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021" class="csl-entry" role="listitem">
+Rodríguez-Pérez,H. <em>et al.</em> (2021) <a href="https://doi.org/10.1093/bioinformatics/btaa900"><span>NanoCLUST</span>:
+A species-level analysis of <span class="nocase">16S rRNA</span>
+nanopore sequencing data</a>. <em>Bioinformatics</em>,
+<strong>37</strong>, 1600–1601.
+</div>
+<div id="ref-rognesVSEARCHVersatileOpen2016" class="csl-entry" role="listitem">
+Rognes,T. <em>et al.</em> (2016) <a href="https://doi.org/10.7717/peerj.2584"><span>VSEARCH</span>: A
+versatile open source tool for metagenomics</a>. <em>PeerJ</em>,
+<strong>4</strong>, e2584.
+</div>
+<div id="ref-romeijnMycoAIFastAccurate2024" class="csl-entry" role="listitem">
+Romeijn,L. <em>et al.</em> (2024) <a href="https://doi.org/10.1111/1755-0998.14006"><span>MycoAI</span>:
+<span>Fast</span> and accurate taxonomic classification for fungal
+<span>ITS</span> sequences</a>. <em>Molecular Ecology Resources</em>,
+<strong>24</strong>, e14006.
+</div>
+<div id="ref-Schoch2012" class="csl-entry" role="listitem">
+Schoch,C.L. <em>et al.</em> (2012) <a href="https://doi.org/10.1073/pnas.1117018109">Nuclear ribosomal
+internal transcribed spacer (<span>ITS</span>) region as a universal
+<span>DNA</span> barcode marker for <span>Fungi</span></a>.
+<em>Proceedings of the National Academy of Sciences of the United States
+of America</em>, <strong>109</strong>, 6241–6246.
+</div>
+<div id="ref-Taberlet2018" class="csl-entry" role="listitem">
+Taberlet,P. <em>et al.</em> (2018) <a href="https://doi.org/10.1093/oso/9780198767220.003.0001">Introduction
+to environmental <span>DNA</span> (<span class="nocase">eDNA</span>)</a>
+Taberlet,P. <em>et al.</em> (eds) Oxford University Press.
+</div>
+<div id="ref-taudiereMiscMetabarPackageFacilitate2023" class="csl-entry" role="listitem">
+Taudière,A. (2023) <a href="https://doi.org/10.21105/joss.06038"><span>MiscMetabar</span>: An
+<span>R</span> package to facilitate visualization and reproducibility
+in metabarcoding analysis</a>. <em>Journal of Open Source Software</em>,
+<strong>8</strong>, 6038.
+</div>
+<div id="ref-Tedersoo2022" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2022) <a href="https://doi.org/10.1111/mec.16460">Best practices in metabarcoding
+of fungi: <span>From</span> experimental design to results</a>.
+<em>Molecular ecology</em>, <strong>31</strong>, 2769–2795.
+</div>
+<div id="ref-tedersooEUKARYOMERRNAGene2024" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2024) <a href="https://doi.org/10.1093/database/baae043"><span>EUKARYOME</span>:
+The <span class="nocase">rRNA</span> gene reference database for
+identification of all eukaryotes</a>. <em>Database</em>,
+<strong>2024</strong>, baae043.
+</div>
+<div id="ref-tedersooFungalBiogeographyGlobal2014" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2014) <a href="https://doi.org/10.1126/science.1256688">Fungal biogeography.
+<span>Global</span> diversity and geography of soil fungi</a>.
+<em>Science</em>, <strong>346</strong>, 1256688.
+</div>
+<div id="ref-tedersooIdentifyingUnidentifiedFungi2020" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2020) <a href="https://doi.org/10.1007/s13225-020-00456-4">Identifying the
+<span>‘unidentified’</span> fungi: A global-scale long-read
+third-generation sequencing approach</a>. <em>Fungal Diversity</em>,
+<strong>103</strong>, 273–293.
+</div>
+<div id="ref-Tedersoo2018" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2018a) <a href="https://doi.org/10.1111/nph.14776"><span>PacBio</span>
+metabarcoding of <span>Fungi</span> and other eukaryotes: Errors, biases
+and perspectives</a>. <em>New Phytologist</em>, <strong>217</strong>,
+1370–1385.
+</div>
+<div id="ref-tedersooPacBioMetabarcodingFungi2018" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2018b) <a href="https://doi.org/10.1111/nph.14776"><span>PacBio</span>
+metabarcoding of <span>Fungi</span> and other eukaryotes: Errors, biases
+and perspectives</a>. <em>New Phytologist</em>, <strong>217</strong>,
+1370–1385.
+</div>
+<div id="ref-Tedersoo2015" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2015) <a href="https://doi.org/10.3897/mycokeys.10.4852">Shotgun metagenomes and
+multiple primer pair-barcode combinations of amplicons reveal biases in
+metabarcoding analyses of fungi</a>. <em>MycoKeys</em>,
+<strong>10</strong>, 1–43.
+</div>
+<div id="ref-tedersooGlobalSoilMycobiome2021" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2021) <a href="https://doi.org/10.1007/s13225-021-00493-7">The <span>Global Soil
+Mycobiome</span> consortium dataset for boosting fungal diversity
+research</a>. <em>Fungal Diversity</em>, <strong>111</strong>, 573–588.
+</div>
+<div id="ref-Allen1976" class="csl-entry" role="listitem">
+Tedersoo,L. and Nilsson,R.H. (2016) <a href="https://doi.org/10.1002/9781118951446.ch17">Molecular
+identification of fungi</a>. <em>Molecular Mycorrhizal Symbiosis</em>,
+<strong>57</strong>, 402–403.
+</div>
+<div id="ref-vaserFastAccurateNovo2017" class="csl-entry" role="listitem">
+Vaser,R. <em>et al.</em> (2017) <a href="https://doi.org/10.1101/gr.214270.116">Fast and accurate de novo
+genome assembly from long uncorrected reads</a>. <em>Genome Res.</em>,
+<strong>27</strong>, 737–746.
+</div>
+<div id="ref-vetrovskyGlobalAMFungiGlobalDatabase2023" class="csl-entry" role="listitem">
+Větrovský,T. <em>et al.</em> (2023) <a href="https://doi.org/10.1111/nph.19283"><span>GlobalAMFungi</span>: A
+global database of arbuscular mycorrhizal fungal occurrences from
+high-throughput sequencing metabarcoding studies</a>. <em>New
+Phytologist</em>, <strong>240</strong>, 2151–2163.
+</div>
+<div id="ref-vuDNABarcodingAnalysis2016" class="csl-entry" role="listitem">
+Vu,D. <em>et al.</em> (2016) <a href="https://doi.org/10.1016/j.simyco.2016.11.007"><span>DNA</span>
+barcoding analysis of more than 9000 yeast isolates contributes to
+quantitative thresholds for yeast species and genera delimitation</a>.
+<em>Stud Mycol</em>, <strong>85</strong>, 91–105.
+</div>
+<div id="ref-vuDnabarcoderOpensourceSoftware2022" class="csl-entry" role="listitem">
+Vu,D. <em>et al.</em> (2022) <a href="https://doi.org/10.1111/1755-0998.13651">Dnabarcoder:
+<span>An</span> open-source software package for analysing and
+predicting <span>DNA</span> sequence similarity cutoffs for fungal
+sequence identification</a>. <em>Molecular Ecology Resources</em>,
+<strong>22</strong>, 2793–2809.
+</div>
+<div id="ref-vuLargescaleGenerationAnalysis2019" class="csl-entry" role="listitem">
+Vu,D. <em>et al.</em> (2019) <a href="https://doi.org/10.1016/j.simyco.2018.05.001">Large-scale
+generation and analysis of filamentous fungal <span>DNA</span> barcodes
+boosts coverage for kingdom fungi and reveals thresholds for fungal
+species and higher taxon delimitation</a>. <em>Stud Mycol</em>,
+<strong>92</strong>, 135–154.
+</div>
+<div id="ref-vu_2024_12580255" class="csl-entry" role="listitem">
+Vu,D. (2024) <a href="https://doi.org/10.5281/zenodo.12580255"><span>UNITE</span>+<span>INSD</span>
+2024 fungal <span>ITS</span>, <span>ITS1</span>, and <span>ITS2</span>
+reference sequences</a>.
+</div>
+<div id="ref-Wang2007" class="csl-entry" role="listitem">
+Wang,Q. <em>et al.</em> (2007) <a href="https://doi.org/10.1128/AEM.00062-07">Naïve <span>Bayesian</span>
+classifier for rapid assignment of <span class="nocase">rRNA</span>
+sequences into the new bacterial taxonomy</a>. <em>Applied and
+Environmental Microbiology</em>, <strong>73</strong>, 5261–5267.
+</div>
+<div id="ref-Wang2021" class="csl-entry" role="listitem">
+Wang,Y. <em>et al.</em> (2021) <a href="https://doi.org/10.1038/s41587-021-01108-x">Nanopore sequencing
+technology, bioinformatics and applications</a>. <em>Nature
+Biotechnology</em>, <strong>39</strong>, 1348–1365.
+</div>
+<div id="ref-Id2018" class="csl-entry" role="listitem">
+Wick,R.R. <em>et al.</em> (2018) Deepbinner: <span>Demultiplexing</span>
+barcoded <span>Oxford Nanopore</span> reads with deep convolutional
+neural networks. <em>PLOS Computational Biology</em>, 1–11.
+</div>
+<div id="ref-Wicka" class="csl-entry" role="listitem">
+Wick,R.R. <a href="https://github.com/rrwick/Filtlong">Filtlong</a>.
+</div>
+<div id="ref-Wick2019" class="csl-entry" role="listitem">
+Wick,R.R. <em>et al.</em> (2019) <a href="https://doi.org/10.1186/s13059-019-1727-y">Performance of neural
+network basecalling tools for <span>Oxford Nanopore</span>
+sequencing</a>. <em>Genome Biology</em>, <strong>20</strong>, 1–10.
+</div>
+<div id="ref-Wick" class="csl-entry" role="listitem">
+Wick,R.R. <a href="https://github.com/rrwick/Porechop">Porechop</a>.
+</div>
+<div id="ref-Wiryawan2022" class="csl-entry" role="listitem">
+Wiryawan,A. <em>et al.</em> (2022) <a href="https://doi.org/10.12911/22998993/149972">Changes in essential
+soil nutrients and soil disturbance directly affected soil microbial
+community structure: <span>A</span> metagenomic approach</a>.
+<em>Journal of Ecological Engineering</em>, <strong>23</strong>,
+238–245.
+</div>
+<div id="ref-woodImprovedMetagenomicAnalysis2019" class="csl-entry" role="listitem">
+Wood,D.E. <em>et al.</em> (2019) <a href="https://doi.org/10.1186/s13059-019-1891-0">Improved metagenomic
+analysis with <span>Kraken</span> 2</a>. <em>Genome Biol</em>,
+<strong>20</strong>, 1–13.
+</div>
+<div id="ref-Zhang2023" class="csl-entry" role="listitem">
+Zhang,T. <em>et al.</em> (2023) <a href="https://doi.org/10.1128/aem.00605-23">The newest <span>Oxford
+Nanopore R10</span>.4.1 full-length <span class="nocase">16S rRNA</span>
+sequencing enables the accurate resolution of species-level microbial
+community profiling</a>. <em>Applied and Environmental
+Microbiology</em>, <strong>0</strong>, e00605–23.
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Acknowledgements.html" class="pagination-link" aria-label="Acknowledgements">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./09-Supplementary.html" class="pagination-link" aria-label="Appendices">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Appendices</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

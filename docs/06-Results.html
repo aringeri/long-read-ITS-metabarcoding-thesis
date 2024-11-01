@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing - 6&nbsp; Results</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-Discussion.html" rel="next">
+<link href="./05-Methods.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-Results.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Results</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-LiteratureReview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature Review</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Objectives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objectives</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Significance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-Methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-Results.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Results</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Discussion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discussion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-Conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-References.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-Supplementary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Appendices</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#mock-scenarios" id="toc-mock-scenarios" class="nav-link active" data-scroll-target="#mock-scenarios"><span class="header-section-number">1</span> Mock scenarios</a>
+  <ul class="collapse">
+  <li><a href="#quality-control" id="toc-quality-control" class="nav-link" data-scroll-target="#quality-control"><span class="header-section-number">1.1</span> Quality control</a></li>
+  <li><a href="#sec-even-scenario" id="toc-sec-even-scenario" class="nav-link" data-scroll-target="#sec-even-scenario"><span class="header-section-number">1.2</span> Even abundance scenario</a></li>
+  <li><a href="#uneven-abundance-scenario" id="toc-uneven-abundance-scenario" class="nav-link" data-scroll-target="#uneven-abundance-scenario"><span class="header-section-number">1.3</span> Uneven abundance Scenario</a></li>
+  </ul></li>
+  <li><a href="#real-world---soil-case-study" id="toc-real-world---soil-case-study" class="nav-link" data-scroll-target="#real-world---soil-case-study"><span class="header-section-number">2</span> Real world - Soil case study</a>
+  <ul class="collapse">
+  <li><a href="#quality-control-1" id="toc-quality-control-1" class="nav-link" data-scroll-target="#quality-control-1"><span class="header-section-number">2.1</span> Quality control</a></li>
+  <li><a href="#clustering-and-taxonomic-assignment" id="toc-clustering-and-taxonomic-assignment" class="nav-link" data-scroll-target="#clustering-and-taxonomic-assignment"><span class="header-section-number">2.2</span> Clustering and taxonomic assignment</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Results</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="mock-scenarios" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="mock-scenarios"><span class="header-section-number">1</span> Mock scenarios</h2>
+<section id="quality-control" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="quality-control"><span class="header-section-number">1.1</span> Quality control</h3>
+<p>After quality control, there was considerable read loss across the fungal taxa used to construct the mock scenarios (<a href="09-Supplementary.html#apptbl-samplesheet" class="quarto-xref">Table A<span>2</span></a>). A minimum of 2,500 reads per taxa was required to construct even-abundance mock scenarios with library sizes nearing 150K reads (<span class="math inline">\(58 \text{ taxa} \times 2500 \text{ reads} = 145000\text{ reads}\)</span>). This can be seen in <a href="#fig-readCountDistributionBySample" class="quarto-xref">Figure&nbsp;<span>1</span></a>, where seven samples are excluded.</p>
+<div id="fig-readCountDistributionBySample" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-readCountDistributionBySample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis/images/06-read-count-distribution-by-sample.png" class="img-fluid figure-img" width="1928"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-readCountDistributionBySample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Read loss for taxa used in mock scenarios after quality control. The distribution of read counts per sample before (A) and after (B) quality control processing. Reads having less than 2,500 reads were excluded from mock scenarios (dotted line in B). Note the x-axis is on a log scale.
+</figcaption>
+</figure>
+</div>
+<p>Tracking read counts at each stage of the workflow has shown that the majority of reads were lost in the primer trimming and quality filtering stages of the workflow (<a href="#fig-readLossByStage" class="quarto-xref">Figure&nbsp;<span>2</span></a>). An average of 32.37% of reads were lost across samples after applying cutadapt to select and trim amplicons that contain both forward (ITS1F) and reverse primer (LR3) sequences. The extraction of the full ITS region led to an average loss of 10.65% trimmed reads across samples. An average of 71.82% of full ITS sequences were lost after selecting reads between 300-6,000bp in length and having a mean quality score above Q20 (Phred scale). Such large loss of reads can be attributed to many of the reads from the dataset being below the minimum mean quality threshold of Q20 (<a href="#fig-rawReadQuality" class="quarto-xref">Figure&nbsp;<span>3</span></a>).</p>
+<div id="fig-readLossByStage" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-readLossByStage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis/images/06-read-loss-by-stage-by-sample.png" class="img-fluid figure-img" width="1928"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-readLossByStage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Read loss for taxa used in mock scenarios at filtering and trimming stages of the workflow. Each point represents a fungal isolate sample. Taxa that were excluded from downstream mock scenarios due to low read count have been coloured red. The blue horizontal bar with percentages indicate the mean proportion of reads lost from the previous step. The mean proportion of read loss was only calculated for samples that were not excluded from downstream scenarios. Each step was executed in order from left to right.
+</figcaption>
+</figure>
+</div>
+<div id="fig-rawReadQuality" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rawReadQuality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="analysis/images/06-raw-read-quality.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rawReadQuality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Mean read quality of reads from 58 fungal taxa before trimming or filtering steps. The raw reads have been produced by a MinION R10.4 flow cell after basecalling with guppy v6.4.2 (super-high accuracy model). Quality scores are in the Phred (Q) scale. Read lengths are shown in thousands of basepairs. Histograms on X and Y axes indicate the density of reads at respective quality scores and read lengths. (Plot generated by NanoPlot <span class="citation" data-cites="DeCoster2023">(<a href="10-References.html#ref-DeCoster2023" role="doc-biblioref">De Coster and Rademakers, 2023</a>)</span>)
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-even-scenario" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="sec-even-scenario"><span class="header-section-number">1.2</span> Even abundance scenario</h3>
+<section id="sec-cluster-results" class="level4">
+<h4 class="anchored" data-anchor-id="sec-cluster-results">Minimum cluster size threshold to recover the expected number of species</h4>
+<p>The adopted clustering approaches aimed to group full ITS sequences from the same species together in the same OTU. The total number of OTUs was used as a measure for successfully estimating the number of species in the mock community. In this section we considered the even abundance mock community where 58 fungal taxa were equally represented (<a href="05-Methods.html#sec-mock-fungal-communities" class="quarto-xref"><span>Section 5.2</span></a>). Of the 58 taxa, some had the same species-level designation making for a total of 55 unique species.</p>
+<p>Two clustering approaches were tested: a greedy sequence similarity-based clustering approach with VSEARCH and a k-mer signature based clustering approach (as implemented in NanoCLUST). To recover the expected number of species from the mock community, both clustering approaches required a technique to filter out low-abundance OTUs.</p>
+<p>The number of OTUs returned by VSEARCH at 97% sequence identity was consistently larger than the actual number of species present in the mock community. VSEARCH significantly over-estimated the number of species in the mock community when no filtering was applied to the resulting set of OTUs. Furthermore, this over-estimation was exacerbated as the library size increased. As a significant proportion of these OTUs had low abundance, to recover the expected number of species in the mock community, we implemented a crude cutoff which removed OTUs below a minimum size. We set the cutoff to a proportion of the total library size and tested values between 0% and 2% (<a href="#fig-compareVsearchNanoclust" class="quarto-xref">Figure&nbsp;<span>4</span></a>). We repeated the test for 6 different library sizes (1,160; 2,900; 9,686; 58,000; 116,000; and 145,000 reads) where all fungal taxa had equal abundances.</p>
+<p>With VSEARCH, we observed consistent behaviour when applying the minimum OTU size cutoff at all library sizes. The number of OTUs was very high without a minimum OTU size cutoff, then decreased and stabilised near the expected number of species as the OTU size cutoff increased. We observed that setting the minimum OTU size to be 0.15% of the library size consistently recovered the expected number of species.</p>
+<div id="fig-compareVsearchNanoclust" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-compareVsearchNanoclust-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="analysis/images/06-otu-count-and-loss.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-compareVsearchNanoclust-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Impact of a minimum OTU size cutoff on clustering methods in mock scenario. The number of OTUs and the proportion of read loss is shown for NanoCLUST (in red) and VSEARCH (in blue) clustering methods. These are results from the even abundance scenario. Plots have been organised in columns by increasing library size. The top row of plots shows the number of OTUs after applying a minimum cluster size cutoff that is a proportion of the library size. The bottom row of plots show the proportion of reads that are lost after applying the minimum OTU size cutoff. The mean values of each have been plotted after five random resamplings at each library size. The dashed line indicates the actual number of species in the mock scenario.
+</figcaption>
+</figure>
+</div>
+<!--
+  :::{#fig-vsearchotus}
+  ![](analysis/images/06-otu-count-vsearch.png)
+
+  Effect of a minimum OTU size threshold on the number of OTUs when clustering with VSEARCH.
+  Colours indicate the minimum OTU size threshold as a proportion of the total library size.
+  The dashed line indicates the actual number of species in the mock scenario (55).
+  Five repetitions were performed for each library size. X and Y axes are on a logarithmic scale.
+  :::
+-->
+<p>Alternatively, we tested the k-mer based clustering approach used by the NanoCLUST pipeline. Within the NanoCLUST pipeline, HDBSCAN is the algorithm that performs the clustering and requires specifying a minimum cluster size parameter <em>a priori</em>. Similar to our approach with VSEARCH, we tested multiple values of HDBSCAN’s minimum cluster size parameter on the even abundance mock community for 6 different library sizes (1,160; 2,900; 9,686; 58,000; 116,000; and 145,000 reads). We tested a range of minimum cluster sizes between 0% and 2% of the total library size. We found that when the minimum cluster size parameter was set to its minimum value (2 reads), the NanoCLUST method overestimated the number of species for library sizes of 1,160 reads and above. With the minimum cluster size parameter set to 2, the number of OTUs showed a positive correlation with library size but not as dramatically as with VSEARCH. For library sizes of 1,160 reads and above, a minimum cluster size of 0.65% of the total library size consistently recovered the expected number of species.</p>
+<!--
+  :::{#fig-nanoclustOTUs}
+
+  ![](analysis/images/06-otu-count-nanoclust.png)
+
+  Effect of minimum cluster size parameter and total library size on the number of OTUs when following the UMAP and HDBSCAN (NanoCLUST) clustering approach.
+  Colours indicate the minimum cluster size parameter as a proportion of the total library size.
+  The dashed line indicates the actual number of species in the mock dataset (55).
+  Five repetitions were performed for each library size. X and Y axes are on a logarithmic scale.
+  :::
+-->
+<p>To aid the comparison of VSEARCH and NanoCLUST clustering methods, we recorded the proportion of reads that were lost due to defining a minimum OTU size. We defined the proportion of reads lost for VSEARCH as:</p>
+<p><span class="math display">\[
+\frac{\text{\# of reads removed when filtering OTUs by size}}{\text{\# number of reads in library}}
+\]</span></p>
+<p>and for Nanoclust as:</p>
+<p><span class="math display">\[
+\frac{\text{\# of unclustered reads}}{\text{\# number of reads in library}}
+\]</span></p>
+<p>We found that for low library sizes (1,160-9,686 reads), the NanoCLUST method produced closer estimates of the actual number of species with lower read loss than VSEARCH for all minimum OTU sizes. For larger library sizes (58K-145K reads) using the VSEARCH method, we observed a consistent pattern of read loss for all library sizes. The NanoCLUST method became less consistent for larger library sizes and lost a higher proportion reads to recover the same number of species as VSEARCH (<a href="#fig-compareVsearchNanoclust" class="quarto-xref">Figure&nbsp;<span>4</span></a>). <!--
+For example, using the VSEARCH method, 5% of reads were lost when the minimum OTU size was set to 0.5% (of library size) for all library sizes.
+While using the NanoCLUST method 2.5%, 0.6%, 0.75%
+--></p>
+<!--
+For larger library sizes (50K-145K reads), the NanoCLUST method's minimum cluster size of 0.65% produced consistently
+accurate estimates of the actual number of species while VSEARCH's minimum cluster threshold of 0.15% performed similarly.
+When considering read loss at these thresholds, compared to VSEARCH, the NanoCLUST method performed better at a library size of 50K, similarly at a library size of 116K reads
+and worse at a library size of 145K reads.
+-->
+</section>
+<section id="computing-number-of-species-after-taxonomic-assignments" class="level4">
+<h4 class="anchored" data-anchor-id="computing-number-of-species-after-taxonomic-assignments">Computing number of species after taxonomic assignments</h4>
+<p>While we were able to demonstrate above that the expected number of species can be recovered by setting a minimum OTU size, the number of OTUs may not be an accurate measure of the actual number of species. For example, one species may have been split into multiple OTUs which have all been given the same species-level taxonomic assignment. In addition, we wanted to explore using a minimum OTU size threshold that was not proportional to the library size. We felt that a minimum OTU size of 0.65% for NanoCLUST and 0.15% for VSEARCH would exclude low-abundance species and may bias against samples with low read depth.</p>
+<p>Here we explored the observed number of species in our even abundance mock community after assigning OTUs. We performed VSEARCH and NanoCLUST clustering methods on four library sizes of 9,686; 58,000; 116,000 and 145,000 reads. HDBSCAN clustering was performed six times for each library with minimum cluster sizes of: 2, 5, 10, 20, 50 and 100 reads. VSEARCH clustering was performed once for each library at 97% identity, then OTUs with fewer than: 2, 5, 10, 20, 50 and 100 reads were removed. The most abundant sequence was used at the representative sequence for each OTU and given a taxonomic assignment with dnabarcoder using the UNITE+INSD 2024 database.</p>
+<p>For each minimum OTU size, we counted the number of unique taxonomic assignments given at the species level. <!-- OTUs that were unidentified at the species level were counted as individual species (and not lumped together as a single species). --> Of the OTUs that were given a species-level assignment, we counted the number of species that were known to be in the mock community (listed in <a href="09-Supplementary.html#apptbl-samplesheet" class="quarto-xref">Table A<span>2</span></a>). For OTUs that were only identified to genus or family level, we counted the number of OTUs that had genus or family level labels that were known to be in the mock community. OTUs that were identified at species, genus or family levels but whose taxonomic labels were not expected in the mock community were counted as false positives. OTUs that were unidentified at the family level or higher were recorded as ‘unidentified’ (<a href="#fig-fixed-min-cluster-size-even" class="quarto-xref">Figure&nbsp;<span>5</span></a>). We also recorded the proportion of read loss as in the previous section.</p>
+<div id="fig-fixed-min-cluster-size-even" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fixed-min-cluster-size-even-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./analysis/images/06-n-species-even.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fixed-min-cluster-size-even-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Number of species after ‘collapsing’ OTUs with the same species-level taxonomic assignment in mock scenario. The even abundance mock community was clustered with VSEARCH and NanoCLUST, and six minimum OTU sizes were tested (2, 5, 10, 20, 50, 100). Each OTU was given a taxonomic assignment with dnabarcoder using the UNITE+INSD 2024 database. The dark blue line (first two rows) shows the number of OTUs after clustering. Green bars show the number of species that were known to be in the mock community. Yellow bars show the number of OTUs that were assigned at the genus level, and whose genus label was known to be in the mock community. Orange bars show the number of OTUs that were assigned at the family level, and whose family label was known to be in the mock community. Red bars show the number of OTUs that were assigned at the species, genus or family level but whose taxonomic label was not found in the mock community. Grey bars show the number of OTUs that were unidentified at the family level or above. The process was repeated for four library sizes of 9,686; 58,000; 116,000 and 145,000 reads. The bottom row of plots show the proportion of reads that are lost after applying the minimum OTU size cutoff.
+</figcaption>
+</figure>
+</div>
+<p>We observed that ‘collapsing’ OTUs by their species-level identification was more accurate in estimating the number of species in the mock community compared to using the number OTUs. We found that a core set of species from the mock community remained regardless of minimum OTU size or library size (green bars in <a href="#fig-fixed-min-cluster-size-even" class="quarto-xref">Figure&nbsp;<span>5</span></a>). When the library size increased, we observed an increase in OTUs that were unidentified or assigned to the expected genus and family levels for both NanoCLUST and VSEARCH. Increasing the minimum OTU size with VSEARCH mostly removed OTUs that were unidentified or assigned to genera from the mock community. NanoCLUST overestimated the number of species regardless of the minimum OTU size, but had the benefit of much lower read loss than VSEARCH.</p>
+</section>
+<section id="comparing-cluster-delineation-between-vsearch-and-nanoclust" class="level4">
+<h4 class="anchored" data-anchor-id="comparing-cluster-delineation-between-vsearch-and-nanoclust">Comparing cluster delineation between VSEARCH and NanoCLUST</h4>
+<p>To investigate if closely related species could be distinguished after clustering, we looked at a single execution of the even abundance mock scenario where 2,000 reads were selected from each of the 58 fungal taxa giving a total library size of 116K reads. Reads were clustered separately with the NanoCLUST and VSEARCH methods. Reads that were clustered with the NanoCLUST method used a minimum cluster size of 580 reads (0.5% of the library size). VSEARCH clustering used a 97% identity and OTUs that had fewer than 174 reads (0.15% of library size) were removed. The most abundant sequences of each OTU were classified with dnabarcoder and the UNITE+INSD 2024 reference database.</p>
+<p>The samples from the order <em>Pucciniales</em> are shown in <a href="#fig-splittingPuccinia" class="quarto-xref">Figure&nbsp;<span>6</span></a>. Using the NanoCLUST method, the majority of reads from the <em>Puccinia striiformis (var tritici)</em> sample (BC 25) clustered together into a single OTU (OTU 37) with the expected species-level classification (<em>Puccinia striiformis</em>). The remaining reads from the <em>P. striiformis (var tritici)</em> sample clustered into singleton OTUs which did not correspond to the expected taxonomic label. The <em>Botrytis</em> classification of one of these OTUs corresponds to another fungal taxa present in the library and may be indicative of index-switching (where a sequencing error has occurred in the barcode region of the read).</p>
+<div id="fig-splittingPuccinia" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-splittingPuccinia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><img src="analysis/images/06-cluster-splitting-nanoclust-puccinia.png" class="img-fluid figure-img"></p>
+<p><img src="analysis/images/06-cluster-splitting-vsearch-puccinia.png" class="img-fluid figure-img"></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-splittingPuccinia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Clustering of <em>Pucciniales</em> using the NanoCLUST (UMAP + HDBSCAN) and VSEARCH methods. Each plot shows the reads from a single fungal taxon and bars indicate the number of reads from the taxon placed in an OTU. The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the x-axis labels. Green bars indicate that the assignment given to an OTU matches the expected species-level classification. Red bars indicate that the classification is incorrect for family-level and above. Grey bars indicate that the cluster could not be given any taxonomic classification at all. Bars marked with an asterix (*) indicate that taxonomic labels differed between reference database and our sample but were still considered the same species.
+</figcaption>
+</figure>
+</div>
+<p>For <em>Puccinia graminis</em> (BC 27) when using the NanoCLUST method, the majority of the reads were split into two OTUs, both of which were classified as the expected <em>P. graminis</em> species. Using the VSEARCH method, the majority of the <em>Puccinia graminis</em> reads clustered into a single correctly identified OTU. This likely indicates that biological variation exists in the <em>P. graminis</em> sample that the NanoCLUST method was capable of detecting while VSEARCH (at 97% identity) could not. The majority of reads for both <em>Austropuccinia psidii</em> samples (BC 28 and 36) were split into the same two OTUs (OTU 38 and 21) which have been classified as <em>Puccinia psidii</em>. A similar plot for all samples in this mock community can be seen in <a href="09-Supplementary.html#appfig-nanoclustSplitting2" class="quarto-xref">Figure A<span>1</span></a> with classifications shown in <a href="09-Supplementary.html#apptbl-tax-assignments-nanoclust" class="quarto-xref">Table A<span>4</span></a>.</p>
+<div id="fig-splittingCandida" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-splittingCandida-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><img src="analysis/images/06-cluster-splitting-nanoclust-candida.png" class="img-fluid figure-img"></p>
+<p><img src="analysis/images/06-cluster-splitting-vsearch-candida.png" class="img-fluid figure-img"></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-splittingCandida-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Clustering of selected <em>Candida</em> using the NanoCLUST (UMAP + HDBSCAN) and VSEARCH methods. Each plot shows the reads from a single fungal taxon and bars indicate the number of reads from the taxon placed in an OTU. The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the x-axis labels. Green bars indicate that the assignment given to an OTU matches the expected species-level classification. Yellow bars indicate a correct genus-level classification. Red bars indicate that the classification is incorrect for family-level and above. Grey bars indicate that the OTU could not be given any taxonomic classification at all.
+</figcaption>
+</figure>
+</div>
+<p>We observed similar clustering behaviour between VSEARCH and NanoCLUST for taxa in the genus <em>Candida</em> (<a href="#fig-splittingCandida" class="quarto-xref">Figure&nbsp;<span>7</span></a>). With VSEARCH, sequences from <em>C. albicans</em> (BC47) were placed into three OTUs. The OTU that received the most reads from <em>C. albicans</em> was classified correctly, while the other two were classified to other taxa in the mock community (<em>C. orthopsilosis</em> and <em>C. metapsilosis</em>). A similar pattern was observed using NanoCLUST, although the major OTU was not classified correctly at the species-level and there were many more low-abundance OTUs (below 40 reads). The majority of sequences from <em>C. caryicola</em> (BC49) were placed into two unclassified OTUs for both clustering methods. Sequences from <em>C. metapsilosis</em> (BC53) and <em>C. orthopsilosis</em> (BC54) showed significant similarity as VSEARCH placed the majority of reads from both taxa in the same OTU, while NanoCLUST placed a similar proportion of reads from each taxon into two major OTUs.</p>
+<div id="fig-splittingCryptococcus" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-splittingCryptococcus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><img src="analysis/images/06-cluster-splitting-nanoclust-cryptococcus.png" class="img-fluid figure-img"></p>
+<p><img src="analysis/images/06-cluster-splitting-vsearch-cryptococcus.png" class="img-fluid figure-img"></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-splittingCryptococcus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Clustering of genus <em>Cryptococcus</em> using the NanoCLUST (UMAP + HDBSCAN) and VSEARCH methods. Each plot shows the reads from a single fungal taxon and bars indicate the number of reads from the taxon placed in an OTU. The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the x-axis labels. Green bars indicate that the assignment given to an OTU matches the expected species-level classification. Yellow bars indicate a correct genus-level classification. Red bars indicate that the classification is incorrect for family-level and above. Grey bars indicate that the OTU could not be given any taxonomic classification at all.
+</figcaption>
+</figure>
+</div>
+<p>In the genus <em>Cryptococcus</em>, with NanoCLUST, reads from <em>C. gattii VG I</em> (BC59) were placed into one major OTU with the correct species-level assignment while VSEARCH split reads into three major OTUs (<a href="#fig-splittingCryptococcus" class="quarto-xref">Figure&nbsp;<span>8</span></a>). With VSEARCH, we observed a significant proportion of reads from all four <em>Cryptococcus</em> taxa were placed into the same OTU (OTU 9), while with NanoCLUST this only occurred for three of the taxa (<em>C. gattii</em> VG III (BC60), <em>C. neoformans</em> VNI (BC61) and <em>C. neoformans</em> VN IV (BC62)). A proportion of reads from <em>Cryptococcus gatii</em> VG III (BC60) were misclassified as <em>Candida ortholopsis</em>, while a proportion of reads from <em>Cryptococcus neoformans</em> VNI (BC61) were misclassified as <em>Kluveromyces marxianus</em>.</p>
+<div id="fig-splittingBotrytis" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-splittingBotrytis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p><img src="analysis/images/06-cluster-splitting-nanoclust-botrytis.png" class="img-fluid figure-img"></p>
+<p><img src="analysis/images/06-cluster-splitting-vsearch-botrytis.png" class="img-fluid figure-img"></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-splittingBotrytis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Clustering of family <em>Sclerotiniaceae</em> using the NanoCLUST (UMAP + HDBSCAN) and VSEARCH methods. Each plot shows the reads from a single fungal taxon and bars indicate the number of reads from the taxon placed in an OTU. The taxonomic classification given by dnabarcoder (with the UNITE 2024 database) for each OTU is shown in the x-axis labels. Green bars indicate that the assignment given to an OTU matches the expected species-level classification. Yellow bars indicate a correct genus-level classification. Red bars indicate that the classification is incorrect for family-level and above. Grey bars indicate that the OTU could not be given any taxonomic classification at all.
+</figcaption>
+</figure>
+</div>
+<p>For the <em>Sclerotiniaceae</em> family, we found that both <em>Botrytis</em> taxa (BC31 and BC32) were placed in the same OTU with both NanoCLUST and VSEARCH. With VSEARCH, 516 reads from <em>Sclerotinia sclerotiorum</em> were also placed in the same OTU with the <em>Botrytis</em> taxa. With NanoCLUST, the majority of reads were placed into one correctly identified OTU.</p>
+<p>Overall, with these clustering setting, NanoCLUST and VSEARCH performed similarly for delineating the majority of the taxa. In the <em>Cryptococcus</em> and <em>Sclerotiniaceae</em> cases, NanoCLUST was observed to perform better at delineating closely related taxa. However, in <em>Candida</em> and <em>Cryptococcus</em> cases, we observed many more low-abundance OTUs with incorrect taxonomic assignments for NanoCLUST compared to VSEARCH.</p>
+</section>
+<section id="comparison-of-representative-sequence-used-for-taxonomic-assignment" class="level4">
+<h4 class="anchored" data-anchor-id="comparison-of-representative-sequence-used-for-taxonomic-assignment">Comparison of representative sequence used for taxonomic assignment</h4>
+<p>To explore the accuracy of taxonomic classifications made by the workflow, two metrics were computed for the even abundance mock scenario (Scenario 1). The genera classification proportion metric for all fungal taxa was defined as:</p>
+<p><span class="math display">\[
+\frac{\text{\# of reads classified at the genera level}}{\text{total \# of reads in library}}
+\]</span></p>
+<p>The genera precision metric for all fungal taxa was defined as:</p>
+<p><span class="math display">\[
+\frac{\text{\# of reads classified correctly at the genera level}}{\text{\# of reads classified at the genera level}}
+\]</span></p>
+<p>These metrics were calculated for five library sizes (between 2,900 and 145,000 reads) for both NanoCLUST and VSEARCH clustering methods (<a href="#fig-precision" class="quarto-xref">Figure&nbsp;<span>10</span></a>). We explored which representative sequence from an OTU gave more accurate taxonomic classifications: most abundant sequence or consensus sequence. Consensus sequences were generated by polishing a subset of sequences from each OTU as described in <a href="05-Methods.html#sec-pipeline-description" class="quarto-xref"><span>Section 5.1</span></a>.</p>
+<p>A read’s classification was deemed ‘correct’ if its genus-level label matched the sample from which the read originated. This approach had limitations and was difficult to ensure taxonomic assignments were correct in an automated fashion due to synonymous naming conventions. Manual adjustments were made for the following assignments that would have been otherwise considered misclassified:</p>
+<ul>
+<li>Reads classified as <em>Puccinia psidii</em> from the <em>Austropuccinia psidii</em> sample were considered to be a correct species-level assignment.</li>
+<li>Reads classified to the <em>Kurtzmaniella</em> genus from the <em>Candida boleticola</em> or <em>Candida zeylanoides</em> samples were considered to be correct genus-level assignment.</li>
+</ul>
+<div id="fig-precision" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-precision-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="analysis/images/06-precision-even-abundance.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-precision-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Classification proportion and precision between most abundant sequences and consensus sequences. The proportion of classified reads and the precision of classifications at the genera level between the most abundant sequence and consensus sequence are shown. Classification metrics were calculated for the even-abundance mock scenario with five library sizes of 2,900; 9,686; 58,000; 116,000 and 145,000 reads. Five replicates were performed for each library. Red points show classification proportion and precision when using the most abundance sequence from OTUs. Blue points show classification proportion and precision when using a consensus sequence from OTUs. Consensus sequence metrics were not shown for VSEARCH due very low classification proportion (35% and below).
+</figcaption>
+</figure>
+</div>
+<p>For NanoCLUST, we observed that clustering with a <code>min_cluster_size</code> of 2 and classifying the most abundant sequence gave the most consistent results across all library sizes. In this case, for all library sizes, ~95% of reads were classified and 82.5% to 85% of these classifications were correct. We observed that increasing the <code>min_cluster_size</code> parameter introduced variability in these metrics and generally worsened classification performance. When clustering with a <code>min_cluster_size</code> parameter of 2 and using the consensus sequence for classifications, the classification precision improved slightly while the proportion of reads that were classified decreased.</p>
+<p>For VSEARCH when using the most abundant sequence, we observed that increasing the minimum OTU size decreased the proportion of reads classified at the genera level by ~2.5% while the classification precision did not change significantly. The classification rate of consensus sequences for VSEARCH was very poor with more than 65% of reads being unclassified at the genera level. Overall, both NanoCLUST and VSEARCH approaches performed comparably when the minimum OTU size was low and the most abundant sequence was used for classifications.</p>
+</section>
+</section>
+<section id="uneven-abundance-scenario" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="uneven-abundance-scenario"><span class="header-section-number">1.3</span> Uneven abundance Scenario</h3>
+<!--
+#### Minimum cluster size threshold to recover the expected number of species
+
+:::{#fig-n-species-uneven}
+![](analysis/images/06-n-species-uneven.png)
+
+
+Number of species after 'collapsing' OTUs with the same species-level taxonomic assignment.
+The uneven abundance mock community was clustered with VSEARCH and NanoCLUST, and six minimum OTU sizes were tested (2, 5, 10, 20, 50, 100).
+Each OTU was given a taxonomic assignment with dnabarcoder using the UNITE+INSD 2024 database.
+The blue line shows the number of OTUs after clustering.
+Green bars show the number of species that were known to be in the mock community.
+Yellow bars show the number of OTUs that were assigned at the genus level, and whose genus label was known to be in the mock community.
+Orange bars show the number of OTUs that were assigned at the family level, and whose family label was known to be in the mock community.
+Red bars show the number of OTUs that were assigned at the species, genus or family level but whose taxonomic label was not found in the mock community.
+Grey bars show the number of OTUs that were unidentified at the family level or above.
+The process was repeated for five library sizes of 5,185; 10,185; 25,185; 50,185 and 100,185 reads.
+The bottom row of plots show the proportion of reads that are lost after applying the minimum OTU size cutoff.
+:::
+-->
+<section id="sensitivity-of-cluster-thresholds-in-uneven-abundance-scenarios" class="level4">
+<h4 class="anchored" data-anchor-id="sensitivity-of-cluster-thresholds-in-uneven-abundance-scenarios">Sensitivity of cluster thresholds in uneven abundance scenarios</h4>
+<p>To explore the impact that a minimum OTU size cutoff might have on rare species in a real environmental sample, we created a mock scenario where a subset of fungal taxa had much lower abundance than others. This mock community contained a total of 55 fungal taxa where 50 taxa each had an abundance of 2,000 reads, while the remaining five taxa had abundances of 5, 10, 20, 50 and 100 reads, making for a total library size of 100,185 reads. We examined the minimum OTU size cutoff at which low-abundance taxa would be lost (<a href="#fig-uneven-min-cluster-thresh" class="quarto-xref">Figure&nbsp;<span>11</span></a>).</p>
+<div id="fig-uneven-min-cluster-thresh" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uneven-min-cluster-thresh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="analysis/images/06-uneven-min-cluster.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uneven-min-cluster-thresh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Impact of the minimum OTU size on low abundance taxa in mock scenario. Each plot shows the OTUs that contained reads from the five ‘low-abundance’ fungal taxa. The OTUs and their taxonomic classification (given by dnabarcoder) are shown on the x-axis. Coloured bars show the proportion of reads belonging to the fungal taxa within an OTU. Minimum OTU sizes of 2, 5, 10, 20, 50 and 100 were tested and shown in plots arranged from left to right. The low-abundance fungal taxa are <em>Trichomanascus ciferri</em>, <em>Erysiphe necator</em>, <em>Eutypa lata</em>, <em>Penicillium chrysogenum</em> and <em>Candida zeylanoides</em> which had abundances of 5, 10, 20, 50 and 100 reads respectively. The remaining 50 taxa in the mock community each had an abundance of 2,000 reads. The dotted line indicates the minimum OTU size relative to the OTU size.
+</figcaption>
+</figure>
+</div>
+<p>We observed that when increasing the <code>min_cluster_size</code> parameter for HDBSCAN (the clustering algorithm used by NanoCLUST), reads from ‘low-abundance’ fungal taxa were placed in OTUs with unrelated taxa. For example in <a href="#fig-uneven-min-cluster-thresh" class="quarto-xref">Figure&nbsp;<span>11</span></a>, when setting the <code>min_cluster_size</code> to 100 reads, we see that reads from <em>Eutypa lata</em> were clustered together into an OTU which was classified as the distantly related <em>Dipodascus capitatus</em>. This behaviour was consistent when the <code>min_cluster_size</code> parameter exceeded the abundance of a fungal taxon. <!--This behaviour was consistent when the `min_cluster_size` exceeded the number of reads of low-abundance taxa.--></p>
+<p>For VSEARCH, the effect of a minimum OTU size was predictable in removing low-abundance OTUs. Low-abundance taxa such as <em>Trichomanascus ciferri</em> and <em>Erysiphe necator</em> were lost at lower minimum OTU sizes than expected because they had been split into smaller OTUs.</p>
+</section>
+</section>
+</section>
+<section id="real-world---soil-case-study" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="real-world---soil-case-study"><span class="header-section-number">2</span> Real world - Soil case study</h2>
+<p>For our ‘real world’ soil study, 23 samples were taken from soil beneath six tree species and two controls were sequenced with ONT MinION 10.4.1 and gave a total of 4,365,488 reads after basecalling. After demultiplexing with minibar using a custom barcoding scheme, 3,041,450 reads remained (30% loss). Of the reads where demultiplexing failed, 88,599 reads had multiple barcode matches and 1,235,439 had unidentifiable barcodes.</p>
+<section id="quality-control-1" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="quality-control-1"><span class="header-section-number">2.1</span> Quality control</h3>
+<p>We observed considerably higher read quality scores from the soil samples (median: Q24.0) compared to the pure fungal taxa (median: Q16.8) used in the mock scenarios (compare <a href="#fig-raw-read-quality-soil" class="quarto-xref">Figure&nbsp;<span>12</span></a> and <a href="#fig-rawReadQuality" class="quarto-xref">Figure&nbsp;<span>3</span></a>). <!--
+mean -> 13.2, median -> 16.8
+mean -> 18.6, median -> 24.0
+--> This was expected, as the soil samples were sequenced with the latest MinION chemistry and basecalled with the dorado’s latest basecalling model (v5.0.0), while the pure fungal taxa were limited to older basecalling models (v4.1.0).</p>
+<div id="fig-raw-read-quality-soil" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-raw-read-quality-soil-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="analysis/images/06-raw-read-quality-soil.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-raw-read-quality-soil-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Read quality of real world soil samples. Mean read quality of reads from 23 soil samples and two control samples are shown before trimming or filtering steps. The raw reads have been produced by a MinION R10.4.1 flow cell after basecalling with dorado v0.7.1 (super-high accuracy model). Quality scores are in the Phred (Q) scale. Read lengths are shown in thousands of basepairs. Histograms on X and Y axes indicate the density of reads at respective quality scores and read lengths. (Plot generated by NanoPlot <span class="citation" data-cites="DeCoster2023">(<a href="10-References.html#ref-DeCoster2023" role="doc-biblioref">De Coster and Rademakers, 2023</a>)</span>)
+</figcaption>
+</figure>
+</div>
+<p>After tracking the number of reads through the primer trimming, ITS extraction, quality filtering and chimera detection stages of the workflow, we observed a mean read loss across all samples of 14.85%, 15.56%, 12.26% and 0% respectively (<a href="#fig-qc-soil" class="quarto-xref">Figure&nbsp;<span>13</span></a>). We observed considerably more reads being retained after the primer trimming step for the soil samples as compared to the mock fungal samples (14.85% loss vs.&nbsp;32.37% loss), which is likely due to the higher read quality but also due to the demultiplexing approach having already detected and filtered reads that did not match the amplicon primers. We also noted that the extraction kit (ExCon) and PCR negative control had a relatively low number of reads as expected after these stages. The sample AP6 was excluded from further processing due to having a significantly lower read count (1,173) compared to the other samples.</p>
+<div id="fig-qc-soil" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-qc-soil-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="analysis/images/06-read-loss-by-stage-by-sample-soil.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qc-soil-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Read loss in soil case study in filtering and trimming stages. Each point represents a soil or control sample. The blue horizontal bar with percentages indicate the mean proportion of reads lost from the previous step. Four samples with relatively low read count after quality control stages have been given colours; red: AP6 (<em>Allocasuarina paradoxa</em>), brown: EC1 (<em>Eucalyptus cephalocarpa</em>), green: ExCon (extraction kit control) and pink: PCRNegCon (PCR negative control). Each step was executed in order from left to right. Note the y-axis has been plotted on a square root scale.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="clustering-and-taxonomic-assignment" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="clustering-and-taxonomic-assignment"><span class="header-section-number">2.2</span> Clustering and taxonomic assignment</h3>
+<p>The full set of quality filtered reads were clustered with VSEARCH at 97% identity and the most abundant sequence of each OTU was classified using dnabarcoder and the UNITE+INSD 2024 database. Low-abundance OTUs were removed from samples if they were smaller than 0.15% of the number of reads in the sample. The top 30 largest OTUS can be seen in <a href="09-Supplementary.html#apptbl-top-30-soil-vsearch" class="quarto-xref">Table A<span>8</span></a>. A high proportion of OTUs could not be given a classification by dnabarcoder. 71.7% of 1,590,965 reads were considered unclassified at the kingdom level consisting of 451 out of 775 OTUs (<a href="#fig-soil-classified" class="quarto-xref">Figure&nbsp;<span>14</span></a>).</p>
+<div id="fig-soil-classified" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-soil-classified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="analysis/images/06-soil-unidentified.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-soil-classified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: The proportion of kingdom-level classifications in real world soil samples. Each bar represents the number of reads in each sample that are either classified to kingdom level (blue) or not (red).
+</figcaption>
+</figure>
+</div>
+<p>The classifications by tree species are shown in <a href="#fig-AL-krona" class="quarto-xref">Figure&nbsp;<span>16</span></a> and <a href="#fig-EC-krona" class="quarto-xref">Figure&nbsp;<span>18</span></a> and show a higher proportion of fungi are classified in <em>Eucalyptus</em> species compared to <em>Allocasuarina</em>.</p>
+<div id="fig-AL-krona" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-AL-krona-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<iframe width="400" height="500" src="analysis/krona/AL.html" title="Webpage example"></iframe>
+<figcaption>A. litteralis</figcaption>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<iframe width="400" height="500" src="analysis/krona/AP.html" title="Webpage example"></iframe>
+<figcaption>A. paradoxa</figcaption>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-AL-krona-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Classifications from <em>Allocasuarina</em> samples. Krona chart shows genus level classifications from all <em>Allocasuarina littoralis</em> and <em>Allocasuarina paradoxa</em> samples. Generated using <span class="citation" data-cites="taudiereMiscMetabarPackageFacilitate2023 ondovInteractiveMetagenomicVisualization2011">(<a href="10-References.html#ref-taudiereMiscMetabarPackageFacilitate2023" role="doc-biblioref">Taudière, 2023</a>; <a href="10-References.html#ref-ondovInteractiveMetagenomicVisualization2011" role="doc-biblioref">Ondov <em>et al.</em>, 2011</a>)</span>.
+</figcaption>
+</figure>
+</div>
+<div id="fig-EC-krona" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-EC-krona-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<iframe width="400" height="500" src="analysis/krona/EC.html" title="Webpage example"></iframe>
+<figcaption>E. cephalocarpa</figcaption>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<iframe width="400" height="500" src="analysis/krona/EV.html" title="Webpage example"></iframe>
+<figcaption>E. viminalis</figcaption>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-EC-krona-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17: Classifications from <em>Eucalyptus</em> samples. Krona chart shows genus level classifications from all <em>Eucalyptus cephalocarpa</em> and <em>Eucalyptus viminalis</em> samples. Generated using <span class="citation" data-cites="taudiereMiscMetabarPackageFacilitate2023 ondovInteractiveMetagenomicVisualization2011">(<a href="10-References.html#ref-taudiereMiscMetabarPackageFacilitate2023" role="doc-biblioref">Taudière, 2023</a>; <a href="10-References.html#ref-ondovInteractiveMetagenomicVisualization2011" role="doc-biblioref">Ondov <em>et al.</em>, 2011</a>)</span>.
+</figcaption>
+</figure>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-DeCoster2023" class="csl-entry" role="listitem">
+De Coster,W. and Rademakers,R. (2023) <a href="https://doi.org/10.1093/bioinformatics/btad311"><span>NanoPack2</span>: Population-scale evaluation of long-read sequencing data</a>. <em>Bioinformatics</em>, <strong>39</strong>, 0–2.
+</div>
+<div id="ref-ondovInteractiveMetagenomicVisualization2011" class="csl-entry" role="listitem">
+Ondov,B.D. <em>et al.</em> (2011) <a href="https://doi.org/10.1186/1471-2105-12-385">Interactive metagenomic visualization in a <span>Web</span> browser</a>. <em>BMC Bioinformatics</em>, <strong>12</strong>, 385.
+</div>
+<div id="ref-taudiereMiscMetabarPackageFacilitate2023" class="csl-entry" role="listitem">
+Taudière,A. (2023) <a href="https://doi.org/10.21105/joss.06038"><span>MiscMetabar</span>: An <span>R</span> package to facilitate visualization and reproducibility in metabarcoding analysis</a>. <em>Journal of Open Source Software</em>, <strong>8</strong>, 6038.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-Methods.html" class="pagination-link" aria-label="Methods">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Methods</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-Discussion.html" class="pagination-link" aria-label="Discussion">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discussion</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

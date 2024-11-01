@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing - 5&nbsp; Methods</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./06-Results.html" rel="next">
+<link href="./03-Significance.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-Methods.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Methods</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-LiteratureReview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature Review</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Objectives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objectives</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Significance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-Methods.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-Results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Results</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Discussion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discussion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-Conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-References.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-Supplementary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Appendices</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-pipeline-description" id="toc-sec-pipeline-description" class="nav-link active" data-scroll-target="#sec-pipeline-description"><span class="header-section-number">1</span> Workflow description</a>
+  <ul class="collapse">
+  <li><a href="#adapter-and-primer-trimming" id="toc-adapter-and-primer-trimming" class="nav-link" data-scroll-target="#adapter-and-primer-trimming"><span class="header-section-number">1.1</span> Adapter and primer trimming</a></li>
+  <li><a href="#its-extraction-and-quality-filtering" id="toc-its-extraction-and-quality-filtering" class="nav-link" data-scroll-target="#its-extraction-and-quality-filtering"><span class="header-section-number">1.2</span> ITS extraction and quality filtering</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">1.3</span> Clustering</a></li>
+  <li><a href="#taxonomic-assignments" id="toc-taxonomic-assignments" class="nav-link" data-scroll-target="#taxonomic-assignments"><span class="header-section-number">1.4</span> Taxonomic assignments</a></li>
+  <li><a href="#workflow-implementation" id="toc-workflow-implementation" class="nav-link" data-scroll-target="#workflow-implementation"><span class="header-section-number">1.5</span> Workflow implementation</a></li>
+  </ul></li>
+  <li><a href="#sec-mock-fungal-communities" id="toc-sec-mock-fungal-communities" class="nav-link" data-scroll-target="#sec-mock-fungal-communities"><span class="header-section-number">2</span> Mock fungal communities</a>
+  <ul class="collapse">
+  <li><a href="#preparation-of-reads-from-fungal-taxa-for-mock-scenarios" id="toc-preparation-of-reads-from-fungal-taxa-for-mock-scenarios" class="nav-link" data-scroll-target="#preparation-of-reads-from-fungal-taxa-for-mock-scenarios"><span class="header-section-number">2.1</span> Preparation of reads from fungal taxa for mock scenarios</a></li>
+  <li><a href="#sec-scenario-1" id="toc-sec-scenario-1" class="nav-link" data-scroll-target="#sec-scenario-1"><span class="header-section-number">2.2</span> Scenario 1 - Even abundance</a></li>
+  <li><a href="#scenario-2---uneven-5-low-abundance" id="toc-scenario-2---uneven-5-low-abundance" class="nav-link" data-scroll-target="#scenario-2---uneven-5-low-abundance"><span class="header-section-number">2.3</span> Scenario 2 - Uneven (5 low abundance)</a></li>
+  </ul></li>
+  <li><a href="#real-world---soil-case-study" id="toc-real-world---soil-case-study" class="nav-link" data-scroll-target="#real-world---soil-case-study"><span class="header-section-number">3</span> Real world - Soil case study</a>
+  <ul class="collapse">
+  <li><a href="#dna-extraction-amplification-and-sequencing-1" id="toc-dna-extraction-amplification-and-sequencing-1" class="nav-link" data-scroll-target="#dna-extraction-amplification-and-sequencing-1"><span class="header-section-number">3.1</span> DNA extraction, amplification and sequencing</a></li>
+  <li><a href="#bioinformatics---basecalling-and-demultiplexing" id="toc-bioinformatics---basecalling-and-demultiplexing" class="nav-link" data-scroll-target="#bioinformatics---basecalling-and-demultiplexing"><span class="header-section-number">3.2</span> Bioinformatics - basecalling and demultiplexing</a></li>
+  <li><a href="#sample-selection" id="toc-sample-selection" class="nav-link" data-scroll-target="#sample-selection"><span class="header-section-number">3.3</span> Sample selection</a></li>
+  <li><a href="#metabarcoding-workflow" id="toc-metabarcoding-workflow" class="nav-link" data-scroll-target="#metabarcoding-workflow"><span class="header-section-number">3.4</span> Metabarcoding workflow</a></li>
+  <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis"><span class="header-section-number">3.5</span> Data analysis</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Methods</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-pipeline-description" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="sec-pipeline-description"><span class="header-section-number">1</span> Workflow description</h2>
+<p>Our approach for metabarcoding long-read fungal ITS amplicons was packaged into a workflow using the Nextflow language <span class="citation" data-cites="ditommasoNextflowEnablesReproducible2017">(<a href="10-References.html#ref-ditommasoNextflowEnablesReproducible2017" role="doc-biblioref">Di Tommaso <em>et al.</em>, 2017</a>)</span>. As input, the workflow takes a set of <code>fastq</code> formatted files where each file contains the basecalled sequences from each sample. The stages of the metabarcoding workflow are outlined below. The full set of software and versions used can be found in <a href="09-Supplementary.html#apptbl-software-pipeline" class="quarto-xref">Table A<span>1</span></a>. We have named the workflow nanoporcini, and it is accessible online at <a href="https://github.com/aringeri/nanoporcini">https://github.com/aringeri/nanoporcini</a>.</p>
+<section id="adapter-and-primer-trimming" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="adapter-and-primer-trimming"><span class="header-section-number">1.1</span> Adapter and primer trimming</h3>
+<p>Sequencing adapters were trimmed from raw basecalled reads using dorado v0.6.1 with the ‘<code>--no-trim-primers</code>’ option to avoid removing primer sequences. Cutadapt v4.6 <span class="citation" data-cites="Cutadapt">(<a href="10-References.html#ref-Cutadapt" role="doc-biblioref">Martin, 2011</a>)</span> was used to select and trim primers from amplicons that contain both forward (NS5) and reverse primer (LR6) sequences. Amplicons where both of these primer sequences could not be detected were excluded from the analysis. Cutadapt was also used to re-orient reads from the reverse strand (‘<code>--revcomp</code>’ option), facilitating analysis by downstream tools (<a href="#fig-filterTrimFlowchart" class="quarto-xref">Figure&nbsp;<span>1</span></a>).</p>
+</section>
+<section id="its-extraction-and-quality-filtering" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="its-extraction-and-quality-filtering"><span class="header-section-number">1.2</span> ITS extraction and quality filtering</h3>
+<p>The full ITS region of these reads was extracted using ITSxpress v2.0.1 <span class="citation" data-cites="Rivers2018">(<a href="10-References.html#ref-Rivers2018" role="doc-biblioref">Rivers <em>et al.</em>, 2018</a>)</span> with default settings other than ‘<code>--single_end</code>’ and ‘<code>--taxa Fungi</code>’ options. Chopper v0.7.0 <span class="citation" data-cites="DeCoster2023">(<a href="10-References.html#ref-DeCoster2023" role="doc-biblioref">De Coster and Rademakers, 2023</a>)</span> was used to select reads of the full ITS region having a length between 300-6000bp and mean Phred quality score above Q20. Chimeric reads were detected with VSEARCH v2.21.1 <span class="citation" data-cites="rognesVSEARCHVersatileOpen2016">(<a href="10-References.html#ref-rognesVSEARCHVersatileOpen2016" role="doc-biblioref">Rognes <em>et al.</em>, 2016</a>)</span> using <em>de novo</em> and reference based methods. The database used for reference based chimera detection of full ITS sequences was the UNITE+INSD 2024 reference database <span class="citation" data-cites="abarenkovFullUNITEINSDDataset2024 vu_2024_12580255">(<a href="10-References.html#ref-abarenkovFullUNITEINSDDataset2024" role="doc-biblioref">Abarenkov <em>et al.</em>, 2024</a>; <a href="10-References.html#ref-vu_2024_12580255" role="doc-biblioref">Vu, 2024</a>)</span></p>
+<div id="fig-filterTrimFlowchart" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-filterTrimFlowchart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-fig-width="6.5" data-fig-height="0.65" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="624" height="62" viewbox="0.00 0.00 1553.48 144.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 140)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-140 1549.48,-140 1549.48,4 -4,4"></polygon>
+<!-- rec1 -->
+<g id="node1" class="node">
+<title>rec1</title>
+<polygon fill="none" stroke="black" points="420.06,-60 260.34,-60 260.34,-4 420.06,-4 420.06,-60"></polygon>
+<polygon fill="none" stroke="black" points="424.06,-64 256.34,-64 256.34,0 424.06,0 424.06,-64"></polygon>
+<text text-anchor="middle" x="340.2" y="-38" font-family="Times,serif" font-size="20.00">Adapter trimming</text>
+<text text-anchor="middle" x="340.2" y="-14" font-family="Times,serif" font-size="20.00">(dorado)</text>
+</g>
+<!-- rec2 -->
+<g id="node2" class="node">
+<title>rec2</title>
+<polygon fill="none" stroke="black" points="614.95,-60 465.19,-60 465.19,-4 614.95,-4 614.95,-60"></polygon>
+<polygon fill="none" stroke="black" points="618.94,-64 461.19,-64 461.19,0 618.94,0 618.94,-64"></polygon>
+<text text-anchor="middle" x="540.07" y="-38" font-family="Times,serif" font-size="20.00">Primer trimming</text>
+<text text-anchor="middle" x="540.07" y="-14" font-family="Times,serif" font-size="20.00">(cutadapt)</text>
+</g>
+<!-- rec1&#45;&gt;rec2 -->
+<g id="edge3" class="edge">
+<title>rec1-&gt;rec2</title>
+<path fill="none" stroke="black" d="M424.25,-32C433,-32 441.91,-32 450.71,-32"></path>
+<polygon fill="black" stroke="black" points="450.97,-35.5 460.97,-32 450.97,-28.5 450.97,-35.5"></polygon>
+</g>
+<!-- rec3 -->
+<g id="node3" class="node">
+<title>rec3</title>
+<polygon fill="none" stroke="black" points="883.54,-60 660.16,-60 660.16,-4 883.54,-4 883.54,-60"></polygon>
+<polygon fill="none" stroke="black" points="887.53,-64 656.16,-64 656.16,0 887.53,0 887.53,-64"></polygon>
+<text text-anchor="middle" x="771.85" y="-38" font-family="Times,serif" font-size="20.00">Barcode region extraction</text>
+<text text-anchor="middle" x="771.85" y="-14" font-family="Times,serif" font-size="20.00">(ITSxpress)</text>
+</g>
+<!-- rec2&#45;&gt;rec3 -->
+<g id="edge4" class="edge">
+<title>rec2-&gt;rec3</title>
+<path fill="none" stroke="black" d="M619.18,-32C627.78,-32 636.69,-32 645.69,-32"></path>
+<polygon fill="black" stroke="black" points="645.87,-35.5 655.87,-32 645.87,-28.5 645.87,-35.5"></polygon>
+</g>
+<!-- rec4 -->
+<g id="node4" class="node">
+<title>rec4</title>
+<polygon fill="none" stroke="black" points="1140.54,-60 994.73,-60 994.73,-4 1140.54,-4 1140.54,-60"></polygon>
+<polygon fill="none" stroke="black" points="1144.55,-64 990.72,-64 990.72,0 1144.55,0 1144.55,-64"></polygon>
+<text text-anchor="middle" x="1067.63" y="-38" font-family="Times,serif" font-size="20.00">Quality filtering</text>
+<text text-anchor="middle" x="1067.63" y="-14" font-family="Times,serif" font-size="20.00">(chopper)</text>
+</g>
+<!-- rec3&#45;&gt;rec4 -->
+<g id="edge5" class="edge">
+<title>rec3-&gt;rec4</title>
+<path fill="none" stroke="black" d="M887.7,-32C918.65,-32 951.59,-32 980.67,-32"></path>
+<polygon fill="black" stroke="black" points="980.78,-35.5 990.78,-32 980.78,-28.5 980.78,-35.5"></polygon>
+<text text-anchor="middle" x="939.31" y="-38" font-family="Times,serif" font-size="20.00">Full ITS</text>
+</g>
+<!-- rec5 -->
+<g id="node5" class="node">
+<title>rec5</title>
+<polygon fill="none" stroke="black" points="1339.77,-60 1185.2,-60 1185.2,-4 1339.77,-4 1339.77,-60"></polygon>
+<polygon fill="none" stroke="black" points="1343.78,-64 1181.2,-64 1181.2,0 1343.78,0 1343.78,-64"></polygon>
+<text text-anchor="middle" x="1262.49" y="-38" font-family="Times,serif" font-size="20.00">Chimera filtering</text>
+<text text-anchor="middle" x="1262.49" y="-14" font-family="Times,serif" font-size="20.00">(vsearch)</text>
+</g>
+<!-- rec4&#45;&gt;rec5 -->
+<g id="edge6" class="edge">
+<title>rec4-&gt;rec5</title>
+<path fill="none" stroke="black" d="M1144.58,-32C1153.21,-32 1162.08,-32 1170.88,-32"></path>
+<polygon fill="black" stroke="black" points="1171.17,-35.5 1181.17,-32 1171.17,-28.5 1171.17,-35.5"></polygon>
+</g>
+<!-- rec6 -->
+<g id="node8" class="node">
+<title>rec6</title>
+<text text-anchor="middle" x="1463.06" y="-38" font-family="Times,serif" font-size="20.00">Quality filtered</text>
+<text text-anchor="middle" x="1463.06" y="-14" font-family="Times,serif" font-size="20.00">full ITS sequences</text>
+</g>
+<!-- rec5&#45;&gt;rec6 -->
+<g id="edge7" class="edge">
+<title>rec5-&gt;rec6</title>
+<path fill="none" stroke="black" d="M1343.68,-32C1352.52,-32 1361.56,-32 1370.53,-32"></path>
+<polygon fill="black" stroke="black" points="1370.59,-35.5 1380.59,-32 1370.59,-28.5 1370.59,-35.5"></polygon>
+</g>
+<!-- rec7 -->
+<g id="node6" class="node">
+<title>rec7</title>
+<polygon fill="none" stroke="black" points="1316.75,-136 1208.22,-136 1208.22,-100 1316.75,-100 1316.75,-136"></polygon>
+<text text-anchor="middle" x="1262.49" y="-112" font-family="Times,serif" font-size="20.00">UNITE DB</text>
+</g>
+<!-- rec7&#45;&gt;rec5 -->
+<g id="edge1" class="edge">
+<title>rec7-&gt;rec5</title>
+<path fill="none" stroke="black" d="M1262.49,-99.94C1262.49,-91.39 1262.49,-82.84 1262.49,-74.29"></path>
+<polygon fill="black" stroke="black" points="1265.99,-74.25 1262.49,-64.25 1258.99,-74.25 1265.99,-74.25"></polygon>
+</g>
+<!-- rec0 -->
+<g id="node7" class="node">
+<title>rec0</title>
+<text text-anchor="middle" x="109.64" y="-38" font-family="Times,serif" font-size="20.00">Raw demultiplexed reads</text>
+<text text-anchor="middle" x="109.64" y="-14" font-family="Times,serif" font-size="20.00">fastq</text>
+</g>
+<!-- rec0&#45;&gt;rec1 -->
+<g id="edge2" class="edge">
+<title>rec0-&gt;rec1</title>
+<path fill="none" stroke="black" d="M219.56,-32C228.41,-32 237.29,-32 246.01,-32"></path>
+<polygon fill="black" stroke="black" points="246.15,-35.5 256.15,-32 246.15,-28.5 246.15,-35.5"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filterTrimFlowchart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Stages of trimming and quality filtering in our workflow. The steps applied to raw reads are shown in boxes with the software used in parentheses.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="clustering" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="clustering"><span class="header-section-number">1.3</span> Clustering</h3>
+<p>For each scenario, full ITS sequences were grouped into approximate species-level OTUs using two clustering approaches (<a href="#fig-clusterAssignFlowchart" class="quarto-xref">Figure&nbsp;<span>2</span></a>).</p>
+<p>The first approach uses <em>de novo</em> centroid-based clustering on sequence similarity as implemented in VSEARCH v2.21.1 <span class="citation" data-cites="rognesVSEARCHVersatileOpen2016">(<a href="10-References.html#ref-rognesVSEARCHVersatileOpen2016" role="doc-biblioref">Rognes <em>et al.</em>, 2016</a>)</span>. The sequences were first de-replicated using VSEARCH’s ‘<code>--fastx_uniques</code>’ option to merge identical sequences into a single record, then clustered with the ‘<code>--cluster_size</code>’ option. 97% identity was used as the pairwise sequence similarity threshold. This clustering approach resulted in many low-abundance operational taxonomic units (OTUs). Methods for selecting a threshold to remove low-abundance spurious OTUs are explored in <a href="06-Results.html#sec-even-scenario" class="quarto-xref"><span>Section 6.1.2</span></a>.</p>
+<p>The second clustering approach grouped sequences by similarity of their k-mer signatures. We implemented our own version of the clustering approach used by the NanoCLUST pipeline <span class="citation" data-cites="rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021">(<a href="10-References.html#ref-rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021" role="doc-biblioref">Rodríguez-Pérez <em>et al.</em>, 2021</a>)</span>. Each sequence was transformed into a k-mer frequency vector and stored in a tabular format. In our workflow, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST) based on existing work done by <span class="citation" data-cites="langsiriTargetedSequencingAnalysis2023">Langsiri <em>et al.</em> (<a href="10-References.html#ref-langsiriTargetedSequencingAnalysis2023" role="doc-biblioref">2023</a>)</span>. The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) <span class="citation" data-cites="mcinnesUMAPUniformManifold2020">(<a href="10-References.html#ref-mcinnesUMAPUniformManifold2020" role="doc-biblioref">McInnes <em>et al.</em>, 2020</a>)</span>. Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) <span class="citation" data-cites="mcinnes2017hdbscan">(<a href="10-References.html#ref-mcinnes2017hdbscan" role="doc-biblioref">McInnes <em>et al.</em>, 2017</a>)</span>. The ‘<code>cluster_selection_epsilon</code>’ parameter used in HDBSCAN was set to 0.5, while the multiple ‘<code>min_cluster_size</code>’ parameters were tested and explored in <a href="06-Results.html#sec-even-scenario" class="quarto-xref"><span>Section 6.1.2</span></a>.</p>
+<div id="fig-clusterAssignFlowchart" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clusterAssignFlowchart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-fig-width="6.5" data-fig-height="1" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="624" height="96" viewbox="0.00 0.00 1892.35 284.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 280)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-280 1888.35,-280 1888.35,4 -4,4"></polygon>
+<!-- derep -->
+<g id="node1" class="node">
+<title>derep</title>
+<polygon fill="none" stroke="black" points="540,-227 288,-227 288,-147 540,-147 540,-227"></polygon>
+<text text-anchor="middle" x="414" y="-196" font-family="Times,serif" font-size="30.00">Read dereplication</text>
+<text text-anchor="middle" x="414" y="-160" font-family="Times,serif" font-size="30.00">(vsearch)</text>
+</g>
+<!-- vsearch -->
+<g id="node2" class="node">
+<title>vsearch</title>
+<polygon fill="none" stroke="black" points="1176.37,-227 880.48,-227 880.48,-147 1176.37,-147 1176.37,-227"></polygon>
+<text text-anchor="middle" x="1028.42" y="-196" font-family="Times,serif" font-size="30.00">97% identity clustering</text>
+<text text-anchor="middle" x="1028.42" y="-160" font-family="Times,serif" font-size="30.00">(vsearch)</text>
+</g>
+<!-- derep&#45;&gt;vsearch -->
+<g id="edge2" class="edge">
+<title>derep-&gt;vsearch</title>
+<path fill="none" stroke="black" d="M540.04,-187C635.52,-187 767.69,-187 870.3,-187"></path>
+<polygon fill="black" stroke="black" points="870.46,-190.5 880.46,-187 870.45,-183.5 870.46,-190.5"></polygon>
+</g>
+<!-- consA -->
+<g id="node7" class="node">
+<title>consA</title>
+<polygon fill="none" stroke="black" points="1499.48,-178 1237.9,-178 1237.9,-98 1499.48,-98 1499.48,-178"></polygon>
+<text text-anchor="middle" x="1368.69" y="-147" font-family="Times,serif" font-size="30.00">Consensus sequence</text>
+<text text-anchor="middle" x="1368.69" y="-111" font-family="Times,serif" font-size="30.00">(polishing)</text>
+</g>
+<!-- vsearch&#45;&gt;consA -->
+<g id="edge8" class="edge">
+<title>vsearch-&gt;consA</title>
+<path fill="none" stroke="black" d="M1176.81,-165.65C1193.62,-163.22 1210.72,-160.74 1227.43,-158.32"></path>
+<polygon fill="black" stroke="black" points="1228.38,-161.72 1237.78,-156.82 1227.38,-154.79 1228.38,-161.72"></polygon>
+</g>
+<!-- centr -->
+<g id="node8" class="node">
+<title>centr</title>
+<polygon fill="none" stroke="black" points="1494.69,-276 1242.69,-276 1242.69,-196 1494.69,-196 1494.69,-276"></polygon>
+<text text-anchor="middle" x="1368.69" y="-245" font-family="Times,serif" font-size="30.00">centroids</text>
+<text text-anchor="middle" x="1368.69" y="-209" font-family="Times,serif" font-size="30.00">(vsearch)</text>
+</g>
+<!-- vsearch&#45;&gt;centr -->
+<g id="edge9" class="edge">
+<title>vsearch-&gt;centr</title>
+<path fill="none" stroke="black" d="M1176.81,-208.35C1195.29,-211.03 1214.12,-213.75 1232.39,-216.4"></path>
+<polygon fill="black" stroke="black" points="1232.09,-219.89 1242.49,-217.86 1233.09,-212.97 1232.09,-219.89"></polygon>
+</g>
+<!-- kmer -->
+<g id="node3" class="node">
+<title>kmer</title>
+<polygon fill="none" stroke="black" points="540,-129 288,-129 288,-49 540,-49 540,-129"></polygon>
+<text text-anchor="middle" x="414" y="-98" font-family="Times,serif" font-size="30.00">k-mer frequencies</text>
+<text text-anchor="middle" x="414" y="-62" font-family="Times,serif" font-size="30.00">(python)</text>
+</g>
+<!-- umap -->
+<g id="node4" class="node">
+<title>umap</title>
+<polygon fill="none" stroke="black" points="844.68,-129 575.77,-129 575.77,-49 844.68,-49 844.68,-129"></polygon>
+<text text-anchor="middle" x="710.23" y="-98" font-family="Times,serif" font-size="30.00">Dimension reduction</text>
+<text text-anchor="middle" x="710.23" y="-62" font-family="Times,serif" font-size="30.00">(UMAP)</text>
+</g>
+<!-- kmer&#45;&gt;umap -->
+<g id="edge4" class="edge">
+<title>kmer-&gt;umap</title>
+<path fill="none" stroke="black" d="M540.2,-89C548.54,-89 556.98,-89 565.4,-89"></path>
+<polygon fill="black" stroke="black" points="565.66,-92.5 575.66,-89 565.66,-85.5 565.66,-92.5"></polygon>
+</g>
+<!-- hdbscan -->
+<g id="node5" class="node">
+<title>hdbscan</title>
+<polygon fill="none" stroke="black" points="1154.42,-129 902.42,-129 902.42,-49 1154.42,-49 1154.42,-129"></polygon>
+<text text-anchor="middle" x="1028.42" y="-98" font-family="Times,serif" font-size="30.00">Clustering</text>
+<text text-anchor="middle" x="1028.42" y="-62" font-family="Times,serif" font-size="30.00">(HDBSCAN)</text>
+</g>
+<!-- umap&#45;&gt;hdbscan -->
+<g id="edge5" class="edge">
+<title>umap-&gt;hdbscan</title>
+<path fill="none" stroke="black" d="M844.86,-89C860.49,-89 876.44,-89 892.08,-89"></path>
+<polygon fill="black" stroke="black" points="892.32,-92.5 902.32,-89 892.32,-85.5 892.32,-92.5"></polygon>
+</g>
+<!-- mostA -->
+<g id="node6" class="node">
+<title>mostA</title>
+<polygon fill="none" stroke="black" points="1524.78,-80 1212.6,-80 1212.6,0 1524.78,0 1524.78,-80"></polygon>
+<text text-anchor="middle" x="1368.69" y="-49" font-family="Times,serif" font-size="30.00">Most abundant sequence</text>
+<text text-anchor="middle" x="1368.69" y="-13" font-family="Times,serif" font-size="30.00">(vsearch)</text>
+</g>
+<!-- hdbscan&#45;&gt;mostA -->
+<g id="edge6" class="edge">
+<title>hdbscan-&gt;mostA</title>
+<path fill="none" stroke="black" d="M1154.9,-70.82C1170.39,-68.58 1186.41,-66.26 1202.38,-63.95"></path>
+<polygon fill="black" stroke="black" points="1202.92,-67.4 1212.32,-62.51 1201.92,-60.48 1202.92,-67.4"></polygon>
+</g>
+<!-- hdbscan&#45;&gt;consA -->
+<g id="edge7" class="edge">
+<title>hdbscan-&gt;consA</title>
+<path fill="none" stroke="black" d="M1154.9,-107.18C1178.7,-110.62 1203.73,-114.25 1227.94,-117.76"></path>
+<polygon fill="black" stroke="black" points="1227.49,-121.23 1237.89,-119.2 1228.5,-114.3 1227.49,-121.23"></polygon>
+</g>
+<!-- reps -->
+<g id="node10" class="node">
+<title>reps</title>
+<text text-anchor="middle" x="1722.67" y="-147" font-family="Times,serif" font-size="30.00">Representative sequences</text>
+<text text-anchor="middle" x="1722.67" y="-111" font-family="Times,serif" font-size="30.00">for classification</text>
+</g>
+<!-- mostA&#45;&gt;reps -->
+<g id="edge12" class="edge">
+<title>mostA-&gt;reps</title>
+<path fill="none" stroke="black" d="M1513.36,-80C1531.41,-85.03 1549.92,-90.18 1568.12,-95.25"></path>
+<polygon fill="black" stroke="black" points="1567.31,-98.66 1577.89,-97.97 1569.19,-91.91 1567.31,-98.66"></polygon>
+</g>
+<!-- consA&#45;&gt;reps -->
+<g id="edge11" class="edge">
+<title>consA-&gt;reps</title>
+<path fill="none" stroke="black" d="M1499.75,-138C1516.37,-138 1533.57,-138 1550.71,-138"></path>
+<polygon fill="black" stroke="black" points="1550.79,-141.5 1560.79,-138 1550.79,-134.5 1550.79,-141.5"></polygon>
+</g>
+<!-- centr&#45;&gt;reps -->
+<g id="edge10" class="edge">
+<title>centr-&gt;reps</title>
+<path fill="none" stroke="black" d="M1494.78,-201.17C1518.5,-194.57 1543.57,-187.59 1568.06,-180.77"></path>
+<polygon fill="black" stroke="black" points="1569.08,-184.12 1577.78,-178.06 1567.2,-177.37 1569.08,-184.12"></polygon>
+</g>
+<!-- qc -->
+<g id="node9" class="node">
+<title>qc</title>
+<text text-anchor="middle" x="126" y="-147" font-family="Times,serif" font-size="30.00">Quality filtered</text>
+<text text-anchor="middle" x="126" y="-111" font-family="Times,serif" font-size="30.00">full ITS sequences</text>
+</g>
+<!-- qc&#45;&gt;derep -->
+<g id="edge1" class="edge">
+<title>qc-&gt;derep</title>
+<path fill="none" stroke="black" d="M252.03,-159.42C260.56,-160.88 269.18,-162.36 277.77,-163.83"></path>
+<polygon fill="black" stroke="black" points="277.37,-167.31 287.82,-165.55 278.56,-160.41 277.37,-167.31"></polygon>
+</g>
+<!-- qc&#45;&gt;kmer -->
+<g id="edge3" class="edge">
+<title>qc-&gt;kmer</title>
+<path fill="none" stroke="black" d="M252.03,-116.58C260.56,-115.12 269.18,-113.64 277.77,-112.17"></path>
+<polygon fill="black" stroke="black" points="278.56,-115.59 287.82,-110.45 277.37,-108.69 278.56,-115.59"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clusterAssignFlowchart-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Stages of clustering in our workflow. Reads were clustered using two approaches: VSEARCH and NanoCLUST (UMAP + HDBSCAN). Software tools used are shown in parentheses. A representative sequence from each operational taxonomic unit (OTU) was selected based either on the most abundant sequence or the consensus sequence.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="taxonomic-assignments" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="taxonomic-assignments"><span class="header-section-number">1.4</span> Taxonomic assignments</h3>
+<p>A representative sequence was selected from each OTU to aid their taxonomic assignment. Our initial approach used the most abundant sequence as the representative sequence of each OTU. VSEARCH supplied the most abundant sequences with the ‘<code>--centroids</code>’ option. To determine the most abundant sequence from OTUs in the UMAP + HDBSCAN approach, the VSEARCH v2.21.1 ‘<code>--fastx_uniques</code>’ command in combination with ‘<code>--topn 1</code>’ option was used (<a href="#fig-clusterAssignFlowchart" class="quarto-xref">Figure&nbsp;<span>2</span></a>).</p>
+<p>Alternatively, a consensus sequence was built from the reads of each OTU following a similar approach used by the NanoCLUST pipeline (<a href="#fig-clusterPolishFlow" class="quarto-xref">Figure&nbsp;<span>3</span></a>). First, a subset of 200 sequences was selected from each OTU to reduce computation time and space requirements. Then, the read with the highest Average Nucleotide Identity (ANI) to all the other sequences was chosen as the ‘draft’ sequence for the OTU. This was performed with FastANI v1.34 <span class="citation" data-cites="jainHighThroughputANI2018">(<a href="10-References.html#ref-jainHighThroughputANI2018" role="doc-biblioref">Jain <em>et al.</em>, 2018</a>)</span>. The subset of 200 reads were then aligned to the draft sequence using minimap2 v2.28 <span class="citation" data-cites="liMinimap2PairwiseAlignment2018">(<a href="10-References.html#ref-liMinimap2PairwiseAlignment2018" role="doc-biblioref">Li, 2018</a>)</span>. Subsequently, the draft read underwent polishing using racon v1.5.0 <span class="citation" data-cites="vaserFastAccurateNovo2017">(<a href="10-References.html#ref-vaserFastAccurateNovo2017" role="doc-biblioref">Vaser <em>et al.</em>, 2017</a>)</span> then medaka v1.12.0 (<a href="https://github.com/nanoporetech/medaka" class="uri">https://github.com/nanoporetech/medaka</a>). We were unable to use Canu <span class="citation" data-cites="korenCanuScalableAccurate2017">(<a href="10-References.html#ref-korenCanuScalableAccurate2017" role="doc-biblioref">Koren <em>et al.</em>, 2017</a>)</span> in the same manner as the original NanoCLUST pipeline implementation. Canu is designed as a long-read assembler, it has a strict minimum genome size of 1000 making it unable to polish full ITS sequences from this dataset (which were around 400bp).</p>
+<div id="fig-clusterPolishFlow" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clusterPolishFlow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-fig-width="6.5" data-fig-height="1" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="624" height="96" viewbox="0.00 0.00 2287.80 342.78" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 338.78)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-338.78 2283.8,-338.78 2283.8,4 -4,4"></polygon>
+<!-- subset -->
+<g id="node1" class="node">
+<title>subset</title>
+<polygon fill="none" stroke="black" points="709.76,-187.45 380.83,-187.45 380.83,-107.45 709.76,-107.45 709.76,-187.45"></polygon>
+<text text-anchor="middle" x="545.3" y="-156.45" font-family="Times,serif" font-size="30.00">Subset reads for polishing</text>
+<text text-anchor="middle" x="545.3" y="-120.45" font-family="Times,serif" font-size="30.00">(n=200)</text>
+</g>
+<!-- fastANI -->
+<g id="node2" class="node">
+<title>fastANI</title>
+<polygon fill="none" stroke="black" points="1056.38,-187.45 745.58,-187.45 745.58,-107.45 1056.38,-107.45 1056.38,-187.45"></polygon>
+<text text-anchor="middle" x="900.98" y="-156.45" font-family="Times,serif" font-size="30.00">Select draft by max ANI</text>
+<text text-anchor="middle" x="900.98" y="-120.45" font-family="Times,serif" font-size="30.00">(fastANI)</text>
+</g>
+<!-- subset&#45;&gt;fastANI -->
+<g id="edge2" class="edge">
+<title>subset-&gt;fastANI</title>
+<path fill="none" stroke="black" d="M709.68,-147.45C718.26,-147.45 726.89,-147.45 735.48,-147.45"></path>
+<polygon fill="black" stroke="black" points="735.54,-150.95 745.54,-147.45 735.54,-143.95 735.54,-150.95"></polygon>
+</g>
+<!-- minimap -->
+<g id="node3" class="node">
+<title>minimap</title>
+<polygon fill="none" stroke="black" points="1344.43,-187.45 1092.43,-187.45 1092.43,-107.45 1344.43,-107.45 1344.43,-187.45"></polygon>
+<text text-anchor="middle" x="1218.43" y="-156.45" font-family="Times,serif" font-size="30.00">Align reads to draft</text>
+<text text-anchor="middle" x="1218.43" y="-120.45" font-family="Times,serif" font-size="30.00">(minimap2)</text>
+</g>
+<!-- subset&#45;&gt;minimap -->
+<g id="edge9" class="edge">
+<title>subset-&gt;minimap:sw</title>
+<path fill="none" stroke="black" d="M691.62,-107.44C709.66,-103.74 727.94,-100.59 745.53,-98.45 819.01,-89.55 1020.4,-55.84 1085.51,-100.9"></path>
+<polygon fill="black" stroke="black" points="1083.49,-103.78 1093.43,-107.45 1087.96,-98.38 1083.49,-103.78"></polygon>
+</g>
+<!-- racon -->
+<g id="node4" class="node">
+<title>racon</title>
+<polygon fill="none" stroke="black" points="1632.43,-187.45 1380.43,-187.45 1380.43,-107.45 1632.43,-107.45 1632.43,-187.45"></polygon>
+<text text-anchor="middle" x="1506.43" y="-156.45" font-family="Times,serif" font-size="30.00">Polish draft</text>
+<text text-anchor="middle" x="1506.43" y="-120.45" font-family="Times,serif" font-size="30.00">(racon)</text>
+</g>
+<!-- subset&#45;&gt;racon -->
+<g id="edge7" class="edge">
+<title>subset-&gt;racon:sw</title>
+<path fill="none" stroke="black" d="M632.51,-107.35C800.39,-35.84 1172.32,89.34 1374.03,-100.28"></path>
+<polygon fill="black" stroke="black" points="1371.81,-103.01 1381.43,-107.45 1376.69,-97.98 1371.81,-103.01"></polygon>
+</g>
+<!-- medaka -->
+<g id="node5" class="node">
+<title>medaka</title>
+<polygon fill="none" stroke="black" points="1920.43,-187.45 1668.43,-187.45 1668.43,-107.45 1920.43,-107.45 1920.43,-187.45"></polygon>
+<text text-anchor="middle" x="1794.43" y="-156.45" font-family="Times,serif" font-size="30.00">Polish draft</text>
+<text text-anchor="middle" x="1794.43" y="-120.45" font-family="Times,serif" font-size="30.00">(medaka)</text>
+</g>
+<!-- subset&#45;&gt;medaka -->
+<g id="edge8" class="edge">
+<title>subset-&gt;medaka:nw</title>
+<path fill="none" stroke="black" d="M633.91,-187.54C843.77,-276.91 1378.75,-464.29 1660.98,-194.73"></path>
+<polygon fill="black" stroke="black" points="1663.73,-196.95 1668.43,-187.45 1658.83,-191.94 1663.73,-196.95"></polygon>
+</g>
+<!-- fastANI&#45;&gt;minimap -->
+<g id="edge3" class="edge">
+<title>fastANI-&gt;minimap</title>
+<path fill="none" stroke="black" d="M1056.47,-147.45C1065.11,-147.45 1073.76,-147.45 1082.32,-147.45"></path>
+<polygon fill="black" stroke="black" points="1082.33,-150.95 1092.33,-147.45 1082.33,-143.95 1082.33,-150.95"></polygon>
+</g>
+<!-- fastANI&#45;&gt;racon -->
+<g id="edge10" class="edge">
+<title>fastANI:ne-&gt;racon:nw</title>
+<path fill="none" stroke="black" d="M1054.98,-187.45C1103.82,-236.3 1309.59,-238.49 1372.53,-194.04"></path>
+<polygon fill="black" stroke="black" points="1374.99,-196.54 1380.43,-187.45 1370.51,-191.17 1374.99,-196.54"></polygon>
+</g>
+<!-- minimap&#45;&gt;racon -->
+<g id="edge4" class="edge">
+<title>minimap-&gt;racon</title>
+<path fill="none" stroke="black" d="M1344.46,-147.45C1352.99,-147.45 1361.61,-147.45 1370.2,-147.45"></path>
+<polygon fill="black" stroke="black" points="1370.25,-150.95 1380.25,-147.45 1370.25,-143.95 1370.25,-150.95"></polygon>
+</g>
+<!-- racon&#45;&gt;medaka -->
+<g id="edge5" class="edge">
+<title>racon-&gt;medaka</title>
+<path fill="none" stroke="black" d="M1632.46,-147.45C1640.99,-147.45 1649.61,-147.45 1658.2,-147.45"></path>
+<polygon fill="black" stroke="black" points="1658.25,-150.95 1668.25,-147.45 1658.25,-143.95 1658.25,-150.95"></polygon>
+</g>
+<!-- reps -->
+<g id="node7" class="node">
+<title>reps</title>
+<text text-anchor="middle" x="2118.11" y="-156.45" font-family="Times,serif" font-size="30.00">Representative sequences</text>
+<text text-anchor="middle" x="2118.11" y="-120.45" font-family="Times,serif" font-size="30.00">for classification</text>
+</g>
+<!-- medaka&#45;&gt;reps -->
+<g id="edge6" class="edge">
+<title>medaka-&gt;reps</title>
+<path fill="none" stroke="black" d="M1920.72,-147.45C1929.09,-147.45 1937.6,-147.45 1946.14,-147.45"></path>
+<polygon fill="black" stroke="black" points="1946.18,-150.95 1956.18,-147.45 1946.18,-143.95 1946.18,-150.95"></polygon>
+</g>
+<!-- reads -->
+<g id="node6" class="node">
+<title>reads</title>
+<text text-anchor="middle" x="172.53" y="-138.45" font-family="Times,serif" font-size="30.00">Set of reads in same cluster</text>
+</g>
+<!-- reads&#45;&gt;subset -->
+<g id="edge1" class="edge">
+<title>reads-&gt;subset</title>
+<path fill="none" stroke="black" d="M345.08,-147.45C353.66,-147.45 362.28,-147.45 370.87,-147.45"></path>
+<polygon fill="black" stroke="black" points="370.94,-150.95 380.94,-147.45 370.94,-143.95 370.94,-150.95"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clusterPolishFlow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Stages of consensus sequence generation in our workflow. The process of producing a consensus sequence for each OTU by selecting and polishing a draft read. An initial draft sequence was selected by taking the read with the highest Average Nucleotide Identity (ANI) from the first 200 reads in the OTU. The subset of 200 reads were first aligned to the draft sequence, then polished using racon <span class="citation" data-cites="vaserFastAccurateNovo2017">(<a href="10-References.html#ref-vaserFastAccurateNovo2017" role="doc-biblioref">Vaser <em>et al.</em>, 2017</a>)</span> and medaka (<a href="https://github.com/nanoporetech/medaka" class="uri">https://github.com/nanoporetech/medaka</a>).
+</figcaption>
+</figure>
+</div>
+<p>The representative sequence from each OTU was then given a taxonomic assignment with dnabarcoder v1.0.6 <span class="citation" data-cites="vuDnabarcoderOpensourceSoftware2022">(<a href="10-References.html#ref-vuDnabarcoderOpensourceSoftware2022" role="doc-biblioref">Vu <em>et al.</em>, 2022</a>)</span>. In this case, full ITS sequences were classified against the UNITE+INSD 2024 reference database <span class="citation" data-cites="abarenkovFullUNITEINSDDataset2024 vu_2024_12580255">(<a href="10-References.html#ref-abarenkovFullUNITEINSDDataset2024" role="doc-biblioref">Abarenkov <em>et al.</em>, 2024</a>; <a href="10-References.html#ref-vu_2024_12580255" role="doc-biblioref">Vu, 2024</a>)</span> using precomputed similarity cutoffs provided by the dnabarcoder project <span class="citation" data-cites="vuDnabarcoderOpensourceSoftware2022">(<a href="10-References.html#ref-vuDnabarcoderOpensourceSoftware2022" role="doc-biblioref">Vu <em>et al.</em>, 2022</a>)</span>.</p>
+</section>
+<section id="workflow-implementation" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="workflow-implementation"><span class="header-section-number">1.5</span> Workflow implementation</h3>
+<p>The workflow was implemented using the Nextflow language <span class="citation" data-cites="ditommasoNextflowEnablesReproducible2017">(<a href="10-References.html#ref-ditommasoNextflowEnablesReproducible2017" role="doc-biblioref">Di Tommaso <em>et al.</em>, 2017</a>)</span> and was developed to run with Singularity <span class="citation" data-cites="kurtzerSingularityScientificContainers2017">(<a href="10-References.html#ref-kurtzerSingularityScientificContainers2017" role="doc-biblioref">Kurtzer <em>et al.</em>, 2017</a>)</span> or Docker <span class="citation" data-cites="merkel2014docker">(<a href="10-References.html#ref-merkel2014docker" role="doc-biblioref">Merkel <em>et al.</em>, 2014</a>)</span> containers. A container-based approach is flexible and allows the workflow to run on all systems that support either one of these container platforms. It also simplifies the setup of dependencies and enhances reproducibility between installations. The workflow only requires Nextflow and a container platform (Singularity or Docker) to be installed.</p>
+<p>The source code for the workflow is available online at <a href="https://github.com/aringeri/nanoporcini">https://github.com/aringeri/nanoporcini</a>.</p>
+<p>It can be configured to customise the use of system resources such as number of threads or RAM. The following parameters of the workflow are also configurable:</p>
+<ul>
+<li>Forward and reverse primer sequences.</li>
+<li>Minimum quality score for full ITS sequences.</li>
+<li>Minimum and maximum length for full ITS sequences.</li>
+<li>Minimum cluster size for HDBSCAN clustering algorithm.</li>
+<li>Percent identity similarity threshold for VSEARCH clustering.</li>
+<li>Reference database used for chimera detection and taxonomic classifications.</li>
+</ul>
+</section>
+</section>
+<section id="sec-mock-fungal-communities" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="sec-mock-fungal-communities"><span class="header-section-number">2</span> Mock fungal communities</h2>
+<p>In order to understand the behaviour of our workflow under different sampling scenarios, a mock dataset was constructed using sequences from 65 fungal taxa which had been isolated and identified from mycelia or spores. We constructed mock communities by mixing reads from these taxa and aimed to emulate data that might be encountered when sampling a complex fungal community. We constructed two varieties of mock scenarios by controlling the relative proportion of reads from each fungal taxon:</p>
+<ol type="1">
+<li>Even abundance where all fungal taxa had the same relative abundance of read count.</li>
+<li>Uneven abundance where a subset of fungal taxa had a much lower abundance relative to the other taxa.</li>
+</ol>
+<p>The raw basecalled reads were provided to us by collaborators from the Schwessinger Group at Australian National University <span class="citation" data-cites="anuSchwessingerGroupPlants">(<a href="10-References.html#ref-anuSchwessingerGroupPlants" role="doc-biblioref">ANU</a>)</span>. Our collaborators have performed: the identification and isolation of all fungal taxa, DNA library preparation, DNA sequencing and basecalling. <a href="09-Supplementary.html#apptbl-samplesheet" class="quarto-xref">Table A<span>2</span></a> provides the list of fungal taxa and the number of raw reads that were available to us for generating these mock scenarios. The steps to generate and prepare reads for these mock datasets are outlined below.</p>
+<section id="preparation-of-reads-from-fungal-taxa-for-mock-scenarios" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="preparation-of-reads-from-fungal-taxa-for-mock-scenarios"><span class="header-section-number">2.1</span> Preparation of reads from fungal taxa for mock scenarios</h3>
+<section id="dna-extraction-amplification-and-sequencing" class="level4">
+<h4 class="anchored" data-anchor-id="dna-extraction-amplification-and-sequencing">DNA extraction, amplification and sequencing</h4>
+<p>The genomic DNA of 65 fungal taxa was extracted with the Qiagen DNeasy Plant mini kit. The DNA was extracted from mycelia or spore material of each fungal taxa. Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse) (<a href="04-LiteratureReview.html#fig-its-region-simple" class="quarto-xref">Figure&nbsp;<span>1</span></a>). The amplicons were prepared with ONT’s Native Barcoding Kit 96 V14 (SQK-NBD114.96). The fungal samples plus a negative control were sequenced together with a MinION R10.4 flow cell.</p>
+</section>
+<section id="bioinformatics---basecalling" class="level4">
+<h4 class="anchored" data-anchor-id="bioinformatics---basecalling">Bioinformatics - Basecalling</h4>
+<p>The raw ONT data was basecalled and demultiplexed using guppy v6.4.2 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup).</p>
+</section>
+<section id="bioinformatics---selection-of-high-quality-full-its-sequences" class="level4">
+<h4 class="anchored" data-anchor-id="bioinformatics---selection-of-high-quality-full-its-sequences">Bioinformatics - Selection of high quality full ITS sequences</h4>
+<p>The basecalled reads were passed to the adapter trimming, primer trimming, ITS extraction, quality filtering and chimera detection stages of our workflow described in <a href="#sec-pipeline-description" class="quarto-xref"><span>Section 5.1</span></a>. At this point, we had a pool of high quality full ITS sequences which we used to construct different mock communities.</p>
+<p>After being processed by the workflow, 7 of the 65 fungal taxa were excluded from the mock dataset leaving 58 taxa available for mock scenarios. 6 of the 7 excluded taxa were removed due to having a low number of reads. Due to differences in chimera detection behaviour between reference databases, 1 of the 7 excluded taxa was removed erroneously under the impression that it had a low number of reads (<em>Fusarium proliferatum</em>).</p>
+<p>A minimum of 2,500 reads per taxa was required to construct even-abundance mock scenarios with library sizes nearing 150K reads (<span class="math inline">\(58 \text{ taxa} \times 2500 \text{ reads} = 145000\text{ reads}\)</span>). The samples that were excluded (with updated names in parentheses) were: <em>Aspergillus niger</em>, <em>Naganishia albida</em> (<em>Cryptococcus albidus</em>), <em>Geotrichum candidum</em> (<em>Galactomyces geotrichum</em>), <em>Meyerozyma guilliermondii</em>, Yarrowia lipolytica, <em>Fusarium proliferatum</em> and <em>Puccinia recondita</em> (<em>Puccinia triticina</em>). The footnotes in <a href="09-Supplementary.html#apptbl-samplesheet" class="quarto-xref">Table A<span>2</span></a> indicate which taxa were excluded from mock scenarios.</p>
+<p>Of the 58 remaining taxa, six had the same species-level designation making for a total 55 unique species in the mock dataset. <!-- *Austropuccinia psidii*, *Cryptococcus gattii*, *Cryptococcus neoformans* --></p>
+</section>
+<section id="taxonomic-naming-validation" class="level4">
+<h4 class="anchored" data-anchor-id="taxonomic-naming-validation">Taxonomic naming validation</h4>
+<p>To ensure that taxonomic names were used consistently between the fungal samples and the reference database, manual validation of each sample name was performed by conducting searches for the recorded species name of each sample in the 2024 UNITE+INSD reference database <span class="citation" data-cites="abarenkovFullUNITEINSDDataset2024 vu_2024_12580255">(<a href="10-References.html#ref-abarenkovFullUNITEINSDDataset2024" role="doc-biblioref">Abarenkov <em>et al.</em>, 2024</a>; <a href="10-References.html#ref-vu_2024_12580255" role="doc-biblioref">Vu, 2024</a>)</span>. Most mismatches were either due to names being misspelled or due to use of taxonomic synonyms. For example, <em>Nakaseomyces glabratus</em> in UNITE was originally recorded by its former name <em>Candida glabrata</em>. Names of samples were manually updated using current names found in both Index Fungorum (<a href="www.indexfungorum.org">www.indexfungorum.org</a>) and the 2024 UNITE reference database. For samples that were not classified at the species level (e.g.&nbsp;<em>Entoleuca sp</em> CCL052), the genus label (e.g.&nbsp;<em>Entoleuca</em>) was confirmed to exist in the reference database.</p>
+</section>
+</section>
+<section id="sec-scenario-1" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="sec-scenario-1"><span class="header-section-number">2.2</span> Scenario 1 - Even abundance</h3>
+<p>The first mock scenario emulated an even community structure where every fungal taxa had an equal abundance in terms of number of reads. Libraries of differing sizes were generated by subsampling an equal number of reads from each taxa. For each of the 58 taxa: 20; 50; 167; 1,000; 2,000 and 2,500 reads were randomly selected to produce libraries with sizes of 1,160; 2,900; 9,686; 58,000; 116,000 and 145,000 reads (<a href="#fig-equalAbundanceDiagram" class="quarto-xref">Figure&nbsp;<span>4</span></a>). Seqtk v1.4 <span class="citation" data-cites="Lh3SeqtkToolkit">(<a href="10-References.html#ref-Lh3SeqtkToolkit" role="doc-biblioref">Lh3/seqtk: <span>Toolkit</span> for processing sequences in <span>FASTA</span>/<span>Q</span> formats</a>)</span> was used to perform the subsampling (with the ‘<code>sample</code>’ command). The subsampling was repeated five times for each library size producing a total of 30 libraries (6 libraries <span class="math inline">\(\times\)</span> 5 repetitions). The random seed values given to seqtk’s ‘<code>sample</code>’ command for each repetition were generated deterministically so that each run of the workflow was reproducible.</p>
+<div id="fig-equalAbundanceDiagram" class="quarto-figure quarto-figure-center quarto-float anchored" width="15cm">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-equalAbundanceDiagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis/images/05-even-sampling-diagram.png" class="img-fluid figure-img" width="484"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-equalAbundanceDiagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Process for generating mock communities with equal abundances. Equal numbers of reads were selected from each fungal taxa then combined into a single library. The process was repeated with different subsampling depth to produce libraries with different sizes. Five replicate libraries of each size were created where clustering and taxonomic assignment was performed on each library individually.
+</figcaption>
+</figure>
+</div>
+<div id="fig-unevenSamplingDiagram" class="quarto-figure quarto-figure-center quarto-float anchored" width="15cm">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unevenSamplingDiagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="analysis/images/05-uneven-sampling-diagram.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unevenSamplingDiagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Process for generating mock communities with uneven abundances. Five fungal taxa were subsampled at a low rate (between 5 and 100 reads). The remaining 50 fungal taxa were subsampled at a fixed higher rate. The ‘high-abundance’ fungal taxa were subsampled at rates between 200 and 2,000 reads to produce four libraries. Clustering and taxonomic assignment was performed on each library individually.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="scenario-2---uneven-5-low-abundance" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="scenario-2---uneven-5-low-abundance"><span class="header-section-number">2.3</span> Scenario 2 - Uneven (5 low abundance)</h3>
+<p>As it is unlikely in a ‘real world’ environmental sample for all taxa to have the same number of reads, we aimed to model situations where a subset of taxa had a disproportionately low number of reads. For this scenario, we selected five taxa to be subsampled at a low abundance, while a remaining 50 taxa were subsampled at a higher abundance (<a href="#fig-unevenSamplingDiagram" class="quarto-xref">Figure&nbsp;<span>5</span></a>). The low-abundance taxa <em>Trichomonascus ciferrii</em>, <em>Erysiphe necator</em>, <em>Eutypa lata</em>, <em>Penicillium chrysogenum</em> and <em>Candida zeylanoides</em>, were subsampled at levels of 5, 10, 20, 50 and 100 reads respectively. The remaining 50 high-abundance taxa were subsampled at an even rate and mixed with the low-abundance reads. This process was repeated to produce different library sizes by subsampling the ‘high-abundance’ taxa at rates of 200, 500, 1000 and 2000 reads per taxon, while keeping the ‘low-abundance’ taxa unchanged. This produced library sizes of 10185, 25185, 50185, 100185 reads respectively.</p>
+<p><em>Trichomonascus ciferrii</em>, <em>Erysiphe necator</em>, <em>Eutypa lata</em>, <em>Penicillium chrysogenum</em> and <em>Candida zeylanoides</em> were randomly selected as the low-abundance taxa. To simplify the interpretation of this scenario, we ensured that we did not subsample from the same species more than once (i.e.&nbsp;from two fungal taxa with the same species-level designation). To do this, the following fungal taxa were excluded from the set of quality filtered reads: <em>Austropuccinia psidii</em> 2, <em>Cryptococcus gattii VG III</em>, <em>Cryptococcus neoformans VNI</em> in addition to those from Scenario 1. The footnotes in <a href="09-Supplementary.html#apptbl-samplesheet" class="quarto-xref">Table A<span>2</span></a> show which taxa were excluded from mock scenarios.</p>
+</section>
+</section>
+<section id="real-world---soil-case-study" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="real-world---soil-case-study"><span class="header-section-number">3</span> Real world - Soil case study</h2>
+<p>A set of soil samples were made available to us to test the workflow on a real world environmental data. 24 samples were collected from soil beneath four trees species in heathy woodland from the Cranbourne Conservation area in Victoria, Australia (<a href="09-Supplementary.html#apptbl-soil-samplesheet" class="quarto-xref">Table A<span>6</span></a>). Six soil samples were taken from soil beneath each of the tree species: <em>Allocasuarina littoralis</em>, <em>Allocasuarina paradoxa</em>, <em>Eucalyptus viminalis</em> and <em>Eucalyptus cephalocarpa</em>. Two control samples were sequenced: one control (ExCon) contained only the contents of the DNA extraction kit and the other was a negative PCR control (PCRNegCon).</p>
+<section id="dna-extraction-amplification-and-sequencing-1" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="dna-extraction-amplification-and-sequencing-1"><span class="header-section-number">3.1</span> DNA extraction, amplification and sequencing</h3>
+<p>Genomic DNA (gDNA) was extracted from all soil samples. One <em>Eucalyptus cephalocarpa</em> sample (EC4) was excluded due to low gDNA concentration. Library preparation and sequencing of extracted gDNA followed the protocol found at <a href="https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1">https://www.protocols.io/view/sequencing-fungal-metabarcode-with-pcr-primer-base-81wgbxm41lpk/v1</a>. This protocol used a custom barcoding scheme which amplified full ITS and partial LSU regions with primers which included DNA barcodes <span class="citation" data-cites="Hebert2023.11.29.569282 ohtaDNAMetabarcodingWorkflow2023a">(<a href="10-References.html#ref-Hebert2023.11.29.569282" role="doc-biblioref">Hebert <em>et al.</em>, 2023</a>; <a href="10-References.html#ref-ohtaDNAMetabarcodingWorkflow2023a" role="doc-biblioref">Ohta <em>et al.</em>, 2023</a>)</span>. The modified forward primer was ITS1_F_KYO2 and reverse primer was LR6. Amplicons were sequenced using the ONT MinION 10.4.1.</p>
+</section>
+<section id="bioinformatics---basecalling-and-demultiplexing" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="bioinformatics---basecalling-and-demultiplexing"><span class="header-section-number">3.2</span> Bioinformatics - basecalling and demultiplexing</h3>
+<p>The raw ONT data was basecalled using dorado v0.7.1 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup@v5.0.0). Due to the custom barcoding scheme, basecalled reads were demultiplexed with minibar v0.25 (<a href="09-Supplementary.html#apptbl-software-soil" class="quarto-xref">Table A<span>7</span></a>).</p>
+</section>
+<section id="sample-selection" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="sample-selection"><span class="header-section-number">3.3</span> Sample selection</h3>
+<p>One <em>Allocasuarina paradoxa</em> (AP6) sample was excluded due to having much lower read count than other samples (<a href="09-Supplementary.html#apptbl-software-soil" class="quarto-xref">Table A<span>7</span></a>). This left 24 samples (22 soil samples + 2 controls) for downstream processing.</p>
+</section>
+<section id="metabarcoding-workflow" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="metabarcoding-workflow"><span class="header-section-number">3.4</span> Metabarcoding workflow</h3>
+<p>The set of demultiplexed reads was passed to our metabarcoding workflow (v0.0.1) with default settings. Adapter trimming, primer trimming, ITS extraction, quality filtering and chimera detection was performed as described in <a href="#sec-pipeline-description" class="quarto-xref"><span>Section 5.1</span></a>. Due to a large library size after quality control (~1.8 million reads), computational constraints did not allow our NanoCLUST implementation to cluster the full dataset. Instead, VSEARCH was used for clustering with 97% identity. Singleton OTUs were removed after clustering and the remaining OTUs were classified by their most abundant sequence using dnabarcoder and the UNITE+INSD 2024 reference database.</p>
+</section>
+<section id="data-analysis" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="data-analysis"><span class="header-section-number">3.5</span> Data analysis</h3>
+<p>An OTU table and dnabarcoder’s classifications table was imported into the phyloseq v1.48.0 R package <span class="citation" data-cites="mcmurdiePhyloseqPackageReproducible2013">(<a href="10-References.html#ref-mcmurdiePhyloseqPackageReproducible2013" role="doc-biblioref">McMurdie and Holmes, 2013</a>)</span>. The decontam v1.24.0 R package <span class="citation" data-cites="davisSimpleStatisticalIdentification2018">(<a href="10-References.html#ref-davisSimpleStatisticalIdentification2018" role="doc-biblioref">Davis <em>et al.</em>, 2018</a>)</span> was used to remove contaminant sequences identified in the two control samples. Low-abundance OTUs were filtered in a sample-wise fashion: OTUs were removed from a sample if they were smaller than 0.15% of the total number of reads in the sample. This cutoff was chosen based on the results of experimentation with the mock community trials. The scripts used to perform this analysis have been published on GitHub for reference: <a href="https://github.com/aringeri/long-read-ITS-metabarcoding-thesis/tree/main/reports/masters/thesis/analysis">https://github.com/aringeri/long-read-ITS-metabarcoding-thesis/tree/main/reports/masters/thesis/analysis</a>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-abarenkovFullUNITEINSDDataset2024" class="csl-entry" role="listitem">
+Abarenkov,K. <em>et al.</em> (2024) <a href="https://doi.org/10.15156/BIO/2959330">Full <span>UNITE</span>+<span>INSD</span> dataset for <span>Fungi</span></a>.
+</div>
+<div id="ref-anuSchwessingerGroupPlants" class="csl-entry" role="listitem">
+ANU <a href="https://biology.anu.edu.au/research/research-groups/schwessinger-group-plants-fungi-evolution">Schwessinger <span>Group</span> - <span>Plants</span>, fungi, evolution | <span>ANU Research School</span> of <span>Biology</span></a>.
+</div>
+<div id="ref-davisSimpleStatisticalIdentification2018" class="csl-entry" role="listitem">
+Davis,N.M. <em>et al.</em> (2018) <a href="https://doi.org/10.1186/s40168-018-0605-2">Simple statistical identification and removal of contaminant sequences in marker-gene and metagenomics data</a>. <em>Microbiome</em>, <strong>6</strong>, 1–14.
+</div>
+<div id="ref-DeCoster2023" class="csl-entry" role="listitem">
+De Coster,W. and Rademakers,R. (2023) <a href="https://doi.org/10.1093/bioinformatics/btad311"><span>NanoPack2</span>: Population-scale evaluation of long-read sequencing data</a>. <em>Bioinformatics</em>, <strong>39</strong>, 0–2.
+</div>
+<div id="ref-ditommasoNextflowEnablesReproducible2017" class="csl-entry" role="listitem">
+Di Tommaso,P. <em>et al.</em> (2017) <a href="https://doi.org/10.1038/nbt.3820">Nextflow enables reproducible computational workflows</a>. <em>Nat Biotechnol</em>, <strong>35</strong>, 316–319.
+</div>
+<div id="ref-Hebert2023.11.29.569282" class="csl-entry" role="listitem">
+Hebert,P.D. <em>et al.</em> (2023) <a href="https://doi.org/10.1101/2023.11.29.569282">Barcode <span>100K</span> specimens: <span>In</span> a single nanopore run</a>. <em>bioRxiv</em>.
+</div>
+<div id="ref-jainHighThroughputANI2018" class="csl-entry" role="listitem">
+Jain,C. <em>et al.</em> (2018) <a href="https://doi.org/10.1038/s41467-018-07641-9">High throughput <span>ANI</span> analysis of <span>90K</span> prokaryotic genomes reveals clear species boundaries</a>. <em>Nat Commun</em>, <strong>9</strong>, 5114.
+</div>
+<div id="ref-korenCanuScalableAccurate2017" class="csl-entry" role="listitem">
+Koren,S. <em>et al.</em> (2017) <a href="https://doi.org/10.1101/gr.215087.116">Canu: Scalable and accurate long-read assembly via adaptive k-mer weighting and repeat separation</a>. <em>Genome Res.</em>, <strong>27</strong>, 722–736.
+</div>
+<div id="ref-kurtzerSingularityScientificContainers2017" class="csl-entry" role="listitem">
+Kurtzer,G.M. <em>et al.</em> (2017) <a href="https://doi.org/10.1371/journal.pone.0177459">Singularity: <span>Scientific</span> containers for mobility of compute</a>. <em>PLOS ONE</em>, <strong>12</strong>, e0177459.
+</div>
+<div id="ref-langsiriTargetedSequencingAnalysis2023" class="csl-entry" role="listitem">
+Langsiri,N. <em>et al.</em> (2023) <a href="https://doi.org/10.1186/s43008-023-00125-6">Targeted sequencing analysis pipeline for species identification of human pathogenic fungi using long-read nanopore sequencing</a>. <em>IMA Fungus</em>, <strong>14</strong>, 1–18.
+</div>
+<div id="ref-Lh3SeqtkToolkit" class="csl-entry" role="listitem">
+<a href="https://github.com/lh3/seqtk">Lh3/seqtk: <span>Toolkit</span> for processing sequences in <span>FASTA</span>/<span>Q</span> formats</a>.
+</div>
+<div id="ref-liMinimap2PairwiseAlignment2018" class="csl-entry" role="listitem">
+Li,H. (2018) <a href="https://doi.org/10.1093/bioinformatics/bty191">Minimap2: Pairwise alignment for nucleotide sequences</a>. <em>Bioinformatics</em>, <strong>34</strong>, 3094–3100.
+</div>
+<div id="ref-Cutadapt" class="csl-entry" role="listitem">
+Martin,M. (2011) <a href="https://doi.org/10.14806/ej.17.1.200">Cutadapt removes adapter sequences from high-throughput sequencing reads</a>. <em>EMBnet.journal</em>, 10–12.
+</div>
+<div id="ref-mcinnes2017hdbscan" class="csl-entry" role="listitem">
+McInnes,L. <em>et al.</em> (2017) Hdbscan: <span>Hierarchical</span> density based clustering. <em>J. Open Source Softw.</em>, <strong>2</strong>, 205.
+</div>
+<div id="ref-mcinnesUMAPUniformManifold2020" class="csl-entry" role="listitem">
+McInnes,L. <em>et al.</em> (2020) <a href="https://doi.org/10.48550/arXiv.1802.03426"><span>UMAP</span>: <span>Uniform Manifold Approximation</span> and <span>Projection</span> for <span>Dimension Reduction</span></a>.
+</div>
+<div id="ref-mcmurdiePhyloseqPackageReproducible2013" class="csl-entry" role="listitem">
+McMurdie,P.J. and Holmes,S. (2013) <a href="https://doi.org/10.1371/journal.pone.0061217">Phyloseq: <span>An R Package</span> for <span>Reproducible Interactive Analysis</span> and <span>Graphics</span> of <span>Microbiome Census Data</span></a>. <em>PLOS ONE</em>, <strong>8</strong>, e61217.
+</div>
+<div id="ref-merkel2014docker" class="csl-entry" role="listitem">
+Merkel,D. <em>et al.</em> (2014) Docker: Lightweight linux containers for consistent development and deployment. <em>Linux j</em>, <strong>239</strong>, 2.
+</div>
+<div id="ref-ohtaDNAMetabarcodingWorkflow2023a" class="csl-entry" role="listitem">
+Ohta,A. <em>et al.</em> (2023) <a href="https://doi.org/10.1101/2023.04.14.536971"><span>DNA</span> metabarcoding workflow utilizing nanopore long-read sequencing and consensus generation for rapid identification of fungal taxa with high phylogenetic resolution</a>. <em>bioRxiv</em>, 2023.04.14.536971.
+</div>
+<div id="ref-Rivers2018" class="csl-entry" role="listitem">
+Rivers,A.R. <em>et al.</em> (2018) <a href="https://doi.org/10.12688/F1000RESEARCH.15704.1"><span>ITSxpress</span>: <span>Software</span> to rapidly trim internally transcribed spacer sequences with quality scores for marker gene analysis [version 1; peer review: 2 approved]</a>. <em>F1000Research</em>, <strong>7</strong>.
+</div>
+<div id="ref-rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021" class="csl-entry" role="listitem">
+Rodríguez-Pérez,H. <em>et al.</em> (2021) <a href="https://doi.org/10.1093/bioinformatics/btaa900"><span>NanoCLUST</span>: A species-level analysis of <span class="nocase">16S rRNA</span> nanopore sequencing data</a>. <em>Bioinformatics</em>, <strong>37</strong>, 1600–1601.
+</div>
+<div id="ref-rognesVSEARCHVersatileOpen2016" class="csl-entry" role="listitem">
+Rognes,T. <em>et al.</em> (2016) <a href="https://doi.org/10.7717/peerj.2584"><span>VSEARCH</span>: A versatile open source tool for metagenomics</a>. <em>PeerJ</em>, <strong>4</strong>, e2584.
+</div>
+<div id="ref-vaserFastAccurateNovo2017" class="csl-entry" role="listitem">
+Vaser,R. <em>et al.</em> (2017) <a href="https://doi.org/10.1101/gr.214270.116">Fast and accurate de novo genome assembly from long uncorrected reads</a>. <em>Genome Res.</em>, <strong>27</strong>, 737–746.
+</div>
+<div id="ref-vuDnabarcoderOpensourceSoftware2022" class="csl-entry" role="listitem">
+Vu,D. <em>et al.</em> (2022) <a href="https://doi.org/10.1111/1755-0998.13651">Dnabarcoder: <span>An</span> open-source software package for analysing and predicting <span>DNA</span> sequence similarity cutoffs for fungal sequence identification</a>. <em>Molecular Ecology Resources</em>, <strong>22</strong>, 2793–2809.
+</div>
+<div id="ref-vu_2024_12580255" class="csl-entry" role="listitem">
+Vu,D. (2024) <a href="https://doi.org/10.5281/zenodo.12580255"><span>UNITE</span>+<span>INSD</span> 2024 fungal <span>ITS</span>, <span>ITS1</span>, and <span>ITS2</span> reference sequences</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03-Significance.html" class="pagination-link" aria-label="Significance">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Significance</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./06-Results.html" class="pagination-link" aria-label="Results">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Results</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

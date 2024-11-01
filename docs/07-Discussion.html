@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing - 7&nbsp; Discussion</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./08-Conclusion.html" rel="next">
+<link href="./06-Results.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-Discussion.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discussion</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A Workflow for Metabarcoding of Fungi with Oxford Nanopore Sequencing</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-LiteratureReview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Literature Review</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-Objectives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objectives</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-Significance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Significance</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-Methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-Results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Results</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-Discussion.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discussion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-Conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-References.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-Supplementary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Appendices</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#quality-control" id="toc-quality-control" class="nav-link active" data-scroll-target="#quality-control"><span class="header-section-number">1</span> Quality control</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">2</span> Clustering</a></li>
+  <li><a href="#taxonomic-assignments" id="toc-taxonomic-assignments" class="nav-link" data-scroll-target="#taxonomic-assignments"><span class="header-section-number">3</span> Taxonomic assignments</a></li>
+  <li><a href="#recommendations" id="toc-recommendations" class="nav-link" data-scroll-target="#recommendations"><span class="header-section-number">4</span> Recommendations</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Discussion</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Our results indicate that our workflow is effective for detecting the major fungal taxa from our mock communities with less clear results in Australian soil samples due to the high rate of unclassified OTUs. We observed consistent patterns in clustering with VSEARCH and with our customised NanoCLUST implementation. We have tested the impact of a minimum OTU size threshold and found that the lowest OTU size threshold gave the highest classification accuracy at the cost of overestimating species diversity and a higher rate of false positive identifications. For classifying OTUs at the genus level, we found that the most abundant sequence was more reliable than the consensus sequence.</p>
+<section id="quality-control" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="quality-control"><span class="header-section-number">1</span> Quality control</h2>
+<p>As expected from ONT sequencing, the reads used to construct our mock scenarios had considerably higher error rates than those produced by other sequencing platforms such as Illumina and PacBio <span class="citation" data-cites="anslanGreatDifferencesPerformance2018a tedersooGlobalSoilMycobiome2021 tedersooPacBioMetabarcodingFungi2018">(<a href="10-References.html#ref-anslanGreatDifferencesPerformance2018a" role="doc-biblioref">Anslan <em>et al.</em>, 2018</a>; <a href="10-References.html#ref-tedersooGlobalSoilMycobiome2021" role="doc-biblioref">Tedersoo <em>et al.</em>, 2021</a>, <a href="10-References.html#ref-tedersooPacBioMetabarcodingFungi2018" role="doc-biblioref">2018</a>)</span>. With a mean read quality of Q13.2, our approach to quality control aimed to significantly decrease noise by setting stringent quality thresholds. Setting a minimum quality score of Q20 and requiring both forward and reverse primers to be present on reads resulted in the removal of 85% of the dataset (<a href="06-Results.html#fig-readLossByStage" class="quarto-xref">Figure&nbsp;<span>2</span></a>). If applied generally in real world scenarios, this QC approach may be overly conservative and bias against some taxa. Therefore, we aim to make these quality filtering settings configurable in the workflow so end-users can determine their own acceptable level of error. It should be noted that the sequences for the mock dataset were generated in 2022 and were not compatible with dorado’s latest basecalling model (v5.0.0 at the time of writing). We observed that using modern ONT chemistry and the latest basecalling model for our soil samples resulted in many more sequences being retained (40% loss versus the 85% loss in the mock scenarios).</p>
+</section>
+<section id="clustering" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="clustering"><span class="header-section-number">2</span> Clustering</h2>
+<p>We have demonstrated that clustering with VSEARCH and with our NanoCLUST implementation produced comparable results and both were able to successfully delineate major taxa in our mock scenarios. The NanoCLUST implementation was generally more sensitive to biological variation than VSEARCH in some fungal groups as it split single taxa into multiple OTUs (for example: <em>Pucciniales</em> (<a href="06-Results.html#fig-splittingPuccinia" class="quarto-xref">Figure&nbsp;<span>6</span></a>), <em>Cryptococcus</em> (<a href="06-Results.html#fig-splittingCryptococcus" class="quarto-xref">Figure&nbsp;<span>8</span></a>) and <em>Sclerotiniaceae</em> (<a href="06-Results.html#fig-splittingBotrytis" class="quarto-xref">Figure&nbsp;<span>9</span></a>)). The splitting of taxa in NanoCLUST may suggest the presence of ITS haplotype variants in these fungal groups. This interpretation should be treated with caution as the UMAP dimension reduction technique cannot guarantee the preservation of all structure in the lower dimensional space <span class="citation" data-cites="mittalDimensionalityReductionUsing2024 asnicarMachineLearningMicrobiologists2024">(<a href="10-References.html#ref-mittalDimensionalityReductionUsing2024" role="doc-biblioref">Mittal <em>et al.</em>, 2024</a>; <a href="10-References.html#ref-asnicarMachineLearningMicrobiologists2024" role="doc-biblioref">Asnicar <em>et al.</em>, 2024</a>)</span>. Closer analysis of the sequences found in each OTU may give further insight into the true source of this variation. We anticipate that by increasing the clustering identity used by VSEARCH, these taxa would also be split into multiple OTUs, although this was not tested.</p>
+<p>The metrics we used to measure species recovery (i.e.&nbsp;number of OTUs, number of species and percentage of reads lost) gave insight into broad patterns of clustering, but had limitations when comparing clustering methods. We found that the number of OTUs was a good initial measure for comparing clustering methods as it was relatively efficient to compute. However, after performing taxonomic assignments, we found that the number of OTUs tended to overestimate the number of species present because many OTUs shared the same species-level classifications (<a href="06-Results.html#fig-fixed-min-cluster-size-even" class="quarto-xref">Figure&nbsp;<span>5</span></a>).</p>
+<p>When comparing the effect of a minimum OTU size on our clustering methods, we observed predictable trends in the number of OTUs that VSEARCH produced for all library sizes (<a href="06-Results.html#fig-compareVsearchNanoclust" class="quarto-xref">Figure&nbsp;<span>4</span></a>). Our NanoCLUST implementation showed less stability than VSEARCH in the number of OTUs it produced at high library sizes. Care should be taken when interpreting this comparison as the minimum OTU size filtering is not applied in the same way between clustering methods. For VSEARCH, the minimum OTU size cutoff is applied after clustering on a fixed set of OTUs. In our NanoCLUST implementation, HDBSCAN recomputed the set of OTUs for each <code>min_cluster_size</code> value and is therefore more dynamic than VSEARCH.</p>
+<p>We found that interpreting the percentage of reads lost as a measure of the success was misleading. Our NanoCLUST implementation often lost fewer reads than VSEARCH but clustered unrelated taxa together as the minimum OTU size cutoff increased (<a href="06-Results.html#fig-compareVsearchNanoclust" class="quarto-xref">Figure&nbsp;<span>4</span></a> and <a href="06-Results.html#fig-uneven-min-cluster-thresh" class="quarto-xref">Figure&nbsp;<span>11</span></a>). The HDBSCAN algorithm had the unexpected behaviour of merging small clusters together as the <code>min_cluster_size</code> parameter increased <span class="citation" data-cites="lelandmcinnesParameterSelectionHDBSCAN2016">(<a href="10-References.html#ref-lelandmcinnesParameterSelectionHDBSCAN2016" role="doc-biblioref">Leland McInnes <em>et al.</em>, 2016</a>)</span>. The original NanoCLUST pipeline <span class="citation" data-cites="rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021">(<a href="10-References.html#ref-rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021" role="doc-biblioref">Rodríguez-Pérez <em>et al.</em>, 2021</a>)</span> was designed for more conserved 16S regions in Bacteria, parameters validated against 16S data may not be suitable for variable ITS regions in fungi without further testing.</p>
+<p>Our NanoCLUST implementation was unsuitable for clustering large datasets due to computational limitations. In our case, attempting to cluster 1.8 million reads from our soil dataset with UMAP and HDBSCAN resulted in much higher memory use than was possible with a limit of 128GB RAM. By default, the NanoCLUST pipeline <span class="citation" data-cites="rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021">(<a href="10-References.html#ref-rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021" role="doc-biblioref">Rodríguez-Pérez <em>et al.</em>, 2021</a>)</span> on which we modelled our implementation, only selects 100K reads from the given dataset and is expected to use between 32GB-36GB of RAM <span class="citation" data-cites="iterGenomicsITERNanoCLUST2024">(<a href="10-References.html#ref-iterGenomicsITERNanoCLUST2024" role="doc-biblioref">ITER, 2024</a>)</span>. Despite these limitations, NanoCLUST is a complex and dynamic clustering approach that shows promise for clustering variable ITS sequences. While VSEARCH uses a fixed similarity metric which is much easier to understand, with further work, NanoCLUST may be suited to cluster fungal groups with differing rates of variability at the ITS locus.</p>
+</section>
+<section id="taxonomic-assignments" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="taxonomic-assignments"><span class="header-section-number">3</span> Taxonomic assignments</h2>
+<p>In our mock communities, in the best cases we observed a genera-level classification rate of ~95% and genera-level precision of 82% to 85%. This demonstrated that in a controlled scenario, a significant proportion of the major taxa were correctly identified. However, there were a number of major taxa that were consistently misidentified regardless of clustering approach (<a href="#tbl-top-misidentified" class="quarto-xref">Table&nbsp;<span>1</span></a>).</p>
+<div id="tbl-top-misidentified" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-top-misidentified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Top 10 misidentified OTUs in an even-abundance scenario (2,000 reads per taxa) using NanoCLUST. These misidentifications were also common across VSEARCH trials. The columns show: the OTU which the taxon was clustered, the barcode identifying the taxon at time of sequencing, the taxon’s ‘known’ species-level identification, the number of reads from the taxon in the OTU, the classification given by dnabarcoder, the BLAST identity score against the reference sequence, and the similarity cutoff used by dnabarcoder to classify at the species level.
+</figcaption>
+<div aria-describedby="tbl-top-misidentified-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-f6a4592c{}.cl-f69b8a5e{font-family:'Helvetica';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f69b8a86{font-family:'Helvetica';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f69f6d22{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f69f6d36{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f69f8a8c{width:0.394in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8a96{width:0.984in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8a97{width:1.575in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8a98{width:0.591in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8aa0{width:0.591in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8aa1{width:0.394in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8aa2{width:0.984in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8aaa{width:1.575in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8aab{width:0.591in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8ab4{width:0.591in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8ab5{width:0.394in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8ab6{width:0.984in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8abe{width:1.575in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8abf{width:0.591in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8ac0{width:0.591in;background-color:transparent;vertical-align: middle;border-bottom: 0.75pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8ac8{width:0.394in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8ac9{width:0.984in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8aca{width:1.575in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8ad2{width:0.591in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f69f8ad3{width:0.591in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0.75pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-f6a4592c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-f69f8a8c"><p class="cl-f69f6d22"><span class="cl-f69b8a5e">otu</span></p></th><th class="cl-f69f8a96"><p class="cl-f69f6d36"><span class="cl-f69b8a5e">barcode</span></p></th><th class="cl-f69f8a97"><p class="cl-f69f6d36"><span class="cl-f69b8a5e">actual species</span></p></th><th class="cl-f69f8a98"><p class="cl-f69f6d22"><span class="cl-f69b8a5e">n reads</span></p></th><th class="cl-f69f8a97"><p class="cl-f69f6d36"><span class="cl-f69b8a5e">dnabarcoder classification</span></p></th><th class="cl-f69f8aa0"><p class="cl-f69f6d36"><span class="cl-f69b8a5e">score</span></p></th><th class="cl-f69f8aa0"><p class="cl-f69f6d36"><span class="cl-f69b8a5e">cutoff</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-f69f8aa1"><p class="cl-f69f6d22"><span class="cl-f69b8a86">136</span></p></td><td class="cl-f69f8aa2"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode72</span></p></td><td class="cl-f69f8aaa"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Pichia kudriavzevii</span></p></td><td class="cl-f69f8aab"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1,996</span></p></td><td class="cl-f69f8aaa"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Komagataella pastoris</span></p></td><td class="cl-f69f8ab4"><p class="cl-f69f6d36"><span class="cl-f69b8a86">100.00%</span></p></td><td class="cl-f69f8ab4"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.10%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ab5"><p class="cl-f69f6d22"><span class="cl-f69b8a86">85</span></p></td><td class="cl-f69f8ab6"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode83</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Diaporthe sp CCL067</span></p></td><td class="cl-f69f8abf"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1,996</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Gnomoniopsis paraclavulata</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">100.00%</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.60%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ab5"><p class="cl-f69f6d22"><span class="cl-f69b8a86">85</span></p></td><td class="cl-f69f8ab6"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode87</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Asteroma sp CCL068</span></p></td><td class="cl-f69f8abf"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1,995</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Gnomoniopsis paraclavulata</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">100.00%</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.60%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ab5"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1</span></p></td><td class="cl-f69f8ab6"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode43</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Aspergillus fumigatus</span></p></td><td class="cl-f69f8abf"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1,920</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Inopinatum lactosum</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">100.00%</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.10%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ab5"><p class="cl-f69f6d22"><span class="cl-f69b8a86">20</span></p></td><td class="cl-f69f8ab6"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode65</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Geotrichum candidum</span></p></td><td class="cl-f69f8abf"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1,675</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Dipodascus capitatus</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">90.50%</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">89.60%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ab5"><p class="cl-f69f6d22"><span class="cl-f69b8a86">109</span></p></td><td class="cl-f69f8ab6"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode88</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Asteroma sp CCL060</span></p></td><td class="cl-f69f8abf"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1,620</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Diaporthe foeniculina</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">100.00%</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.10%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ab5"><p class="cl-f69f6d22"><span class="cl-f69b8a86">11</span></p></td><td class="cl-f69f8ab6"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode66</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Kluyveromyces lactis</span></p></td><td class="cl-f69f8abf"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1,579</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Candida albicans</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">100.00%</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">97.30%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ab5"><p class="cl-f69f6d22"><span class="cl-f69b8a86">119</span></p></td><td class="cl-f69f8ab6"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode61</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Cryptococcus neoformans</span></p></td><td class="cl-f69f8abf"><p class="cl-f69f6d22"><span class="cl-f69b8a86">1,169</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Kluyveromyces marxianus</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">100.00%</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.10%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ab5"><p class="cl-f69f6d22"><span class="cl-f69b8a86">183</span></p></td><td class="cl-f69f8ab6"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode60</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Cryptococcus gattii</span></p></td><td class="cl-f69f8abf"><p class="cl-f69f6d22"><span class="cl-f69b8a86">703</span></p></td><td class="cl-f69f8abe"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Candida orthopsilosis</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.76%</span></p></td><td class="cl-f69f8ac0"><p class="cl-f69f6d36"><span class="cl-f69b8a86">97.30%</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-f69f8ac8"><p class="cl-f69f6d22"><span class="cl-f69b8a86">43</span></p></td><td class="cl-f69f8ac9"><p class="cl-f69f6d36"><span class="cl-f69b8a86">barcode88</span></p></td><td class="cl-f69f8aca"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Asteroma sp CCL060</span></p></td><td class="cl-f69f8ad2"><p class="cl-f69f6d22"><span class="cl-f69b8a86">211</span></p></td><td class="cl-f69f8aca"><p class="cl-f69f6d36"><span class="cl-f69b8a86">Diaporthe foeniculina</span></p></td><td class="cl-f69f8ad3"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.59%</span></p></td><td class="cl-f69f8ad3"><p class="cl-f69f6d36"><span class="cl-f69b8a86">99.10%</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>While we cannot be certain of the cause of these misclassifications, we hypothesise that some may be explained by cross-sample contamination and mislabelling. Some misclassified reads had high matching BLAST scores for other taxa that were present in the mock community which may indicate that contamination has occurred. For example: reads from <em>Kluyveromyces lactis</em>, <em>Cryptococcus neoformans</em> and <em>Cryptococcus gattii</em> had high scoring classifications for <em>Candida albicans</em>, <em>Kluyveromyces marxianus</em>, <em>Candida orthopsilosis</em> respectively. There was also a potential mislabelling of samples where <em>Diaporthe sp CCL067</em> and <em>Asteroma sp CCL060</em> were swapped. There were two <em>Asteroma</em> species in the mock community and we expected them to cluster together. Instead, <em>Asteroma sp CCL068</em> and <em>Diaporthe sp CCL067</em> were consistently placed in the same OTU. In addition, the major OTU in the <em>Asteroma sp CCL060</em> sample was classified as <em>Diaporthe foeniculina</em> with 100% identity (<a href="#tbl-top-misidentified" class="quarto-xref">Table&nbsp;<span>1</span></a>). Despite these observations, the mislabelling is unclear because <em>Asteroma</em> and <em>Diaporthe</em> are both in <em>Diaporthales</em> order, so we expect considerable similarity between ITS sequences.</p>
+<p>The inconsistency of taxonomic nomenclature was a significant limitation of assessing correct taxonomic assignments in an automated way. The taxa examined in this study had many taxonomic synonyms, complicating the validation process. A simple approach that only considers the taxonomic labels as-is can lead to false negatives. Our approach involved the manual (and non-exhaustive) validation of nomenclature for mock community taxa which would not scale well for larger mock communities.</p>
+<p>When assessing the precision of taxonomic classifications from our scenarios, surprisingly, we found that the highest rates of classification with the most correct classifications occurred with minimal OTU filtering for both NanoCLUST and VSEARCH (<a href="06-Results.html#fig-precision" class="quarto-xref">Figure&nbsp;<span>10</span></a>). This went against our expectations that low-abundance OTUs were mostly erroneous and would reduce classification accuracy. We expect that these small OTUs were the result of sequencing errors but still contain sequences with a high level of similarity to the ‘correct’ reference database entry. Further investigation for patterns in these low-abundance OTUs may be fruitful for separating signal from noise.</p>
+<p>When comparing the classification accuracy of most abundant sequences versus consensus sequences, we found that most abundant sequences gave less variable results (<a href="06-Results.html#fig-precision" class="quarto-xref">Figure&nbsp;<span>10</span></a>). We expected the consensus sequence approach used by NanoCLUST to significantly improve classification precision by correcting sequencing errors. However, we expect that there was considerable biological variation present within OTUs which introduced noise into the resulting consensus sequence. This issue was exacerbated when computing consensus sequences for OTUs clustered by VSEARCH at 97% identity as only up to 35% of reads were given classifications. As the NanoCLUST pipeline was originally intended for more conserved 16S sequences, the consensus approach may need significant adjustment for highly variable ITS sequences. If we were to refine the consensus sequence construction, it would be important to determine whether the source of errors in the resulting sequence was due to a specific polishing tool (such as racon or medaka) or due to variation in the OTUs.</p>
+<!--
+- limitation of VSEARCH with dnabarcoder
+  - mismatch with dnabarcoder cutoffs and pipeline VSEARCH 97% cutoff
+  - potential to clump unrelated species in same OTU
+-->
+<p>The real world soil case study displayed remarkably different patterns in taxonomic assignments than in our mock scenarios. 58% of the 775 OTUs recovered in the soil case study were unidentified at the kingdom level using dnabarcoder. Many of these were in the top 30 most abundant OTUs and had between 40% to 93.75% identity to their closest matches in the UNITE+INSD database (<a href="09-Supplementary.html#apptbl-top-30-soil-vsearch" class="quarto-xref">Table A<span>8</span></a>). The class level is the highest taxonomic rank that dnabarcoder can assign with the published pre-computed ITS cutoffs <span class="citation" data-cites="vuDnabarcoderOpensourceSoftware2022">(<a href="10-References.html#ref-vuDnabarcoderOpensourceSoftware2022" role="doc-biblioref">Vu <em>et al.</em>, 2022</a>)</span>. If dnabarcoder cannot classify a sequence to class level, it will remain unidentified at the phylum and kingdom levels. The classes <em>Basidiomycota</em> and <em>Ascomycota</em> require a similarity of 94.2% and 93.4% respectively, leaving many of our OTUs unclassified. <!-- We have observed that the dynamic cutoff approach taken by dnabarcoder aims to make highly precise classifications with the downside that fewer classifications are made. --> We expect that the dynamic cutoff approach taken by dnabarcoder makes fewer but more precise classifications. As much research focus has been on fungal communities found in the northern hemisphere, Australian fungi are often underrepresented in DNA reference databases <span class="citation" data-cites="johnstonImpactsPlannedBurning2024">(<a href="10-References.html#ref-johnstonImpactsPlannedBurning2024" role="doc-biblioref">Johnston <em>et al.</em>, 2024</a>)</span>. We suspect lack of representation in the UNITE database and dnabarcoder’s conservative classification approach is the reason for the low classification rate. However, we still have detected a number of <em>Basidiomycota</em>, <em>Ascomycota</em> and <em>Mortierellaceae</em> across the four tree species allowing for an initial comparative analysis (<a href="06-Results.html#fig-AL-krona" class="quarto-xref">Figure&nbsp;<span>16</span></a>, <a href="06-Results.html#fig-EC-krona" class="quarto-xref">Figure&nbsp;<span>18</span></a>).</p>
+<p>Improved classification rate may be possible by taking advantage of highly-conserved regions found within the amplicons. The amplicons from the soil case study include the partial LSU region which may useful to assign higher taxonomic levels for OTUs that cannot be identified with the full ITS region alone. This approach may also enable phylogenetic methods and leverage existing approaches taken for studying arbuscular mycorrhizal fungi <span class="citation" data-cites="delavauxUtilityLargeSubunit2021 vetrovskyGlobalAMFungiGlobalDatabase2023">(<a href="10-References.html#ref-delavauxUtilityLargeSubunit2021" role="doc-biblioref">Delavaux <em>et al.</em>, 2021</a>; <a href="10-References.html#ref-vetrovskyGlobalAMFungiGlobalDatabase2023" role="doc-biblioref">Větrovský <em>et al.</em>, 2023</a>)</span>. The EUKARYOME reference databases <span class="citation" data-cites="tedersooEUKARYOMERRNAGene2024">(<a href="10-References.html#ref-tedersooEUKARYOMERRNAGene2024" role="doc-biblioref">Tedersoo <em>et al.</em>, 2024</a>)</span> would be a useful additional resource which contains curated sequences for SSU, ITS and LSU markers for all eukaryotes.</p>
+</section>
+<section id="recommendations" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="recommendations"><span class="header-section-number">4</span> Recommendations</h2>
+<p>In determining the smallest library size required for reliably detecting taxa, in our even-abundance mock scenarios, we found that 10,000 reads across 58 taxa (167 reads per taxon) worked well for recovering species present with minimal OTU filtering (<a href="06-Results.html#fig-fixed-min-cluster-size-even" class="quarto-xref">Figure&nbsp;<span>5</span></a>). Higher sampling rates resulted in more misidentified and unclassified OTUS and benefited from more aggressive filtering. Although if using our NanoCLUST implementation to cluster reads, we would not recommend high values of the <code>min_cluster_size</code> parameter due to merging of unrelated taxa as discussed above and shown in <a href="06-Results.html#fig-uneven-min-cluster-thresh" class="quarto-xref">Figure&nbsp;<span>11</span></a>. If focusing on detecting rare OTUs, we suggest using minimal OTU filtering. In our uneven mock community, we were able to recover a taxon with 5 reads in a library with ~100K reads with minimum OTU sizes of 2 and 5. While low abundance taxa are recovered there is a drawback of overestimating diversity and a higher rate of false positives.</p>
+<p>A minimum mean quality score of Q20 was used for our analyses but as demonstrated, ONT basecalling accuracy is improving. With the latest ONT technology and the ability to generate millions of reads, it may be beneficial to increase this quality cutoff in future trials.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-anslanGreatDifferencesPerformance2018a" class="csl-entry" role="listitem">
+Anslan,S. <em>et al.</em> (2018) <a href="https://doi.org/10.3897/mycokeys.39.28109">Great differences in performance and outcome of high-throughput sequencing data analysis platforms for fungal metabarcoding</a>. <em>MycoKeys</em>, 29.
+</div>
+<div id="ref-asnicarMachineLearningMicrobiologists2024" class="csl-entry" role="listitem">
+Asnicar,F. <em>et al.</em> (2024) <a href="https://doi.org/10.1038/s41579-023-00984-1">Machine learning for microbiologists</a>. <em>Nat Rev Microbiol</em>, <strong>22</strong>, 191–205.
+</div>
+<div id="ref-delavauxUtilityLargeSubunit2021" class="csl-entry" role="listitem">
+Delavaux,C.S. <em>et al.</em> (2021) <a href="https://doi.org/10.1111/nph.17080">Utility of large subunit for environmental sequencing of arbuscular mycorrhizal fungi: A new reference database and pipeline</a>. <em>New Phytologist</em>, <strong>229</strong>, 3048–3052.
+</div>
+<div id="ref-iterGenomicsITERNanoCLUST2024" class="csl-entry" role="listitem">
+ITER,G.D. (2024) <a href="https://github.com/genomicsITER/NanoCLUST"><span class="nocase">genomicsITER</span>/<span>NanoCLUST</span></a>.
+</div>
+<div id="ref-johnstonImpactsPlannedBurning2024" class="csl-entry" role="listitem">
+Johnston,M.T. <em>et al.</em> (2024) <a href="https://doi.org/10.1016/j.foreco.2024.121958">Impacts of planned burning on the fungal diversity and vascular plants in a heathy woodland</a>. <em>Forest Ecology and Management</em>, <strong>563</strong>, 121958.
+</div>
+<div id="ref-lelandmcinnesParameterSelectionHDBSCAN2016" class="csl-entry" role="listitem">
+Leland McInnes <em>et al.</em> (2016) <a href="https://hdbscan.readthedocs.io/en/latest/parameter_selection.html">Parameter <span>Selection</span> for <span>HDBSCAN</span>* — hdbscan 0.8.1 documentation</a>.
+</div>
+<div id="ref-mittalDimensionalityReductionUsing2024" class="csl-entry" role="listitem">
+Mittal,M. <em>et al.</em> (2024) <a href="https://doi.org/10.1109/ICAIT61638.2024.10690797">Dimensionality <span>Reduction Using UMAP</span> and <span>TSNE Technique</span></a>. In, <em>2024 <span>Second International Conference</span> on <span>Advances</span> in <span>Information Technology</span> (<span>ICAIT</span>)</em>., pp. 1–5.
+</div>
+<div id="ref-rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021" class="csl-entry" role="listitem">
+Rodríguez-Pérez,H. <em>et al.</em> (2021) <a href="https://doi.org/10.1093/bioinformatics/btaa900"><span>NanoCLUST</span>: A species-level analysis of <span class="nocase">16S rRNA</span> nanopore sequencing data</a>. <em>Bioinformatics</em>, <strong>37</strong>, 1600–1601.
+</div>
+<div id="ref-tedersooEUKARYOMERRNAGene2024" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2024) <a href="https://doi.org/10.1093/database/baae043"><span>EUKARYOME</span>: The <span class="nocase">rRNA</span> gene reference database for identification of all eukaryotes</a>. <em>Database</em>, <strong>2024</strong>, baae043.
+</div>
+<div id="ref-tedersooPacBioMetabarcodingFungi2018" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2018) <a href="https://doi.org/10.1111/nph.14776"><span>PacBio</span> metabarcoding of <span>Fungi</span> and other eukaryotes: Errors, biases and perspectives</a>. <em>New Phytologist</em>, <strong>217</strong>, 1370–1385.
+</div>
+<div id="ref-tedersooGlobalSoilMycobiome2021" class="csl-entry" role="listitem">
+Tedersoo,L. <em>et al.</em> (2021) <a href="https://doi.org/10.1007/s13225-021-00493-7">The <span>Global Soil Mycobiome</span> consortium dataset for boosting fungal diversity research</a>. <em>Fungal Diversity</em>, <strong>111</strong>, 573–588.
+</div>
+<div id="ref-vetrovskyGlobalAMFungiGlobalDatabase2023" class="csl-entry" role="listitem">
+Větrovský,T. <em>et al.</em> (2023) <a href="https://doi.org/10.1111/nph.19283"><span>GlobalAMFungi</span>: A global database of arbuscular mycorrhizal fungal occurrences from high-throughput sequencing metabarcoding studies</a>. <em>New Phytologist</em>, <strong>240</strong>, 2151–2163.
+</div>
+<div id="ref-vuDnabarcoderOpensourceSoftware2022" class="csl-entry" role="listitem">
+Vu,D. <em>et al.</em> (2022) <a href="https://doi.org/10.1111/1755-0998.13651">Dnabarcoder: <span>An</span> open-source software package for analysing and predicting <span>DNA</span> sequence similarity cutoffs for fungal sequence identification</a>. <em>Molecular Ecology Resources</em>, <strong>22</strong>, 2793–2809.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./06-Results.html" class="pagination-link" aria-label="Results">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Results</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./08-Conclusion.html" class="pagination-link" aria-label="Conclusion">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Conclusion</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
