@@ -15,16 +15,16 @@ barcode is optimal when the sequence is unique to one species and there
 is little variability of the barcode within that same species [@Schoch2012].
 
 <!-- TODO review wording -->
-In fungi, barcode regions used for species identification are often from regions
+In fungi, barcode regions most often used for species identification are those
 that encode the nuclear ribosomal RNA (rRNA) and more rarely from other
 regions that encode proteins [@Schoch2012]. The nuclear rRNA region
 contains the 18S small subunit (SSU), 5.8S and 28S large subunit (LSU)
 rRNA genes. These genes are transcribed by RNA polymerase I and two
-spacer regions (ITS1 and ITS2) between the genes are removed through
+spacer regions (ITS1 and ITS2) found between the genes are removed through
 post-transcriptional modifications. The region covering the two spacers
-are referred to as the internal transcribed spacer (ITS) region and
+is referred to as the internal transcribed spacer (ITS) region and
 typically spans 500--700 bases but is highly variable among fungal
-groups (@fig-its-region-simple) [@Nilsson2019a].
+groups (@fig-its-region-simple, @Nilsson2019a).
 
 :::{#fig-its-region-simple}
 ![](resources/images/ITS-region-(2021 Furneaux).png)
@@ -38,7 +38,7 @@ generally only one of the ITS1 or ITS2 subregions (250-400 bases) are
 targeted for sequencing [@Nilsson2019a]. The limitations of using the
 ITS1 or ITS2 subregions in isolation is that they have lower taxonomic
 resolution and universal PCR primer sites are less convenient than the full
-ITS region (see [@Tedersoo2022] and [@Tedersoo2015]).
+ITS region [@Tedersoo2022; @Tedersoo2015].
 
 The ITS region has limitations on its coverage of taxa and is unsuitable
 for some groups of fungi. For example some species in the
@@ -68,7 +68,7 @@ Since they encode RNA involved in ribosome formation, these regions are
 highly conserved and there is often insufficient variation in the SSU
 and LSU regions to discriminate between many basidiomycete and
 ascomycete species [@Schoch2012]. Nevertheless, the SSU and LSU markers
-can be very useful at higher taxonomic levels to resolve the
+can be useful at higher taxonomic levels to resolve the
 evolutionary history of genera, families, order and class [@Nilsson2019a].
 
 
@@ -95,17 +95,16 @@ regions [@Allen1976]. As of 2016, the production of 454 sequencers was
 discontinued [@BioIT2013].
 
 Ion Torrent technology produced similar quality results to 454
-pyrosequencing at lower cost, but was limited to shorter read lengths
+pyrosequencing at lower cost but was limited to shorter read lengths
 (400--600 bp) and complex library preparation protocols [@Allen1976].
-With these drawbacks, Ion Torrent was never broadly used in fungal
+Due to these drawbacks, Ion Torrent was never broadly used in fungal
 ecology [@Nilsson2019a].
 
-The next advance in sequencing which has had wide adoption is the
-Illumina MiSeq technology [@Allen1976]. The Illumina MiSeq, (and more
-recently) NextSeq and NovaSeq platforms offer short reads of up to
-~300 paired-end bp while providing very high
-throughput that enables the production of high quality sequences. MiSeq,
-NextSeq and NovaSeq can sequence up to 20, 360 and 6000 GB of read data
+The next advance in sequencing which had wide adoption was Illumina MiSeq technology [@Allen1976].
+The Illumina MiSeq, (and more recently) NextSeq and NovaSeq platforms offer short paired-end
+reads of up to 300 bp in length.
+These platforms provide very high throughput and high quality sequences.
+MiSeq, NextSeq and NovaSeq can sequence up to 20, 360 and 6000 gigabase (GB) of read data
 respectively [@Nilsson2019a; @Inc.2023]. Of the sequencing systems,
 Illumina can provide one of the highest read qualities with typical
 accuracy of 99.9% [@IlluminaQuality]. The use of paired end reads (on
@@ -138,9 +137,9 @@ The PacBio HiFi sequencing platform can provide read lengths of 10--25
 KB and improves error rates through circular sequencing which allows the
 same molecule to be sequenced repetitively [@PacBio2023; @Allen1976].
 PacBio HiFi reads can reach a base
-call accuracy comparable to Illumina of 99.9% [@Aigrain2021], but the
+call accuracy comparable to Illumina of 99.9% but the
 relatively high cost is a major drawback for its
-adoption [@Murigneux2020].
+adoption [@Aigrain2021; @Murigneux2020].
 
 Oxford Nanopore Technology's (ONT) sequencing platform has gained much attention in recent years and
 has been observed to produce read lengths of up to 2.4MB [@payneBulkVisGraphicalViewer2019].
@@ -150,7 +149,7 @@ than other platforms since it can be run from a laptop, even in the
 field [@Mafune2020]. Until recently, a large drawback of the ONT system
 was the high raw error rate which had been reported to range between 1%
 and up to 15% [@Baloglu2021; @Rang2018]. Techniques to improve accuracy
-are advancing with new chemistry and basecalling. ONT is now claiming a
+are advancing with new sequencing chemistry and basecalling algorithms. ONT is now claiming a
 raw read accuracy rate of 99.75% with the latest
 chemistry [@oxfordnanoporetechnologiesNanoporeSequencingAccuracy2024] which is comparable to Illumina MiSeq.
 
@@ -160,8 +159,7 @@ through a pore with an internal diameter on the order of
 on a charged membrane and allows ions to flow across the membrane. The
 sequencing of base pairs is made possible by analysing the change of
 electric current across the membrane as the DNA (or RNA) molecule is
-ratcheted through the pore (see
-@fig-nanopore-schematic).
+ratcheted through the pore (@fig-nanopore-schematic).
 
 :::{#fig-nanopore-schematic}
 ![](resources/images/nanopore-schematic.png)
@@ -184,19 +182,20 @@ and their latest being R10.4.1 [@Wang2021; @OxfordNanoporeTechnologies2024].
 It is worth noting that none of the specifications for the proteins used in
 these systems have been fully disclosed by ONT [@Wang2021].
 
-Basecalling is the step where raw electrical signals from the device are
+Basecalling is the process where raw electrical signals from the device are
 analysed to determine the sequence of nucleotides. The electrical signal
 is influenced by the nucleotides that occupy the pore at a given
-time [@Wick2019].
+time.
 Historically, basecallers used hidden markov models
-(HMMs) to predict the DNA sequence, but modern basecallers have adopted neural networks
-and improved accuracy significantly [@Wick2019; @Rang2018].
-ONT’s latest basecaller is Dorado [@OxfordNanoporeTechnologies] which is: open source, optimised for graphics processing units (GPUs)
-and replaces ONT’s previous (now unsupported) basecaller Guppy.
+(HMMs) to infer a DNA sequence from an electrical signal
+but modern basecallers now adopt neural networks and accuracy has improved significantly with each iteration [@Wick2019; @Rang2018].
+ONT’s latest basecaller is dorado which is: open source, optimised for graphics processing units (GPUs)
+and replaces ONT’s previous (now unsupported) basecaller guppy [@NanoporetechDorado2024].
 
 ## Bioinformatic analysis {#sec-bioinformatic-analysis}
 
-Here we will outline the key computational steps common to many metabarcoding analyses (@fig-metabarcoding-workflow).
+Here we will outline the key computational steps common to many metabarcoding analyses
+as outlined in @fig-metabarcoding-workflow.
 
 ### Quality filtering {#sec-quality-filtering}
 
@@ -209,14 +208,14 @@ reads [@Tedersoo2022].
 Multiplexing is a method for reducing costs by sequencing multiple DNA
 samples simultaneously, where each sequence contains a tag (or barcode)
 that is unique to the sample it belongs to [@Id2018].
-Demultiplexing is the process of splitting reads by tags to determine which sample a read came from [@Id2018].
-The ONT basecallers Dorado and guppy have built-in support for demultiplexing,
+Demultiplexing is the process of splitting reads by these tags to determine which sample the read came from [@Id2018].
+The ONT basecallers dorado and guppy have built-in support for demultiplexing,
 while minibar [@californiaacademyofsciencesCalacademyresearchMinibarDual2024] is suitable for custom barcoding schemes.
 Historically, custom tools such as Porechop [@Wick] were developed to trim ONT sequencing adapters from reads, but
 currently this functionality is supported by dorado.
 
-For ITS metabarcoding, it is important to remove the genes flanking the
-ITS1 and ITS2 subregion (such as 18S, 5.8S and 22S) as they are more
+For ITS metabarcoding, it is useful to remove the genes flanking the
+ITS1 and ITS2 subregions (such as 18S, 5.8S and 22S) as they are more
 conserved and do not enhance species level
 resolution [@Nilsson2019a; @Tedersoo2022]. The tools
 ITSx [@Bengtsson-Palme2013] and ITSxpress [@Rivers2018] are capable of
@@ -224,11 +223,11 @@ extracting ITS1, ITS2 and full length ITS regions using hidden markov
 models. ITSxpress expands on the functionality of ITSx, targeting its
 use for amplicon sequence variant (ASV) techniques over OTU clustering [@Rivers2018].
 
-To ensure the sequence data is usable for downstream analysis, read
-quality-based filtering removes entire reads that do not meet a quality
-threshold or trims low quality segments from a
-read [@Taberlet2018; @Hakimzadeh2023]. Some considerations are needed
-when performing read quality filtering for ONT data. Tools such as
+To ensure the sequence data is usable for downstream analysis,
+quality filtering tools remove entire reads that do not meet a quality
+threshold or trim low quality segments from
+reads [@Taberlet2018; @Hakimzadeh2023]. Some considerations are needed
+when performing quality filtering for ONT data. Tools such as
 NanoFilt [@DeCoster2018] and Chopper [@DeCoster2023] accept or reject an
 entire read based on an average quality score threshold.
 For ONT reads with variable quality, stretches of the read with high sequence quality
@@ -251,9 +250,9 @@ in samples [@guenay-greunkeHandlingTargetedAmplicon2021; @Tedersoo2022].
 In general, clustering is an unsupervised technique for grouping items together
 based on their similarity to each other.
 In the context of metabarcoding, clustering is the process of aggregating
-DNA sequences into groups based on a similarity metric.
+DNA sequences into groups based on a predefined similarity metric.
 
-A commonly used similarity metric used in metabarcoding is sequence identity
+In metabarcoding, a commonly used similarity metric is sequence identity
 and is defined as the proportion of nucleotides that match exactly between two sequences.
 Sequences are considered to be in the same cluster when the pairwise sequence identity is above a predefined threshold.
 The resulting clusters are called Operational Taxonomic Units (OTUs) [@Cline2017; @Blaxter2005].
@@ -269,12 +268,11 @@ reference database is lost when clustering with this method [@Callahan2017].
 Closed reference clustering allows OTUs to be tracked across studies provided
 the same reference database is used [@Cline2017; @Callahan2017].
 
-*De novo* clustering is one of the widely employed methods for defining
-fungal OTUs, where clustering is only performed for
-sequences within the experimental dataset [@Cline2017]. The OTUs generated by
-de novo clustering are dependent on the dataset in which they are
-defined, therefore de novo OTUs clustered from different datasets cannot
-be reliably compared [@Callahan2017].
+*De novo* clustering is a commonly used method for defining
+fungal OTUs where sequences within an experimental dataset are clustered without relying on a reference database [@Cline2017]. The OTUs generated by
+*de novo* clustering are dependent on the dataset in which they are
+defined.
+Therefore, *de novo* OTUs clustered from different datasets cannot be reliably compared [@Callahan2017].
 Compared with closed reference clustering,
 *de novo* clustering produces less stable OTUs but can detect biological variation that
 is not present in a reference database [@He2015].
@@ -285,21 +283,19 @@ by *de novo* clustering of the unassigned sequences [@Cline2017].
 
 The amplicon sequence variant (ASV, also called the exact sequence variant) approach
 differs significantly from traditional OTU clustering by aiming to
-correct errors in reads then group the reads by 100% identity.
+correct errors in reads then grouping identical reads together.
 ASV methods discriminate biological sequences from errors on the expectation that errors are rare [@Callahan2017].
 ASV methods can detect small
 biological sequence variants, such as infraspecific variation (i.e.
 between populations within a species), while disregarding errors
 introduced through sequencing or library preparation, therefore
 increasing the taxonomic resolution of the results [@Joos2020; @Glassman2018].
-Compared to OTU clustering where identity thresholds are defined *a priori*, ASVs have the advantage to be more precise,
-reusable and reproducible [@Callahan2017].
-ASVs are largely used in metabarcoding studies targeting conserved regions such as the bacterial
-16S.
+Compared to OTU clustering where identity thresholds are defined artificially,
+ASVs have the advantage to be more precise and reproducible [@Callahan2017].
+ASVs are largely used in metabarcoding studies targeting conserved regions such as the bacterial 16S.
 However, in fungal metabarcoding, ASVs are expected to perform
 poorly for groups that have multiple ITS copies and variants within
 individuals [@Tedersoo2022].
-
 Therefore, ASV approaches tend to overestimate richness of common fungal
 species (due to haplotype variation) and underestimate richness of rare
 species (by removing rare variants) [@Tedersoo2022; @Joos2020].
@@ -310,17 +306,17 @@ and OTU based approaches [@Glassman2018].
 A completely different approach to clustering has been implemented in the NanoCLUST pipeline [@rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021] which groups sequences by k-mer signature similarity.
 First, each sequence is transformed into a k-mer frequency vector and stored in a tabular format (one column per k-mer).
 A dimension reduction step converts the multidimensional tabular structure into two dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020].
-The similarity of sequences is represented as distances between points in two-dimensional space where
-the Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) algorithm is then used to cluster points (@fig-nanoclust-steps, @mcinnes2017hdbscan).
-HDBSCAN is a dynamic clustering approach that considers the density surrounding a point to detect and remove noise.
-HDBSCAN requires setting a minimum cluster size parameter which controls how many points are required to be considered a cluster
- and has the effect of filtering out small clusters or merging nearby clusters together [@lelandmcinnesParameterSelectionHDBSCAN2016].
-NanoCLUST has been developed for the analysis of 16S rRNA amplicons but other researchers [@langsiriTargetedSequencingAnalysis2023] have had success applying the same approach to fungal ITS sequences.
+The similarity of sequences is represented as distances between points in two-dimensional space.
+The Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) algorithm is then used to cluster these points (@fig-nanoclust-steps, @mcinnes2017hdbscan).
+HDBSCAN is a dynamic clustering approach that takes into consideration the density surrounding points which allows it to detect and remove noise.
+HDBSCAN requires setting a minimum cluster size parameter (`min_cluster_size`) which controls the minimum number points that are required to be considered a cluster.
+ The parameter has the effect of filtering out small clusters or merging nearby clusters together [@lelandmcinnesParameterSelectionHDBSCAN2016].
+NanoCLUST has been developed for the analysis of 16S rRNA amplicons but other researchers have had success applying the same approach to fungal ITS sequences [@langsiriTargetedSequencingAnalysis2023].
 
 :::{#fig-nanoclust-steps width=15cm}
 ![](resources/images/NanoCLUST-langsiri-cropped.png)
 
-Illustration of NanoCLUST clustering.
+Illustration of clustering with NanoCLUST.
 Reads are transformed into a k-mer frequency vector and stored in a tabular format.
 Uniform Manifold Approximation and Projection (UMAP) is applied to reduce the multidimensional tabular structure into two dimensions.
 The Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) algorithm clusters points in two-dimensional space.
@@ -354,21 +350,14 @@ A drawback of curated databases is that they have
 limited taxonomic coverage and do not always include the most recently
 published sequences [@Furneaux2021a].
 
-<!--
-The most common sequence similarity approach for taxonomic classification is a search using the Basic Local Alignment Search Tool (BLAST) algorithm (Altschul et. al., 1990; Camacho et al., 2009), where pairwise comparisons are made between representative sequences and those in a reference database to assign the closest matching reference (Taberlet et al., 2018; Tedersoo et al., 2022).
-Using heuristics, BLAST allows for considerably faster searches of sequence similarity compared to exact alignment algorithms such as Smith-Waterman or Needleman-Wunsch (Camacho et al., 2009).
-The BLAST algorithm can massively reduce search space by scanning a database of sequences for small, fixed size subsequences (knows as words), then these matching sites are used as starting points to initiate more in-depth alignment.
-
-BLAST is highly sensitive alignment but is also computationally intensive and may not be practical for classifying huge numbers of sequences (Ye et al., 2019), and furthermore may not be the most accurate classification option for long ITS metabarcoding pipelines (Lu et. al., 2022), especially when using with fixed threshold values of sequence similarity (Vu et. al., 2022).
--->
 
 A common method for taxonomic assignment is a Basic Local Alignment Search Tool (BLAST) search [@Camacho2009a],
  where pairwise comparisons are made between representative sequences and those in a reference database to assign the closest matching reference [@Taberlet2018; @Tedersoo2022].
-The BLAST algorithm can massively reduce search space by scanning a database of sequences for small, fixed size subsequences (knows as words),
-then these matching sites are used as starting points to initiate more in-depth alignment.
+The BLAST algorithm can massively reduce search space by scanning a database of sequences for small, fixed size subsequences (knows as words).
+These matching sites are used as starting points to initiate more in-depth alignment.
 Fixed BLAST percent identity cutoffs have often been used to classify sequences at a given taxonomic rank
-(i.e. 98%, 90% and 85% sequence identity to assign species, genus and family as in [@tedersooFungalBiogeographyGlobal2014]),
-but this approach is restrictive because fixed thresholds that accurately delineate taxa in one part of the fungal tree
+(i.e. 98%, 90% and 85% sequence identity to assign species, genus and family [@tedersooFungalBiogeographyGlobal2014]).
+However, this approach is restrictive because fixed thresholds that accurately delineate taxa in one part of the fungal tree
 of life may not be accurate for other clades in the tree [@vuDNABarcodingAnalysis2016; @vuLargescaleGenerationAnalysis2019; @vuDnabarcoderOpensourceSoftware2022].
 Dnabarcoder is a tool that has been developed to address this issue by predicting similarity cutoffs for different fungal clades in a reference sequence dataset and can also classify sequences (via BLAST) using these predicted cutoff [@vuDnabarcoderOpensourceSoftware2022].
 
@@ -376,11 +365,11 @@ Minimap2 [@liMinimap2PairwiseAlignment2018a] and Kraken2 [@woodImprovedMetagenom
 They both use minimisers [@robertsReducingStorageRequirements2004] to improve performance and handle long, potentially noisy reads.
 
 Alternatively, there is an expanding field of machine learning (ML) techniques to classify sequences.
-Generally, ML techniques optimise a computer model to correctly identify sequences from a training set (where taxonomic identity of sequences are known).
+Generally, ML techniques optimise a computer model to correctly identify sequences from a training set (where the taxonomic identity of sequences are known).
 The trained model is then used to classify new, unseen sequences.
 ML techniques will not be discussed in detail here but some notable tools for taxonomic classification are: the Naive Bayesian Classifier [@Wang2007],
 SINTAX [@Edgar2016a] and IDTAXA [@Murali2018].
-Recent neural network based ML methods such as MycoAI [@romeijnMycoAIFastAccurate2024] show promise in performing rapidly with comparable accuracy to other classification methods.
+Recent neural network based classification methods such as MycoAI [@romeijnMycoAIFastAccurate2024] show promise in rapid performance with comparable accuracy to other classification methods.
 
 Phylogenetic placement algorithms such as pplacer [@FA2010] and
 EPA-ng [@Barbera2019] place amplicon reads onto a pre-established
@@ -424,7 +413,7 @@ and enhance the recovery of rare taxa [@Furneaux2021a].
 
 High throughput sequencing techniques applied to metabarcoding have
 detected a high diversity of fungal taxa that are undescribed and entire
-groups (even phyla) that cannot be placed with the current fungal tree
+groups (even phyla) that cannot be placed within the current fungal tree
 of life [@Nilsson2019; @Phukhamsakda2022]. These so-called \"dark taxa\"
 do not seem to form discernible morphological structures or be
 cultivatable in the lab, therefore dark taxa are predominantly detected

@@ -12,7 +12,7 @@ We have named the workflow nanoporcini, and it is accessible online at [https://
 
 ### Adapter and primer trimming
 
-Sequencing adapters were trimmed from raw basecalled reads using Dorado v0.6.1 with the '`--no-trim-primers`' option to avoid removing primer sequences. Cutadapt v4.6 [@Cutadapt] was used to select and trim primers from amplicons that contain both forward (NS5) and reverse primer (LR6) sequences. Amplicons where both of these primer sequences could not be detected were excluded from the analysis. Cutadapt was also used to re-orient reads that have been sequenced by the reverse strand ('`--revcomp`' option), facilitating analysis by downstream tools (@fig-filterTrimFlowchart).
+Sequencing adapters were trimmed from raw basecalled reads using dorado v0.6.1 with the '`--no-trim-primers`' option to avoid removing primer sequences. Cutadapt v4.6 [@Cutadapt] was used to select and trim primers from amplicons that contain both forward (NS5) and reverse primer (LR6) sequences. Amplicons where both of these primer sequences could not be detected were excluded from the analysis. Cutadapt was also used to re-orient reads from the reverse strand ('`--revcomp`' option), facilitating analysis by downstream tools (@fig-filterTrimFlowchart).
 
 ### ITS extraction and quality filtering
 
@@ -50,16 +50,22 @@ digraph {
 }
 ```
 
-Stages of trimming and quality filtering. The process in which trimming and quality filtering is applied to raw reads with the software used in parentheses.
+Stages of trimming and quality filtering in our workflow. The steps applied to raw reads are shown in boxes with the software used in parentheses.
 :::
 
 ### Clustering
 
-For each scenario, full ITS sequences were grouped into approximate species-level OTUs using two de-novo clustering approaches (@fig-clusterAssignFlowchart).
+For each scenario, full ITS sequences were grouped into approximate species-level OTUs using two clustering approaches (@fig-clusterAssignFlowchart).
 
-The first approach uses centroid-based clustering on sequence similarity as implemented in VSEARCH v2.21.1 [@rognesVSEARCHVersatileOpen2016]. The sequences were first de-replicated using VSEARCH's '`--fastx_uniques`' option to merge identical sequences into a single record, then clustered with the '`--cluster_size`' option. 97% identity was used as the pairwise sequence similarity threshold. This clustering approach resulted in many low-abundance operational taxonomic units (OTUs). Methods for selecting a threshold to remove low-abundance spurious OTUs are explored in @sec-even-scenario.
+The first approach uses *de novo* centroid-based clustering on sequence similarity as implemented in VSEARCH v2.21.1 [@rognesVSEARCHVersatileOpen2016]. The sequences were first de-replicated using VSEARCH's '`--fastx_uniques`' option to merge identical sequences into a single record, then clustered with the '`--cluster_size`' option. 97% identity was used as the pairwise sequence similarity threshold. This clustering approach resulted in many low-abundance operational taxonomic units (OTUs). Methods for selecting a threshold to remove low-abundance spurious OTUs are explored in @sec-even-scenario.
 
-The second clustering approach grouped sequences by similarity of their k-mer signatures. We followed the clustering approach used by the tool NanoCLUST [@rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021; @langsiriTargetedSequencingAnalysis2023]. Each sequence was transformed into a k-mer frequency vector and stored in a tabular format. In our workflow, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST). The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020]. Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan]. The '`cluster_selection_epsilon`' parameter used in HDBSCAN was set to 0.5, while the multiple '`min_cluster_size`' parameters were tested and explored in @sec-even-scenario.
+The second clustering approach grouped sequences by similarity of their k-mer signatures.
+We implemented our own version of the clustering approach used by the NanoCLUST pipeline [@rodriguez-perezNanoCLUSTSpecieslevelAnalysis2021].
+Each sequence was transformed into a k-mer frequency vector and stored in a tabular format.
+In our workflow, 6-mer frequencies were computed (as opposed to 5-mers in NanoCLUST) based on existing work done by @langsiriTargetedSequencingAnalysis2023.
+The multidimensional tabular structure was then projected into two-dimensions using Uniform Manifold Approximation and Projection (UMAP) [@mcinnesUMAPUniformManifold2020].
+Sequences (represented as points in the two-dimensional space) were then clustered using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) [@mcinnes2017hdbscan].
+The '`cluster_selection_epsilon`' parameter used in HDBSCAN was set to 0.5, while the multiple '`min_cluster_size`' parameters were tested and explored in @sec-even-scenario.
 
 ::: {#fig-clusterAssignFlowchart}
 ```{dot}
@@ -111,14 +117,21 @@ digraph {
   }
 ```
 
-Stages of clustering. Reads are clustered using two approaches: VSEARCH and NanoCLUST (UMAP + HDBSCAN), with the software tools used in parentheses. A representative sequence from each operational taxonomic unit (OTU) was selected either based on the most abundant sequence or the consensus sequence.
+Stages of clustering in our workflow. Reads were clustered using two approaches: VSEARCH and NanoCLUST (UMAP + HDBSCAN). Software tools used are shown in parentheses. A representative sequence from each operational taxonomic unit (OTU) was selected based either on the most abundant sequence or the consensus sequence.
 :::
 
 ### Taxonomic assignments
 
-A representative sequence was selected from each OTU to aid their taxonomic assignment. Our initial approach used the most abundant sequence as the representative sequence of each OTU. The VSEARCH clustering approach provided the most abundant sequences with the '`--centroids`' option. To determine the most abundant sequence from clusters in the UMAP + HDBSCAN approach, the VSEARCH v2.21.1 '`--fastx_uniques`' command in combination with '`--topn 1`' option was used (@fig-clusterAssignFlowchart).
+A representative sequence was selected from each OTU to aid their taxonomic assignment. Our initial approach used the most abundant sequence as the representative sequence of each OTU. VSEARCH supplied the most abundant sequences with the '`--centroids`' option.
+To determine the most abundant sequence from OTUs in the UMAP + HDBSCAN approach, the VSEARCH v2.21.1 '`--fastx_uniques`' command in combination with '`--topn 1`' option was used (@fig-clusterAssignFlowchart).
 
-Alternatively, a consensus sequence was built from the reads of each OTU following a similar approach used by NanoCLUST (@fig-clusterPolishFlow). First, a subset of 200 sequences was selected from each OTU to reduce computation time and space requirements. Then a draft sequence was selected by choosing the read with the highest Average Nucleotide Identity (ANI) to all the other sequences with FastANI v1.34 [@jainHighThroughputANI2018]. The 200 reads used for polishing were then aligned to the draft sequence using minimap2 v2.28 [@liMinimap2PairwiseAlignment2018]. Subsequently, the draft read underwent polishing using Racon v1.5.0 [@vaserFastAccurateNovo2017] then Medaka v1.12.0 (<https://github.com/nanoporetech/medaka>). As Canu [@korenCanuScalableAccurate2017] is designed as a long-read assembler, it has a strict minimum genome size of 1000 making it unable to polish full ITS sequences from this dataset (which were around 400bp).
+Alternatively, a consensus sequence was built from the reads of each OTU following a similar approach used by the NanoCLUST pipeline (@fig-clusterPolishFlow). First, a subset of 200 sequences was selected from each OTU to reduce computation time and space requirements.
+Then, the read with the highest Average Nucleotide Identity (ANI) to all the other sequences was chosen as the 'draft' sequence for the OTU.
+This was performed with FastANI v1.34 [@jainHighThroughputANI2018].
+The subset of 200 reads were then aligned to the draft sequence using minimap2 v2.28 [@liMinimap2PairwiseAlignment2018].
+Subsequently, the draft read underwent polishing using racon v1.5.0 [@vaserFastAccurateNovo2017] then medaka v1.12.0 (<https://github.com/nanoporetech/medaka>).
+We were unable to use Canu [@korenCanuScalableAccurate2017] in the same manner as the original NanoCLUST pipeline implementation.
+Canu is designed as a long-read assembler, it has a strict minimum genome size of 1000 making it unable to polish full ITS sequences from this dataset (which were around 400bp).
 
 ::: {#fig-clusterPolishFlow}
 ```{dot}
@@ -151,30 +164,30 @@ digraph {
 }
 ```
 
-Stages of consensus sequence generation. The process of producing a consensus sequence for each OTU by selecting and polishing a draft read. An initial draft sequence is selected by taking the read with the highest Average Nucleotide Identity (ANI) from the first 200 reads in the OTU. The 200 reads used for polishing were first aligned to the draft sequence, then polished using racon [@vaserFastAccurateNovo2017] and medaka (<https://github.com/nanoporetech/medaka>).
+Stages of consensus sequence generation in our workflow. The process of producing a consensus sequence for each OTU by selecting and polishing a draft read. An initial draft sequence was selected by taking the read with the highest Average Nucleotide Identity (ANI) from the first 200 reads in the OTU. The subset of 200 reads were first aligned to the draft sequence, then polished using racon [@vaserFastAccurateNovo2017] and medaka (<https://github.com/nanoporetech/medaka>).
 :::
 
 The representative sequence from each OTU was then given a taxonomic assignment with dnabarcoder v1.0.6 [@vuDnabarcoderOpensourceSoftware2022]. In this case, full ITS sequences were classified against the UNITE+INSD 2024 reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255] using precomputed similarity cutoffs provided by the dnabarcoder project [@vuDnabarcoderOpensourceSoftware2022].
 
 ### Workflow implementation
 
-The workflow was implemented using the Nextflow language [@ditommasoNextflowEnablesReproducible2017].
-The workflow was developed to run with Singularity [@kurtzerSingularityScientificContainers2017] or Docker [@merkel2014docker] containers.
+The workflow was implemented using the Nextflow language [@ditommasoNextflowEnablesReproducible2017]
+and was developed to run with Singularity [@kurtzerSingularityScientificContainers2017] or Docker [@merkel2014docker] containers.
 A container-based approach is flexible and allows the workflow to run on all systems that support either one of these container platforms.
-It also simplifies the setup of dependencies and ensures that the versions of dependencies are reproducible between installations.
+It also simplifies the setup of dependencies and enhances reproducibility between installations.
 The workflow only requires Nextflow and a container platform (Singularity or Docker) to be installed.
 
 The source code for the workflow is available online at [https://github.com/aringeri/nanoporcini](https://github.com/aringeri/nanoporcini).
 
-It can be configured to run to customise the use of system resources such as number of threads or RAM.
+It can be configured to customise the use of system resources such as number of threads or RAM.
 The following parameters of the workflow are also configurable:
 
-- Forward and reverse primer sequences
-- Minimum quality score for full ITS sequences
-- Minimum and maximum full ITS sequence length
-- Minimum cluster size for HDBSCAN clustering algorithm
-- Percent identity for VSEARCH clustering
-- Reference database used for chimera detection and taxonomic classifications
+- Forward and reverse primer sequences.
+- Minimum quality score for full ITS sequences.
+- Minimum and maximum length for full ITS sequences.
+- Minimum cluster size for HDBSCAN clustering algorithm.
+- Percent identity similarity threshold for VSEARCH clustering.
+- Reference database used for chimera detection and taxonomic classifications.
 
 ## Mock fungal communities {#sec-mock-fungal-communities}
 
@@ -192,20 +205,21 @@ The raw basecalled reads were provided to us by collaborators from the Schwessin
 
 #### DNA extraction, amplification and sequencing
 
-The genomic DNA of 65 fungal taxa was extracted with the Qiagen DNeasy Plant mini kit. The DNA was extracted from mycelia or spore material of each fungal taxa. Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse) (@fig-its-region-simple). The amplicons were prepared with ONT's Native Barcoding Kit 96 V14 (code SQK-NBD114.96, ONT). The fungal samples plus a negative control were multiplexed and sequenced using a MinION R10.4 flow cell.
+The genomic DNA of 65 fungal taxa was extracted with the Qiagen DNeasy Plant mini kit. The DNA was extracted from mycelia or spore material of each fungal taxa. Partial SSU, full ITS region and partial LSU regions of each sample were amplified with primers NS5 (forward) and LR6 (reverse) (@fig-its-region-simple). The amplicons were prepared with ONT's Native Barcoding Kit 96 V14 (SQK-NBD114.96).
+The fungal samples plus a negative control were sequenced together with a MinION R10.4 flow cell.
 
 #### Bioinformatics - Basecalling
 
-The raw ONT data was basecalled and demultiplexed using Guppy v6.4.2 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup).
+The raw ONT data was basecalled and demultiplexed using guppy v6.4.2 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup).
 
 #### Bioinformatics - Selection of high quality full ITS sequences
 
 The basecalled reads were passed to the adapter trimming, primer trimming, ITS extraction, quality filtering and chimera detection stages of our workflow described in @sec-pipeline-description.
-At this point, we had a pool of high quality full ITS sequences which we used to construct different mock community structures.
+At this point, we had a pool of high quality full ITS sequences which we used to construct different mock communities.
 
 After being processed by the workflow, 7 of the 65 fungal taxa were excluded from the mock dataset leaving 58 taxa available for mock scenarios.
-6 of the 7 taxa were excluded due to having a low number of reads.
-Due to differences in chimera detection behaviour between reference databases, 1 of the 7 taxa was excluded erroneously under the impression that it had a low number of reads.
+6 of the 7 excluded taxa were removed due to having a low number of reads.
+Due to differences in chimera detection behaviour between reference databases, 1 of the 7 excluded taxa was removed erroneously under the impression that it had a low number of reads (*Fusarium proliferatum*).
 
 A minimum of 2,500 reads per taxa was required to construct even-abundance mock scenarios with library sizes nearing 150K reads
 ($58 \text{ taxa} \times 2500 \text{ reads} = 145000\text{ reads}$).
@@ -217,7 +231,10 @@ Of the 58 remaining taxa, six had the same species-level designation making for 
 
 #### Taxonomic naming validation
 
-To ensure that taxonomic names were used consistently between the fungal samples and the reference database, manual validation of each sample name was performed by conducting searches for the recorded species name of each sample in the 2024 UNITE+INSD reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255]. Most mismatches were either due to names being misspelled or based on an older taxonomic synonym. For example, *Nakaseomyces glabratus* in UNITE was originally recorded by its former name *Candida glabrata*. Names of samples were manually updated using current names found in both Index Fungorum (www.indexfungorum.org) and the 2024 UNITE reference database. For samples that were not classified at the species level (e.g. *Entoleuca sp* CCL052), the genus label was confirmed to exist in the reference database.
+To ensure that taxonomic names were used consistently between the fungal samples and the reference database, manual validation of each sample name was performed by conducting searches for the recorded species name of each sample in the 2024 UNITE+INSD reference database [@abarenkovFullUNITEINSDDataset2024; @vu_2024_12580255].
+Most mismatches were either due to names being misspelled or due to use of taxonomic synonyms.
+For example, *Nakaseomyces glabratus* in UNITE was originally recorded by its former name *Candida glabrata*.
+Names of samples were manually updated using current names found in both Index Fungorum ([www.indexfungorum.org](www.indexfungorum.org)) and the 2024 UNITE reference database. For samples that were not classified at the species level (e.g. *Entoleuca sp* CCL052), the genus label (e.g. *Entoleuca*) was confirmed to exist in the reference database.
 
 ### Scenario 1 - Even abundance {#sec-scenario-1}
 
@@ -263,7 +280,7 @@ Amplicons were sequenced using the ONT MinION 10.4.1.
 
 ### Bioinformatics - basecalling and demultiplexing
 
-The raw ONT data was basecalled using Dorado v0.7.1 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup@v5.0.0).
+The raw ONT data was basecalled using dorado v0.7.1 with the super-high accuracy model (dna_r10.4.1_e8.2_400bps_sup@v5.0.0).
 Due to the custom barcoding scheme, basecalled reads were demultiplexed with minibar v0.25 (@apptbl-software-soil).
 
 ### Sample selection
@@ -273,15 +290,16 @@ This left 24 samples (22 soil samples + 2 controls) for downstream processing.
 
 ### Metabarcoding workflow
 
-The set of demultiplexed reads was passed to the metabarcoding workflow with default settings.
-Due to a large library size after quality control (~1.8 million reads), computational constraints did not allow the NanoCLUST approach to cluster the full dataset.
-Instead, VSEARCH was used to cluster the full dataset.
+The set of demultiplexed reads was passed to our metabarcoding workflow (v0.0.1) with default settings.
+Adapter trimming, primer trimming, ITS extraction, quality filtering and chimera detection was performed as described in @sec-pipeline-description.
+Due to a large library size after quality control (~1.8 million reads), computational constraints did not allow our NanoCLUST implementation to cluster the full dataset.
+Instead, VSEARCH was used for clustering with 97% identity.
 Singleton OTUs were removed after clustering and the remaining OTUs were classified by their most abundant sequence using dnabarcoder and the UNITE+INSD 2024 reference database.
 
 ### Data analysis
 
 An OTU table and dnabarcoder's classifications table was imported into the phyloseq v1.48.0 R package [@mcmurdiePhyloseqPackageReproducible2013].
-The decontam v1.24.0 [@davisSimpleStatisticalIdentification2018] R package was used to remove contaminant sequences identified in the two control samples.
+The decontam v1.24.0 R package [@davisSimpleStatisticalIdentification2018] was used to remove contaminant sequences identified in the two control samples.
 Low-abundance OTUs were filtered in a sample-wise fashion: OTUs were removed from a sample if they were smaller than 0.15% of the total number of reads in the sample.
 This cutoff was chosen based on the results of experimentation with the mock community trials.
 The scripts used to perform this analysis have been published on GitHub for reference: [https://github.com/aringeri/long-read-ITS-metabarcoding-thesis/tree/main/reports/masters/thesis/analysis](https://github.com/aringeri/long-read-ITS-metabarcoding-thesis/tree/main/reports/masters/thesis/analysis).

@@ -4,8 +4,8 @@ title: "Significance"
 
 There is currently a need for easily accessible bioinformatic tools for mycologists and microbial ecologists,
 as well as for end-users working in the conservation of fungi, plants and animals who are undertaking environmental metabarcoding.
-Long-read technologies show promise for improved taxonomic classifications however there are few workflows that exist for metabarcoding with ONT datasets.
-We aim to explore methods that might prove useful for future metabarcoding pipelines.
+Long-read technologies show promise for improved taxonomic classifications however there is a lack of workflows for metabarcoding with ONT datasets.
+We aim to explore this space and test methods that might prove useful for future metabarcoding pipelines.
 Due to its relatively low cost and portability, ONT has made sequencing much more accessible by enabling groups to purchase and run their own sequencing devices that would otherwise not be able to afford it.
 This democratisation of technology has provided much wider access to sequencing techniques, gaining the interest of those who may not have a background in biology or informatics.
-This research project aims to fill this gap by exploring how ONT performs for mock and real world data and by producing software that may serve others working in the fungal metabarcoding space.
+This research project aims to fill this gap by exploring how ONT performs on mock and real world data and by producing software that may serve others working in the fungal metabarcoding space.

@@ -8,6 +8,5 @@ As part of this higher-level goal, we aim to achieve the following:
 1. Apply filtering and processing workflows which extract taxonomic informative regions from fungal long-read rDNA sequencing amplicons
 2. Evaluate clustering and taxonomic assignment methods on extracted rDNA regions.
 3. Assess established workflows (#1 and 2) on a mock fungal long-read rDNA dataset.
-4. Apply developed workflows on a real world soil long-read rDNA locus dataset.
-5. Publish workflow software that serve others in their own analysis of ONT rDNA datasets.
-6. Develop guidelines for end-users of the workflow.
+4. Apply developed workflows on a real world soil dataset.
+5. Publish the workflow software that can serve others in their own analysis of ONT rDNA datasets.

@@ -26,8 +26,7 @@ formation of mycorrhiza between plants and fungi [@Frey2019]. Other
 fungi form pathogenic interactions causing considerable damage to
 human health and agriculture [@C.2020].
 
-When performing ecological studies, it is important to reliably detect
-and identify fungi in a given environment. Metabarcoding is a technique
+Metabarcoding is a technique
 for identifying the organisms that are present in an environment by
 sampling and analysing genomic content after amplification of
 DNA barcodes [@Taberlet2018]. Applications of metabarcoding include: the
@@ -49,7 +48,7 @@ extracting the genomic DNA of all organisms within a sample,
 followed by the amplification of a barcode region of interest using the polymerase chain reaction
 (PCR) [@Lindahl2013].
 The amplified DNA is sequenced by a HTS platform such as Illumina, PacBio or Oxford Nanopore Technologies.
-Using computational techniques, sequences can be analysed and compared with reference databases to identify taxa.
+Using computational techniques, sequences can be analysed and compared to those in reference databases to identify taxa.
 The accuracy of these taxonomic classifications depends heavily on the quality of the
 reference data used [@Tedersoo2022].
 
@@ -58,7 +57,8 @@ reference data used [@Tedersoo2022].
 
 The main steps for a fungal metabarcoding workflow.
 Depicted is the nuclear ribosomal RNA operon where short-read technologies target the ITS1 or ITS2 subregion
-in isolation, while long-read technologies are capable of targeting the entire ITS region and beyond [@Nilsson2019a]
+in isolation.
+Long-read technologies can target the entire ITS region and beyond [@Nilsson2019a]
 :::
 
 The barcode region most commonly used for metabarcoding of fungi is the
@@ -66,18 +66,18 @@ internal transcribed spacer (ITS) region which is found between the 18S
 and 28S subunits of the nuclear ribosome, also known as the small
 subunit (SSU) and large subunit (LSU) respectively [@Tedersoo2022]. The
 ITS region has become the universal marker for barcoding fungi for
-multiple reasons. PCR amplification of the ITS region has a high success
-rate due to highly conserved regions flanking the gene where PCR primers
-can be designed to cover a high range of Fungi [@Schoch2012]. See
+multiple reasons. PCR amplification of the ITS marker has a high success
+rate due to highly conserved regions which flank the marker.
+This allows PCR primers can be designed to cover a high range of Fungi [@Schoch2012]. See
 @fig-metabarcoding-workflow for a general overview of fungal
-metabarcoding. Because they are non-coding, the ITS regions are highly
+metabarcoding.
+As ITS regions are non-coding, they are highly
 variable and provide high inter- and intraspecies
-resolution [@Schoch2012]. Further discussion on the advantages and drawbacks of using the ITS
-region can be found in @sec-fungal-marker-regions.
+resolution [@Schoch2012].
 
 HTS technologies have been adopted for
-metabarcoding due to their large sequencing capacity and their ability
-to characterize DNA sequences from mixed samples in comparison to
+metabarcoding due to large sequencing capacity and the ability
+to characterize DNA sequences from mixed samples as opposed to
 traditional methods such as Sanger sequencing [@Nilsson2019a].
 Short-read HTS methods such as Illumina MiSeq are commonly used for
 metabarcoding studies and allow for the sequencing of up to 2x300
@@ -87,20 +87,19 @@ length limitations makes Illumina best suited to analyse the smaller
 ITS1 or ITS2 subregions separately with a very high sequencing
 depth [@Nilsson2019a]. Illumina MiSeq, NextSeq and HiSeq produce a very
 high numbers of reads per run (up to 25 million, 1.2 billion and 6
-billion respectively) that results in high quality denoised
+billion respectively) that result in high quality denoised
 sequences [@Inc.2023; @IlluminaInc.2016].
 
 Sequencing platforms such as Oxford Nanopore Technologies (ONT) and
 PacBio provide much longer read lengths compared to Illumina HTS
 methods. ONT sequencing is comparatively cheap and can be performed in a
-basic molecular lab and even in the field [@Mafune2020; @Baloglu2021].
+basic molecular lab or in the field [@Mafune2020; @Baloglu2021].
 Until recently, the high error rate made ONT sequencing unsuitable
 for metabarcoding studies [@Zhang2023]. The prospect of long-read
 sequencing for fungal metabarcoding is that the longer reads will be able
 to cover multiple marker genes, including the full ribosomal operon, and
 can provide more reliable phylogenetic placement and discovery of new
 fungal lineages [@Tedersoo2018].
-Sequencing technologies will be discussed further in @sec-sequencing-methods.
 
 In the existing research, studies have explored the use of ONT
 sequencing for metabarcoding of soil microbial community
@@ -108,5 +107,5 @@ structure [@Wiryawan2022], rapid pathogen
 detection [@Hong2020; @Ohta2023], and testing the use
 of ONT for metabarcoding of mock fungal
 communities [@Baloglu2021; @Mafune2020; @langsiriTargetedSequencingAnalysis2023].
-In this study, we integrated common approaches to fungal metabarcoding into a bioinformatic workflow with a focus on analysing ONT data.
-We validated our metabarcoding approaches with mock fungal communities and demonstrated how the workflow performed on real environmental soil samples.
+In this study, we integrated common approaches to fungal metabarcoding into a bioinformatic workflow with the focus on analysing ONT data.
+We validated our metabarcoding approach with mock fungal communities and tested the workflow on real environmental soil samples.
