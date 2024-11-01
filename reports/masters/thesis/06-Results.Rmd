@@ -470,16 +470,17 @@ and show a higher proportion of fungi are classified in *Eucalyptus* species com
 :::{#fig-AL-krona layout-ncol=2 .content-visible when-format="html"}
 ```{=html}
 <iframe width="400" height="500" src="analysis/krona/AL.html" title="Webpage example"></iframe>
-<figcaption>A. litteralis</figcaption>
+<figcaption>A. litteralis (<a target="_blank" href="analysis/krona/AL.html">click for full size</a>)</figcaption>
 ```
 
 ```{=html}
 <iframe width="400" height="500" src="analysis/krona/AP.html" title="Webpage example"></iframe>
-<figcaption>A. paradoxa</figcaption>
+<figcaption>A. paradoxa (<a target="_blank" href="analysis/krona/AP.html">click for full size</a>)</figcaption>
 ```
 
-Classifications from *Allocasuarina* samples. Krona chart shows genus level classifications from all *Allocasuarina littoralis* and *Allocasuarina paradoxa* samples.
+Classifications from *Allocasuarina* samples. Krona chart showing classifications from all *Allocasuarina littoralis* and *Allocasuarina paradoxa* samples.
 Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011].
+Chart shows OTU ids by default, change the 'Max depth' option to view species-level (7), genus-level (6), and so forth.
 :::
 
 :::{#fig-AL-krona layout-ncol=2 .content-hidden when-format="html"}
@@ -496,16 +497,17 @@ Interactive versions of these figures are available online at: [https://aringeri
 :::{#fig-EC-krona layout-ncol=2 .content-visible when-format="html"}
 ```{=html}
 <iframe width="400" height="500" src="analysis/krona/EC.html" title="Webpage example"></iframe>
-<figcaption>E. cephalocarpa</figcaption>
+<figcaption>E. cephalocarpa (<a target="_blank" href="analysis/krona/EC.html">click for full size</a>)</figcaption>
 ```
 
 ```{=html}
 <iframe width="400" height="500" src="analysis/krona/EV.html" title="Webpage example"></iframe>
-<figcaption>E. viminalis</figcaption>
+<figcaption>E. viminalis (<a target="_blank" href="analysis/krona/EV.html">click for full size</a>)</figcaption>
 ```
 
-Classifications from *Eucalyptus* samples. Krona chart shows genus level classifications from all *Eucalyptus cephalocarpa* and *Eucalyptus viminalis* samples.
+Classifications from *Eucalyptus* samples. Krona chart showing classifications from all *Eucalyptus cephalocarpa* and *Eucalyptus viminalis* samples.
 Generated using [@taudiereMiscMetabarPackageFacilitate2023; @ondovInteractiveMetagenomicVisualization2011].
+Chart shows OTU ids by default, change the 'Max depth' option to view species-level (7), genus-level (6), and so forth.
 :::
 
 :::{#fig-EC-krona layout-ncol=2 .content-hidden when-format="html"}
